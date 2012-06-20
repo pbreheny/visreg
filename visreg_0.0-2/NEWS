@@ -1,0 +1,15 @@
+* Minor change
+** Substantial change
+*** Major change
+
+0.0-2
+      *  Added fill='median' option
+0.0-1 
+      ** Added 'type' option to visreg, allowing both conditional and
+          term plots
+      *  Changed default y label in visreg
+      *  Added fill='zero' option
+
+0.0-0 
+      *** Package infrastructure established
+      **  visreg.R, visreg2d.R: Polynomial terms handled correctly

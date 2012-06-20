@@ -1,0 +1,28 @@
+data("birthwt",package="MASS")
+birthwt$race <- factor(birthwt$race,labels=c("White","Black","Other"))
+birthwt$smoke <- factor(birthwt$smoke,labels=c("Nonsmoker","Smoker"))
+
+## Basic
+fit <- glm(low~age+race+smoke+lwt,data=birthwt,family="binomial")
+visreg(fit,"age")
+visreg(fit,"lwt")
+visreg(fit,"race")
+visreg(fit,"smoke")
+
+## Transformation of X
+fit <- glm(low~age+race+smoke+lwt,data=birthwt,family="binomial")
+visreg(fit,"age")
+visreg(fit,"age",type="terms")
+
+## Plot on response scale
+## Add option to handle this automatically?
+inv.logit <- function(x){exp(x)/(1+exp(x))}
+fit <- glm(low~age+race+smoke+lwt,data=birthwt,family="binomial")
+visreg(fit,"age",trans=inv.logit)
+visreg(fit,"lwt",trans=inv.logit)
+
+## Cond
+visreg(fit,"lwt",trans=inv.logit,cond=list(smoke='Smoker'))
+
+## Factors
+visreg(fit,"race",cond=list(smoke='Smoker'))

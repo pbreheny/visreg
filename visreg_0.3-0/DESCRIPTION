@@ -1,0 +1,10 @@
+Package: visreg
+Title: Visualization of regression functions
+Version: 0.3-0
+Date: 
+Author: Patrick Breheny, Woodrow Burchett
+Maintainer: Patrick Breheny <patrick.breheny@uky.edu>
+Depends: lattice
+Suggests: rgl
+Description: 
+License: GPL-2
