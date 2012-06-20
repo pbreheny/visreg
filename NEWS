@@ -2,7 +2,8 @@
 ** Substantial change
 *** Major change
 
-1.1-0
+1.0-1
+      *  Fixed bug with visregFactorPanel when partial=FALSE
 
 1.0-0
       *** Submitted to CRAN
