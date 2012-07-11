@@ -3,7 +3,10 @@
 *** Major change
 
 1.0-1
+      *  Fixed bug with formatting names for locfit objects
       *  Fixed bug with visregFactorPanel when partial=FALSE
+      *  Changed default for ylabels to las=1 (always horizontal) 
+      	 (Thank you to Doug Bates for this advice)
 
 1.0-0
       *** Submitted to CRAN
