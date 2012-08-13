@@ -2,7 +2,8 @@
 ** Substantial change
 *** Major change
 
-1.0-1
+1.1-0
+      *  Allow finer control of plots with line.par, fill.par, points.par
       *  Fixed bug with formatting names for locfit objects
       *  Fixed bug with visregFactorPanel when partial=FALSE
       *  Changed default for ylabels to las=1 (always horizontal) 

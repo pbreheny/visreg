@@ -1,4 +1,4 @@
-visregLatticePlot <- function(fit,f,name,nn,cond,type,trans,xtrans,alpha,jitter,partial,whitespace,by,strip.names,...)
+visregLatticePlot <- function(fit, f, name, nn, cond, type, trans, xtrans, alpha, jitter, partial, whitespace, by, strip.names, line.par, fill.par, points.par, ...)
 {
   lev <- attr(cond,"lev")  
   if(is.factor(f[,name])) nn <- length(levels(f[,name]))
@@ -49,13 +49,14 @@ visregLatticePlot <- function(fit,f,name,nn,cond,type,trans,xtrans,alpha,jitter,
   xlim[2] <- xlim[2]+pad
   
   if (!partial) lresids=NULL
-  plot.args <- list(x=formula(lframe$fit~lframe$xx | lframe$by),type="l",ylim=ylim, xlab=name, ylab=as.character(formula(fit)[2]), lframe=lframe,lresids=lresids,partial=partial,xlim=xlim,strip=strip.custom(strip.names=strip.names,var.name=by))
+  plot.args <- list(x=formula(lframe$fit~lframe$xx | lframe$by), type="l", ylim=ylim, xlab=name, ylab=as.character(formula(fit)[2]), lframe=lframe, lresids=lresids, partial=partial, xlim=xlim, strip=strip.custom(strip.names=strip.names, var.name=by), fill.par=fill.par)
   new.args <- list(...)
   if (length(new.args)) plot.args[names(new.args)] <- new.args
-  if (is.null(dev.list())) {
-    trellis.device()
-    trellis.par.set(plot.symbol=list(pch=19,cex=0.4))
-  }
+  if (is.null(dev.list())) trellis.device()
+  if (length(line.par)) trellis.par.set(plot.line=line.par)
+  plot.symbol <- list(pch=19)
+  if (length(points.par)) plot.symbol[names(points.par)] <- points.par
+  trellis.par.set(plot.symbol=plot.symbol)
   
   if(is.factor(f[,name])) {
     K <- length(levels(x$x))

@@ -49,5 +49,9 @@ fit <- lm(Ozone ~ Solar.R + Wind*Hot,data=ozone)
 visreg(fit,"Wind",by="Hot")
 
 ## Plotting options
-fit <- lm(Ozone ~ Solar.R + Wind + Heat,data=ozone)
-visreg(fit,"Heat",whitespace=.1,xlab="Heat Category")
+airquality$Heat <- cut(airquality$Temp,3,labels=c("Cool","Mild","Hot"))
+fit <- lm(Ozone ~ Solar.R + Wind*Heat, data=airquality)
+visreg(fit,"Heat", whitespace=.1, xlab="Heat Category", line=list(col="blue", lwd=10), points=list(col="red", cex=2), alpha=.001, fill=list(col="yellow", border="green"))
+visreg(fit, "Wind", line=list(col="blue", lwd=10), points=list(col="red", cex=2), alpha=.001, fill=list(col="yellow", border="green"))
+visreg(fit, "Wind", by="Heat", line=list(col="blue", lwd=10), points=list(col="red", cex=2), alpha=.001, fill=list(col="yellow", border="green"))
+visreg(fit, "Heat", by="Wind", line=list(col="blue", lwd=10), points=list(col="red", cex=2), alpha=.001, fill=list(col="yellow", border="green"))

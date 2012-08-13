@@ -1,5 +1,5 @@
 ## To do: add overlay plot option?
-visreg <- function(fit, xvar, by, breaks=4, type=c("conditional","effect"), trans=as.numeric, scale=c("linear","response"), xtrans, alpha=.05, nn=101, cond=list(), whitespace=0.2, partial=TRUE, jitter=FALSE, strip.names=FALSE, ...)
+visreg <- function(fit, xvar, by, breaks=4, type=c("conditional","effect"), trans=as.numeric, scale=c("linear","response"), xtrans, alpha=.05, nn=101, cond=list(), whitespace=0.2, partial=TRUE, jitter=FALSE, strip.names=FALSE, line.par=NULL, fill.par=NULL, points.par=NULL, ...)
 {
   if (missing(type) & class(fit)[1]=="coxph") type <- "effect"
   type <- match.arg(type)
@@ -30,14 +30,14 @@ visreg <- function(fit, xvar, by, breaks=4, type=c("conditional","effect"), tran
       v <- vector("list",length(xvar))
       for (i in 1:length(xvar))
         {
-          v[[i]] <- visregPlot(fit,f,xvar[i],nn,cond[[1]],type,trans,xtrans,alpha,jitter,partial,whitespace,...)
+          v[[i]] <- visregPlot(fit, f, xvar[i], nn, cond[[1]], type, trans, xtrans, alpha, jitter, partial, whitespace, line.par, fill.par, points.par, ...)
         }
       names(v) <- xvar
       if (length(xvar)==1) v <- v[[1]]
     }
   else
     {
-      v <- visregLatticePlot(fit,f,xvar,nn,cond,type,trans,xtrans,alpha,jitter,partial,whitespace,by,strip.names,...)
+      v <- visregLatticePlot(fit, f, xvar, nn, cond, type, trans, xtrans, alpha, jitter, partial, whitespace, by, strip.names, line.par, fill.par, points.par, ...)
     }
   return(invisible(v))
 }

@@ -1,4 +1,4 @@
-visregPlot <- function(fit,f,name,nn,cond,type,trans,xtrans,alpha,jitter,partial,whitespace,...)
+visregPlot <- function(fit, f, name, nn, cond, type, trans, xtrans, alpha, jitter, partial, whitespace, line.par, fill.par, points.par, ...)
   {
     xy <- getXY(fit,f,name,nn,cond,type,trans,xtrans,alpha,jitter)
     x <- xy$x
@@ -15,12 +15,20 @@ visregPlot <- function(fit,f,name,nn,cond,type,trans,xtrans,alpha,jitter,partial
     if (length(new.args)) plot.args[names(new.args)] <- new.args
     do.call("plot", plot.args)
 
-    if(is.factor(f[,name])) factorPlot(x,y,partial,whitespace)
+    if(is.factor(f[,name])) factorPlot(x,y,partial,whitespace, line.par, fill.par, points.par)
     else
       {
-        polygon(c(x$xx,rev(x$xx)),c(y$lwr,rev(y$upr)),col="gray85",border=F)
-        lines(x$xx,y$fit,lwd=2)
-        if (partial) points(x$x,y$r,pch=19,cex=0.4)
+        fill.args <- list(x=c(x$xx,rev(x$xx)), y=c(y$lwr,rev(y$upr)), col="gray85", border=F)
+        if (length(fill.par)) fill.args[names(fill.par)] <- fill.par
+        do.call("polygon", fill.args)
+        line.args <- list(x=x$xx, y=y$fit, lwd=2)
+        if (length(line.par)) line.args[names(line.par)] <- line.par
+        do.call("lines", line.args)
+        if (partial) {
+          points.args <- list(x=x$x, y=y$r, pch=19, cex=0.4)
+          if (length(points.par)) points.args[names(points.par)] <- points.par
+          do.call("points", points.args)
+        }
       }
     return(xy)
   }

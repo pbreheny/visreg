@@ -1,6 +1,6 @@
 ## To-do: add too.far option?
 ## Invisible return of DD
-visreg2d <- function(fit,xvar,yvar,type=c("conditional","effect"),nn=ifelse(plot.type=="persp",49,99),plot.type=c("image","persp","rgl"),trans=as.numeric,scale=c("linear","response"),cond=list(),whitespace=0.2,...)
+visreg2d <- function(fit,xvar,yvar,type=c("conditional","effect"),nn=ifelse(plot.type=="persp",49,99),plot.type=c("image","persp","rgl"),trans=as.numeric,scale=c("linear","response"), cond=list(), whitespace=0.2, ...)
   {
     type <- match.arg(type)
     scale <- match.arg(scale)
