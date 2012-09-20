@@ -21,8 +21,7 @@ visreg <- function(fit, xvar, by, breaks=4, type=c("conditional","effect"), tran
   
   n.y <- if (class(fit)[1]=="mlm") ncol(coef(fit)) else 1
   n.plots <- length(xvar) * n.y
-  print(n.plots)
-  if (n.plots > 1 && prod(par("mfcol")) < n.plots && dev.interactive()) {
+  if (n.plots > 1 && prod(par("mfcol")) < n.plots && dev.interactive() && missing(by)) {
     oask <- devAskNewPage(TRUE)
     on.exit(devAskNewPage(oask))
   }
