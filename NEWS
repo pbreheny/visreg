@@ -3,6 +3,7 @@
 *** Major change
 
 1.1-0
+      *  Fixed bug in 'ask' behavior when multiple plots created
       *  Allow finer control of plots with line.par, fill.par, points.par
       *  Fixed bug with formatting names for locfit objects
       *  Fixed bug with visregFactorPanel when partial=FALSE
