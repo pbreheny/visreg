@@ -1,4 +1,4 @@
-factorAxis <- function(xx,w,nn)
+factorAxis <- function(xx, w, nn)
   {
     l <- levels(xx)
     K <- length(levels(xx))
