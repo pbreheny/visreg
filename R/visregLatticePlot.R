@@ -15,7 +15,7 @@ visregLatticePlot <- function(fit, f, name, nn, cond, type, trans, xtrans, alpha
     lby <- rep(f[,by],length(lev))
     
     for (i in 1:length(cond)) {
-      xy <- getXY(fit,f,name,nn,cond[[i]],type,trans,xtrans,alpha,jitter)
+      xy <- getXY(fit, f, name, nn, cond[[i]], type, trans, xtrans, alpha, jitter)
       x <- xy$x
       y <- xy$y
       if (class(fit)[1] == "mlm") {

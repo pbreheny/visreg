@@ -1,4 +1,4 @@
-getXY <- function(fit,f,name,nn,cond,type,trans,xtrans,alpha,jitter)
+getXY <- function(fit, f, name, nn, cond, type, trans, xtrans, alpha, jitter)
 {
   if (type=="conditional") {
     x <- setupD(fit,f,name,nn,cond)
