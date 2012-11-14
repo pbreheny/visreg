@@ -2,6 +2,10 @@
 ** Substantial change
 *** Major change
 
+1.1-1
+      *  Fixed bug in 'removeFormulaFormatting'; old version was
+      	 incompatible with use of ns() or bs() for splines
+
 1.1-0
       *  Added support for multiple response (class 'mlm') models
       *  Fixed bug in 'ask' behavior when multiple plots created
