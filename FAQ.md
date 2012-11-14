@@ -1,10 +1,11 @@
 ## Frequently asked questions
 
-1. Can visreg can be used for GLMMs (i.e., from the lme4 package)?  
- > The underlying basis on which visreg operates is by using the predict method to plot predictions from the model.  Predictions for mixed models are complicated.  In principle, it is possible to make predictions from a GLMM (albeit with caveats), but in practice, there is no 'predict' method provided by the lme4 package.  If Doug Bates (the author of lme4) or someone else writes a predict function for lme4, then it will work with visreg; otherwise not.  
+1. Can visreg can be used for GLMMs (i.e., from the lme4 package)?
+
+   The underlying basis on which visreg operates is by using the predict method to plot predictions from the model.  Predictions for mixed models are complicated.  In principle, it is possible to make predictions from a GLMM (albeit with caveats), but in practice, there is no 'predict' method provided by the lme4 package.  If Doug Bates (the author of lme4) or someone else writes a predict function for lme4, then it will work with visreg; otherwise not.  
 1. What is the difference between 'conditional' and 'effect' plots?  
- > Suppose our data looked like:  
- > SBP    Sex    Age  
+   Suppose our data looked like:  
+   SBP    Sex    Age  
 140    M    56  
 135    F    47  
 ...  
