@@ -17,5 +17,5 @@ setupF <- function(fit)
     attr(f,"needs.update") <- TRUE
     for (j in 1:ncol(f)) if (class(f[,j])[1]=="logical") f[,j] <- as.numeric(f[,j])
   }
-  return(f)
+  f
 }
