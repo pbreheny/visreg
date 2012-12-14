@@ -1,4 +1,3 @@
-## To do: add overlay plot option?
 visreg <- function(fit, xvar, by, breaks=4, type=c("conditional","effect"), trans=I, scale=c("linear","response"), xtrans, alpha=.05, nn=101, cond=list(), whitespace=0.2, partial=TRUE, jitter=FALSE, strip.names=FALSE, line.par=NULL, fill.par=NULL, points.par=NULL, ...)
 {
   if (missing(type) & class(fit)[1]=="coxph") type <- "effect"

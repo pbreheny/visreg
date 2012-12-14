@@ -8,7 +8,7 @@ setupD <- function(fit,f,name,nn,cond,whitespace)
   
   form <- removeFormulaFormatting(formula(fit)[3])
   D <- model.frame(as.formula(paste("~",form)),df)
-  D <- cbind(D,df[,setdiff(names(df),names(D)),drop=FALSE])
+  D <- cbind(D, df[,setdiff(names(df),names(D)), drop=FALSE])
   
   ## Set up nn-row data frame for prediction
   xx <- if (is.factor(x)) factor(levels(x),levels=levels(x)) else seq(min(x),max(x),length=nn)
