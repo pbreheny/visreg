@@ -2,6 +2,10 @@
 ** Substantial change
 *** Major change
 
+1.1-2
+      *  Fixed bug in 'removeFormulaFormatting'; further compatibility
+      	 for splines with use of 'cond'
+
 1.1-1
       *  Fixed bug in 'removeFormulaFormatting'; old version was
       	 incompatible with use of ns() or bs() for splines
