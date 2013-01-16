@@ -8,7 +8,7 @@ setupF <- function(fit)
       f <- as.data.frame(as.list(get_all_vars(fit,eval(fit$call$data,envir=environment(fit$terms)))))
     } else f <- as.data.frame(as.list(get_all_vars(fit,data=environment(fit$terms))))
   }
-  suppressWarnings(f <- f[complete.cases(f),])
+  suppressWarnings(f <- f[!apply(is.na(f), 1, any),])
   
   ## Handle some variable type issues
   attr(f,"needs.update") <- FALSE

@@ -19,8 +19,8 @@ visregPlot <- function(fit, f, name, nn, cond, type, trans, xtrans, alpha, jitte
     else xlim <- range(x$xx)
     if (type=="effect") ylab <- as.expression(substitute(list(Delta) * x,list(x=yname)))
     else ylab <- yname
-    if (partial) ylim <- range(c(y$r,y$lwr,y$upr))
-    else ylim <- range(c(y$lwr,y$upr))
+    if (partial) ylim <- range(c(y$r,y$lwr,y$upr), na.rm=TRUE)
+    else ylim <- range(c(y$lwr,y$upr), na.rm=TRUE)
     plot.args <- list(x=1, y=1, ylim=ylim, xlab=name, ylab=ylab, type="n", xlim=xlim,xaxt=ifelse(is.factor(f[,name]),'n','s'),las=1)
     new.args <- list(...)
     if (length(new.args)) plot.args[names(new.args)] <- new.args
