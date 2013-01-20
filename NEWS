@@ -2,9 +2,12 @@
 ** Substantial change
 *** Major change
 
-1.1-2
+1.2-0
       *  Fixed bug in 'removeFormulaFormatting'; further compatibility
       	 for splines with use of 'cond'
+      *  Added support for models from the 'gam' package
+      *  Improved support for 'coxph' models from 'survival' package
+      *  Fixed bug in use of ns/bs with type='effect'
 
 1.1-1
       *  Fixed bug in 'removeFormulaFormatting'; old version was

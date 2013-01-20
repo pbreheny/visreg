@@ -9,6 +9,7 @@ removeFormulaFormatting <- function(form)
     f[i] <- gsub("\\bs\\(([[:alnum:]]+).*\\)", "\\1", f[i])
     f[i] <- gsub("\\bbs\\(([[:alnum:]]+).*\\)", "\\1", f[i])
     f[i] <- gsub("\\bns\\(([[:alnum:]]+).*\\)", "\\1", f[i])
+    f[i] <- gsub("\\bpspline\\(([[:alnum:]]+).*\\)", "\\1", f[i])
   }
   val <- paste(f,collapse=" + ")
   val <- gsub("()","",val)

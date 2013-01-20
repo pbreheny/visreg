@@ -7,7 +7,7 @@ setupX <- function(fit,f,name,nn,cond)
   names(xdf) <- name
   df <- fillFrame(f,xdf,cond)
   D <- rbind(f,df)
-  form <- removeFormulaFormatting(formula(fit)[3])
+  form <- formula(fit)[3]
   
   if (class(fit)[1]=="mlm") {
     ind <- apply(is.finite(coef(fit)), 1, all)

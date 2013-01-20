@@ -1,6 +1,5 @@
 visreg <- function(fit, xvar, by, breaks=4, type=c("conditional","effect"), trans=I, scale=c("linear","response"), xtrans, alpha=.05, nn=101, cond=list(), whitespace=0.2, partial=TRUE, jitter=FALSE, strip.names=FALSE, line.par=NULL, fill.par=NULL, points.par=NULL, ...)
 {
-  if (missing(type) & class(fit)[1]=="coxph") type <- "effect"
   type <- match.arg(type)
   scale <- match.arg(scale)
   if (!missing(by) & !missing(cond)) stop("Cannot specify 'by' and 'cond' simultaneously")
@@ -29,8 +28,7 @@ visreg <- function(fit, xvar, by, breaks=4, type=c("conditional","effect"), tran
   
   if (missing(by)) {
     v <- vector("list",length(xvar))
-    for (i in 1:length(xvar))
-    {
+    for (i in 1:length(xvar)) {
       v[[i]] <- visregPlot(fit, f, xvar[i], nn, cond[[1]], type, trans, xtrans, alpha, jitter, partial, whitespace, line.par, fill.par, points.par, ...)
     }
     names(v) <- xvar

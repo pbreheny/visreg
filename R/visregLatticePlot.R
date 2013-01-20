@@ -56,7 +56,10 @@ visregLatticePlot <- function(fit, f, name, nn, cond, type, trans, xtrans, alpha
     pad <- 0.04*diff(xlim)
     xlim[1] <- xlim[1]-pad
     xlim[2] <- xlim[2]+pad
-    ylab <- if (type=="effect") as.expression(substitute(list(Delta) * x,list(x=yname))) else yname
+    if (identical(trans,I)) {
+      if (type=="effect") ylab <- as.expression(substitute(list(Delta) * x,list(x=yname)))
+      else ylab <- yname      
+    } else ylab <- "f(x)"
     
     if (!partial) lresids=NULL
     plot.args <- list(x=formula(lframe$fit~lframe$xx | lframe$by), type="l", ylim=ylim, xlab=name, ylab=ylab, lframe=lframe, lresids=lresids, partial=partial, xlim=xlim, strip=strip.custom(strip.names=strip.names, var.name=by), fill.par=fill.par)
