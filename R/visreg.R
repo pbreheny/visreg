@@ -5,7 +5,6 @@ visreg <- function(fit, xvar, by, breaks=4, type=c("conditional","effect"), tran
   if (!missing(by) & !missing(cond)) stop("Cannot specify 'by' and 'cond' simultaneously")
   if (scale=="response") trans <- family(fit)$linkinv
   
-  r <- residuals(fit)
   f <- setupF(fit)
   if (missing(xvar)) xvar <- names(f)[-1]
   for (i in 1:length(xvar)){if (!is.element(xvar[i],names(f))) stop(paste(xvar[i],"not in model"))}
@@ -16,7 +15,7 @@ visreg <- function(fit, xvar, by, breaks=4, type=c("conditional","effect"), tran
     warning("'By' variable has too few unique values and has been coerced to a factor")
   }
   if (attr(f,"needs.update")) fit <- update(fit,data=f)
-  fit$residuals <- r
+  #fit$residuals <- r
   cond <- setupCond(cond,f,by,breaks)
   
   n.y <- if (class(fit)[1]=="mlm") ncol(coef(fit)) else 1
@@ -25,7 +24,7 @@ visreg <- function(fit, xvar, by, breaks=4, type=c("conditional","effect"), tran
     oask <- devAskNewPage(TRUE)
     on.exit(devAskNewPage(oask))
   }
-  
+
   if (missing(by)) {
     v <- vector("list",length(xvar))
     for (i in 1:length(xvar)) {

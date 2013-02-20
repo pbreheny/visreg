@@ -46,7 +46,7 @@ visreg(fit,"Heat",whitespace=.5)
 ozone$Hot <- ozone$Temp > 85
 ozone$Hot <- ozone$Hot + (ozone$Temp > 92)
 fit <- lm(Ozone ~ Solar.R + Wind*Hot,data=ozone)
-visreg(fit,"Wind",by="Hot")
+visreg(fit, "Wind", by="Hot")
 
 ## Plotting options
 airquality$Heat <- cut(airquality$Temp,3,labels=c("Cool","Mild","Hot"))

@@ -1,5 +1,4 @@
-Terms <- function(fit,f,x,trans,alpha)
-{
+Terms <- function(fit,f,x,trans,alpha) {
   if (class(fit)[1]=="mlm") {
     summ <- summary.mlm(fit)
     n.y <- length(summ)
@@ -21,5 +20,11 @@ Terms <- function(fit,f,x,trans,alpha)
   m <- ifelse(class(fit)=="coxph" || family(fit)$family %in% c("binomial","poisson"), qnorm(1-alpha/2), qt(1-alpha/2,fit$df.residual))
   lwr <- yy - m*SE
   upr <- yy + m*SE
-  list(fit=trans(yy),lwr=trans(lwr),upr=trans(upr),r=trans(r))
+  if (class(fit)[1]=="mlm") {
+    val <- list(fit=matrix(as.numeric(trans(yy)), ncol=n.y), lwr=matrix(as.numeric(trans(lwr)), ncol=n.y), upr=matrix(as.numeric(trans(upr)), ncol=n.y), r=matrix(as.numeric(trans(r)), ncol=n.y))
+    colnames(val$fit) <- colnames(fit$fitted.values)
+  } else {
+    val <- list(fit=as.numeric(trans(yy)), lwr=as.numeric(trans(lwr)), upr=as.numeric(trans(upr)), r=as.numeric(trans(r)))
+  }
+  val
 }

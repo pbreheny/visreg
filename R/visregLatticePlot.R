@@ -66,6 +66,7 @@ visregLatticePlot <- function(fit, f, name, nn, cond, type, trans, xtrans, alpha
     new.args <- list(...)
     if (length(new.args)) plot.args[names(new.args)] <- new.args
     if (is.null(dev.list())) trellis.device()
+    opar <- trellis.par.get()
     if (length(line.par)) trellis.par.set(plot.line=line.par)
     plot.symbol <- list(pch=19)
     if (length(points.par)) plot.symbol[names(points.par)] <- points.par
@@ -88,6 +89,7 @@ visregLatticePlot <- function(fit, f, name, nn, cond, type, trans, xtrans, alpha
     Lframe <- c(Lframe, lframe)
     if (partial) Lresids <- c(Lresids, lresids)
   }
+  trellis.par.set(opar)
   
   if (partial) return(list(lframe,lresids))
   else return(lframe)

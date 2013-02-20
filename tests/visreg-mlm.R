@@ -15,4 +15,4 @@ visreg(fit, "Petal.Width", by="Petal.Length")
 visreg2d(fit, "Petal.Width", "Petal.Length")
 visreg2d(fit, "Petal.Width", "Petal.Length", plot.type="persp")
 visreg2d(fit, "Petal.Width", "Petal.Length", plot.type="persp", type="effect")
-visreg2d(fit, "Petal.Width", "Petal.Length", plot.type="rgl")
+visreg2d(fit, "Petal.Width", "Petal.Length", plot.type="rgl") ## Doesn't really work

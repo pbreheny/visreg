@@ -11,7 +11,7 @@ visreg(fit,"race")
 visreg(fit,"smoke")
 
 ## Transformation of X
-fit <- glm(low~age+race+smoke+lwt,data=birthwt,family="binomial")
+fit <- glm(low~age+I(age^2)+race+smoke+lwt,data=birthwt,family="binomial")
 visreg(fit,"age")
 visreg(fit,"age",type="effect")
 

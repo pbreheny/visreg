@@ -2,6 +2,12 @@
 ** Substantial change
 *** Major change
 
+1.2-1
+      *  Fixed bug in calculation of confidence bands for quasilikelihood
+      	 models (thank you to Ariel Muldoon for pointing this out)
+      *  Fixed side-effect which caused trellis settings to be changed
+      	 when visreg changed them internally
+
 1.2-0
       *  Fixed bug in 'removeFormulaFormatting'; further compatibility
       	 for splines with use of 'cond'
