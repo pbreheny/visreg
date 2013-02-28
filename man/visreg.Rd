@@ -10,19 +10,22 @@ visreg(fit, xvar, by, breaks=4, type=c("conditional","effect"), trans=I, scale=c
 \arguments{
   
   \item{fit}{
-    This is the fitted model object you wish to visualize.  lm, glm,
+    The fitted model object you wish to visualize.  lm, glm,
     gam, rlm, and coxph data classes are all supported.
   }
 
   \item{xvar}{
-    This is the variable to be put on the x-axis of your plot.  Both
-    continuous variables and factors are supported.
+    The variable to be put on the x-axis of your plot, supplied as a
+    character string (see examples).  Both continuous variables and
+    factors are supported.
   }
 
   \item{by}{
-    An option to use if you wish to divide your plot by a third
-    variable.  Uses the lattice package.  Both continuous variables and
-    factors are supported.
+    (Optional) A variable allowing you to divide your plot into
+    cross-sections bases on levels of the \code{by} variable,
+    particularly useful for visualizing models with interactions.
+    Supplied as a character string.  Uses the lattice package.  Both
+    continuous variables and factors are supported.
   }
   \item{breaks}{
     If a continuous variable is used for the 'by' option, the 'breaks'
