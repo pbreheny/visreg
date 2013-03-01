@@ -27,9 +27,9 @@
 
    By default, visreg is set up to provide conditional plots in which all other terms are set to their median value (or most common category).  This includes offset terms.  It is not uncommon, however, to want to see results with the offset included.  To obtain these results, one needs to specify the offset among the arguments to cond.  For example, using the Insurance data from the MASS package:
 
-   utils::data(Insurance, package="MASS")
-   fit <- glm(Claims ~ District + Group + Age + offset(log(Holders)), data = Insurance, family = poisson)
-   visreg(fit, "Group", scale="response")
+   utils::data(Insurance, package="MASS")  
+   fit <- glm(Claims ~ District + Group + Age + offset(log(Holders)), data = Insurance, family = poisson)  
+   visreg(fit, "Group", scale="response")  
 
    This will provide the model's predictions for the expected number of claims given the median number of holders (here, 136).  To obtain the expected number of claims per holder, we need to specify Holders=1 in cond:
 
