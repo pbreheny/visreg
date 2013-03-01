@@ -27,11 +27,13 @@ visreg(fit, xvar, by, breaks=4, type=c("conditional","effect"), trans=I, scale=c
     Supplied as a character string.  Uses the lattice package.  Both
     continuous variables and factors are supported.
   }
+  
   \item{breaks}{
     If a continuous variable is used for the 'by' option, the 'breaks'
     argument determines how many quantiles will be divided to be used
     for panels.
   }
+  
   \item{type}{
     The type of plot to be produced.  The following options are
     supported:
