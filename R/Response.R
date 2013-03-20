@@ -1,6 +1,7 @@
 Response <- function(fit, x, trans, alpha)
 {
-  r <- predict(fit, newdata=x$D) + residuals(fit)
+  rr <- if (class(fit)[1] %in% c("lm", "glm")) rstudent(fit) else residuals(fit)
+  r <- predict(fit, newdata=x$D) + rr
   if (class(fit)[1]=="mlm") {
     p <- list(fit = predict(fit, newdata=x$DD), se.fit = se.mlm(fit, newdata=x$DD))
   } else p <- predict(fit, newdata=x$DD, se.fit=TRUE)
