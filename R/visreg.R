@@ -15,7 +15,6 @@ visreg <- function(fit, xvar, by, breaks=4, type=c("conditional","effect"), tran
     warning("'By' variable has too few unique values and has been coerced to a factor")
   }
   if (attr(f,"needs.update")) fit <- update(fit,data=f)
-  #fit$residuals <- r
   cond <- setupCond(cond,f,by,breaks)
   
   n.y <- if (class(fit)[1]=="mlm") ncol(coef(fit)) else 1
