@@ -1,68 +1,44 @@
-visregLatticePlot <- function(fit, f, name, nn, cond, type, trans, xtrans, alpha, jitter, partial, whitespace, by, strip.names, line.par, fill.par, points.par, ...)
-{
-  Lframe <- Lresids <- NULL
-  n.y <- if (class(fit)[1]=="mlm") ncol(coef(fit)) else 1
-  for (j in 1:n.y) {
+visregLatticePlot <- function(v, partial, whitespace, strip.names, line.par, fill.par, points.par, ...) {
+  lev <- attr(v, "lev")
+  for (j in 1:v[[1]]$y$n) {
     if (j > 1 & interactive()) readline(prompt="Hit <Return> to see next plot:")
-    lev <- attr(cond,"lev")
-    if(is.factor(f[,name])) nn <- length(levels(f[,name]))
-    lframe <- as.data.frame(matrix(0,nn*length(lev),5))
-    names(lframe)<-c('xx','fit','upr','lwr','by')
-    if (partial) {
-      lresids <- as.data.frame(matrix(0,length(f[,name]),3))
-      names(lresids)<-c('r','x','by')
-    }
-    lby <- rep(f[,by],length(lev))
-    
-    for (i in 1:length(cond)) {
-      xy <- getXY(fit, f, name, nn, cond[[i]], type, trans, xtrans, alpha, jitter)
-      x <- xy$x
-      y <- xy$y
-      if (class(fit)[1] == "mlm") {
+    lframe <- lresids <- NULL
+    for (i in 1:length(v)) {
+      x <- v[[i]]$x
+      y <- v[[i]]$y
+      if (y$n > 1) {
         Y <- y
         y <- list(fit=Y$fit[,j], lwr=Y$lwr[,j], upr=Y$upr[,j], r=Y$r[,j])
-        yname <- colnames(Y$fit)[j]
-      } else yname <- as.character(formula(fit)[2])
-      
-      lframe$xx[((i-1)*nn + 1):(i*nn)] <- x$xx
-      lframe$fit[((i-1)*nn + 1):(i*nn)] <- y$fit
-      lframe$upr[((i-1)*nn + 1):(i*nn)] <- y$upr
-      lframe$lwr[((i-1)*nn + 1):(i*nn)] <- y$lwr
-      lframe$by[((i-1)*nn + 1):(i*nn)] <- lev[i]
-      if(is.numeric(f[,by])) {
-        rpoints <- (as.numeric(attr(cond,"new.by"))==i)
-      } else rpoints <- (as.numeric(f[,by]) == i)
-      if (partial) {
-        lresids$x[rpoints] <- x$x[rpoints]
-        lresids$r[rpoints] <- y$r[rpoints]
-        lresids$by[rpoints] <- lev[i]
+        y$name <- colnames(Y$fit)[j]
       }
+      lframe.i <- data.frame(xx=x$xx, fit=y$fit, upr=y$upr, lwr=y$lwr, by=lev[i])
+      lframe <- rbind(lframe, lframe.i)
+      lresids.i <- data.frame(x=x$x, r=y$r, by=lev[i])
+      lresids <- rbind(lresids, lresids.i)
     }
-    lframe$by <- factor(lframe$by,levels=lev)
-    if (partial) lresids$by <- factor(lresids$by,levels=lev)
-    if (is.factor(f[,name]))
-    {
-      if (partial) lresids$x <- factor(levels(f[,name])[lresids$x],levels=levels(f[,name]))
-      lframe$xx <- factor(levels(f[,name])[lframe$xx],levels=levels(f[,name]))
+    lframe$by <- factor(lframe$by, levels=lev)
+    lresids$by <- factor(lresids$by, levels=lev)
+    if (x$factor) {
+      if (partial) lresids$x <- factor(lresids$x, levels=levels(x$x))
+      lframe$xx <- factor(lframe$xx, levels=levels(x$x))
     }
     
-    if (is.factor(x$x)) xlim <- c(0,1) else xlim <- range(x$xx)
+    if (x$factor) xlim <- c(0,1) else xlim <- range(x$xx)
     if (partial) {
-      ylim <- range(c(lresids$r,lframe$lwr,lframe$upr))
-    } else ylim <- range(c(lframe$lwr,lframe$upr))
+      ylim <- range(c(lresids$r, lframe$lwr, lframe$upr))
+    } else ylim <- range(c(lframe$lwr, lframe$upr))
     pad <- 0.04*diff(ylim)
     ylim[1] <- ylim[1]-pad
     ylim[2] <- ylim[2]+pad
     pad <- 0.04*diff(xlim)
     xlim[1] <- xlim[1]-pad
-    xlim[2] <- xlim[2]+pad
-    if (identical(trans,I)) {
-      if (type=="effect") ylab <- as.expression(substitute(list(Delta) * x,list(x=yname)))
-      else ylab <- yname      
-    } else ylab <- "f(x)"
-    
+    xlim[2] <- xlim[2]+pad      
+    ylab <- switch(attr(v, "yNameClass"),
+                   as.expression(substitute(list(Delta) * x,list(x=y$name))),
+                   y$name,
+                   paste("f(", x$name, ")", sep=""))
     if (!partial) lresids=NULL
-    plot.args <- list(x=formula(lframe$fit~lframe$xx | lframe$by), type="l", ylim=ylim, xlab=name, ylab=ylab, lframe=lframe, lresids=lresids, partial=partial, xlim=xlim, strip=strip.custom(strip.names=strip.names, var.name=by), fill.par=fill.par)
+    plot.args <- list(x=formula(lframe$fit~lframe$xx | lframe$by), type="l", ylim=ylim, xlab=x$name, ylab=ylab, lframe=lframe, lresids=lresids, partial=partial, xlim=xlim, strip=strip.custom(strip.names=strip.names, var.name=attr(v, "by")), fill.par=fill.par)
     new.args <- list(...)
     if (length(new.args)) plot.args[names(new.args)] <- new.args
     if (is.null(dev.list())) trellis.device()
@@ -72,25 +48,21 @@ visregLatticePlot <- function(fit, f, name, nn, cond, type, trans, xtrans, alpha
     if (length(points.par)) plot.symbol[names(points.par)] <- points.par
     trellis.par.set(plot.symbol=plot.symbol)
     
-    if(is.factor(f[,name])) {
+    if (x$factor) {
       K <- length(levels(x$x))
       len <- K*(1-whitespace)+(K-1)*whitespace
       scales <- list(x=list(at=((0:(K-1))/len+(1-whitespace)/(2*len)),labels=levels(x$x)))
       plot.args$scales <- scales
       plot.args$panel <- visregFactorPanel
       plot.args$w <- whitespace
-      tp <- do.call("xyplot",plot.args)
+      tp <- do.call("xyplot", plot.args)
       plot(tp)
     } else {
       plot.args$panel <- visregPanel
+      plot.args$newpage <- TRUE
       tp <- do.call("xyplot",plot.args)
       plot(tp)
     }
-    Lframe <- c(Lframe, lframe)
-    if (partial) Lresids <- c(Lresids, lresids)
   }
   trellis.par.set(opar)
-  
-  if (partial) return(list(lframe,lresids))
-  else return(lframe)
 }

@@ -1,5 +1,4 @@
-Response <- function(fit, x, trans, alpha)
-{
+Response <- function(fit, x, trans, alpha) {
   rr <- residuals(fit)
   r <- predict(fit, newdata=x$D) + rr
   if (class(fit)[1]=="mlm") {
@@ -11,9 +10,10 @@ Response <- function(fit, x, trans, alpha)
   lwr <- p$fit - m*p$se.fit
   if (class(fit)[1]=="mlm") {
     val <- list(fit=matrix(trans(p$fit), ncol=ncol(p$fit)), lwr=matrix(trans(lwr), ncol=ncol(p$fit)), upr=matrix(trans(upr), ncol=ncol(p$fit)), r=matrix(trans(r), ncol=ncol(p$fit)))
-    colnames(val$fit) <- colnames(p$fit)
+    val$name <- colnames(val$fit) <- colnames(p$fit)
   } else {
-    val <- list(fit=as.numeric(trans(p$fit)), lwr=as.numeric(trans(lwr)), upr=as.numeric(trans(upr)), r=as.numeric(trans(r)))
+    val <- list(fit=as.numeric(trans(p$fit)), lwr=as.numeric(trans(lwr)), upr=as.numeric(trans(upr)), r=as.numeric(trans(r)), name=as.character(formula(fit)[2]))
   }
+  val$n <- if (class(fit)[1]=="mlm") ncol(p$fit) else 1
   val
 }

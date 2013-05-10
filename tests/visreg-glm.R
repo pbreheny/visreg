@@ -8,6 +8,7 @@ fit <- glm(low~age+race+smoke+lwt,data=birthwt,family="binomial")
 visreg(fit,"age")
 visreg(fit,"lwt")
 visreg(fit,"race")
+visreg(fit, "race", cond=list(smoke='Smoker'))
 visreg(fit,"smoke")
 
 ## Transformation of X
@@ -21,8 +22,5 @@ visreg(fit,"age",scale="response")
 visreg(fit,"lwt",scale="response")
 
 ## Cond
-visreg(fit,"lwt",scale="response",cond=list(smoke='Smoker'))
-visreg(fit,"lwt",scale="response",by="smoke")
-
-## Factors
-visreg(fit,"race",cond=list(smoke='Smoker'))
+visreg(fit, "lwt", scale="response", cond=list(smoke='Smoker'))
+visreg(fit, "lwt", scale="response", by="smoke")

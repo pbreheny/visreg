@@ -18,5 +18,5 @@ setupD <- function(fit,f,name,nn,cond,whitespace)
   DD <- model.frame(as.formula(paste("~",form)),df)
   DD <- cbind(DD,df[,setdiff(names(df),names(DD)),drop=FALSE])
   
-  return(list(x=x,xx=xx,D=D,DD=DD))
+  return(list(x=x, xx=xx, D=D, DD=DD, factor=is.factor(x), name=name))
 }

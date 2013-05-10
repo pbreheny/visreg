@@ -40,5 +40,5 @@ setupX <- function(fit,f,name,nn,cond)
     X <- X[,-which(colnames(X)=="(Intercept)"),drop=FALSE]
   }
   
-  return(list(x=x[-1],xx=xx[-1],X=X,XX=XX))
+  return(list(x=x[-1], xx=xx[-1], X=X, XX=XX, factor=is.factor(x), name=name))
 }

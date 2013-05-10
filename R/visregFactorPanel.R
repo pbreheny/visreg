@@ -1,5 +1,4 @@
-visregFactorPanel <- function(x, y, w, subscripts, lframe, lresids, partial, fill.par, ...)
-{
+visregFactorPanel <- function(x, y, w, subscripts, lframe, lresids, partial, fill.par, ...) {
   K <- length(levels(lframe$xx))
   len <- K*(1-w)+(K-1)*w
   
