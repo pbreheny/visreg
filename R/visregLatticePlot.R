@@ -1,4 +1,4 @@
-visregLatticePlot <- function(v, partial, whitespace, strip.names, line.par, fill.par, points.par, ...) {
+visregLatticePlot <- function(v, partial, band, whitespace, strip.names, line.par, fill.par, points.par, ...) {
   lev <- attr(v, "lev")
   for (j in 1:v[[1]]$y$n) {
     if (j > 1 & interactive()) readline(prompt="Hit <Return> to see next plot:")
@@ -38,7 +38,7 @@ visregLatticePlot <- function(v, partial, whitespace, strip.names, line.par, fil
                    y$name,
                    paste("f(", x$name, ")", sep=""))
     if (!partial) lresids=NULL
-    plot.args <- list(x=formula(lframe$fit~lframe$xx | lframe$by), type="l", ylim=ylim, xlab=x$name, ylab=ylab, lframe=lframe, lresids=lresids, partial=partial, xlim=xlim, strip=strip.custom(strip.names=strip.names, var.name=attr(v, "by")), fill.par=fill.par)
+    plot.args <- list(x=formula(lframe$fit~lframe$xx | lframe$by), type="l", ylim=ylim, xlab=x$name, ylab=ylab, lframe=lframe, lresids=lresids, partial=partial, band=band, xlim=xlim, strip=strip.custom(strip.names=strip.names, var.name=attr(v, "by")), fill.par=fill.par)
     new.args <- list(...)
     if (length(new.args)) plot.args[names(new.args)] <- new.args
     if (is.null(dev.list())) trellis.device()

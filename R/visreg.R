@@ -1,8 +1,7 @@
-visreg <- function(fit, xvar, by, breaks=4, type=c("conditional","effect"), trans=I, scale=c("linear","response"), xtrans, alpha=.05, nn=101, cond=list(), whitespace=0.2, partial=TRUE, jitter=FALSE, strip.names=is.numeric(attr(v, "lev")), line.par=NULL, fill.par=NULL, points.par=NULL, ...) {
+visreg <- function(fit, xvar, by, overlay=FALSE, breaks=4, type=c("conditional","effect"), trans=I, scale=c("linear","response"), xtrans, alpha=.05, nn=101, cond=list(), whitespace=0.2, partial=TRUE, band=TRUE, jitter=FALSE, strip.names=is.numeric(attr(v, "lev")), legend=TRUE, line.par=NULL, fill.par=NULL, points.par=NULL, ...) {
   ## Setup
   type <- match.arg(type)
   scale <- match.arg(scale)
-  if (!missing(by) & !missing(cond)) stop("Cannot specify 'by' and 'cond' simultaneously")
   if (scale=="response") trans <- family(fit)$linkinv
   
   f <- setupF(fit, xvar)
@@ -20,9 +19,11 @@ visreg <- function(fit, xvar, by, breaks=4, type=c("conditional","effect"), tran
   
   ## Plot
   if (missing(by)) {
-    visregPlot(v, partial, whitespace, line.par, fill.par, points.par, ...)
+    visregPlot(v, partial, band, whitespace, line.par, fill.par, points.par, ...)
+  } else if (overlay) {
+    visregOverlayPlot(v, partial, band, whitespace, strip.names, line.par, fill.par, points.par, ...)
   } else {
-    visregLatticePlot(v, partial, whitespace, strip.names, line.par, fill.par, points.par, ...)
+    visregLatticePlot(v, partial, band, whitespace, legend, line.par, fill.par, points.par, ...)
   }
   
   invisible(v)

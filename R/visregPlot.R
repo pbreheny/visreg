@@ -1,4 +1,4 @@
-visregPlot <- function(v, partial, whitespace, line.par, fill.par, points.par, ...) {
+visregPlot <- function(v, partial, band, whitespace, line.par, fill.par, points.par, ...) {
   n.plots <- length(v) * v[[1]]$y$n
   if (n.plots > 1 && prod(par("mfcol")) < n.plots && dev.interactive()) {
     oask <- devAskNewPage(TRUE)
@@ -29,11 +29,13 @@ visregPlot <- function(v, partial, whitespace, line.par, fill.par, points.par, .
       do.call("plot", plot.args)
       
       if (x$factor) {
-        factorPlot(x, y, partial, whitespace, line.par, fill.par, points.par)
+        factorPlot(x, y, partial, band, whitespace, line.par, fill.par, points.par)
       } else {
-        fill.args <- list(x=c(x$xx,rev(x$xx)), y=c(y$lwr,rev(y$upr)), col="gray85", border=F)
-        if (length(fill.par)) fill.args[names(fill.par)] <- fill.par
-        do.call("polygon", fill.args)
+        if (band) {
+          fill.args <- list(x=c(x$xx,rev(x$xx)), y=c(y$lwr,rev(y$upr)), col="gray85", border=F)
+          if (length(fill.par)) fill.args[names(fill.par)] <- fill.par
+          do.call("polygon", fill.args)          
+        }
         line.args <- list(x=x$xx, y=y$fit, lwd=2)
         if (length(line.par)) line.args[names(line.par)] <- line.par
         do.call("lines", line.args)

@@ -1,9 +1,8 @@
-Overlay option for plots (as opposed to trellis)
 Rug option (as opposed to partial residuals)
 Allow extrapolation
-Allow simultaneous specification of by and cond
 Allow multiple 'by' arguments in a list
 From reviewers:
   * Review 'ask' settings
   * Check two-way ANOVA example with empty cells
 Refactor visreg2d to make it compliant with current visreg
+Update help files
