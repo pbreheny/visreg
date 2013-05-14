@@ -1,7 +1,7 @@
 require(visreg)
 ozone <- airquality[complete.cases(airquality),]
 ozone$Heat <- cut(ozone$Temp,3,labels=c("Cool","Mild","Hot"))
-fit <- lm(Ozone ~ Wind*Heat,data=ozone)
+fit <- lm(Ozone ~ Wind*Heat, data=ozone)
 
 visreg(fit,"Wind",by="Heat")
 visreg(fit,"Wind",by="Heat",layout=c(3,1))

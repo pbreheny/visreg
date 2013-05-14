@@ -1,4 +1,4 @@
-setupF <- function(fit, xvar, by) {
+setupF <- function(fit, xvar) {
   if (class(fit)[1]=="locfit") {
     f <- model.frame(fit)
     for (j in 1:ncol(f)) names(f)[j] <- removeFormulaFormatting(names(f)[j])
@@ -18,7 +18,6 @@ setupF <- function(fit, xvar, by) {
   }
   if (missing(xvar)) xvar <- names(f)[-1]
   for (i in 1:length(xvar)){if (!is.element(xvar[i],names(f))) stop(paste(xvar[i],"not in model"))}
-  if (!missing(by) & (length(xvar) > 1)) stop("Cannot specify 'by' and multiple x variables simultaneously")
   attr(f, "needsUpdate") <- needsUpdate
   attr(f, "xvar") <- xvar
   f

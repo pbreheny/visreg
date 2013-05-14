@@ -27,7 +27,7 @@ visregLatticePlot <- function(v, partial, band, whitespace, strip.names, line.pa
     if (partial) {
       ylim <- range(c(lresids$r, lframe$lwr, lframe$upr))
     } else ylim <- range(c(lframe$lwr, lframe$upr))
-    pad <- 0.04*diff(ylim)
+    pad <- 0.05*diff(ylim)
     ylim[1] <- ylim[1]-pad
     ylim[2] <- ylim[2]+pad
     pad <- 0.04*diff(xlim)
@@ -43,11 +43,12 @@ visregLatticePlot <- function(v, partial, band, whitespace, strip.names, line.pa
     if (length(new.args)) plot.args[names(new.args)] <- new.args
     if (is.null(dev.list())) trellis.device()
     opar <- trellis.par.get()
-    if (length(line.par)) trellis.par.set(plot.line=line.par)
-    plot.symbol <- list(pch=19)
-    if (length(points.par)) plot.symbol[names(points.par)] <- points.par
-    trellis.par.set(plot.symbol=plot.symbol)
-    
+    line.args <- list(lwd=2)
+    if (length(line.par)) line.args[names(line.par)] <- line.par
+    trellis.par.set(plot.line=line.args)
+    points.args <- list(cex=0.4, pch=19)
+    if (length(points.par)) points.args[names(points.par)] <- points.par
+    trellis.par.set(plot.symbol=points.args)
     if (x$factor) {
       K <- length(levels(x$x))
       len <- K*(1-whitespace)+(K-1)*whitespace
@@ -59,7 +60,6 @@ visregLatticePlot <- function(v, partial, band, whitespace, strip.names, line.pa
       plot(tp)
     } else {
       plot.args$panel <- visregPanel
-      plot.args$newpage <- TRUE
       tp <- do.call("xyplot",plot.args)
       plot(tp)
     }

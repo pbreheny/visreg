@@ -1,4 +1,4 @@
-visreg <- function(fit, xvar, by, overlay=FALSE, breaks=4, type=c("conditional","effect"), trans=I, scale=c("linear","response"), xtrans, alpha=.05, nn=101, cond=list(), whitespace=0.2, partial=TRUE, band=TRUE, jitter=FALSE, strip.names=is.numeric(attr(v, "lev")), legend=TRUE, line.par=NULL, fill.par=NULL, points.par=NULL, ...) {
+visreg <- function(fit, xvar, by, overlay=FALSE, breaks=3, type=c("conditional","effect"), trans=I, scale=c("linear","response"), xtrans, alpha=.05, nn=101, cond=list(), whitespace=0.2, partial=TRUE, band=TRUE, jitter=FALSE, strip.names=is.numeric(attr(v, "lev")), legend=TRUE, line.par=NULL, fill.par=NULL, points.par=NULL, ...) {
   ## Setup
   type <- match.arg(type)
   scale <- match.arg(scale)

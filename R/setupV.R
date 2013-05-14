@@ -1,6 +1,7 @@
 ## Each element of v should be a list of x and y for plotting
 ## v is a list of these elements, one element for each xvar or condition
 setupV <- function(fit, f, xvar, nn, cond, type, trans, xtrans, alpha, jitter) {
+  if (length(xvar) > 1 & length(cond) > 1) stop("Cannot specify 'by' and multiple x variables simultaneously")
   J <- max(length(xvar), length(cond))
   v <- vector("list", J)
   for (j in 1:J) {

@@ -21,5 +21,5 @@ factorPlot <- function(x, y, partial, band, w, line.par, fill.par, points.par, a
       do.call("points", points.args)
     }
   }
-  if (ax) axis(side=1,at=((0:(K-1))/len+(1-w)/(2*len)),labels=levels(x$x))
+  if (ax) axis(side=1,at=(0:(K-1))/len+(1-w)/(2*len),labels=levels(x$x))
 }
