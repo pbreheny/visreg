@@ -11,5 +11,6 @@ setupV <- function(fit, f, xvar, nn, cond, type, trans, xtrans, alpha, jitter) {
   }
   if (length(cond)==1) names(v) <- xvar
   attr(v, "lev") <- attr(cond, "lev")
+  attr(v, "hasInteraction") <- (max(attr(terms(formula(fit)), "order")) > 1)
   v
 }

@@ -9,8 +9,8 @@ visreg(fit,c("Solar.R","Wind","Temp"))
 
 ## Transformations of X
 fit <- lm(Ozone ~ Solar.R + Wind + Temp + I(Wind^2),data=ozone)
-visreg(fit,"Wind")
-visreg(fit,"Wind",type="effect")
+visreg(fit, "Wind")
+visreg(fit, "Wind", type="effect")
 fit <- lm(Ozone ~ Solar.R + Wind + I(Temp^2) + I(Wind^2),data=ozone)
 visreg(fit, "Temp")
 
@@ -51,7 +51,7 @@ visreg(fit, "Heat", by="Wind", line=list(col="blue", lwd=10), points=list(col="r
 col <- c("purple", "orange", "yellow")
 visreg(fit, "Wind", by="Heat", line=list(col=col, lwd=10), points=list(col=col, cex=2), fill=list(col=rgb(.1,.1,.1,.3), border="green"), overlay=TRUE)
 col <- c("purple", "orange", "yellow", "red")
-visreg(fit, "Heat", by="Wind", line=list(col=col, lwd=10), points=list(col=col, cex=2), fill=list(col=rgb(.1,.1,.1,.3), border="green"), overlay=TRUE, jitter=TRUE)
+visreg(fit, "Heat", by="Wind", line=list(col=col, lwd=10), points=list(col=col, cex=2), fill=list(col=rgb(.1,.1,.1,.3), border="green"), overlay=TRUE)
 
 ## Specifying by and cond at the same time
 fit <- lm(Ozone ~ Solar.R + Wind*Heat, data=airquality)

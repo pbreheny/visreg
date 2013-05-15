@@ -1,5 +1,4 @@
-setupX <- function(fit,f,name,nn,cond)
-{
+setupX <- function(fit,f,name,nn,cond) {
   ## Set up n x p matrix for (conditional) partial residuals
   x <- f[,name]
   x <- if (is.factor(x)) factor(c(1,as.integer(x)),labels=levels(x)) else c(mean(x),x)
@@ -34,11 +33,12 @@ setupX <- function(fit,f,name,nn,cond)
   XX <- t(t(XX.[-1,])-XX.[1,])
   
   ## Remove extraneous intercept for coxph
-  if (class(fit)[1]=="coxph")
-  {
+  if (class(fit)[1]=="coxph") {
     XX <- XX[,-which(colnames(XX)=="(Intercept)"),drop=FALSE]
     X <- X[,-which(colnames(X)=="(Intercept)"),drop=FALSE]
   }
-  
-  return(list(x=x[-1], xx=xx[-1], X=X, XX=XX, factor=is.factor(x), name=name))
+  condNames <- names(model.frame(as.formula(paste("~", removeFormulaFormatting(formula(fit)[3]))), df))
+  condNames <- setdiff(condNames, name)
+  condNames <- intersect(condNames, names(df))
+  return(list(x=x[-1], xx=xx[-1], X=X, XX=XX, factor=is.factor(x), name=name, cond=df[1,condNames,drop=FALSE]))
 }

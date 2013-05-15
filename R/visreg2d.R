@@ -49,7 +49,8 @@ visreg2d <- function(fit, xvar, yvar, type=c("conditional","effect"), trans=I, s
     ylim <- if (is.factor(v$y)) c(0,1) else range(v$y)
     
     if (plot.type=="image") {
-      color.palette=colorRampPalette(c("blue","gray90","red"),space="Lab")
+      ##color.palette=colorRampPalette(c("blue","gray90","red"),space="Lab")
+      color.palette=colorRampPalette(c(pal(3)[3],"gray90",pal(3)[1]),space="Lab")
       plot.args <- list(x=x, y=y, z=z, xlim=xlim, ylim=ylim, xlab=xvar, ylab=yvar, color.palette=color.palette, main=zlab)
       plot.args$plot.axes <- quote({axis(1,at=mx,labels=lx);axis(2,at=my,labels=ly)})
       new.args <- list(...)

@@ -1,4 +1,4 @@
-visregPlot <- function(v, partial, band, whitespace, line.par, fill.par, points.par, ...) {
+visregPlot <- function(v, partial, band, whitespace, print.cond, line.par, fill.par, points.par, ...) {
   n.plots <- length(v) * v[[1]]$y$n
   if (n.plots > 1 && prod(par("mfcol")) < n.plots && dev.interactive()) {
     oask <- devAskNewPage(TRUE)
@@ -46,5 +46,6 @@ visregPlot <- function(v, partial, band, whitespace, line.par, fill.par, points.
         }
       }
     }
+    if (print.cond) printCond(list(v[[i]]), attr(v, "hasInteraction"))
   }
 }

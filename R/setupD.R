@@ -1,5 +1,4 @@
-setupD <- function(fit,f,name,nn,cond,whitespace)
-{
+setupD <- function(fit,f,name,nn,cond,whitespace) {
   ## Set up n-row data frame for residuals
   x <- f[,name]
   xdf <- data.frame(x)
@@ -8,6 +7,8 @@ setupD <- function(fit,f,name,nn,cond,whitespace)
   
   form <- removeFormulaFormatting(formula(fit)[3])
   D <- model.frame(as.formula(paste("~",form)),df)
+  condNames <- setdiff(names(D), name)
+  condNames <- intersect(condNames, names(df))
   D <- cbind(D, df[,setdiff(names(df),names(D)), drop=FALSE])
   
   ## Set up nn-row data frame for prediction
@@ -18,5 +19,5 @@ setupD <- function(fit,f,name,nn,cond,whitespace)
   DD <- model.frame(as.formula(paste("~",form)),df)
   DD <- cbind(DD,df[,setdiff(names(df),names(DD)),drop=FALSE])
   
-  return(list(x=x, xx=xx, D=D, DD=DD, factor=is.factor(x), name=name))
+  list(x=x, xx=xx, D=D, DD=DD, factor=is.factor(x), name=name, cond=D[1,condNames,drop=FALSE])
 }
