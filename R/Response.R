@@ -14,6 +14,7 @@ Response <- function(fit, x, trans, alpha) {
   } else {
     val <- list(fit=as.numeric(trans(p$fit)), lwr=as.numeric(trans(lwr)), upr=as.numeric(trans(upr)), r=as.numeric(trans(r)), name=as.character(formula(fit)[2]))
   }
+  val$pos <- rr>0
   val$n <- if (class(fit)[1]=="mlm") ncol(p$fit) else 1
   val
 }

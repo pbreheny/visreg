@@ -35,3 +35,10 @@ airquality$Heat <- as.numeric(cut(airquality$Temp,3,labels=c("Cool","Mild","Hot"
 fit <- lm(Ozone ~ Solar.R + Wind*Heat, data=airquality)
 visreg(fit, "Wind", by="Heat")
 visreg(fit, "Wind", by="Heat", overlay=TRUE)
+
+## Rug
+fit <- lm(Ozone ~ Wind*Heat, data=airquality)
+visreg(fit, "Wind", by="Heat", rug=TRUE)
+visreg(fit, "Heat", by="Wind", rug=TRUE)
+visreg(fit, "Wind", by="Heat", rug=TRUE, overlay=TRUE)
+visreg(fit, "Heat", by="Wind", rug=TRUE, overlay=TRUE)

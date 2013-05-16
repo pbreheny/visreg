@@ -1,4 +1,4 @@
-visregFactorPanel <- function(x, y, w, subscripts, lframe, lresids, partial, band=band, fill.par, ...) {
+visregFactorPanel <- function(x, y, w, subscripts, lframe, lresids, partial, band, rug, fill.par, ...) {
   K <- length(levels(lframe$xx))
   len <- K*(1-w)+(K-1)*w
   
@@ -13,10 +13,17 @@ visregFactorPanel <- function(x, y, w, subscripts, lframe, lresids, partial, ban
       do.call("panel.polygon", poly.args)      
     }
     panel.lines(xx,rep(lframe$fit[subscripts][k],2),subscripts=subscripts,...)
-    if (partial) {
-      ind <- intersect(which(lresids$by==lframe$by[subscripts][1]),which(lresids$x==levels(lresids$x)[k]))
-      rx <- seq(x1,x2,len=length(ind)+2)[c(-1,-(length(ind)+2))]
-      panel.points(rx,lresids$r[ind])
+    ind <- (lresids$by==lframe$by[subscripts][1]) & (lresids$x==levels(lresids$x)[k])
+    rx <- seq(x1, x2, len=sum(ind)+2)[c(-1,-(sum(ind)+2))]
+    if (partial) panel.points(rx, lresids$r[ind])
+    if (rug==1) panel.rug(rx)
+    if (rug==2) {
+      ind1 <- ind & !lresids$pos
+      ind2 <- ind & lresids$pos
+      rx1 <- seq(x1, x2, len=sum(ind1)+2)[c(-1,-(sum(ind1)+2))]
+      rx2 <- seq(x1, x2, len=sum(ind2)+2)[c(-1,-(sum(ind2)+2))]
+      panel.rug(rx1)
+      panel.rug(rx2, regular=FALSE)
     }
   }
   

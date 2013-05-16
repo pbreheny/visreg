@@ -1,7 +1,5 @@
-Rug option (as opposed to partial residuals)
-Allow extrapolation
 Allow multiple 'by' arguments in a list
 From reviewers:
-  * Review 'ask' settings
+  * Review 'ask' settings (esp. for visreg2d), add option
   * Check two-way ANOVA example with empty cells
-Update help files
+Update help files, NEWS, description

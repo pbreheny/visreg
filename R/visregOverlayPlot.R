@@ -1,4 +1,4 @@
-visregOverlayPlot <- function(v, partial, band, whitespace, legend, line.par, fill.par, points.par, ...) {
+visregOverlayPlot <- function(v, partial, band, rug, whitespace, legend, line.par, fill.par, points.par, ...) {
   lev <- attr(v, "lev")
   if (v[[1]]$y$n > 1 && prod(par("mfcol")) < v[[1]]$y$n && dev.interactive()) {
     oask <- devAskNewPage(TRUE)
@@ -63,12 +63,12 @@ visregOverlayPlot <- function(v, partial, band, whitespace, legend, line.par, fi
       }
       if (x$factor) {
         ax <- if (i==1) TRUE else FALSE
-        factorPlot(x, y, partial, band, whitespace, line.args.i, fill.args.i, points.args.i, ax=ax)
+        factorPlot(x, y, partial, band, rug, whitespace, line.args.i, fill.args.i, points.args.i, ax=ax)
       } else {
         if (band) {
           fill.args.i$x <- c(x$xx,rev(x$xx))
           fill.args.i$y <- c(y$lwr,rev(y$upr))
-          do.call("polygon", fill.args.i)          
+          do.call("polygon", fill.args.i)
         }
         line.args.i$x <- x$xx
         line.args.i$y <- y$fit
@@ -77,6 +77,11 @@ visregOverlayPlot <- function(v, partial, band, whitespace, legend, line.par, fi
           points.args.i$x <- x$x
           points.args.i$y <- y$r
           do.call("points", points.args.i)
+        }
+        if (rug==1) rug(x$x, side=1)
+        if (rug==2) {
+          rug(x$x[!y$pos], side=1)
+          rug(x$x[y$pos], side=3)
         }
       }
     }

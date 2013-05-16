@@ -3,13 +3,14 @@ Terms <- function(fit, f, x, trans, alpha) {
     summ <- summary.mlm(fit)
     n.y <- length(summ)
     yy <- SE <- matrix(NA, nrow=nrow(x$XX), ncol=n.y)
-    r <- matrix(NA, nrow=nrow(x$X), ncol=n.y)
+    r <- rr <- matrix(NA, nrow=nrow(x$X), ncol=n.y)
     for (i in 1:n.y) {
       V <- summ[[i]]$sigma^2 * summ[[i]]$cov.unscaled
       SE[,i] <- sqrt(apply(x$XX * (x$XX %*% V),1,sum))
       ind <- is.finite(coef(fit)[,i])
       yy[,i] <- x$XX%*%coef(fit)[ind,i]
-      r[,i] <- x$X%*%coef(fit)[ind,i] + residuals(fit)[,i]
+      rr[,i] <- residuals(fit)[,i]
+      r[,i] <- x$X%*%coef(fit)[ind,i] + rr[,i]
     }
   } else {
     V <- vcov(fit)
@@ -27,6 +28,7 @@ Terms <- function(fit, f, x, trans, alpha) {
   } else {
     val <- list(fit=as.numeric(trans(yy)), lwr=as.numeric(trans(lwr)), upr=as.numeric(trans(upr)), r=as.numeric(trans(r)), name=as.character(formula(fit)[2]))
   }
+  val$pos <- rr>0
   val$n <- if (class(fit)[1]=="mlm") n.y else 1
   val
 }

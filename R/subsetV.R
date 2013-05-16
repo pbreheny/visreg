@@ -16,6 +16,7 @@ subsetV <- function(v, f, by) {
     }
     v[[i]]$x$x <- v[[i]]$x$x[ind]
     v[[i]]$y$r <- if (v[[i]]$y$n == 1) v[[i]]$y$r[ind] else v[[i]]$y$r[ind,]
+    v[[i]]$y$pos <- if (v[[i]]$y$n == 1) v[[i]]$y$pos[ind] else v[[i]]$y$pos[ind,]
   }
   v
 }

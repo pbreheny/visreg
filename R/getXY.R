@@ -1,10 +1,9 @@
-getXY <- function(fit, f, name, nn, cond, type, trans, xtrans, alpha, jitter)
-{
+getXY <- function(fit, f, name, nn, cond, type, trans, xtrans, alpha, jitter, ...) {
   if (type=="conditional") {
-    x <- setupD(fit, f, name, nn, cond)
+    x <- setupD(fit, f, name, nn, cond, ...)
     y <- Response(fit, x, trans, alpha)
   } else if (type=="effect") {
-    x <- setupX(fit, f, name, nn, cond)
+    x <- setupX(fit, f, name, nn, cond, ...)
     y <- Terms(fit, f, x, trans, alpha)
   }
   
@@ -13,5 +12,5 @@ getXY <- function(fit, f, name, nn, cond, type, trans, xtrans, alpha, jitter)
     x$xx <- xtrans(x$xx)
     x$x <- xtrans(x$x)
   }
-  return(list(x=x,y=y))
+  list(x=x,y=y)
 }

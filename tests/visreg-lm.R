@@ -1,8 +1,7 @@
 require(visreg)
-ozone <- airquality[complete.cases(airquality),]
 
 ## Basic
-fit <- lm(Ozone ~ Solar.R + Wind + Temp,data=ozone)
+fit <- lm(Ozone ~ Solar.R + Wind + Temp, data=airquality)
 visreg(fit,"Wind")
 visreg(fit,"Wind",type="effect")
 visreg(fit,c("Solar.R","Wind","Temp"))
@@ -57,3 +56,14 @@ visreg(fit, "Heat", by="Wind", line=list(col=col, lwd=10), points=list(col=col, 
 fit <- lm(Ozone ~ Solar.R + Wind*Heat, data=airquality)
 visreg(fit,"Heat", by="Wind", cond=list(Solar.R=0))
 visreg(fit,"Heat", by="Wind", cond=list(Solar.R=500))
+
+## Extrapolation
+fit <- lm(Ozone ~ Solar.R + Wind + Temp, data=airquality)
+visreg(fit, "Temp", xlim=c(50,100))
+visreg(fit, "Temp", type="effect", xlim=c(50,100))
+
+## Rug
+airquality$Heat <- cut(airquality$Temp,3,labels=c("Cool","Mild","Hot"))
+fit <- lm(Ozone ~ Solar.R + Wind + Heat, data=airquality)
+visreg(fit, "Wind", rug=TRUE)
+visreg(fit, "Heat", rug=TRUE)

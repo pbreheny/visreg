@@ -1,4 +1,4 @@
-visregPlot <- function(v, partial, band, whitespace, print.cond, line.par, fill.par, points.par, ...) {
+visregPlot <- function(v, partial, band, rug, whitespace, print.cond, line.par, fill.par, points.par, ...) {
   n.plots <- length(v) * v[[1]]$y$n
   if (n.plots > 1 && prod(par("mfcol")) < n.plots && dev.interactive()) {
     oask <- devAskNewPage(TRUE)
@@ -29,7 +29,7 @@ visregPlot <- function(v, partial, band, whitespace, print.cond, line.par, fill.
       do.call("plot", plot.args)
       
       if (x$factor) {
-        factorPlot(x, y, partial, band, whitespace, line.par, fill.par, points.par)
+        factorPlot(x, y, partial, band, rug, whitespace, line.par, fill.par, points.par)
       } else {
         if (band) {
           fill.args <- list(x=c(x$xx,rev(x$xx)), y=c(y$lwr,rev(y$upr)), col="gray85", border=F)
@@ -43,6 +43,11 @@ visregPlot <- function(v, partial, band, whitespace, print.cond, line.par, fill.
           points.args <- list(x=x$x, y=y$r, pch=19, cex=0.4)
           if (length(points.par)) points.args[names(points.par)] <- points.par
           do.call("points", points.args)
+        }
+        if (rug==1) rug(x$x, side=1)
+        if (rug==2) {
+          rug(x$x[!y$pos], side=1)
+          rug(x$x[y$pos], side=3)
         }
       }
     }
