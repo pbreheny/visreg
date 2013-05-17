@@ -1,6 +1,6 @@
-visregPlot <- function(v, partial, band, rug, whitespace, print.cond, line.par, fill.par, points.par, ...) {
+visregPlot <- function(v, partial, band, rug, ask, whitespace, print.cond, line.par, fill.par, points.par, ...) {
   n.plots <- length(v) * v[[1]]$y$n
-  if (n.plots > 1 && prod(par("mfcol")) < n.plots && dev.interactive()) {
+  if (ask & (n.plots > 1) & (prod(par("mfcol")) < n.plots) && dev.interactive()) {
     oask <- devAskNewPage(TRUE)
     on.exit(devAskNewPage(oask))
   }

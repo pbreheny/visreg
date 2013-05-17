@@ -1,7 +1,7 @@
-visregLatticePlot <- function(v, partial, band, rug, whitespace, strip.names, line.par, fill.par, points.par, ...) {
+visregLatticePlot <- function(v, partial, band, rug, ask, whitespace, strip.names, line.par, fill.par, points.par, ...) {
   lev <- attr(v, "lev")
   for (j in 1:v[[1]]$y$n) {
-    if (j > 1 & interactive()) readline(prompt="Hit <Return> to see next plot:")
+    if (ask & j > 1 & interactive()) readline(prompt="Hit <Return> to see next plot:")
     lframe <- lresids <- NULL
     for (i in 1:length(v)) {
       x <- v[[i]]$x

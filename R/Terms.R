@@ -19,6 +19,7 @@ Terms <- function(fit, f, x, trans, alpha) {
     rr <- residuals(fit)
     r <- x$X%*%coef(fit)[is.finite(coef(fit))] + rr
   }
+  if (!all(is.finite(coef(fit)))) warning("prediction from a rank-deficient fit may be misleading")
   m <- ifelse(class(fit)=="coxph" || family(fit)$family %in% c("binomial","poisson"), qnorm(1-alpha/2), qt(1-alpha/2,fit$df.residual))
   lwr <- yy - m*SE
   upr <- yy + m*SE

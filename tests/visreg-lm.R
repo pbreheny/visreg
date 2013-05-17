@@ -7,16 +7,16 @@ visreg(fit,"Wind",type="effect")
 visreg(fit,c("Solar.R","Wind","Temp"))
 
 ## Transformations of X
-fit <- lm(Ozone ~ Solar.R + Wind + Temp + I(Wind^2),data=ozone)
+fit <- lm(Ozone ~ Solar.R + Wind + Temp + I(Wind^2), data=airquality)
 visreg(fit, "Wind")
 visreg(fit, "Wind", type="effect")
-fit <- lm(Ozone ~ Solar.R + Wind + I(Temp^2) + I(Wind^2),data=ozone)
+fit <- lm(Ozone ~ Solar.R + Wind + I(Temp^2) + I(Wind^2), data=airquality)
 visreg(fit, "Temp")
 
 ## Transformations of y
-fit <- lm(log(Ozone) ~ Solar.R + Wind + Temp,data=ozone)
+fit <- lm(log(Ozone) ~ Solar.R + Wind + Temp,data=airquality)
 visreg(fit,"Wind",trans=exp,ylab="Ozone")
-fit <- lm(sqrt(Ozone) ~ Solar.R + Wind + Temp,data=ozone)
+fit <- lm(sqrt(Ozone) ~ Solar.R + Wind + Temp,data=airquality)
 visreg(fit, "Wind", trans=function(x) x^2, ylab="Ozone")
 
 ## Cond
@@ -24,8 +24,8 @@ visreg(fit,"Wind",cond=list('Temp'=100))
 visreg(fit,"Wind",cond=list('Temp'=0,'Solar.R'=0))
 
 ## Factors
-ozone$Heat <- cut(ozone$Temp,3,labels=c("Cool","Mild","Hot"))
-fit <- lm(Ozone ~ Solar.R + Wind + Heat,data=ozone)
+airquality$Heat <- cut(airquality$Temp,3,labels=c("Cool","Mild","Hot"))
+fit <- lm(Ozone ~ Solar.R + Wind + Heat,data=airquality)
 visreg(fit,"Wind")
 visreg(fit,"Wind",cond=list(Heat='Mild')) ## Same as above
 visreg(fit,"Wind",type="effect")
@@ -34,7 +34,7 @@ visreg(fit,"Wind",cond=list(Heat = 'Cool'))
 visreg(fit,"Heat")
 ## Reorder
 ozone$Heat <- factor(ozone$Heat,levels=c("Hot","Mild","Cool"))
-fit <- lm(Ozone ~ Solar.R + Wind + Heat,data=ozone)
+fit <- lm(Ozone ~ Solar.R + Wind + Heat,data=airquality)
 visreg(fit,"Heat")
 ## Whitespace option tests
 visreg(fit,"Heat",whitespace=.1)

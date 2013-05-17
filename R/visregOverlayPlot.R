@@ -1,6 +1,6 @@
-visregOverlayPlot <- function(v, partial, band, rug, whitespace, legend, line.par, fill.par, points.par, ...) {
+visregOverlayPlot <- function(v, partial, band, rug, ask, whitespace, legend, line.par, fill.par, points.par, ...) {
   lev <- attr(v, "lev")
-  if (v[[1]]$y$n > 1 && prod(par("mfcol")) < v[[1]]$y$n && dev.interactive()) {
+  if (ask & v[[1]]$y$n > 1 & prod(par("mfcol")) < v[[1]]$y$n & dev.interactive()) {
     oask <- devAskNewPage(TRUE)
     on.exit(devAskNewPage(oask))
   }

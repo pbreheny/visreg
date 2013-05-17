@@ -1,3 +1,4 @@
+## Tests missing / subsetted data in various / mixed locations
 require(visreg)
 ozone <- airquality
 
@@ -21,3 +22,21 @@ x <- rnorm(100)
 x[c(10,20)] <- NA
 fit <- lm(y~x)
 visreg(fit,"x")
+
+## Subset
+fit <- lm(Ozone ~ Wind, data=airquality)
+visreg(fit, ylim=c(-50, 200))
+fit <- lm(Ozone ~ Wind, data=airquality, subset=(Ozone < 150))
+visreg(fit, ylim=c(-50, 200))
+fit <- lm(Ozone ~ Wind, data=airquality)
+visreg(fit, ylim=c(-50, 200), type="effect")
+fit <- lm(Ozone ~ Wind, data=airquality, subset=(Ozone < 150))
+visreg(fit, ylim=c(-50, 200), type="effect")
+
+## A bunch of mixed types in various locations
+a <- rep(LETTERS[1:4],25)
+b <- rep(c(TRUE, FALSE), 50)
+df <- data.frame(c=rnorm(100), d=factor(rep(1:10,10)), y=rnorm(100))
+fit <- lm(y~a+b+c+d, df)
+par(mfrow=c(2,2))
+visreg(fit)

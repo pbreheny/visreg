@@ -1,6 +1,23 @@
 * Minor change
-** Substantial change
-*** Major change
+** Major change
+
+2.0-0
+      ** Added 'overlay' option
+      ** Substantial internal refactoring to separate calculations / model
+         manipulations from plotting
+      ** Changed how 'breaks' are handled for continuous 'by' variables,
+      	 both in setup and appearance, with option to directly specify
+	 where breaks should occur
+      *  Added print.cond option, with warning when user tries to plot
+         a main effect in the presence of interactions
+      *  Extrapolation now allowed
+      *  Addition of 'rug' option
+      *  Addition of 'band' option to suppress confidence bands
+      *  Fixed bug for models which were called with 'subset' option
+      *  Added 'ask' option to turn off prompting when starting a new page
+      	 of plots
+      *  Minor bug fix for passing of lattice options
+      *  Expanded suite of tests
 
 1.2-1
       *  Fixed bug in calculation of confidence bands for quasilikelihood
@@ -29,7 +46,7 @@
       	 (Thank you to Doug Bates for this advice)
 
 1.0-0
-      *** Submitted to CRAN
+      ** Submitted to CRAN
       ** Improved support for effect plots:
 	  - extensive revision to implementation
       	  - 'x' can now be categorical
@@ -130,5 +147,5 @@
       *  Added fill='zero' option
 
 0.0-0 
-      *** Package infrastructure established
+      ** Package infrastructure established
       **  visreg.R, visreg2d.R: Polynomial terms handled correctly

@@ -3,9 +3,14 @@ setupF <- function(fit, xvar) {
     f <- model.frame(fit)
     for (j in 1:ncol(f)) names(f)[j] <- removeFormulaFormatting(names(f)[j])
   } else {
-    if ("data" %in% names(fit$call)) {
-      f <- as.data.frame(as.list(get_all_vars(fit,eval(fit$call$data,envir=environment(fit$terms)))))
-    } else f <- as.data.frame(as.list(get_all_vars(fit,data=environment(fit$terms))))
+    env <- environment(fit$terms)
+    Data <- eval(fit$call$data, envir=env)
+    f <- as.data.frame(as.list(get_all_vars(fit, Data)))
+    if ("subset" %in% names(fit$call)) {
+      s <- fit$call$subset
+      subset <- eval(substitute(s), Data, env)
+      f <- f[which(subset==TRUE),]
+    } 
   }
   suppressWarnings(f <- f[!apply(is.na(f), 1, any),])
   
