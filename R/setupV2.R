@@ -21,7 +21,7 @@ setupV2 <- function(fit, f, xvar, yvar, nn, cond, type, trans) {
     } else {
       z <- matrix(trans(P), nrow=length(xx), ncol=length(yy))
     }
-  } else if (type=="effect") {
+  } else if (type=="contrast") {
     xref <- if(is.factor(x)) xx[1] else xref <- mean(x)
     yref <- if(is.factor(y)) yy[1] else yref <- mean(y)
     xydf <- rbind(c(xref, yref), xydf)

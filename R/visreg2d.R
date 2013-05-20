@@ -1,11 +1,15 @@
 ## To-do: add too.far option?
-visreg2d <- function(fit, xvar, yvar, type=c("conditional","effect"), trans=I, scale=c("linear","response"), plot.type=c("image","persp","rgl"), nn=ifelse(plot.type=="persp",49,99), cond=list(), whitespace=0.2, ...) {
+visreg2d <- function(fit, xvar, yvar, type=c("conditional", "contrast", "effect"), trans=I, scale=c("linear","response"), plot.type=c("image","persp","rgl"), nn=ifelse(plot.type=="persp",49,99), cond=list(), whitespace=0.2, ...) {
   ## Setup
   type <- match.arg(type)
   scale <- match.arg(scale)
   plot.type <- match.arg(plot.type)
   if (scale=="response") trans <- family(fit)$linkinv
   if (missing(xvar) | missing(yvar)) stop("Must specify and x and y variable")
+  if (type=="effect") {
+    warning("Please note that type='effect' is deprecated and may not be supported in future versions of visreg.  Use type='contrast' instead.")
+    type <- "contrast"
+  }
   
   ## Set up f
   f <- setupF(fit, c(xvar, yvar))
@@ -14,7 +18,7 @@ visreg2d <- function(fit, xvar, yvar, type=c("conditional","effect"), trans=I, s
 
   ## Calculate v
   v <- setupV2(fit, f, xvar, yvar, nn, cond, type, trans)
-  zNameClass <- if (scale=="response" | (class(fit)[1] %in% c("lm", "mlm") & identical(trans,I))) {if (type=="effect") 1 else 2} else 3
+  zNameClass <- if (scale=="response" | (class(fit)[1] %in% c("lm", "mlm") & identical(trans,I))) {if (type=="contrast") 1 else 2} else 3
   if (plot.type %in% c("persp", "rgl") & zNameClass==1) zNameClass=3 ## persp cannot handle expressions
   
   for (i in 1:v$n) {

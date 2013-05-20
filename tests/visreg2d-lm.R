@@ -6,10 +6,10 @@ visreg2d(fit, x="Wind", y="Temp")
 visreg2d(fit,x="Wind",y="Temp",plot.type="persp",col="slateblue")
 ##visreg2d(fit,x="Wind",y="Temp",plot.type="rgl")
 
-## Effect plots
-visreg2d(fit,x="Wind",y="Temp",type="effect")
-visreg2d(fit,x="Wind",y="Temp",plot.type="persp",theta=-30,ticktype="detailed",col="slateblue",type="effect")
-##visreg2d(fit,x="Wind",y="Temp",plot.type="rgl",type="effect")
+## Contrast plots
+visreg2d(fit,x="Wind",y="Temp",type="contrast")
+visreg2d(fit,x="Wind",y="Temp",plot.type="persp",theta=-30,ticktype="detailed",col="slateblue",type="contrast")
+##visreg2d(fit,x="Wind",y="Temp",plot.type="rgl",type="contrast")
 
 ## Cond
 visreg2d(fit,x="Wind",y="Temp",cond=list('Solar.R'=500))
@@ -22,7 +22,7 @@ visreg2d(fit,x="Wind",y="Temp",cond=list('Solar.R'=500))
 ## Simple + transformation
 fit <- lm(log(Ozone) ~ Solar.R + Wind + Temp,data=airquality)
 visreg2d(fit, x="Wind", y="Temp", trans=exp)
-visreg2d(fit, x="Wind", y="Temp", trans=exp, type="effect")
+visreg2d(fit, x="Wind", y="Temp", trans=exp, type="contrast")
 
 ## Changing options
 visreg2d(fit, x="Wind", y="Temp", xlab="MyLabel", main="MyTitle")

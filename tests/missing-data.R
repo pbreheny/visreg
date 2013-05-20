@@ -29,9 +29,9 @@ visreg(fit, ylim=c(-50, 200))
 fit <- lm(Ozone ~ Wind, data=airquality, subset=(Ozone < 150))
 visreg(fit, ylim=c(-50, 200))
 fit <- lm(Ozone ~ Wind, data=airquality)
-visreg(fit, ylim=c(-50, 200), type="effect")
+visreg(fit, ylim=c(-50, 200), type="contrast")
 fit <- lm(Ozone ~ Wind, data=airquality, subset=(Ozone < 150))
-visreg(fit, ylim=c(-50, 200), type="effect")
+visreg(fit, ylim=c(-50, 200), type="contrast")
 
 ## A bunch of mixed types in various locations
 a <- rep(LETTERS[1:4],25)

@@ -14,7 +14,7 @@ visreg(fit,"smoke")
 ## Transformation of X
 fit <- glm(low~age+I(age^2)+race+smoke+lwt,data=birthwt,family="binomial")
 visreg(fit,"age")
-visreg(fit,"age",type="effect")
+visreg(fit,"age",type="contrast")
 
 ## Plot on response scale
 fit <- glm(low~age+race+smoke+lwt,data=birthwt,family="binomial")
