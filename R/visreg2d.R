@@ -1,5 +1,6 @@
 ## To-do: add too.far option?
-visreg2d <- function(fit, xvar, yvar, type=c("conditional", "contrast", "effect"), trans=I, scale=c("linear","response"), plot.type=c("image","persp","rgl"), nn=ifelse(plot.type=="persp",49,99), cond=list(), whitespace=0.2, ...) {
+visreg2d <- function(fit, xvar, yvar, type=c("conditional", "contrast", "effect"), trans=I, scale=c("linear","response"), 
+                     plot.type=c("image","persp","rgl"), nn=ifelse(plot.type=="persp",49,99), cond=list(), print.cond=FALSE, whitespace=0.2, ...) {
   ## Setup
   type <- match.arg(type)
   scale <- match.arg(scale)
@@ -74,5 +75,6 @@ visreg2d <- function(fit, xvar, yvar, type=c("conditional", "contrast", "effect"
       do.call("persp3d",plot.args)
     }
   }
+  if (print.cond) printCond(list(list(x=list(cond=v$cond))))
   invisible(v)
 }

@@ -1,7 +1,7 @@
 Package: visreg
 Title: Visualization of regression models
 Version: 2.0-0
-Date: 2013-05-17
+Date: 2013-05-23
 Author: Patrick Breheny, Woodrow Burchett
 Maintainer: Patrick Breheny <patrick.breheny@uky.edu>
 Depends: lattice

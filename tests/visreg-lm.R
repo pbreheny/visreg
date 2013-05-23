@@ -2,6 +2,7 @@ require(visreg)
 
 ## Basic
 fit <- lm(Ozone ~ Solar.R + Wind + Temp, data=airquality)
+par(mfrow=c(1,3))
 visreg(fit,"Wind")
 visreg(fit,"Wind",type="contrast")
 visreg(fit,c("Solar.R","Wind","Temp"))
@@ -33,7 +34,7 @@ visreg(fit,"Wind",cond=list(Solar.R=250))
 visreg(fit,"Wind",cond=list(Heat = 'Cool'))
 visreg(fit,"Heat")
 ## Reorder
-ozone$Heat <- factor(ozone$Heat,levels=c("Hot","Mild","Cool"))
+airquality$Heat <- factor(airquality$Heat,levels=c("Hot","Mild","Cool"))
 fit <- lm(Ozone ~ Solar.R + Wind + Heat,data=airquality)
 visreg(fit,"Heat")
 ## Whitespace option tests
@@ -59,6 +60,7 @@ visreg(fit,"Heat", by="Wind", cond=list(Solar.R=500))
 
 ## Extrapolation
 fit <- lm(Ozone ~ Solar.R + Wind + Temp, data=airquality)
+par(mfrow=c(1,1))
 visreg(fit, "Temp", xlim=c(50,100))
 visreg(fit, "Temp", type="contrast", xlim=c(50,100))
 

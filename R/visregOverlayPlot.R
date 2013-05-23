@@ -42,7 +42,7 @@ visregOverlayPlot <- function(v, partial, band, rug, ask, whitespace, legend, li
     do.call("plot", plot.args)
     col <- pal(length(v))
     acol <- pal(length(v), alpha=0.5)
-    line.args <- list(lwd=3, col=col)
+    line.args <- list(lwd=3, col=col, lty=1)
     if (length(line.par)) line.args[names(line.par)] <- line.par
     points.args <- list(pch=19, cex=0.4, col=col)
     if (length(points.par)) points.args[names(points.par)] <- points.par
@@ -85,6 +85,6 @@ visregOverlayPlot <- function(v, partial, band, rug, ask, whitespace, legend, li
         }
       }
     }
-    toplegend(lev, col=col, lwd=line.args$lwd, ncol=min(length(lev), 5))
+    toplegend(lev, col=line.args$col, lwd=line.args$lwd, lty=line.args$lty, ncol=min(length(lev), 5))
   }
 }

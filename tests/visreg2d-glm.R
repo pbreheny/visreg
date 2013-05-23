@@ -18,5 +18,5 @@ visreg2d(fit,"age","lwt",scale="response")
 visreg2d(fit,"age","lwt",scale="response",cond=list(smoke='Smoker'))
 
 ## Factors
-visreg2d(fit,"age","race",cond=list(smoke='Smoker'))
 visreg2d(fit,"age","race",cond=list(smoke='Smoker'), ylab="")
+visreg2d(fit,"race","age",cond=list(smoke='Smoker'), xlab="")

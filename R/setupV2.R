@@ -41,5 +41,9 @@ setupV2 <- function(fit, f, xvar, yvar, nn, cond, type, trans) {
     }
   }
   zname <- if (class(fit)[1]=="mlm") colnames(fit$fitted.values) else as.character(formula(fit)[2])
-  list(x=xx, y=yy, z=z, n=n.z, zname=zname)
+  D <- model.frame(as.formula(paste("~",form)),df)
+  condNames <- setdiff(names(D), c(xvar, yvar))
+  condNames <- intersect(condNames, names(df))
+  
+  list(x=xx, y=yy, z=z, n=n.z, zname=zname, cond=D[1,condNames,drop=FALSE])
 }

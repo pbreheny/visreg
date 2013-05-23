@@ -31,10 +31,10 @@ visreg(fit,"Wind",by='Solar.R',trans=exp)
 visreg(fit,"Wind", by='Solar.R', trans=exp, overlay=TRUE)
 
 ## Numeric variables with few unique values
-airquality$Heat <- as.numeric(cut(airquality$Temp,3,labels=c("Cool","Mild","Hot")))
-fit <- lm(Ozone ~ Solar.R + Wind*Heat, data=airquality)
-visreg(fit, "Wind", by="Heat")
-visreg(fit, "Wind", by="Heat", overlay=TRUE)
+airquality$Hotness <- as.numeric(cut(airquality$Temp,2,labels=c("Cold","Hot")))
+fit <- lm(Ozone ~ Solar.R + Wind*Hotness, data=airquality)
+visreg(fit, "Wind", by="Hotness")
+visreg(fit, "Wind", by="Hotness", overlay=TRUE)
 
 ## Rug
 fit <- lm(Ozone ~ Wind*Heat, data=airquality)

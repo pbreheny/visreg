@@ -1,7 +1,7 @@
 \name{visreg-package}
 \alias{visreg-package}
 \docType{package}
-\title{Visualization of regression functions}
+\title{Visualization of regression models}
 \description{\code{visreg} provides a number of plotting functions for
   visualizing fitted regression models: regression functions, confidence
   bands, partial residuals, interactions, and more.}
@@ -9,17 +9,18 @@
 \tabular{ll}{
 Package: \tab visreg\cr
 Type: \tab Package\cr
-Version: \tab 1.0-0\cr
-Date: \tab 2011-08-09\cr
+Version: \tab 2.0-0\cr
+Date: \tab 2013-05-23\cr
 License: \tab GPL-2\cr
 LazyLoad: \tab yes\cr}
-This package allows the use of visreg and visreg2d, both R functions used to visualize regression functions.  See the examples below for some basic uses and look in the help pages for each function for a much more detailed look.
+This package allows the use of visreg and visreg2d, functions for visualizing regression models.  See example below for the most basic use, and the help pages for each function for details.
+Also see the cited manuscript for additional details.
 }
 \author{Patrick Breheny and Woodrow Burchett
   
 Maintainer: Patrick Breheny <patrick.breheny@uky.edu>}
 \references{
-  Breheny, P. and Burchett, W. (2012), Visualizing regression models
+  Breheny, P. and Burchett, W. (2013), Visualizing regression models
   using visreg.
   \url{http://web.as.uky.edu/statistics/users/pbreheny/publications/visreg.pdf}
 }
@@ -29,11 +30,6 @@ Maintainer: Patrick Breheny <patrick.breheny@uky.edu>}
 \code{\link[visreg]{visreg2d}}
 }
 \examples{
-ozone <- airquality[complete.cases(airquality),]
-
-fit <- lm(Ozone ~ Solar.R + Wind + Temp,data=ozone)
-visreg(fit,"Wind")
-visreg(fit,"Wind",type="effect")
-
-
+fit <- lm(Ozone ~ Solar.R + Wind + Temp, data=airquality)
+visreg(fit, "Wind")
 }

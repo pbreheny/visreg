@@ -4,8 +4,8 @@ setupX <- function(fit, f, name, nn, cond, ...) {
   x <- if (is.factor(x)) factor(c(1,as.integer(x)),labels=levels(x)) else c(mean(x),x)
   xdf <- data.frame(x)
   names(xdf) <- name
-  df <- fillFrame(f,xdf,cond)
-  D <- rbind(f,df)
+  df <- fillFrame(f, xdf, cond)
+  D <- rbind(f[,names(df)], df)
   form <- formula(fit)[3]
   
   if (class(fit)[1]=="mlm") {
@@ -29,7 +29,7 @@ setupX <- function(fit, f, name, nn, cond, ...) {
   xxdf <- data.frame(xx)
   names(xxdf) <- name
   df <- fillFrame(f,xxdf,cond)
-  DD <- rbind(f,df)
+  DD <- rbind(f[,names(df)],df)
   if (class(fit)[1]=="gam") {
     DD <- model.frame(as.formula(paste("~",form)),df)
     XX. <- predict(fit, newdata=as.list(DD), type="lpmatrix")

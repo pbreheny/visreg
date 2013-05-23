@@ -1,7 +1,9 @@
 visregPlot <- function(v, partial, band, rug, ask, whitespace, print.cond, line.par, fill.par, points.par, ...) {
   n.plots <- length(v) * v[[1]]$y$n
+  prompt.user <- FALSE
   if (ask & (n.plots > 1) & (prod(par("mfcol")) < n.plots) && dev.interactive()) {
-    oask <- devAskNewPage(TRUE)
+    oask <- devAskNewPage()
+    prompt.user <- TRUE
     on.exit(devAskNewPage(oask))
   }
   
@@ -36,7 +38,7 @@ visregPlot <- function(v, partial, band, rug, ask, whitespace, print.cond, line.
           if (length(fill.par)) fill.args[names(fill.par)] <- fill.par
           do.call("polygon", fill.args)          
         }
-        line.args <- list(x=x$xx, y=y$fit, lwd=2)
+        line.args <- list(x=x$xx, y=y$fit, lwd=2, lty=1)
         if (length(line.par)) line.args[names(line.par)] <- line.par
         do.call("lines", line.args)
         if (partial) {
@@ -50,6 +52,7 @@ visregPlot <- function(v, partial, band, rug, ask, whitespace, print.cond, line.
           rug(x$x[y$pos], side=3)
         }
       }
+      if (prompt.user) devAskNewPage(TRUE)
     }
     if (print.cond) printCond(list(v[[i]]), attr(v, "hasInteraction"))
   }
