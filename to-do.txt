@@ -1,2 +1,0 @@
-Allow multiple 'by' arguments in a list
-Update help files
