@@ -4,6 +4,7 @@
 2.0-1
       *  Scoping issue resolved; can now call visreg, visreg2d from a
       	 function without fit or data present in the global environment
+	 (Thank you to Johannes Kutsam for pointing this out)
 
 2.0-0
       ** Added 'overlay' option
