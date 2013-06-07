@@ -2,14 +2,19 @@
 \alias{visreg}
 \title{Visualization of regression functions for a single variable}
 \description{
-A function for visualizing regression models quickly and easily.  Default plots contain a confidence band, prediction line, and partial residuals.  Factors, transformations, conditioning, interactions, and a variety of other options are supported.
+A function for visualizing regression models quickly and easily.
+Default plots contain a confidence band, prediction line, and partial
+residuals.  Factors, transformations, conditioning, interactions, and a
+variety of other options are supported. 
 }
 \usage{
-visreg(fit, xvar, by, overlay=FALSE, breaks=3, type=c("conditional", "contrast", "effect"),
-trans=I, scale=c("linear","response"), xtrans, alpha=.05, nn=101, cond=list(),
-print.cond=missing(by) & (max(attr(terms(formula(fit)), "order"))>1), whitespace=0.2,
-partial=(!rug), band=TRUE, rug=FALSE, jitter=FALSE, strip.names=is.numeric(attr(v, "lev")),
-legend=TRUE, ask=TRUE, line.par=NULL, fill.par=NULL, points.par=NULL, ...)
+visreg(fit, xvar, by, overlay=FALSE, breaks=3, type=c("conditional",
+"contrast", "effect"), trans=I, scale=c("linear","response"), xtrans,
+alpha=.05, nn=101, cond=list(), print.cond=missing(by) &
+(max(attr(terms(formula(fit)), "order"))>1), whitespace=0.2,
+partial=(!rug), band=TRUE, rug=FALSE, jitter=FALSE,
+strip.names=is.numeric(attr(v, "lev")), legend=TRUE, ask=TRUE,
+line.par=NULL, fill.par=NULL, points.par=NULL, ...) 
 }
 \arguments{
   
@@ -66,9 +71,10 @@ legend=TRUE, ask=TRUE, line.par=NULL, fill.par=NULL, points.par=NULL, ...)
     (Optional) A function specifying a transformation for the vertical axis.
   }
   \item{scale}{
-    By default, the model is plotted on the scale of the linear predictor.
-    If \code{scale='response'} for a glm, the inverse link function will be
-    applied so that the model is plotted on the scale of the original response.
+    By default, the model is plotted on the scale of the linear
+    predictor.  If \code{scale='response'} for a glm, the inverse link
+    function will be applied so that the model is plotted on the scale
+    of the original response.
   }
   \item{xtrans}{
     (Optional) A function specifying a transformation for the horizontal axis.
@@ -104,20 +110,23 @@ legend=TRUE, ask=TRUE, line.par=NULL, fill.par=NULL, points.par=NULL, ...)
     the horizontal axis is whitespace.
   }
   \item{partial}{
-    If \code{partial=TRUE} (the default), partial residuals are shown on the plot.
+    If \code{partial=TRUE} (the default), partial residuals are shown on
+    the plot. 
   }
   \item{band}{
     If \code{band=TRUE} (the default), confidence bands are shown on the plot.
   }
   \item{rug}{
-    By default, partial residuals are plotted.  Alternatively, a \code{\link{rug}}
-    may be plotted along the horizontal axis instead.  Setting \code{rug=TRUE} turns
-    off partial residuals by default; if one wants both to be plotted, both \code{rug=TRUE}
-    and \code{partial=TRUE} need to be specified.  Two types of rug plots are available.
-    If \code{rug=1} or \code{rug=TRUE}, then a basic rug is drawn on the bottom.  If
-    \code{rug=2}, then separate rugs are drawn on the top for observations with positive
-    residuals and on the bottom for observations with negative residuals.  Such plots
-    are particularly useful in logistic regression (see examples).
+    By default, partial residuals are plotted.  Alternatively, a
+    \code{\link{rug}} may be plotted along the horizontal axis instead.
+    Setting \code{rug=TRUE} turns off partial residuals by default; if
+    one wants both to be plotted, both \code{rug=TRUE} and
+    \code{partial=TRUE} need to be specified.  Two types of rug plots
+    are available.  If \code{rug=1} or \code{rug=TRUE}, then a basic rug
+    is drawn on the bottom.  If \code{rug=2}, then separate rugs are
+    drawn on the top for observations with positive residuals and on the
+    bottom for observations with negative residuals.  Such plots are
+    particularly useful in logistic regression (see examples).
   }
   \item{jitter}{
     Adds a small amount of noise to \code{xvar}.  Potentially useful if many
@@ -128,14 +137,17 @@ legend=TRUE, ask=TRUE, line.par=NULL, fill.par=NULL, points.par=NULL, ...)
     strip at the top of each panel.  Default is \code{FALSE}.
   }
   \item{legend}{
-    For overlay plots, (\code{overlay=TRUE}), should visreg create a legend?
-    If \code{legend=TRUE} (the default), a legend is placed in the top margin.
+    For overlay plots, (\code{overlay=TRUE}), should visreg create a
+    legend?  If \code{legend=TRUE} (the default), a legend is placed in
+    the top margin.
   }
   \item{ask}{
-    By default (\code{ask=TRUE}), if multiple plots are requested (for example, by passing
-    a vector to \code{xvar}) and the result would cause some of the graphs to be on one figure
-    and others on a different figure, \code{visreg} will prompt the user before moving to
-    the next figure.  The prompting can be turned off with \code{ask=FALSE}.
+    By default (\code{ask=TRUE}), if multiple plots are requested (for
+    example, by passing a vector to \code{xvar}) and the result would
+    cause some of the graphs to be on one figure and others on a
+    different figure, \code{visreg} will prompt the user before moving
+    to the next figure.  The prompting can be turned off with
+    \code{ask=FALSE}.
   }
   \item{line.par}{
     List of parameters (see \code{\link{par}}) to pass to \code{lines(...)}
@@ -156,7 +168,9 @@ legend=TRUE, ask=TRUE, line.par=NULL, fill.par=NULL, points.par=NULL, ...)
   }
 }
 \value{
-In addition to providing plots, the visreg function also invisibly returns the data frames, estimates, confidence intervals, and residuals used in the creation of its plots (see last example).
+  In addition to providing plots, the visreg function also invisibly
+  returns the data frames, estimates, confidence intervals, and
+  residuals used in the creation of its plots (see last example).
 }
 \references{
   Breheny, P. and Burchett, W. (2012), Visualizing regression models
@@ -164,7 +178,7 @@ In addition to providing plots, the visreg function also invisibly returns the d
   \url{http://web.as.uky.edu/statistics/users/pbreheny/publications/visreg.pdf}
 }
 \author{
-Patrick Breheny and Woodrow Burchett
+  Patrick Breheny and Woodrow Burchett
 }
 \seealso{\code{\link{visreg2d}}}
 \examples{
@@ -216,7 +230,8 @@ visreg(fit.in1, "Heat", by="Wind", breaks=c(0,10,20))
 visreg(fit.in1, "Wind", by="Heat", overlay=TRUE)
 visreg(fit.in1, "Wind", by="Heat", overlay=TRUE, partial=FALSE)
 visreg(fit.in1, "Wind", by="Heat", overlay=TRUE, partial=FALSE, band=FALSE)
-visreg(fit.in1, "Wind", by="Heat", overlay=TRUE, partial=FALSE, band=FALSE, type="contrast")
+visreg(fit.in1, "Wind", by="Heat", overlay=TRUE, partial=FALSE,
+band=FALSE, type="contrast")
 
 ## Changing appearance
 visreg(fit, "Wind", line=list(col="blue"), points=list(cex=1, pch=1))
@@ -231,8 +246,10 @@ birthwt$race <- factor(birthwt$race,labels=c("White","Black","Other"))
 birthwt$smoke <- factor(birthwt$smoke,labels=c("Nonsmoker","Smoker"))
 fit <- glm(low~age+race+smoke+lwt,data=birthwt,family="binomial")
 visreg(fit,"lwt",xlab="Mother's Weight",ylab="Log odds (low birthweight)")
-visreg(fit, "lwt", scale="response", partial=FALSE, xlab="Mother's Weight", ylab="P(low birthweight)")
-visreg(fit, "lwt", scale="response", partial=FALSE, xlab="Mother's Weight", ylab="P(low birthweight)", rug=2)
+visreg(fit, "lwt", scale="response", partial=FALSE, xlab="Mother's
+Weight", ylab="P(low birthweight)")
+visreg(fit, "lwt", scale="response", partial=FALSE, xlab="Mother's
+Weight", ylab="P(low birthweight)", rug=2)
 
 ## Proportional hazards
 require(survival)

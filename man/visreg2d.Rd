@@ -6,7 +6,10 @@ A function used to visualize how two variables interact to affect the
 response in regression models.
 }
 \usage{
-visreg2d(fit, xvar, yvar, type=c("conditional", "contrast", "effect"), trans=I, scale=c("linear","response"), plot.type=c("image","persp","rgl"), nn=ifelse(plot.type=="persp",49,99), cond=list(), print.cond=FALSE, whitespace=0.2, ...)
+visreg2d(fit, xvar, yvar, type=c("conditional", "contrast", "effect"),
+trans=I, scale=c("linear","response"),
+plot.type=c("image","persp","rgl"), nn=ifelse(plot.type=="persp",49,99),
+cond=list(), print.cond=FALSE, whitespace=0.2, ...)
 }
 \arguments{
   \item{fit}{
@@ -41,12 +44,14 @@ visreg2d(fit, xvar, yvar, type=c("conditional", "contrast", "effect"), trans=I, 
     (Optional) A function specifying a transformation for the vertical axis.
   }
   \item{scale}{
-    By default, the model is plotted on the scale of the linear predictor.
-    If \code{scale='response'} for a glm, the inverse link function will be
-    applied so that the model is plotted on the scale of the original response.
+    By default, the model is plotted on the scale of the linear
+    predictor.  If \code{scale='response'} for a glm, the inverse link
+    function will be applied so that the model is plotted on the scale
+    of the original response.
   }
   \item{plot.type}{
-    The style of plot to be produced.  The following three options are supported:
+    The style of plot to be produced.  The following three options are
+    supported:
     \itemize{
       \item \code{'image'}, a filled contour plot.
       \item \code{'persp'}, a 3 dimensional perspective plot.
@@ -55,7 +60,8 @@ visreg2d(fit, xvar, yvar, type=c("conditional", "contrast", "effect"), trans=I, 
     }
   }
   \item{nn}{
-    Resolution of the three dimensional plot.  Higher values will results in a smoother looking plot.
+    Resolution of the three dimensional plot.  Higher values will
+    results in a smoother looking plot.
   }
   \item{cond}{
     Named list specifying conditional values of other explanatory variables.
@@ -72,9 +78,9 @@ visreg2d(fit, xvar, yvar, type=c("conditional", "contrast", "effect"), trans=I, 
     are present.
   }
   \item{whitespace}{
-    When \code{xvar} or \code{yvar} is a factor, whitespace determines the amount
-    of space in between the factors.  Default is 0.2, meaning that 20 percent of
-    the axis is whitespace.
+    When \code{xvar} or \code{yvar} is a factor, whitespace determines
+    the amount of space in between the factors.  Default is 0.2, meaning
+    that 20 percent of the axis is whitespace.
   }
   \item{\dots}{
     Graphical parameters can be passed to the function to customize the plots.
@@ -92,7 +98,9 @@ visreg2d(fit, xvar, yvar, type=c("conditional", "contrast", "effect"), trans=I, 
 }
 \seealso{\code{\link{visreg}}}
 \examples{
-fit <- lm(Ozone ~ Solar.R + Wind + Temp + I(Wind^2) + I(Temp^2) + I(Wind*Temp)+I(Wind*Temp^2) + I(Temp*Wind^2) + I(Temp^2*Wind^2), data=airquality)
+fit <- lm(Ozone ~ Solar.R + Wind + Temp + I(Wind^2) + I(Temp^2) +
+I(Wind*Temp)+I(Wind*Temp^2) + I(Temp*Wind^2) + I(Temp^2*Wind^2),
+data=airquality)
 
 visreg2d(fit,x="Wind",y="Temp",plot.type="image")
 visreg2d(fit,x="Wind",y="Temp",plot.type="persp")

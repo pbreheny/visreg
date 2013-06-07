@@ -10,7 +10,7 @@ visreg <- function(fit, xvar, by, overlay=FALSE, breaks=3, type=c("conditional",
     type <- "contrast"
   }
   
-  f <- setupF(fit, xvar)
+  f <- setupF(fit, xvar, parent.frame())
   xvar <- attr(f, "xvar")
   if (attr(f, "needsUpdate")) fit <- update(fit, data=f)
   cond <- setupCond(cond, f, by, breaks)

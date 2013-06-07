@@ -13,7 +13,7 @@ visreg2d <- function(fit, xvar, yvar, type=c("conditional", "contrast", "effect"
   }
   
   ## Set up f
-  f <- setupF(fit, c(xvar, yvar))
+  f <- setupF(fit, c(xvar, yvar), parent.frame())
   if (attr(f, "needsUpdate")) fit <- update(fit, data=f)
   cond <- setupCond(cond, f)[[1]]
 

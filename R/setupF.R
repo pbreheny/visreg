@@ -1,10 +1,18 @@
-setupF <- function(fit, xvar) {
+setupF <- function(fit, xvar, call.env) {
   if (class(fit)[1]=="locfit") {
     f <- model.frame(fit)
     for (j in 1:ncol(f)) names(f)[j] <- removeFormulaFormatting(names(f)[j])
   } else {
-    env <- environment(fit$terms)
-    Data <- eval(fit$call$data, envir=env)
+    if (is.null(fit$call$data)) {
+      env <- NULL
+      Data <- NULL
+    } else if (exists(as.character(fit$call$data), call.env)) {
+      env <- call.env
+      Data <- eval(fit$call$data, envir=env)
+    } else {
+      env <- environment(fit$terms)
+      Data <- eval(fit$call$data, envir=env)
+    }
     f <- as.data.frame(as.list(get_all_vars(fit, Data)))
     if ("subset" %in% names(fit$call)) {
       s <- fit$call$subset
