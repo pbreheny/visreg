@@ -51,3 +51,11 @@ myFun <- function(form) {
   visreg2d(fit,"x","y")
 }
 myFun(z~x+y)
+
+## Missing factor levels
+x <- factor(rep(LETTERS[1:5],rep(5,5)))
+y <- rnorm(length(x))
+y[11:15] <- NA
+fit <- lm(y~x)
+visreg(fit)
+visreg(fit, type='contrast')

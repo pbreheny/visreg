@@ -29,6 +29,7 @@ setupF <- function(fit, xvar, call.env) {
     needsUpdate <- TRUE
     for (j in 1:ncol(f)) if (class(f[,j])[1]=="logical") f[,j] <- as.numeric(f[,j])
   }
+  for (j in 1:ncol(f)) if (class(f[,j])[1]=="factor") f[,j] <- droplevels(f[,j])
   if (missing(xvar)) xvar <- names(f)[-1]
   for (i in 1:length(xvar)){if (!is.element(xvar[i],names(f))) stop(paste(xvar[i],"not in model"))}
   attr(f, "needsUpdate") <- needsUpdate
