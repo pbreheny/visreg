@@ -6,7 +6,7 @@ fillFrame <- function(f,x,cond) {
   for (j in 1:ncol(f)) {
     if (is.factor(f[,j]) && !is.element(names(f)[j],names(cond)) && !is.element(names(f)[j],names(x))) {
       mode = names(sort(-table(f[j])))[1]
-      eval(parse(text=c('cond=c(cond,list(',names(f)[j],'=factor(mode,levels=droplevels(levels(f[,names(f)[j]]))))')))
+      eval(parse(text=c('cond=c(cond,list(',names(f)[j],'=factor(mode,levels=levels(f[,names(f)[j]]))))')))
     }
   }
   x2 <- lapply(as.data.frame(f[,setdiff(names(f),c(names(x),names(cond)))]),median)
