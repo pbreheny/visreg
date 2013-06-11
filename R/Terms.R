@@ -4,6 +4,7 @@ Terms <- function(fit, f, x, trans, alpha) {
     n.y <- length(summ)
     yy <- SE <- matrix(NA, nrow=nrow(x$XX), ncol=n.y)
     r <- rr <- matrix(NA, nrow=nrow(x$X), ncol=n.y)
+    if (nrow(x$X) != nrow(rr)) warning("Residuals do not match data; have you changed the original data set?  If so, visreg is probably not displaying the residuals for the data set that was actually used to fit the model.")
     for (i in 1:n.y) {
       V <- summ[[i]]$sigma^2 * summ[[i]]$cov.unscaled
       SE[,i] <- sqrt(apply(x$XX * (x$XX %*% V),1,sum))
@@ -17,6 +18,7 @@ Terms <- function(fit, f, x, trans, alpha) {
     SE <- sqrt(apply(x$XX * (x$XX %*% V),1,sum))
     yy <- x$XX%*%coef(fit)[is.finite(coef(fit))]
     rr <- residuals(fit)
+    if (nrow(x$X) != length(rr)) warning("Residuals do not match data; have you changed the original data set?  If so, visreg is probably not displaying the residuals for the data set that was actually used to fit the model.")
     r <- x$X%*%coef(fit)[is.finite(coef(fit))] + rr
   }
   if (!all(is.finite(coef(fit)))) warning("prediction from a rank-deficient fit may be misleading")

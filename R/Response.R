@@ -1,5 +1,6 @@
 Response <- function(fit, x, trans, alpha) {
   rr <- residuals(fit)
+  if (nrow(x$D) != length(rr)) warning("Residuals do not match data; have you changed the original data set?  If so, visreg is probably not displaying the residuals for the data set that was actually used to fit the model.")
   r <- predict(fit, newdata=x$D) + rr
   if (class(fit)[1]=="mlm") {
     p <- list(fit = predict(fit, newdata=x$DD), se.fit = se.mlm(fit, newdata=x$DD))

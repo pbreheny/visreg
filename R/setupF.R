@@ -9,9 +9,11 @@ setupF <- function(fit, xvar, call.env) {
     } else if (exists(as.character(fit$call$data), call.env)) {
       env <- call.env
       Data <- eval(fit$call$data, envir=env)
-    } else {
+    } else if (exists(as.character(fit$call$data), environment(fit$terms))) {
       env <- environment(fit$terms)
       Data <- eval(fit$call$data, envir=env)
+    } else {
+      stop("visreg cannot find the data set used to fit your model")
     }
     f <- as.data.frame(as.list(get_all_vars(fit, Data)))
     if ("subset" %in% names(fit$call)) {
