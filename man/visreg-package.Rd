@@ -9,8 +9,8 @@
 \tabular{ll}{
 Package: \tab visreg\cr
 Type: \tab Package\cr
-Version: \tab 2.0-0\cr
-Date: \tab 2013-05-23\cr
+Version: \tab 2.0-1\cr
+Date: \tab 2013-08-09\cr
 License: \tab GPL-2\cr
 LazyLoad: \tab yes\cr}
 This package allows the use of visreg and visreg2d, functions for
