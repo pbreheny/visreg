@@ -1,6 +1,11 @@
 * Minor change
 ** Major change
 
+2.0-2
+      *  Bug fix for spline models of variables with '.' in their names
+      *  Bug fix for survival models in which the Surv object is created
+      	 outside the call to visreg
+
 2.0-1
       *  Fixed issue with levels of a factor being dropped from the model
 	 (Thank you to Johannes Kutsam for pointing this out)

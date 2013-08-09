@@ -9,8 +9,9 @@ fillFrame <- function(f,x,cond) {
       eval(parse(text=c('cond=c(cond,list(',names(f)[j],'=factor(mode,levels=levels(f[,names(f)[j]]))))')))
     }
   }
-  x2 <- lapply(as.data.frame(f[,setdiff(names(f),c(names(x),names(cond)))]),median)
-  names(x2) <- setdiff(names(f),c(names(x),names(cond)))
+  exclude <- c(names(x), names(cond), names(which(sapply(f,class)=="Surv")))
+  x2 <- lapply(as.data.frame(f[,setdiff(names(f), exclude)]), median)
+  names(x2) <- setdiff(names(f), exclude)
   x3 <- cond
   
   if (length(x2)>0 & length(x3)>0) newdf <- data.frame(x,x2,x3,check.names=FALSE)
@@ -18,6 +19,5 @@ fillFrame <- function(f,x,cond) {
   else if (length(x2)==0 & length(x3)>0) newdf <- data.frame(x,x3,check.names=FALSE)
   else newdf <- x
   
-  ##names(newdf)[1] <- name
   return(newdf)
 }
