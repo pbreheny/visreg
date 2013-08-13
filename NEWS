@@ -1,6 +1,10 @@
 * Minor change
 ** Major change
 
+2.0-2
+      *  Made compatible with output from the 'survey' package (Thank you
+      	 to Marco Pomati for pointing this incompatibility out to me)
+
 2.0-1
       *  Bug fix for spline models of variables with '.' in their names
       *  Bug fix for survival models in which the Surv object is created
