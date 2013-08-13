@@ -3,7 +3,10 @@ setupF <- function(fit, xvar, call.env) {
     f <- model.frame(fit)
     for (j in 1:ncol(f)) names(f)[j] <- removeFormulaFormatting(names(f)[j])
   } else {
-    if (is.null(fit$call$data)) {
+    if ("data" %in% names(fit)) {
+      Data <- fit$data
+      env <- NULL
+    } else if (is.null(fit$call$data)) {
       env <- NULL
       Data <- NULL
     } else if (exists(as.character(fit$call$data), call.env)) {

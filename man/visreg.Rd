@@ -175,7 +175,7 @@ line.par=NULL, fill.par=NULL, points.par=NULL, ...)
 \references{
   Breheny, P. and Burchett, W. (2012), Visualizing regression models
   using visreg.
-  \url{http://web.as.uky.edu/statistics/users/pbreheny/publications/visreg.pdf}
+  \url{http://myweb.uiowa.edu/pbreheny/publications/visreg.pdf}
 }
 \author{
   Patrick Breheny and Woodrow Burchett

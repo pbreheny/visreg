@@ -20,11 +20,11 @@ Also see the cited manuscript for additional details.
 }
 \author{Patrick Breheny and Woodrow Burchett
   
-Maintainer: Patrick Breheny <patrick.breheny@uky.edu>}
+Maintainer: Patrick Breheny <patrick-breheny@uiowa.edu>}
 \references{
   Breheny, P. and Burchett, W. (2013), Visualizing regression models
   using visreg.
-  \url{http://web.as.uky.edu/statistics/users/pbreheny/publications/visreg.pdf}
+  \url{http://myweb.uiowa.edu/pbreheny/publications/visreg.pdf}
 }
 \keyword{ package }
 \seealso{
