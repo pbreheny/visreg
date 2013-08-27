@@ -3,7 +3,7 @@ setupD <- function(fit, f, name, nn, cond, whitespace, ...) {
   x <- f[,name]
   xdf <- data.frame(x)
   names(xdf) <- name
-  df <- fillFrame(f,xdf,cond)
+  df <- fillFrame(f, xdf, cond)
   
   form <- removeFormulaFormatting(formula(fit)[3])
   D <- model.frame(as.formula(paste("~",form)),df)

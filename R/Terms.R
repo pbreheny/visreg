@@ -1,6 +1,6 @@
 Terms <- function(fit, f, x, trans, alpha) {
   if (class(fit)[1]=="mlm") {
-    summ <- summary.mlm(fit)
+    summ <- summary(fit)
     n.y <- length(summ)
     yy <- SE <- matrix(NA, nrow=nrow(x$XX), ncol=n.y)
     r <- rr <- matrix(NA, nrow=nrow(x$X), ncol=n.y)

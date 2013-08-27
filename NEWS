@@ -4,6 +4,12 @@
 2.0-2
       *  Made compatible with output from the 'survey' package (Thank you
       	 to Marco Pomati for pointing this incompatibility out to me)
+      *  Fixed calling of generics to be compatible with changes in
+      	 R version 3.1.
+      *  Fixed bug for mlm models in which users received an incorrect
+      	 warning about residuals.
+      *  Improved generalizability of fillFrame with factors; was
+      	 incompatible with some instances of predict().
 
 2.0-1
       *  Bug fix for spline models of variables with '.' in their names
