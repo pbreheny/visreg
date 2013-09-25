@@ -1,4 +1,6 @@
-Terms <- function(fit, f, x, trans, alpha) {
+Terms <- function(fit, f, x, trans, alpha, ...) {
+  level <- if ("level" %in% names(list(...))) list(...)$level else 0
+  b <- if ("lme" %in% class(fit)) fixed.effects(fit) else coef(fit)
   if (class(fit)[1]=="mlm") {
     summ <- summary(fit)
     n.y <- length(summ)
@@ -8,21 +10,21 @@ Terms <- function(fit, f, x, trans, alpha) {
     for (i in 1:n.y) {
       V <- summ[[i]]$sigma^2 * summ[[i]]$cov.unscaled
       SE[,i] <- sqrt(apply(x$XX * (x$XX %*% V),1,sum))
-      ind <- is.finite(coef(fit)[,i])
-      yy[,i] <- x$XX%*%coef(fit)[ind,i]
+      ind <- is.finite(b[,i])
+      yy[,i] <- x$XX%*%b[ind,i]
       rr[,i] <- residuals(fit)[,i]
-      r[,i] <- x$X%*%coef(fit)[ind,i] + rr[,i]
+      r[,i] <- x$X%*%b[ind,i] + rr[,i]
     }
   } else {
     V <- vcov(fit)
     SE <- sqrt(apply(x$XX * (x$XX %*% V),1,sum))
-    yy <- x$XX%*%coef(fit)[is.finite(coef(fit))]
+    yy <- x$XX%*%b[is.finite(b)]
     rr <- residuals(fit)
     if (nrow(x$X) != length(rr)) warning("Residuals do not match data; have you changed the original data set?  If so, visreg is probably not displaying the residuals for the data set that was actually used to fit the model.")
-    r <- x$X%*%coef(fit)[is.finite(coef(fit))] + rr
+    r <- x$X%*%b[is.finite(b)] + rr
   }
-  if (!all(is.finite(coef(fit)))) warning("prediction from a rank-deficient fit may be misleading")
-  m <- ifelse(class(fit)=="coxph" || family(fit)$family %in% c("binomial","poisson"), qnorm(1-alpha/2), qt(1-alpha/2,fit$df.residual))
+  if (!all(is.finite(b))) warning("prediction from a rank-deficient fit may be misleading")
+  m <- ifelse(class(fit)=="coxph" || "lme" %in% class(fit) || family(fit)$family %in% c("binomial","poisson"), qnorm(1-alpha/2), qt(1-alpha/2,fit$df.residual))
   lwr <- yy - m*SE
   upr <- yy + m*SE
   if (class(fit)[1]=="mlm") {

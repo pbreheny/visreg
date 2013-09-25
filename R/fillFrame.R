@@ -13,7 +13,7 @@ fillFrame <- function(f, x, cond) {
   x2 <- lapply(as.data.frame(f[,setdiff(names(f), exclude)]), median)
   names(x2) <- setdiff(names(f), exclude)
   x3 <- cond
-  for (j in 1:length(x3)) {
+  for (j in seq_along(x3)) {
     if (is.character(x3[[j]])) x3[[j]] <- factor(x3[[j]], levels=levels(f[,names(x3)[j]]))
   }
   

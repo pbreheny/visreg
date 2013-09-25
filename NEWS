@@ -1,6 +1,16 @@
 * Minor change
 ** Major change
 
+2.0-3
+      *  Added some compatibility with 'lme' models; conditional models
+      	 still cannot include error bands due to lack of this feature
+	 in predict.lme, but the package will produce reasonable plots
+	 of means and partial residuals (Thank you to Jason Rohr for 
+	 pointing out this incompatibility and the bugs below)
+      *  Fixed bug in passing 'scales' to latticePlot
+      *  Fixed bug when trying to panel by every unique value of 'by'
+      	 variable
+
 2.0-2
       *  Made compatible with output from the 'survey' package (Thank you
       	 to Marco Pomati for pointing this incompatibility out to me)

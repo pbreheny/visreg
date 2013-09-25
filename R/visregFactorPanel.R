@@ -12,10 +12,10 @@ visregFactorPanel <- function(x, y, w, subscripts, lframe, lresids, partial, ban
       if (length(fill.par)) poly.args[names(fill.par)] <- fill.par
       do.call("panel.polygon", poly.args)      
     }
-    panel.lines(xx,rep(lframe$fit[subscripts][k],2),subscripts=subscripts,...)
     ind <- (lresids$by==lframe$by[subscripts][1]) & (lresids$x==levels(lresids$x)[k])
     rx <- seq(x1, x2, len=sum(ind)+2)[c(-1,-(sum(ind)+2))]
     if (partial) panel.points(rx, lresids$r[ind])
+    panel.lines(xx,rep(lframe$fit[subscripts][k],2),subscripts=subscripts,...)
     if (rug==1) panel.rug(rx)
     if (rug==2) {
       ind1 <- ind & !lresids$pos

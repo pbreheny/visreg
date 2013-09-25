@@ -38,14 +38,14 @@ visregPlot <- function(v, partial, band, rug, ask, whitespace, print.cond, line.
           if (length(fill.par)) fill.args[names(fill.par)] <- fill.par
           do.call("polygon", fill.args)          
         }
-        line.args <- list(x=x$xx, y=y$fit, lwd=2, lty=1)
-        if (length(line.par)) line.args[names(line.par)] <- line.par
-        do.call("lines", line.args)
         if (partial) {
-          points.args <- list(x=x$x, y=y$r, pch=19, cex=0.4)
+          points.args <- list(x=x$x, y=y$r, pch=19, cex=0.4, col="gray50")
           if (length(points.par)) points.args[names(points.par)] <- points.par
           do.call("points", points.args)
         }
+        line.args <- list(x=x$xx, y=y$fit, lwd=3, lty=1, col="#008DFFFF")
+        if (length(line.par)) line.args[names(line.par)] <- line.par
+        do.call("lines", line.args)
         if (rug==1) rug(x$x, side=1)
         if (rug==2) {
           rug(x$x[!y$pos], side=1)

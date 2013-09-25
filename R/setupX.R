@@ -8,10 +8,12 @@ setupX <- function(fit, f, name, nn, cond, ...) {
   D <- rbind(f[,names(df)], df)
   form <- formula(fit)[3]
   
+  b <- if ("lme" %in% class(fit)) fixed.effects(fit) else coef(fit)
+  
   if (class(fit)[1]=="mlm") {
-    ind <- apply(is.finite(coef(fit)), 1, all)
-    if (!identical(ind, apply(is.finite(coef(fit)), 1, any))) stop("Inconsistent NA/NaN coefficients across outcomes")
-  } else ind <- is.finite(coef(fit))
+    ind <- apply(is.finite(b), 1, all)
+    if (!identical(ind, apply(is.finite(b), 1, any))) stop("Inconsistent NA/NaN coefficients across outcomes")
+  } else ind <- is.finite(b)
   if (class(fit)[1]=="gam") {
     form <- removeFormulaFormatting(formula(fit)[3])
     D <- model.frame(as.formula(paste("~",form)),df)

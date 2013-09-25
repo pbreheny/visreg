@@ -8,8 +8,8 @@ setupCond <- function(cond, f, by, breaks) {
     if(is.numeric(f[,by])) {
       if (length(breaks)==1) {
         unique.by <- unique(f[,by])
-        if (breaks > length(unique.by)) {
-          lev <- unique.by
+        if (breaks >= length(unique.by)) {
+          lev <- sort(unique.by)
         } else {
           a <- 1/5/2^(breaks-2)
           lev <- as.numeric(quantile(f[,by], seq(a,1-a,length=breaks), type=1))
@@ -20,13 +20,19 @@ setupCond <- function(cond, f, by, breaks) {
       }
       n.by <- length(lev)
     } else {
-      n.by <- length(levels(f[,by]))
-      lev <- levels(f[,by])
+      if (class(breaks)=="factor" || class(breaks)=="character") {
+        if (!all(breaks %in% levels(f[,by]))) stop("'breaks' does not match levels of 'by' variable")
+        lev <- breaks
+      } else {
+        lev <- levels(f[,by])
+      }
+      n.by <- length(lev)
     }
     
     cond <- vector("list",n.by)
     for (i in 1:n.by) {
-      cond[[i]] <- c(lev[i], cond.orig)
+      a <- if (class(lev)=="factor") as.character(lev[i]) else lev[i]
+      cond[[i]] <- c(a, cond.orig)
       names(cond[[i]])[1] <- by
       cond[[i]] <- as.list(cond[[i]])
     }

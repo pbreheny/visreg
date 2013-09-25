@@ -10,16 +10,16 @@ factorPlot <- function(x, y, partial, band, rug, w, line.par, fill.par, points.p
       if (length(fill.par)) fill.args[names(fill.par)] <- fill.par
       do.call("polygon", fill.args)      
     }
-    line.args <- list(x=c(x1,x2), y=rep(y$fit[k],2), lwd=2)
-    if (length(line.par)) line.args[names(line.par)] <- line.par
-    do.call("lines", line.args)
     ind <- x$x==levels(x$x)[k]
     rx <- seq(x1,x2,len=sum(ind)+2)[c(-1,-(sum(ind)+2))]
     if (partial) {
-      points.args <- list(x=rx, y=y$r[ind], pch=19, cex=0.4)
+      points.args <- list(x=rx, y=y$r[ind], pch=19, cex=0.4, col="gray50")
       if (length(points.par)) points.args[names(points.par)] <- points.par
       do.call("points", points.args)
     }
+    line.args <- list(x=c(x1,x2), y=rep(y$fit[k],2), lwd=3, col="#008DFFFF")
+    if (length(line.par)) line.args[names(line.par)] <- line.par
+    do.call("lines", line.args)
     if (rug==1) rug(rx)
     if (rug==2) {
       ind1 <- ind & !y$pos

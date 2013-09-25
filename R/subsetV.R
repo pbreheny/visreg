@@ -10,7 +10,7 @@ subsetV <- function(v, f, by) {
   }
   for (i in 1:length(v)) {
     if (is.factor(f[,by])) {
-      ind <- f[,by]==lev[i]
+      ind <- as.character(f[,by])==as.character(lev[i])
     } else {
       ind <- (apply(D, 1, which.min)==i)
     }

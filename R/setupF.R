@@ -19,6 +19,11 @@ setupF <- function(fit, xvar, call.env) {
       stop("visreg cannot find the data set used to fit your model")
     }
     f <- as.data.frame(as.list(get_all_vars(fit, Data)))
+    if (class(fit$call$random)=="call") {
+      rf <- as.data.frame(as.list(get_all_vars(fit$call$random, Data)))
+      rf <- rf[,setdiff(names(rf), names(f)),drop=FALSE]
+      f <- cbind(f, rf)
+    }
     if ("subset" %in% names(fit$call)) {
       s <- fit$call$subset
       subset <- eval(substitute(s), Data, env)
