@@ -1,8 +1,12 @@
 ## Frequently asked questions
 
-1. Can visreg can be used for GLMMs (i.e., from the lme4 package)?
+1. Can visreg can be used for mixed models (i.e., from the 'nlme' or 'lme4' packages)?
 
-   The underlying basis on which visreg operates is by using the predict method to plot predictions from the model.  Predictions for mixed models are complicated.  In principle, it is possible to make predictions from a GLMM (albeit with caveats), but in practice, there is no 'predict' method provided by the lme4 package.  If Doug Bates (the author of lme4) or someone else writes a predict function for lme4, then it will work with visreg; otherwise not.  
+   Sort of.  The underlying basis on which visreg operates is by using the predict method to plot predictions from the model.  Predictions for mixed models are complicated.  In particular, there is no 'se.fit' option provided by the 'predict' methods in the 'nlme' and 'lme4' packages, so you cannot obtain confidence bands for conditional plots.  Nevertheless, 'visreg' will produce reasonable plots of estimated coefficients and partial residuals.
+
+   Keep in mind, however, that, depending on what sort of predictions (BLUPs) you are interested in, random effects may or may not be incorporated into the plotted linear combinations of coefficients.  For example, in 'nlme' this is controlled by the 'level' argument.  Passing the appropriate 'level' to predict through 'visreg' is the user's responsibility; I cannot hope to automatically decide this for any possible model.
+
+   If you are running into difficulty using 'visreg' with mixed models, feel free to e-mail me; comparatively little effort has been spent on testing 'visreg' with mixed models, and there may still be bugs to work out.
 
 1. What is the difference between 'conditional' and 'contrast' plots?
 
