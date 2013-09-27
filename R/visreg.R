@@ -27,10 +27,10 @@ visreg <- function(fit, xvar, by, overlay=FALSE, breaks=3, type=c("conditional",
   if (missing(by)) {
     visregPlot(v, partial, band, rug, ask, whitespace, print.cond, line.par, fill.par, points.par, ...)
   } else if (overlay) {
-    visregOverlayPlot(v, partial, band, rug, ask, whitespace, strip.names, line.par, fill.par, points.par, ...)
+    visregOverlayPlot(v, partial, band, rug, ask, whitespace, legend, line.par, fill.par, points.par, ...)
     if (print.cond) printCond(v)
   } else {
-    visregLatticePlot(v, partial, band, rug, ask, whitespace, legend, line.par, fill.par, points.par, ...)
+    visregLatticePlot(v, partial, band, rug, ask, whitespace, strip.names, line.par, fill.par, points.par, ...)
     if (print.cond) printCond(v)
   }
   

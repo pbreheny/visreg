@@ -49,7 +49,8 @@ line.par=NULL, fill.par=NULL, points.par=NULL, ...)
     By default, cross-sections are taken at the 10th, 50th, and 90th quantiles.
     If \code{breaks} is a single number, it specifies the number of breaks.
     If \code{breaks} is a vector of numbers, it specifies the values
-    at which the cross-sections are to be taken.
+    at which the cross-sections are to be taken.  Each partial residuals
+    appears exactly once in the plot, in the panel it is closest to. 
   }
   
   \item{type}{
@@ -133,8 +134,12 @@ line.par=NULL, fill.par=NULL, points.par=NULL, ...)
     observations have exactly the same value.  Default is FALSE.
   }
   \item{strip.names}{
-    When \code{by=TRUE}, adds the name of the \code{by} variable to the
-    strip at the top of each panel.  Default is \code{FALSE}.
+    When \code{by=TRUE}, \code{strip.names=TRUE} adds the name of the
+    \code{by} variable to the strip at the top of each panel.  Default
+    is \code{FALSE} for factors and \code{TRUE} for numeric \code{by}
+    variables.  \code{strip.names} can also be a character vector, in
+    which case it replaces the strip names altogether with values chosen
+    by the user.
   }
   \item{legend}{
     For overlay plots, (\code{overlay=TRUE}), should visreg create a
@@ -180,7 +185,10 @@ line.par=NULL, fill.par=NULL, points.par=NULL, ...)
 \author{
   Patrick Breheny and Woodrow Burchett
 }
-\seealso{\code{\link{visreg2d}}}
+\seealso{
+  \code{\link{visreg2d}}
+  \code{\link{visreg-faq}}
+}
 \examples{
 ###################
 ## Linear models ##

@@ -1,0 +1,105 @@
+\name{visreg-faq}
+\alias{visreg-faq}
+\alias{visregfaq}
+\alias{visregFAQ}
+\alias{visreg.faq}
+\alias{visreg_faq}
+\title{Frequently Asked Questions for visreg}
+\description{This page tries to answer some of the questions that I get
+  asked most often about how to use the visreg package.  If you have a
+  question that does not appear below, I can be reached at
+  <patrick-breheny@uiowa.edu>.}
+\section{Frequent asked questions}{
+  \enumerate{
+    \item \bold{What is the difference between 'conditional' and
+      'contrast' plots?} 
+
+    Suppose our data looked like:
+
+    \tabular{rrr}{
+      SBP \tab Sex \tab Age\cr
+      140 \tab   M \tab  56\cr
+      135 \tab   F \tab  47\cr
+      ...\cr}
+    
+    we fit a model with  
+
+    \code{fit <- lm(SBP~Sex+Age)}
+
+    and we want to plot the relationship between Age and SBP.  A
+    'conditional' plot illustrates the relationship between the two,
+    conditional on the sex being, say, Male (the default in visreg is to
+    choose the most common category). 
+
+    The 'contrast' plot in visreg, on the other hand, illustrates the
+    effect on SBP of a \emph{change} in age -- the default in visreg is
+    to use the mean age as the reference point for this change.  Since
+    the above model does not have an interaction, this effect will be
+    the same for men and women, and thus does not require you to specify
+    a sex for the plot.   
+
+    Both conditional and contrast plots answer subtly different
+    questions, and both are useful in different situations.
+
+    \item \bold{Can visreg can be used for mixed models (i.e., from the
+      'nlme' or 'lme4' packages)?}
+
+    Sort of.  The underlying basis on which visreg operates is by using
+    the predict method to plot predictions from the model.  Predictions
+    for mixed models are complicated.  In particular, there is no
+    \code{se.fit} option provided by the \code{predict} methods in the
+    \code{nlme} and \code{lme4} packages, so you cannot obtain
+    confidence bands for conditional plots.  Nevertheless, \code{visreg}
+    will produce plots of estimated coefficients and partial
+    residuals. 
+
+    Keep in mind, however, that, depending on what sort of predictions
+    (BLUPs) you are interested in, random effects may or may not be
+    incorporated into the plotted linear combinations of coefficients.
+    For example, in \code{nlme} this is controlled by the \code{level}
+    argument.  Passing the appropriate \code{level} to predict through
+    \code{visreg} is the user's responsibility; I cannot hope to
+    automatically decide this for all possible models that could be
+    passed to visreg.
+
+    If you are running into difficulty using \code{visreg} with mixed
+    models, feel free to e-mail me; comparatively little effort has been
+    spent on testing \code{visreg} with mixed models, and there may
+    still be bugs to work out.
+
+    \item \bold{How do I use visreg for a model with offset terms?}
+
+    By default, visreg is set up to provide conditional plots in which
+    all other terms are set to their median value (or most common
+    category).  This includes offset terms.  It is not uncommon,
+    however, to want to see results with the offset included.  To obtain
+    these results, one needs to specify the offset among the arguments
+    to cond. For example, using the Insurance data from the MASS
+    package:
+
+    \code{utils::data(Insurance, package="MASS")}\cr
+    \code{fit <- glm(Claims ~ District + Group + Age +
+      offset(log(Holders)), data = Insurance, family = poisson)}\cr
+    \code{visreg(fit, "Group", scale="response")}\cr
+
+    This will provide the model's predictions for the expected number of
+    claims given the median number of holders (here, 136).  To obtain
+    the expected number of claims per holder, we need to specify
+    Holders=1 in cond:
+
+    \code{visreg(fit, "Group", scale="response", cond=list(Holders=1))}
+
+    Note also that to ensure proper functionality with all of visreg's
+    options, the use of the \code{offset()} function, rather than the
+    \code{offset=} argument, is recommended.
+  }
+}
+\author{
+  Patrick Breheny and Woodrow Burchett
+  
+  Maintainer: Patrick Breheny <patrick-breheny@uiowa.edu>}
+\references{
+  Breheny, P. and Burchett, W. (2013), Visualizing regression models
+  using visreg.
+  \url{http://myweb.uiowa.edu/pbreheny/publications/visreg.pdf}
+}

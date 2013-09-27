@@ -39,8 +39,13 @@ visregLatticePlot <- function(v, partial, band, rug, ask, whitespace, strip.name
                    as.expression(substitute(list(Delta) * x,list(x=y$name))),
                    y$name,
                    paste("f(", x$name, ")", sep=""))
-    plot.args <- list(x=formula(lframe$fit~lframe$xx | lframe$by), type="l", ylim=ylim, xlab=x$name, ylab=ylab, lframe=lframe, lresids=lresids, partial=partial, band=band, rug=rug, xlim=xlim, strip=strip.custom(strip.names=strip.names, var.name=attr(v, "by")), fill.par=fill.par)
     new.args <- list(...)
+    if (is.logical(strip.names)) {
+      strip <- strip.custom(strip.names=strip.names, var.name=attr(v, "by"))
+    } else {
+      strip <- strip.custom(factor.levels=strip.names)
+    }
+    plot.args <- list(x=formula(lframe$fit~lframe$xx | lframe$by), type="l", ylim=ylim, xlab=x$name, ylab=ylab, lframe=lframe, lresids=lresids, partial=partial, band=band, rug=rug, xlim=xlim, strip=strip, fill.par=fill.par)
     if (length(new.args)) plot.args[names(new.args)] <- new.args
     if (is.null(dev.list())) trellis.device()
     opar <- trellis.par.get()

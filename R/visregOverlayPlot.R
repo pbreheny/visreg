@@ -28,8 +28,8 @@ visregOverlayPlot <- function(v, partial, band, rug, ask, whitespace, legend, li
     
     if (x$factor) xlim <- c(0,1) else xlim <- range(x$xx)
     if (partial) {
-      ylim <- range(c(lresids$r, lframe$lwr, lframe$upr))
-    } else ylim <- range(c(lframe$lwr, lframe$upr))
+      ylim <- range(c(lresids$r, lframe$lwr, lframe$upr), na.rm=TRUE)
+    } else ylim <- range(c(lframe$fit, lframe$lwr, lframe$upr), na.rm=TRUE)
     
     ylab <- switch(attr(v, "yNameClass"),
                    as.expression(substitute(list(Delta) * x,list(x=y$name))),
@@ -85,6 +85,6 @@ visregOverlayPlot <- function(v, partial, band, rug, ask, whitespace, legend, li
         }
       }
     }
-    toplegend(lev, col=line.args$col, lwd=line.args$lwd, lty=line.args$lty, ncol=min(length(lev), 5))
+    if (legend) toplegend(lev, col=line.args$col, lwd=line.args$lwd, lty=line.args$lty, ncol=min(length(lev), 5))
   }
 }
