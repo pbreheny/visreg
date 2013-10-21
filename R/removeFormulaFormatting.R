@@ -3,6 +3,7 @@ removeFormulaFormatting <- function(form) {
   f <- if (grepl("\\+",form)) unlist(strsplit(form, "\\+")) else form
   n.f <- length(f)
   for (i in 1:n.f) {
+    if (grepl("|", f[i], fixed=TRUE)) f[i] <- ""
     f[i] <- gsub(" ", "", f[i])
     f[i] <- gsub("\\blp\\(([^,]+).*\\)", "\\1", f[i])
     f[i] <- gsub("\\bs\\(([^,]+).*\\)", "\\1", f[i])
@@ -11,6 +12,7 @@ removeFormulaFormatting <- function(form) {
     f[i] <- gsub("\\bns\\(([^,]+).*\\)", "\\1", f[i])
     f[i] <- gsub("\\bpspline\\(([^,]+).*\\)", "\\1", f[i])
   }
+  f <- f[f!=""]
   val <- paste(f,collapse=" + ")
   val <- gsub("()","",val)
   val

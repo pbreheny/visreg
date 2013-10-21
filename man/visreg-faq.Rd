@@ -51,7 +51,7 @@
     \code{nlme} and \code{lme4} packages, so you cannot obtain
     confidence bands for conditional plots.  Nevertheless, \code{visreg}
     will produce plots of estimated coefficients and partial
-    residuals. 
+    residuals.
 
     Keep in mind, however, that, depending on what sort of predictions
     (BLUPs) you are interested in, random effects may or may not be
@@ -61,6 +61,15 @@
     \code{visreg} is the user's responsibility; I cannot hope to
     automatically decide this for all possible models that could be
     passed to visreg.
+
+    As mentioned above, you cannot obtain confidence bands for
+    conditional plots.  In the words of the authors of the \code{lme4}
+    package, "There is no option for computing standard errors of
+    predictions because it is difficult to define an efficient method
+    that incorporates uncertainty in the variance parameters"; hence no
+    \code{se.fit} option.  You can, however, get confidence bands for
+    \code{'contrast'} plots.  In a contrast plot, the random effects
+    cancel and the above issue is avoided.
 
     If you are running into difficulty using \code{visreg} with mixed
     models, feel free to e-mail me; comparatively little effort has been

@@ -1,3 +1,7 @@
+2.0-4
+      * Added some compatibility with models from the 'lme4' package
+      	(Thank you to Jack Hogg for pointing out this incompatibility)
+
 2.0-3
       * Added some compatibility with 'lme' models; conditional models
       	still cannot include error bands due to lack of this feature

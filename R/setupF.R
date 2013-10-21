@@ -1,4 +1,11 @@
 setupF <- function(fit, xvar, call.env) {
+  if (isS4(fit)) {
+    CALL <- fit@call
+    ENV <- NULL
+  } else {
+    CALL <- fit$call
+    ENV <- environment(fit$terms)
+  }
   if (class(fit)[1]=="locfit") {
     f <- model.frame(fit)
     for (j in 1:ncol(f)) names(f)[j] <- removeFormulaFormatting(names(f)[j])
@@ -6,26 +13,25 @@ setupF <- function(fit, xvar, call.env) {
     if ("data" %in% names(fit)) {
       Data <- fit$data
       env <- NULL
-    } else if (is.null(fit$call$data)) {
+    } else if (is.null(CALL$data)) {
       env <- NULL
       Data <- NULL
-    } else if (exists(as.character(fit$call$data), call.env)) {
+    } else if (exists(as.character(CALL$data), call.env)) {
       env <- call.env
-      Data <- eval(fit$call$data, envir=env)
-    } else if (exists(as.character(fit$call$data), environment(fit$terms))) {
-      env <- environment(fit$terms)
-      Data <- eval(fit$call$data, envir=env)
+      Data <- eval(CALL$data, envir=env)
+    } else if (exists(as.character(CALL$data), ENV)) {
+      Data <- eval(CALL$data, envir=ENV)
     } else {
       stop("visreg cannot find the data set used to fit your model")
     }
     f <- as.data.frame(as.list(get_all_vars(fit, Data)))
-    if (class(fit$call$random)=="call") {
-      rf <- as.data.frame(as.list(get_all_vars(fit$call$random, Data)))
+    if (class(CALL$random)=="call") {
+      rf <- as.data.frame(as.list(get_all_vars(CALL$random, Data)))
       rf <- rf[,setdiff(names(rf), names(f)),drop=FALSE]
       f <- cbind(f, rf)
     }
-    if ("subset" %in% names(fit$call)) {
-      s <- fit$call$subset
+    if ("subset" %in% names(CALL)) {
+      s <- CALL$subset
       subset <- eval(substitute(s), Data, env)
       f <- f[which(subset==TRUE),]
     } 

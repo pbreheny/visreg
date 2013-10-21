@@ -1,5 +1,4 @@
 Terms <- function(fit, f, x, trans, alpha, ...) {
-  level <- if ("level" %in% names(list(...))) list(...)$level else 0
   b <- if ("lme" %in% class(fit)) fixed.effects(fit) else coef(fit)
   if (class(fit)[1]=="mlm") {
     summ <- summary(fit)
