@@ -25,5 +25,4 @@ visreg(fit, "Petal.Width", by="Petal.Length")
 visreg2d(fit, "Petal.Width", "Petal.Length")
 visreg2d(fit, "Petal.Width", "Petal.Length", plot.type="persp")
 visreg2d(fit, "Petal.Width", "Petal.Length", plot.type="persp", type="contrast")
-\dontrun{visreg2d(fit, "Petal.Width", "Petal.Length", plot.type="rgl")} ## Doesn't really work
-
+#visreg2d(fit, "Petal.Width", "Petal.Length", plot.type="rgl") ## Doesn't really work

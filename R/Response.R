@@ -1,12 +1,21 @@
 Response <- function(fit, x, trans, alpha, ...) {
-  level <- if ("level" %in% names(list(...))) list(...)$level else 0
+  ## Calculate predictions, partial residuals
   rr <- residuals(fit)
   nr <- if (is.matrix(rr)) nrow(rr) else length(rr)
   if (nrow(x$D) != nr) warning("Residuals do not match data; have you changed the original data set?  If so, visreg is probably not displaying the residuals for the data set that was actually used to fit the model.")
-  r <- suppressWarnings(predict(fit, newdata=x$D, level=level)) + rr
+  predict.args <- list(object=fit, newdata=x$D, level=0, REform=NA)
+  dots <- list(...)
+  if (length(dots)) predict.args[names(dots)] <- dots
+  r <- suppressWarnings(do.call("predict", predict.args)) + rr
+  predict.args$newdata <- x$DD
   if (class(fit)[1]=="mlm") {
-    p <- list(fit = predict(fit, newdata=x$DD), se.fit = se.mlm(fit, newdata=x$DD))
-  } else p <- suppressWarnings(predict(fit, newdata=x$DD, se=TRUE, level=level))
+    p <- list(fit = suppressWarnings(do.call("predict", predict.args)), se.fit = se.mlm(fit, newdata=x$DD))
+  } else {
+    predict.args$se <- TRUE
+    p <- suppressWarnings(do.call("predict", predict.args))    
+  }
+  
+  ## Format output
   if (class(p)=="svystat") p <- list(fit=as.numeric(p), se.fit=sqrt(attr(p,"var")))
   if (is.numeric(p)) p <- list(fit=p, se.fit=NA)
   m <- ifelse(identical(class(fit),"lm"),qt(1-alpha/2,fit$df.residual),qnorm(1-alpha/2))

@@ -1,9 +1,10 @@
 2.0-4
-      * Added some compatibility with models from the 'lme4' package
-      	(Thank you to Jack Hogg for pointing out this incompatibility)
+      * Added compatibility with models from the 'lme4' package
+      	(Thank you to Jack Hogg for pointing out this incompatibility);
+	same limitations regarding error bands as 'lme' models
 
 2.0-3
-      * Added some compatibility with 'lme' models; conditional models
+      * Added compatibility with 'lme' models; conditional models
       	still cannot include error bands due to lack of this feature
 	in predict.lme, but the package will produce reasonable plots
 	of means and partial residuals (Thank you to Jason Rohr for 

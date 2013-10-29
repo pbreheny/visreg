@@ -53,14 +53,18 @@
     will produce plots of estimated coefficients and partial
     residuals.
 
-    Keep in mind, however, that, depending on what sort of predictions
-    (BLUPs) you are interested in, random effects may or may not be
-    incorporated into the plotted linear combinations of coefficients.
-    For example, in \code{nlme} this is controlled by the \code{level}
-    argument.  Passing the appropriate \code{level} to predict through
-    \code{visreg} is the user's responsibility; I cannot hope to
-    automatically decide this for all possible models that could be
-    passed to visreg.
+    Keep in mind, that depending on what sort of predictions (BLUPs) you
+    are interested in, you may need to manually control the inclusion
+    of random effects in your predictions.  By default, visreg includes
+    no random effects (i.e., \code{level=0} for \code{nlme} models and
+    \code{REform=NA} for \code{lme4} models).  If you are including a
+    random effect as a \code{by} variable in \code{visreg}, you most
+    likely want to add those effects back in, and you will have to do so
+    manually, by directly specifying the appropriate \code{level} or
+    \code{REform} argument to \code{predict} (see \code{?predict.nlme}
+    or \code{?predict.merMod}).  Handling this appropriately is the
+    user's responsibility; I cannot hope to automatically decide this
+    for all possible mixed models that could be passed to visreg.
 
     As mentioned above, you cannot obtain confidence bands for
     conditional plots.  In the words of the authors of the \code{lme4}
@@ -72,9 +76,9 @@
     cancel and the above issue is avoided.
 
     If you are running into difficulty using \code{visreg} with mixed
-    models, feel free to e-mail me; comparatively little effort has been
-    spent on testing \code{visreg} with mixed models, and there may
-    still be bugs to work out.
+    models, feel free to e-mail me; mixed models have been less
+    extensively tested with \code{visreg} than fixed-effect models, and
+    there may still be bugs to work out.
 
     \item \bold{How do I use visreg for a model with offset terms?}
 
