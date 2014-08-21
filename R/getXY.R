@@ -5,6 +5,7 @@ getXY <- function(fit, f, name, nn, cond, type, trans, xtrans, alpha, jitter, ..
   } else if (type=="contrast") {
     x <- setupX(fit, f, name, nn, cond, ...)
     y <- Terms(fit, f, x, trans, alpha, ...)
+    x <- setupD(fit, f, name, nn, cond, ...)
   }
   
   if (jitter) x$x <- jitter(x$x)

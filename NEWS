@@ -1,3 +1,11 @@
+2.1-0
+      * Major overhaul to visreg's internal structure.  visreg now returns
+      	proper objects that a user can modify and inspect prior to plotting.
+      * Fixed formula parsing so that it now works properly for te() and ti()
+      	models (from the 'mgcv' package).
+      * Changed defaults so that rugs are plotted instead of partial residuals
+      	a transformation has been applied.
+
 2.0-4
       * Added compatibility with models from the 'lme4' package
       	(Thank you to Jack Hogg for pointing out this incompatibility);

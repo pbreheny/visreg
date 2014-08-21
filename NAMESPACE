@@ -1,1 +1,2 @@
+import("lattice")
 export(visreg,visreg2d)

@@ -9,6 +9,7 @@ visreg(fit, "Petal.Width", by="Species")
 visreg(fit, "Species", by="Petal.Width")
 
 ## Rug
+par(mfrow=c(3,1), mar=c(5, 5, 0.5, 0.5))
 visreg(fit, "Petal.Width", rug=TRUE, jitter=TRUE)
 visreg(fit, "Petal.Width", rug=TRUE, jitter=TRUE, type="contrast")
 visreg(fit, "Species", rug=TRUE)

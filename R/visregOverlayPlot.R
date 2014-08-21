@@ -1,90 +1,72 @@
 visregOverlayPlot <- function(v, partial, band, rug, ask, whitespace, legend, line.par, fill.par, points.par, ...) {
-  lev <- attr(v, "lev")
-  if (ask & v[[1]]$y$n > 1 & prod(par("mfcol")) < v[[1]]$y$n & dev.interactive()) {
-    oask <- devAskNewPage(TRUE)
-    on.exit(devAskNewPage(oask))
+  ## Setup
+  x <- v$res[,v$meta$x]
+  y <- v$res$visregRes
+  b <- v$res[,v$meta$by]
+  xx <- v$fit[,v$meta$x]
+  yy <- v$fit$visregFit
+  bb <- v$fit[,v$meta$by]
+  lev <- unique(bb)
+  lwr <- v$fit$visregLwr
+  upr <- v$fit$visregUpr
+  xlim <- if (is.factor(xx)) c(0,1) else range(xx)
+  if (partial) {
+    ylim <- range(c(y, lwr, upr), na.rm=TRUE)
+  } else {
+    ylim <- range(c(yy, lwr, upr), na.rm=TRUE)
   }
-  for (j in 1:v[[1]]$y$n) {
-    lframe <- lresids <- NULL
-    for (i in 1:length(v)) {
-      x <- v[[i]]$x
-      y <- v[[i]]$y
-      if (y$n > 1) {
-        Y <- y
-        y <- list(fit=Y$fit[,j], lwr=Y$lwr[,j], upr=Y$upr[,j], r=Y$r[,j])
-        y$name <- colnames(Y$fit)[j]
+  ylab <- switch(v$meta$yNameClass,
+                 as.expression(substitute(list(Delta) * x,list(x=v$meta$y))),
+                 v$meta$y,
+                 paste("f(", v$meta$x, ")", sep=""))
+  plot.args <- list(x=1, y=1, ylim=ylim, xlab=v$meta$x, ylab=ylab, type="n", xlim=xlim, xaxt=ifelse(is.factor(xx),'n','s'), las=1)
+  new.args <- list(...)
+  if (length(new.args)) plot.args[names(new.args)] <- new.args
+  do.call("plot", plot.args)
+  col <- pal(length(lev))
+  acol <- pal(length(lev), alpha=0.5)
+  line.args <- list(lwd=3, col=col, lty=1)
+  if (length(line.par)) line.args[names(line.par)] <- line.par
+  points.args <- list(pch=19, cex=0.4, col=col)
+  if (length(points.par)) points.args[names(points.par)] <- points.par
+  fill.args <- list(col=acol, border=F)
+  if (length(fill.par)) fill.args[names(fill.par)] <- fill.par
+  
+  for (i in 1:length(lev)) {
+    current.level <- lev[i]
+    indfit <- v$fit[,v$meta$by]==current.level
+    indres <- v$res[,v$meta$by]==current.level
+    fun <- function(x) if (length(x)==length(lev)) x[i] else x
+    line.args.i <- lapply(line.args, fun)
+    points.args.i <- lapply(points.args, fun)
+    fill.args.i <- lapply(fill.args, fun)
+    if (is.factor(x)) {
+      ax <- if (i==1) TRUE else FALSE
+      if (("xaxt" %in% names(new.args)) && new.args$xaxt=="n") ax <- FALSE
+      v.i <- v
+      v.i$fit <- subset(v.i$fit, indfit)
+      v.i$res <- subset(v.i$res, indres)
+      factorPlot(v.i, partial, band, rug, whitespace, line.args.i, fill.args.i, points.args.i, ax=ax)
+    } else {
+      if (band) {
+        fill.args.i$x <- c(xx[indfit],rev(xx[indfit]))
+        fill.args.i$y <- c(lwr[indfit],rev(upr[indfit]))
+        do.call("polygon", fill.args.i)
       }
-      lframe.i <- data.frame(xx=x$xx, fit=y$fit, upr=y$upr, lwr=y$lwr, by=lev[i])
-      lframe <- rbind(lframe, lframe.i)
-      lresids.i <- data.frame(x=x$x, r=y$r, by=lev[i])
-      lresids <- rbind(lresids, lresids.i)
-    }
-    lframe$by <- factor(lframe$by, levels=lev)
-    lresids$by <- factor(lresids$by, levels=lev)
-    if (x$factor) {
-      if (partial) lresids$x <- factor(lresids$x, levels=levels(x$x))
-      lframe$xx <- factor(lframe$xx, levels=levels(x$x))
-    }
-    
-    if (x$factor) xlim <- c(0,1) else xlim <- range(x$xx)
-    if (partial) {
-      ylim <- range(c(lresids$r, lframe$lwr, lframe$upr), na.rm=TRUE)
-    } else ylim <- range(c(lframe$fit, lframe$lwr, lframe$upr), na.rm=TRUE)
-    
-    ylab <- switch(attr(v, "yNameClass"),
-                   as.expression(substitute(list(Delta) * x,list(x=y$name))),
-                   y$name,
-                   paste("f(", x$name, ")", sep=""))
-
-    plot.args <- list(x=1, y=1, ylim=ylim, xlab=x$name, ylab=ylab, type="n", xlim=xlim, xaxt=ifelse(x$factor,'n','s'), las=1)
-    new.args <- list(...)
-    if (length(new.args)) plot.args[names(new.args)] <- new.args
-    do.call("plot", plot.args)
-    col <- pal(length(v))
-    acol <- pal(length(v), alpha=0.5)
-    line.args <- list(lwd=3, col=col, lty=1)
-    if (length(line.par)) line.args[names(line.par)] <- line.par
-    points.args <- list(pch=19, cex=0.4, col=col)
-    if (length(points.par)) points.args[names(points.par)] <- points.par
-    fill.args <- list(col=acol, border=F)
-    if (length(fill.par)) fill.args[names(fill.par)] <- fill.par
-    
-    for (i in 1:length(v)) {
-      x <- v[[i]]$x
-      y <- v[[i]]$y
-      fun <- function(x) if (length(x)==length(v)) x[i] else x
-      line.args.i <- lapply(line.args, fun)
-      points.args.i <- lapply(points.args, fun)
-      fill.args.i <- lapply(fill.args, fun)
-      if (y$n > 1) {
-        Y <- y
-        y <- list(fit=Y$fit[,j], lwr=Y$lwr[,j], upr=Y$upr[,j], r=Y$r[,j])
-        y$name <- colnames(Y$fit)[j]
+      line.args.i$x <- xx[indfit]
+      line.args.i$y <- yy[indfit]
+      do.call("lines", line.args.i)
+      if (partial) {
+        points.args.i$x <- x[indres]
+        points.args.i$y <- y[indres]
+        do.call("points", points.args.i)
       }
-      if (x$factor) {
-        ax <- if (i==1) TRUE else FALSE
-        factorPlot(x, y, partial, band, rug, whitespace, line.args.i, fill.args.i, points.args.i, ax=ax)
-      } else {
-        if (band) {
-          fill.args.i$x <- c(x$xx,rev(x$xx))
-          fill.args.i$y <- c(y$lwr,rev(y$upr))
-          do.call("polygon", fill.args.i)
-        }
-        line.args.i$x <- x$xx
-        line.args.i$y <- y$fit
-        do.call("lines", line.args.i)
-        if (partial) {
-          points.args.i$x <- x$x
-          points.args.i$y <- y$r
-          do.call("points", points.args.i)
-        }
-        if (rug==1) rug(x$x, side=1)
-        if (rug==2) {
-          rug(x$x[!y$pos], side=1)
-          rug(x$x[y$pos], side=3)
-        }
+      if (rug==1) rug(x[indres], side=1, col=line.args.i$col)
+      if (rug==2) {
+        rug(x[indres][!y[v$res$visregPos[indres]]], side=1, col=line.args.i$col)
+        rug(x[indres][y[v$res$visregPos[indres]]], side=3, col=line.args.i$col)
       }
     }
-    if (legend) toplegend(lev, col=line.args$col, lwd=line.args$lwd, lty=line.args$lty, ncol=min(length(lev), 5))
   }
+  if (legend) toplegend(lev, col=line.args$col, lwd=line.args$lwd, lty=line.args$lty, ncol=min(length(lev), 5))
 }

@@ -3,9 +3,10 @@ require(visreg)
 ## Basic
 fit <- lm(Ozone ~ Solar.R + Wind + Temp, data=airquality)
 par(mfrow=c(1,3))
+visreg(fit)
+par(mfrow=c(1,1))
 visreg(fit,"Wind")
 visreg(fit,"Wind",type="contrast")
-visreg(fit,c("Solar.R","Wind","Temp"))
 
 ## Transformations of X
 fit <- lm(Ozone ~ Solar.R + Wind + Temp + I(Wind^2), data=airquality)
@@ -16,7 +17,7 @@ visreg(fit, "Temp")
 
 ## Transformations of y
 fit <- lm(log(Ozone) ~ Solar.R + Wind + Temp,data=airquality)
-visreg(fit,"Wind",trans=exp,ylab="Ozone")
+visreg(fit,"Wind", trans=exp, ylab="Ozone")
 fit <- lm(sqrt(Ozone) ~ Solar.R + Wind + Temp,data=airquality)
 visreg(fit, "Wind", trans=function(x) x^2, ylab="Ozone")
 
@@ -61,8 +62,8 @@ visreg(fit,"Heat", by="Wind", cond=list(Solar.R=500))
 ## Extrapolation
 fit <- lm(Ozone ~ Solar.R + Wind + Temp, data=airquality)
 par(mfrow=c(1,1))
-visreg(fit, "Temp", xlim=c(50,100))
-visreg(fit, "Temp", type="contrast", xlim=c(50,100))
+visreg(fit, "Temp", xlim=c(50,150))
+visreg(fit, "Temp", type="contrast", xlim=c(50,150))
 
 ## Rug
 airquality$Heat <- cut(airquality$Temp,3,labels=c("Cool","Mild","Hot"))
