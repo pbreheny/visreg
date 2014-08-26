@@ -3,8 +3,19 @@
       	proper objects that a user can modify and inspect prior to plotting.
       * Fixed formula parsing so that it now works properly for te() and ti()
       	models (from the 'mgcv' package).
-      * Changed defaults so that rugs are plotted instead of partial residuals
-      	a transformation has been applied.
+
+2.0-6
+      * Fixed issue with S4 models not being compatible with
+      	as.formula().  visreg now refrains from calling as.formula.
+	Thank you to Nick Livingston for bringing this issue to my
+	attention.
+      * Changed defaults so that rugs are plotted instead of partial
+      	residuals when a transformation has been applied.
+
+2.0-5
+      * Fixed bug arising when passing plot options such as 'xlim'
+      	when used in conjunction with lme4 models.  Thank you to
+	Vincent Maire for pointing this bug out.
 
 2.0-4
       * Added compatibility with models from the 'lme4' package

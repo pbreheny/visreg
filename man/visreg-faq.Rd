@@ -105,8 +105,25 @@
     Note also that to ensure proper functionality with all of visreg's
     options, the use of the \code{offset()} function, rather than the
     \code{offset=} argument, is recommended.
-  }
-}
+
+    \item \bold{Why doesn't visreg work with models I fit with package
+      XXX?}
+
+    \code{visreg()} relies on being able to call certain generic
+    functions to interface with the fitted model object that is passed
+    to it.  Specifically, if \code{fit} is the fit of a model that is
+    passed to \code{visreg}, the following have to work:
+
+    \code{model.frame(fit)}
+    \code{formula(fit)}
+
+    If they do not, there is nothing I can really do on the
+    \code{visreg} end to get it to work -- the author of the package
+    would need to add support for those generic functions to make it
+    more portable.  If the above lines of code \emph{do} work and
+    \code{visreg} still fails, please let me know -- perhaps there is a
+    bug somewhere that I can fix.
+}}
 \author{
   Patrick Breheny and Woodrow Burchett
   

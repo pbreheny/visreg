@@ -24,7 +24,8 @@ setupF <- function(fit, xvar, call.env) {
     } else {
       stop("visreg cannot find the data set used to fit your model")
     }
-    f <- as.data.frame(as.list(get_all_vars(fit, Data)))
+    form <- formula(fit)
+    f <- as.data.frame(as.list(get_all_vars(form, Data)))
     if (class(CALL$random)=="call") {
       rf <- as.data.frame(as.list(get_all_vars(CALL$random, Data)))
       rf <- rf[,setdiff(names(rf), names(f)),drop=FALSE]
