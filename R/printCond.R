@@ -8,7 +8,7 @@ printCond <- function(v, warn=FALSE) {
   for (j in 1:ncol(X)) if (is.factor(X[,j])) X[,j] <- as.character(X[,j])
   cat("Conditions used in construction of plot\n")
   for (j in varying.columns) {
-    x <- paste(X[,j], collapse= " / ")
+    x <- paste(unique(X[,j]), collapse= " / ")
     cat(names(X)[j], ": ", x, "\n", sep="")
   }    
   for (j in constant.columns) {

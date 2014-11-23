@@ -5,7 +5,7 @@ setupD <- function(fit, f, name, nn, cond, whitespace, ...) {
   names(xdf) <- name
   df <- fillFrame(f, xdf, cond)
   
-  form <- removeFormulaFormatting(formula(fit)[3])
+  form <- parseFormula(formula(fit)[3])
   D <- model.frame(as.formula(paste("~",form)),df)
   condNames <- setdiff(names(D), name)
   condNames <- intersect(condNames, names(df))

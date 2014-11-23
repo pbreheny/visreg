@@ -8,17 +8,25 @@ setupX <- function(fit, f, name, nn, cond, ...) {
   D <- rbind(f[,names(df)], df)
   form <- formula(fit)[3]
   
-  b <- if ("lme" %in% class(fit)) fixed.effects(fit) else coef(fit)
-  
+  if ("lme" %in% class(fit)) {
+    b <- nlme::fixed.effects(fit)
+  } else if (sum(grep("merMod", class(fit)))) {
+    b <- fit@beta
+  } else {
+    b <- coef(fit)
+  }
+
   if (class(fit)[1]=="mlm") {
     ind <- apply(is.finite(b), 1, all)
     if (!identical(ind, apply(is.finite(b), 1, any))) stop("Inconsistent NA/NaN coefficients across outcomes")
   } else ind <- is.finite(b)
   if (class(fit)[1]=="gam") {
-    form <- removeFormulaFormatting(formula(fit)[3])
+    form <- parseFormula(formula(fit)[3])
     D <- model.frame(as.formula(paste("~",form)),df)
     X. <- predict(fit, newdata=as.list(D), type="lpmatrix")    
-  } else X. <- model.matrix(as.formula(paste("~",form)),D)[-(1:nrow(f)), ind]
+  } else {
+    X. <- model.matrix(as.formula(paste("~",form)),D)[-(1:nrow(f)), ind]
+  }
   X <- t(t(X.[-1,])-X.[1,])
   
   ## Set up data frame with nn rows for prediction
@@ -39,11 +47,11 @@ setupX <- function(fit, f, name, nn, cond, ...) {
   XX <- t(t(XX.[-1,])-XX.[1,])
   
   ## Remove extraneous intercept for coxph
-  if (class(fit)[1]=="coxph") {
+  if ("coxph" %in% class(fit)) {
     XX <- XX[,-which(colnames(XX)=="(Intercept)"),drop=FALSE]
     X <- X[,-which(colnames(X)=="(Intercept)"),drop=FALSE]
   }
-  condNames <- names(model.frame(as.formula(paste("~", removeFormulaFormatting(formula(fit)[3]))), df))
+  condNames <- names(model.frame(as.formula(paste("~", parseFormula(formula(fit)[3]))), df))
   condNames <- setdiff(condNames, name)
   condNames <- intersect(condNames, names(df))
   return(list(x=x[-1], xx=xx[-1], X=X, XX=XX, factor=is.factor(x), name=name, cond=df[1,condNames,drop=FALSE]))

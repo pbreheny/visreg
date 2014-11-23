@@ -4,7 +4,7 @@ setupV <- function(fit, f, xvar, nn, cond, type, trans, xtrans, alpha, jitter, b
   ## Initial setup
   if (length(xvar) > 1 & length(cond) > 1) stop("Cannot specify 'by' and multiple x variables simultaneously")
   J <- max(length(xvar), length(cond))
-  hasInteraction <- (max(attr(terms(formula(fit)), "order")) > 1)
+  hasInteraction <- (max(attr(terms(as.formula(formula(fit))), "order")) > 1)
   lev <- attr(cond, "lev")
 
   ## Get xy list

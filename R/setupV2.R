@@ -2,7 +2,7 @@
 ## Returns a list of x, y, and z for plotting
 setupV2 <- function(fit, f, xvar, yvar, nn, cond, type, trans) {
   n.z <- if (class(fit)[1]=="mlm") ncol(coef(fit)) else 1
-  form <- removeFormulaFormatting(formula(fit)[3])
+  form <- parseFormula(formula(fit)[3])
   x <- f[,xvar]
   y <- f[,yvar]
   xx <- if(is.factor(x)) factor(levels(x),levels=levels(x)) else seq(min(x),max(x),length=nn)

@@ -3,7 +3,7 @@ Response <- function(fit, x, trans, alpha, ...) {
   rr <- residuals(fit)
   nr <- if (is.matrix(rr)) nrow(rr) else length(rr)
   if (nrow(x$D) != nr) warning("Residuals do not match data; have you changed the original data set?  If so, visreg is probably not displaying the residuals for the data set that was actually used to fit the model.")
-  predict.args <- list(object=fit, newdata=x$D, level=0, REform=NA)
+  predict.args <- list(object=fit, newdata=x$D, level=0, re.form=NA)
   dots <- list(...)
   if (length(dots)) predict.args[names(dots)] <- dots
   r <- suppressWarnings(do.call("predict", predict.args)) + rr

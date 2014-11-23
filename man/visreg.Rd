@@ -1,20 +1,18 @@
 \name{visreg}
 \alias{visreg}
-\title{Visualization of regression functions for a single variable}
+\title{Visualization of regression functions}
 \description{
 A function for visualizing regression models quickly and easily.
 Default plots contain a confidence band, prediction line, and partial
 residuals.  Factors, transformations, conditioning, interactions, and a
-variety of other options are supported. 
+variety of other options are supported.  The \code{visreg} function
+performs the calculations and, if \code{plot=TRUE} (the default), these
+calculations are passed to \code{plot.visreg} for plotting.
 }
 \usage{
-visreg(fit, xvar, by, overlay=FALSE, breaks=3, type=c("conditional",
-"contrast", "effect"), trans=I, scale=c("linear","response"), xtrans,
-alpha=.05, nn=101, cond=list(), print.cond=missing(by) &
-(max(attr(terms(formula(fit)), "order"))>1), whitespace=0.2,
-partial=(!rug), band=TRUE, rug=FALSE, jitter=FALSE,
-strip.names=is.numeric(attr(v, "lev")), legend=TRUE, ask=TRUE,
-line.par=NULL, fill.par=NULL, points.par=NULL, ...) 
+visreg(fit, xvar, by, breaks=3, type=c("conditional", "contrast",
+"effect"), trans=I, scale=c("linear","response"), xtrans,  alpha=.05,
+nn=101, cond=list(), jitter=FALSE, plot=TRUE, ...)
 }
 \arguments{
   
@@ -35,12 +33,6 @@ line.par=NULL, fill.par=NULL, points.par=NULL, ...)
     particularly useful for visualizing models with interactions.
     Supplied as a character string.  Uses the lattice package.  Both
     continuous variables and factors are supported.
-  }
-  
-  \item{overlay}{
-    When \code{by} is specified, by default separate panels are used to
-    display each cross-section.  If \code{overlay=TRUE}, these cross-sections
-    are overlaid on top of each other in a single plot.
   }
   
   \item{breaks}{
@@ -68,15 +60,18 @@ line.par=NULL, fill.par=NULL, points.par=NULL, ...)
     }
     For more details, see references.
   }
+  
   \item{trans}{
     (Optional) A function specifying a transformation for the vertical axis.
   }
+  
   \item{scale}{
     By default, the model is plotted on the scale of the linear
     predictor.  If \code{scale='response'} for a glm, the inverse link
     function will be applied so that the model is plotted on the scale
     of the original response.
   }
+  
   \item{xtrans}{
     (Optional) A function specifying a transformation for the horizontal axis.
     Note that, for model terms such as \code{log(x)}, visreg automatically
@@ -86,11 +81,13 @@ line.par=NULL, fill.par=NULL, points.par=NULL, ...)
     Alpha level (1-coverage) for the confidence band displayed in the plot
     (default: 0.05).
   }
+  
   \item{nn}{
     Controls the smoothness of the line and confidence band.  Increasing
     this number will add to the computational burden, but produce a smoother
     plot (default: 101).
   }
+  
   \item{cond}{
     Named list specifying conditional values of other explanatory variables.
     By default, conditional plots in visreg are constructed by filling in 
@@ -98,84 +95,42 @@ line.par=NULL, fill.par=NULL, points.par=NULL, ...)
     most common category (for factors), but this can be overridden by specifying
     their values using \code{cond} (see examples).
   }
-  \item{print.cond}{
-    If \code{print.cond=TRUE}, the explanatory variable values conditioned on
-    in a conditional plot are printed to the console (default: \code{FALSE}).
-    If \code{print.cond=TRUE} and \code{type="contrast"}, the conditions will
-    still be printed, but they have no bearing on the plot unless interactions
-    are present.
-  }  
-  \item{whitespace}{
-    When \code{xvar} is a factor, whitespace determines the amount of space in
-    between factors on the x-axis.  Default is 0.2, meaning that 20 percent of
-    the horizontal axis is whitespace.
-  }
-  \item{partial}{
-    If \code{partial=TRUE} (the default), partial residuals are shown on
-    the plot. 
-  }
-  \item{band}{
-    If \code{band=TRUE} (the default), confidence bands are shown on the plot.
-  }
-  \item{rug}{
-    By default, partial residuals are plotted.  Alternatively, a
-    \code{\link{rug}} may be plotted along the horizontal axis instead.
-    Setting \code{rug=TRUE} turns off partial residuals by default; if
-    one wants both to be plotted, both \code{rug=TRUE} and
-    \code{partial=TRUE} need to be specified.  Two types of rug plots
-    are available.  If \code{rug=1} or \code{rug=TRUE}, then a basic rug
-    is drawn on the bottom.  If \code{rug=2}, then separate rugs are
-    drawn on the top for observations with positive residuals and on the
-    bottom for observations with negative residuals.  Such plots are
-    particularly useful in logistic regression (see examples).
-  }
+  
   \item{jitter}{
     Adds a small amount of noise to \code{xvar}.  Potentially useful if many
     observations have exactly the same value.  Default is FALSE.
   }
-  \item{strip.names}{
-    When \code{by=TRUE}, \code{strip.names=TRUE} adds the name of the
-    \code{by} variable to the strip at the top of each panel.  Default
-    is \code{FALSE} for factors and \code{TRUE} for numeric \code{by}
-    variables.  \code{strip.names} can also be a character vector, in
-    which case it replaces the strip names altogether with values chosen
-    by the user.
+  
+  \item{plot}{
+    Send the calculations to \code{plot.visreg}?  Default is TRUE.
   }
-  \item{legend}{
-    For overlay plots, (\code{overlay=TRUE}), should visreg create a
-    legend?  If \code{legend=TRUE} (the default), a legend is placed in
-    the top margin.
-  }
-  \item{ask}{
-    By default (\code{ask=TRUE}), if multiple plots are requested (for
-    example, by passing a vector to \code{xvar}) and the result would
-    cause some of the graphs to be on one figure and others on a
-    different figure, \code{visreg} will prompt the user before moving
-    to the next figure.  The prompting can be turned off with
-    \code{ask=FALSE}.
-  }
-  \item{line.par}{
-    List of parameters (see \code{\link{par}}) to pass to \code{lines(...)}
-    when lines are drawn in the plots.
-  }
-  \item{fill.par}{
-    List of parameters (see \code{\link{par}}) to pass to \code{polygon(...)}
-    when shaded confidence regions are drawn in the plots.
-  }
-  \item{points.par}{
-    List of parameters (see \code{\link{par}}) to pass to \code{points(...)}
-    when partial residuals are drawn in the plots.
-  }
+  
   \item{\dots}{
-    Graphical parameters can be passed to the function to customize the
-    plots.  If \code{by=TRUE}, lattice parameters can be passed, such as
-    layout (see examples below).
+    Graphical parameters (e.g., \code{ylab}) can be passed to the
+    function to customize the plots.  If \code{by=TRUE}, lattice
+    parameters can be passed, such as layout (see examples below).
   }
 }
+\details{
+  See \code{\link{plot.visreg}} for plotting options, such as changing
+  the appearance of points, lines, confidence bands, etc.
+}
 \value{
-  In addition to providing plots, the visreg function also invisibly
-  returns the data frames, estimates, confidence intervals, and
-  residuals used in the creation of its plots (see last example).
+  A \code{visreg} or \code{visreg.list} object (which is simply a list
+    of \code{visreg} objects).  A \code{visreg} object has three
+    components:
+  \item{fit}{A data frame with \code{nn} rows containing the fit of the
+    model as \code{xvar} varies, along with lower and upper confidence
+    bounds (named \code{visregFit}, \code{visregLwr}, and
+    \code{visregUpr}, respectively). The fitted matrix of coefficients.}
+  \item{res}{A data frame with \code{n} rows, where \code{n} is the
+    number of observations in the original data set used to model.  This
+    frame contains information about the residuals, named
+    \code{visregReg} and \code{visregPos}; the latter records whether
+    the residual was positive or negative.}
+  \item{meta}{Contains meta-information needed to construct plots, such
+    as the name of the x and y variables, whether there were any
+    \code{by} variables, etc.}
 }
 \references{
   Breheny, P. and Burchett, W. (2012), Visualizing regression models
@@ -186,6 +141,7 @@ line.par=NULL, fill.par=NULL, points.par=NULL, ...)
   Patrick Breheny and Woodrow Burchett
 }
 \seealso{
+  \code{\link{plot.visreg}}
   \code{\link{visreg2d}}
   \code{\link{visreg-faq}}
 }

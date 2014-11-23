@@ -1,4 +1,4 @@
-visregOverlayPlot <- function(v, partial, band, rug, ask, whitespace, legend, line.par, fill.par, points.par, ...) {
+visregOverlayPlot <- function(v, partial, band, rug, ask, whitespace, legend, strip.names, line.par, fill.par, points.par, ...) {
   ## Setup
   x <- v$res[,v$meta$x]
   y <- v$res$visregRes
@@ -68,5 +68,14 @@ visregOverlayPlot <- function(v, partial, band, rug, ask, whitespace, legend, li
       }
     }
   }
-  if (legend) toplegend(lev, col=line.args$col, lwd=line.args$lwd, lty=line.args$lty, ncol=min(length(lev), 5))
+  if (legend) {
+    if (identical(strip.names, FALSE)) {
+      lgtext <- lev
+    } else if (identical(strip.names, TRUE)) {
+      lgtext <- paste(v$meta$by, lev, sep=" : ")
+    } else {
+      lgtext <- strip.names
+    }
+    toplegend(lgtext, col=line.args$col, lwd=line.args$lwd, lty=line.args$lty, ncol=min(length(lev), 5))
+  }
 }

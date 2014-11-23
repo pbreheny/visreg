@@ -1,5 +1,5 @@
 visreg <- function(fit, xvar, by, breaks=3, type=c("conditional", "contrast", "effect"), trans=I, scale=c("linear","response"), xtrans, 
-                   alpha=.05, nn=101, cond=list(), jitter=FALSE, ...) {
+                   alpha=.05, nn=101, cond=list(), jitter=FALSE, plot=TRUE, ...) {
   ## Setup
   type <- match.arg(type)
   scale <- match.arg(scale)
@@ -19,6 +19,6 @@ visreg <- function(fit, xvar, by, breaks=3, type=c("conditional", "contrast", "e
   v <- setupV(fit, f, xvar, nn, cond, type, trans, xtrans, alpha, jitter, by, yNameClass, ...)
   
   ## Plot/return
-  plot(v, ...)
+  if (plot) plot(v, ...)
   invisible(v)
 }

@@ -6,39 +6,34 @@ setupF <- function(fit, xvar, call.env) {
     CALL <- fit$call
     ENV <- environment(fit$terms)
   }
-  if (class(fit)[1]=="locfit") {
-    f <- model.frame(fit)
-    for (j in 1:ncol(f)) names(f)[j] <- removeFormulaFormatting(names(f)[j])
+  if ("data" %in% names(fit)) {
+    Data <- fit$data
+    env <- NULL    
+  } else if (is.null(CALL$data)) {
+    env <- NULL
+    Data <- NULL
+  } else if (exists(as.character(CALL$data), call.env)) {
+    env <- call.env
+    Data <- eval(CALL$data, envir=env)
+  } else if (exists(as.character(CALL$data), ENV)) {
+    Data <- eval(CALL$data, envir=ENV)
   } else {
-    if ("data" %in% names(fit)) {
-      Data <- fit$data
-      env <- NULL
-    } else if (is.null(CALL$data)) {
-      env <- NULL
-      Data <- NULL
-    } else if (exists(as.character(CALL$data), call.env)) {
-      env <- call.env
-      Data <- eval(CALL$data, envir=env)
-    } else if (exists(as.character(CALL$data), ENV)) {
-      Data <- eval(CALL$data, envir=ENV)
-    } else {
-      stop("visreg cannot find the data set used to fit your model")
-    }
-    form <- formula(fit)
-    f <- as.data.frame(as.list(get_all_vars(form, Data)))
-    if (class(CALL$random)=="call") {
-      rf <- as.data.frame(as.list(get_all_vars(CALL$random, Data)))
-      rf <- rf[,setdiff(names(rf), names(f)),drop=FALSE]
-      f <- cbind(f, rf)
-    }
-    if ("subset" %in% names(CALL)) {
-      s <- CALL$subset
-      subset <- eval(substitute(s), Data, env)
-      f <- f[which(subset==TRUE),]
-    } 
+    stop("visreg cannot find the data set used to fit your model; try attaching it to the fit with fit$data <- myData")
   }
+  form <- formula(fit)
+  f <- as.data.frame(as.list(get_all_vars(form, Data)))
+  if (class(CALL$random)=="call") {
+    rf <- as.data.frame(as.list(get_all_vars(CALL$random, Data)))
+    rf <- rf[,setdiff(names(rf), names(f)),drop=FALSE]
+    f <- cbind(f, rf)
+  }
+  if ("subset" %in% names(CALL)) {
+    s <- CALL$subset
+    subset <- eval(substitute(s), Data, env)
+    f <- f[which(subset==TRUE),]
+  } 
   suppressWarnings(f <- f[!apply(is.na(f), 1, any),])
-  
+
   ## Handle some variable type issues
   needsUpdate <- FALSE
   if (any(sapply(model.frame(fit),class)=="character")) needsUpdate <- TRUE
