@@ -8,6 +8,12 @@ visregLatticePlot <- function(v, partial, band, rug, ask, whitespace, strip.name
   bb <- v$fit[,v$meta$by]
   lwr <- v$fit$visregLwr
   upr <- v$fit$visregUpr
+  
+  if (is.factor(bb)) {
+    b <- droplevels(b)
+    bb <- droplevels(bb)
+  }
+  
   xlim <- if (is.factor(xx)) c(0,1) else range(xx)
   if (partial) {
     ylim <- range(c(y, lwr, upr), na.rm=TRUE)

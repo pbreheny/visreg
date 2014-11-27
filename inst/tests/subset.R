@@ -1,0 +1,6 @@
+airquality$Heat <- cut(airquality$Temp,3,labels=c("Cool","Mild","Hot"))
+fit <- lm(Ozone~ Solar.R + Wind*Heat,data=airquality)
+v <- visreg(fit, "Wind", by="Heat")
+v$res <- subset(v$res, Heat=="Hot")
+v$fit <- subset(v$fit, Heat=="Hot")
+plot.visreg(v)

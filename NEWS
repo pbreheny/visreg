@@ -9,7 +9,8 @@
 	Vitale for giving me a good, complex model formula to test
 	against).
       * Bug fixes with strip.names: now works for factors and shingles
-      	for both overlay and lattice plots.
+      	for both overlay and lattice plots (thank you to Dan Silver
+	for pointing this out).
 
 2.0-6
       * Fixed issue with S4 models not being compatible with
