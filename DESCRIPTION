@@ -1,11 +1,11 @@
 Package: visreg
-Title: Visualization of regression models
+Title: Visualization of Regression Models
 Version: 2.1-0
 Date: 2014-11-27
 Author: Patrick Breheny, Woodrow Burchett
 Maintainer: Patrick Breheny <patrick-breheny@uiowa.edu>
 Imports: lattice
 Suggests: rgl, survival, MASS, nlme
-Description: Provides convenient interface for constructing plots to visualize the fit of regression models arising from a wide variety of models in R (lm, glm, coxph, rlm, gam, locfit, etc.)
+Description: Provides a convenient interface for constructing plots to visualize the fit of regression models arising from a wide variety of models in R (lm, glm, coxph, rlm, gam, locfit, etc.)
 License: GPL-2
 URL: http://myweb.uiowa.edu/pbreheny/publications/visreg.pdf
