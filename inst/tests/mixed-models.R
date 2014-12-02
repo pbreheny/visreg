@@ -22,3 +22,12 @@ fit <- lmer(y ~ x + (1|ID), data=df)
 visreg(fit, "x")
 visreg(fit, "x", by="ID")
 visreg(fit, "x", by="ID", re.form = ~1|ID) ## Adds random effects back in
+
+visreg(fit, "x", by="ID", overlay=TRUE, strip.names=TRUE)
+visreg(fit, "x", by="ID", overlay=TRUE, strip.names=FALSE)
+visreg(fit, "x", by="ID", overlay=TRUE, strip.names=LETTERS[1:10])
+predict(fit, newdata=model.frame(fit), strip.names=LETTERS[1:2])
+
+visreg(fit, "x", type="contrast")
+visreg(fit, "x", by="ID", type="contrast")
+visreg(fit, "x", by="ID", re.form = ~1|ID) ## Adds random effects back in

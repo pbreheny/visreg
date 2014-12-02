@@ -1,3 +1,6 @@
+2.1-1
+      * Some bug fixes for contrast plots with lme4 models.
+
 2.1-0
       * Major overhaul to visreg's internal structure.  visreg now
         returns simple, structured objects that a user can modify and

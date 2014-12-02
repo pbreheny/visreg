@@ -1,5 +1,12 @@
 Terms <- function(fit, f, x, trans, alpha, ...) {
-  b <- if ("lme" %in% class(fit)) nlme::fixed.effects(fit) else coef(fit)
+  if ("lme" %in% class(fit)) {
+    b <- nlme::fixed.effects(fit)
+  } else if (sum(grep("merMod", class(fit)))) {
+    b <- fit@beta
+  } else {
+    b <- coef(fit)
+  }
+
   if (class(fit)[1]=="mlm") {
     summ <- summary(fit)
     n.y <- length(summ)
@@ -23,7 +30,7 @@ Terms <- function(fit, f, x, trans, alpha, ...) {
     r <- x$X%*%b[is.finite(b)] + rr
   }
   if (!all(is.finite(b))) warning("prediction from a rank-deficient fit may be misleading")
-  m <- ifelse("coxph" %in% class(fit) || "lme" %in% class(fit) || family(fit)$family %in% c("binomial","poisson"), qnorm(1-alpha/2), qt(1-alpha/2,fit$df.residual))
+  m <- ifelse(identical(class(fit),"lm") || identical(class(fit),"mlm"), qt(1-alpha/2,fit$df.residual), qnorm(1-alpha/2))
   lwr <- yy - m*SE
   upr <- yy + m*SE
   if (class(fit)[1]=="mlm") {
