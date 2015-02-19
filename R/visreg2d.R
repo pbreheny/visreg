@@ -73,7 +73,7 @@ visreg2d <- function(fit, xvar, yvar, type=c("conditional", "contrast", "effect"
       new.args <- list(...)
       if (length(new.args)) plot.args[names(new.args)] <- new.args
       if (i >= 2) rgl::open3d()
-      do.call("persp3d",plot.args)
+      do.call("persp3d", plot.args)
     }
   }
   if (print.cond) printCond(list(list(x=list(cond=v$cond))))

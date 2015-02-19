@@ -21,6 +21,7 @@ visreg(fit,"age",by="rx")
 visreg2d(fit, x="age", y="rx")
 
 ## Splines
+require(splines)
 fit <- coxph(Surv(futime,fustat)~ns(age,4)+rx,data=ovarian)
 par(mfrow=c(1,1))
 visreg(fit, "age")

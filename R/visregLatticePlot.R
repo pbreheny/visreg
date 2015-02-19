@@ -71,4 +71,5 @@ visregLatticePlot <- function(v, partial, band, rug, ask, whitespace, strip.name
     plot(tp)
   }
   trellis.par.set(opar)
+  return(tp)
 }
