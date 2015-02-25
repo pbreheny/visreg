@@ -1,5 +1,8 @@
 2.1-1
       * Some bug fixes for contrast plots with lme4 models.
+      * Fixed spline dependency in survival examples.
+      * plot.visreg can now return trellis objects so that you can
+      	arrange multiple trellis plots to your liking.
 
 2.1-0
       * Major overhaul to visreg's internal structure.  visreg now

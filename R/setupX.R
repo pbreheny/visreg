@@ -25,7 +25,8 @@ setupX <- function(fit, f, name, nn, cond, ...) {
     D <- model.frame(as.formula(paste("~",form)),df)
     X. <- predict(fit, newdata=as.list(D), type="lpmatrix")    
   } else if (grepl("merMod", class(fit)[1])) {
-    RHS <- formula(substitute(~R, list(R = lme4:::RHSForm(formula(fit, fixed.only = TRUE)))))
+    form <- formula(fit, fixed.only = TRUE)
+    RHS <- formula(substitute(~R, list(R = form[[length(form)]])))
     X. <- model.matrix(RHS, D)[-(1:nrow(f)), ind]
   } else {
     X. <- model.matrix(as.formula(paste("~",form)),D)[-(1:nrow(f)), ind]
