@@ -23,7 +23,7 @@ setupX <- function(fit, f, name, nn, cond, ...) {
   if (class(fit)[1]=="gam") {
     form <- parseFormula(formula(fit)[3])
     D <- model.frame(as.formula(paste("~",form)),df)
-    X. <- predict(fit, newdata=as.list(D), type="lpmatrix")    
+    X. <- predict(fit, newdata=as.list(D), type="lpmatrix")
   } else if (grepl("merMod", class(fit)[1])) {
     form <- formula(fit, fixed.only = TRUE)
     RHS <- formula(substitute(~R, list(R = form[[length(form)]])))
