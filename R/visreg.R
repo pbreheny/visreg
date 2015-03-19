@@ -3,7 +3,13 @@ visreg <- function(fit, xvar, by, breaks=3, type=c("conditional", "contrast", "e
   ## Setup
   type <- match.arg(type)
   scale <- match.arg(scale)
-  if (scale=="response") trans <- family(fit)$linkinv
+  if (scale=="response") {
+    if (class(fit)[1]=="lrm") {
+      trans <- binomial()$linkinv
+    } else {
+      trans <- family(fit)$linkinv      
+    }
+  }
   if (type=="effect") {
     warning("Please note that type='effect' is deprecated and may not be supported in future versions of visreg.  Use type='contrast' instead.")
     type <- "contrast"
