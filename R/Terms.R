@@ -26,6 +26,7 @@ Terms <- function(fit, f, x, trans, alpha, ...) {
     SE <- sqrt(apply(x$XX * (x$XX %*% V),1,sum))
     yy <- x$XX%*%b[is.finite(b)]
     rr <- residuals(fit)
+    rr <- rr[!is.na(rr)]
     if (nrow(x$X) != length(rr)) warning("Residuals do not match data; have you changed the original data set?  If so, visreg is probably not displaying the residuals for the data set that was actually used to fit the model.")
     r <- x$X%*%b[is.finite(b)] + rr
   }

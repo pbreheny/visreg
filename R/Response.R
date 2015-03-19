@@ -1,6 +1,7 @@
 Response <- function(fit, x, trans, alpha, ...) {
   ## Calculate predictions, partial residuals
   rr <- residuals(fit)
+  if (class(fit)[1]!="mlm") rr <- rr[!is.na(rr)]
   nr <- if (is.matrix(rr)) nrow(rr) else length(rr)
   if (nrow(x$D) != nr) warning("Residuals do not match data; have you changed the original data set?  If so, visreg is probably not displaying the residuals for the data set that was actually used to fit the model.")
   predict.args <- list(object=fit, newdata=x$D)

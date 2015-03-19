@@ -24,15 +24,14 @@ visreg(fit, "x", by="ID")
 visreg(fit, "x", by="ID", re.form = ~1|ID) ## Adds random effects back in
 
 visreg(fit, "x", by="ID", overlay=TRUE, strip.names=TRUE)
-visreg(fit, "x", by="ID", overlay=TRUE, strip.names=FALSE)
-visreg(fit, "x", by="ID", overlay=TRUE, strip.names=LETTERS[1:10])
-predict(fit, newdata=model.frame(fit), strip.names=LETTERS[1:2])
+visreg(fit, "x", by="ID", overlay=TRUE, strip.names=FALSE, re.form = ~1|ID)
+visreg(fit, "x", by="ID", overlay=TRUE, strip.names=LETTERS[1:10], re.form = ~1|ID)
+##predict(fit, newdata=model.frame(fit), strip.names=LETTERS[1:2])
 
 visreg(fit, "x", type="contrast")
 visreg(fit, "x", by="ID", type="contrast")
-visreg(fit, "x", by="ID", re.form = ~1|ID) ## Adds random effects back in
 
 ## predict bug
-fit <- lmer(Reaction ~ Days + (Days | Subject), sleepstudy)
-predict(fit, extra.argument="A")
-predict(fit, extra.argument=LETTERS)
+# fit <- lmer(Reaction ~ Days + (Days | Subject), sleepstudy)
+# predict(fit, extra.argument="A")
+# predict(fit, extra.argument=LETTERS)
