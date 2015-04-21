@@ -1,4 +1,3 @@
-## To-do: add too.far option?
 visreg2d <- function(fit, xvar, yvar, type=c("conditional", "contrast", "effect"), trans=I, scale=c("linear","response"), 
                      plot.type=c("image","persp","rgl"), nn=ifelse(plot.type=="persp",49,99), cond=list(), print.cond=FALSE, whitespace=0.2, ...) {
   ## Setup
@@ -19,15 +18,12 @@ visreg2d <- function(fit, xvar, yvar, type=c("conditional", "contrast", "effect"
 
   ## Calculate v
   v <- setupV2(fit, f, xvar, yvar, nn, cond, type, trans)
-  zNameClass <- if (scale=="response" | (class(fit)[1] %in% c("lm", "mlm") & identical(trans,I))) {if (type=="contrast") 1 else 2} else 3
-  if (plot.type %in% c("persp", "rgl") & zNameClass==1) zNameClass=3 ## persp cannot handle expressions
+  zName <- makeYName(fit, scale, trans, type)
+  if (plot.type %in% c("persp", "rgl") & is.expression(zName)) zName <- NULL ## persp cannot handle expressions
   
   for (i in 1:v$n) {
     z <- if (v$n > 1) v$z[[i]] else v$z
-    zlab <- switch(zNameClass,
-                   as.expression(substitute(list(Delta) * x,list(x=v$zname[i]))),
-                   v$zname[i],
-                   paste("f(", xvar, ", ", yvar, ")", sep=""))
+    zlab <- if (is.null(zName)) paste("f(", xvar, ", ", yvar, ")", sep="") else zName[i]
 
     ## Make factor axes
     mx <- my <- NULL
@@ -54,7 +50,6 @@ visreg2d <- function(fit, xvar, yvar, type=c("conditional", "contrast", "effect"
     ylim <- if (is.factor(v$y)) c(0,1) else range(v$y)
     
     if (plot.type=="image") {
-      ##color.palette=colorRampPalette(c("blue","gray90","red"),space="Lab")
       color.palette=colorRampPalette(c(pal(3)[3],"gray90",pal(3)[1]),space="Lab")
       plot.args <- list(x=x, y=y, z=z, xlim=xlim, ylim=ylim, xlab=xvar, ylab=yvar, color.palette=color.palette, main=zlab)
       plot.args$plot.axes <- quote({axis(1,at=mx,labels=lx);axis(2,at=my,labels=ly)})
@@ -72,7 +67,8 @@ visreg2d <- function(fit, xvar, yvar, type=c("conditional", "contrast", "effect"
       new.args <- list(...)
       if (length(new.args)) plot.args[names(new.args)] <- new.args
       if (i >= 2) rgl::open3d()
-      do.call("rgl::persp3d", plot.args)
+      FUN <- get("persp3d", asNamespace("rgl"))
+      do.call(FUN, plot.args)
     }
   }
   if (print.cond) printCond(list(list(x=list(cond=v$cond))))

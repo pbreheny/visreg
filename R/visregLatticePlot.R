@@ -25,11 +25,8 @@ visregLatticePlot <- function(v, partial, band, rug, ask, whitespace, strip.name
   ylim[2] <- ylim[2]+pad
   pad <- 0.04*diff(xlim)
   xlim[1] <- xlim[1]-pad
-  xlim[2] <- xlim[2]+pad      
-  ylab <- switch(v$meta$yNameClass,
-                 as.expression(substitute(list(Delta) * x,list(x=v$meta$y))),
-                 v$meta$y,
-                 paste("f(", v$meta$x, ")", sep=""))
+  xlim[2] <- xlim[2]+pad
+  ylab <- if (is.null(v$meta$yName)) paste("f(", v$meta$x, ")", sep="") else v$meta$yName
   new.args <- list(...)
   if (identical(strip.names, FALSE)) {
     strip <- strip.custom(strip.names=FALSE, factor.levels=levels(as.factor(bb)), strip.levels=c(TRUE, TRUE), fg=trellis.par.get("strip.background")$col)

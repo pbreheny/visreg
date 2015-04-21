@@ -1,3 +1,8 @@
+2.2-0
+      * Added support for random forests from the 'randomForest'
+      	package
+      * Added support for models from the 'rms' package.
+
 2.1-1
       * Some bug fixes for contrast plots with lme4 models.
       * Fixed spline dependency in survival examples.

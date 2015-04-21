@@ -21,8 +21,8 @@ visreg <- function(fit, xvar, by, breaks=3, type=c("conditional", "contrast", "e
   cond <- setupCond(cond, f, by, breaks)
 
   ## Calculate v
-  yNameClass <- if (scale=="response" | (class(fit)[1] %in% c("lm", "mlm", "aov") & identical(trans,I))) {if (type=="contrast") 1 else 2} else 3
-  v <- setupV(fit, f, xvar, nn, cond, type, trans, xtrans, alpha, jitter, by, yNameClass, ...)
+  yName <- makeYName(fit, scale, trans, type)
+  v <- setupV(fit, f, xvar, nn, cond, type, trans, xtrans, alpha, jitter, by, yName, ...)
   
   ## Plot/return
   if (plot) plot(v, ...)

@@ -7,10 +7,7 @@ visregPlot <- function(v, partial, rug, band, whitespace, line.par, fill.par, po
   lwr <- v$fit$visregLwr
   upr <- v$fit$visregUpr
   xlim <- if (is.factor(xx)) c(0,1) else range(xx)
-  ylab <- switch(v$meta$yNameClass,
-                 as.expression(substitute(list(Delta) * x, list(x=v$meta$y))),
-                 v$meta$y,
-                 paste("f(", v$meta$x, ")", sep=""))
+  ylab <- if (is.null(v$meta$yName)) paste("f(", v$meta$x, ")", sep="") else v$meta$yName
   if (partial) {
     ylim <- range(c(y, lwr, upr), na.rm=TRUE)
   } else if (band) {

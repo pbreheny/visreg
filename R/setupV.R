@@ -1,6 +1,6 @@
 ## v is a list of three elements: fit, res, and meta
 ## alternatively (class "visreg.list"), a list of visreg elements
-setupV <- function(fit, f, xvar, nn, cond, type, trans, xtrans, alpha, jitter, by, yNameClass, ...) {
+setupV <- function(fit, f, xvar, nn, cond, type, trans, xtrans, alpha, jitter, by, yName, ...) {
   ## Initial setup
   if (length(xvar) > 1 & length(cond) > 1) stop("Cannot specify 'by' and multiple x variables simultaneously")
   J <- max(length(xvar), length(cond))
@@ -17,7 +17,7 @@ setupV <- function(fit, f, xvar, nn, cond, type, trans, xtrans, alpha, jitter, b
   if (!missing(by)) xy <- subsetV(xy, f, by, lev, type)
 
   ## Format
-  meta <- list(x=xvar, y=xy[[1]]$y$name, hasInteraction=hasInteraction, yNameClass=yNameClass, trans=trans)
+  meta <- list(x=xvar, y=xy[[1]]$y$name, hasInteraction=hasInteraction, yName=yName, trans=trans)
   K <- xy[[1]]$y$n
   if (K==1) {
     if (!missing(by)) {
@@ -57,6 +57,7 @@ setupV <- function(fit, f, xvar, nn, cond, type, trans, xtrans, alpha, jitter, b
       for (k in 1:K) {
         meta.k <- meta
         meta.k$y <- meta$y[k]
+        meta.k$yName <- meta$yName[k]
         v[[k]] <- list(fit=NULL, res=NULL, meta=meta.k)
         for (j in 1:J) {
           fit.jk <- data.frame(xy[[j]]$x$DD, visregFit=xy[[j]]$y$fit[,k], visregLwr=xy[[j]]$y$lwr[,k], visregUpr=xy[[j]]$y$upr[,k])
@@ -77,6 +78,7 @@ setupV <- function(fit, f, xvar, nn, cond, type, trans, xtrans, alpha, jitter, b
           meta.jk <- meta
           meta.jk$x <- meta$x[j]
           meta.jk$y <- meta$y[k]
+          meta.jk$yName <- meta$yName[k]
           l <- (j-1)*K + k
           v[[l]] <- list(fit=data.frame(xy[[j]]$x$DD, visregFit=xy[[j]]$y$fit[,k], visregLwr=xy[[j]]$y$lwr[,k], visregUpr=xy[[j]]$y$upr[,k]),
                          res=data.frame(xy[[j]]$x$D, visregRes=xy[[j]]$y$r[,k], visregPos=xy[[j]]$y$pos[,k]),

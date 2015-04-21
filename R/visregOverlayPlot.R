@@ -15,10 +15,7 @@ visregOverlayPlot <- function(v, partial, band, rug, ask, whitespace, legend, st
   } else {
     ylim <- range(c(yy, lwr, upr), na.rm=TRUE)
   }
-  ylab <- switch(v$meta$yNameClass,
-                 as.expression(substitute(list(Delta) * x,list(x=v$meta$y))),
-                 v$meta$y,
-                 paste("f(", v$meta$x, ")", sep=""))
+  ylab <- if (is.null(v$meta$yName)) paste("f(", v$meta$x, ")", sep="") else v$meta$yName
   plot.args <- list(x=1, y=1, ylim=ylim, xlab=v$meta$x, ylab=ylab, type="n", xlim=xlim, xaxt=ifelse(is.factor(xx),'n','s'), las=1)
   new.args <- list(...)
   if (length(new.args)) plot.args[names(new.args)] <- new.args
