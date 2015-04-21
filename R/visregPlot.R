@@ -11,7 +11,13 @@ visregPlot <- function(v, partial, rug, band, whitespace, line.par, fill.par, po
                  as.expression(substitute(list(Delta) * x, list(x=v$meta$y))),
                  v$meta$y,
                  paste("f(", v$meta$x, ")", sep=""))
-  ylim <- if (partial) range(c(y, lwr, upr), na.rm=TRUE) else range(c(lwr, upr), na.rm=TRUE)
+  if (partial) {
+    ylim <- range(c(y, lwr, upr), na.rm=TRUE)
+  } else if (band) {
+    ylim <- range(c(lwr, upr), na.rm=TRUE)
+  } else {
+    ylim <- range(yy)
+  }
   plot.args <- list(x=1, y=1, ylim=ylim, xlab=v$meta$x, ylab=ylab, type="n", xlim=xlim, xaxt=ifelse(is.factor(xx),'n','s'), las=1)
   new.args <- list(...)
   if (length(new.args)) plot.args[names(new.args)] <- new.args
