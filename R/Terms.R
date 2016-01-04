@@ -12,21 +12,19 @@ Terms <- function(fit, f, x, trans, alpha, ...) {
     n.y <- length(summ)
     yy <- SE <- matrix(NA, nrow=nrow(x$XX), ncol=n.y)
     r <- rr <- matrix(NA, nrow=nrow(x$X), ncol=n.y)
-    if (nrow(x$X) != nrow(rr)) warning("Residuals do not match data; have you changed the original data set?  If so, visreg is probably not displaying the residuals for the data set that was actually used to fit the model.")
     for (i in 1:n.y) {
       V <- summ[[i]]$sigma^2 * summ[[i]]$cov.unscaled
       SE[,i] <- sqrt(apply(x$XX * (x$XX %*% V),1,sum))
       ind <- is.finite(b[,i])
       yy[,i] <- x$XX%*%b[ind,i]
-      rr[,i] <- residuals(fit)[,i]
+      rr[,i] <- visregResid(fit)[,i]
       r[,i] <- x$X%*%b[ind,i] + rr[,i]
     }
   } else {
     V <- vcov(fit)
     SE <- sqrt(apply(x$XX * (x$XX %*% V),1,sum))
     yy <- x$XX%*%b[is.finite(b)]
-    rr <- residuals(fit)
-    rr <- rr[!is.na(rr)]
+    rr <- visregResid(fit)
     if (nrow(x$X) != length(rr)) warning("Residuals do not match data; have you changed the original data set?  If so, visreg is probably not displaying the residuals for the data set that was actually used to fit the model.")
     r <- x$X%*%b[is.finite(b)] + rr
   }

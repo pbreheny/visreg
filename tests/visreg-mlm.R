@@ -24,6 +24,7 @@ visreg2d(fit, "Species", "Petal.Width")
 fit <- lm(cbind(Sepal.Length, Sepal.Width) ~ Petal.Length*Petal.Width, iris)
 visreg(fit, "Petal.Width", by="Petal.Length")
 visreg2d(fit, "Petal.Width", "Petal.Length")
+
 visreg2d(fit, "Petal.Width", "Petal.Length", plot.type="persp")
 visreg2d(fit, "Petal.Width", "Petal.Length", plot.type="persp", type="contrast")
 #visreg2d(fit, "Petal.Width", "Petal.Length", plot.type="rgl")

@@ -9,12 +9,12 @@ setupV2 <- function(fit, f, xvar, yvar, nn, cond, type, trans) {
   yy <- if(is.factor(y)) factor(levels(y),levels=levels(y)) else seq(min(y),max(y),length=nn)
   xydf <- as.data.frame(expand.grid(xx,yy))
   names(xydf) <- c(xvar,yvar)
-  
+
   if (type=="conditional") {
     df <- fillFrame(f, xydf, cond)
     DD <- model.frame(as.formula(paste("~",form)),df)
     DD <- cbind(DD,df[,setdiff(names(df),names(DD)),drop=FALSE])
-    P <- predict(fit,newdata=DD)
+    P <- predict(fit, newdata=DD)
     if (class(fit)[1]=="mlm") {
       z <- vector("list", n.z)
       for (i in 1:n.z) z[[i]] <- matrix(trans(P[,i]), nrow=length(xx), ncol=length(yy))
@@ -44,6 +44,6 @@ setupV2 <- function(fit, f, xvar, yvar, nn, cond, type, trans) {
   D <- model.frame(as.formula(paste("~",form)),df)
   condNames <- setdiff(names(D), c(xvar, yvar))
   condNames <- intersect(condNames, names(df))
-  
+
   list(x=xx, y=yy, z=z, n=n.z, zname=zname, cond=D[1,condNames,drop=FALSE])
 }

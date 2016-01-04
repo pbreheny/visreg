@@ -1,5 +1,7 @@
 import("lattice")
+import("stats")
+import("graphics")
+import("grDevices")
 export(visreg, visreg2d, plot.visreg)
-importFrom(graphics, plot)
 S3method(plot, visreg)
 S3method(plot, visreg.list)

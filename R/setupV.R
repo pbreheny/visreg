@@ -4,7 +4,8 @@ setupV <- function(fit, f, xvar, nn, cond, type, trans, xtrans, alpha, jitter, b
   ## Initial setup
   if (length(xvar) > 1 & length(cond) > 1) stop("Cannot specify 'by' and multiple x variables simultaneously")
   J <- max(length(xvar), length(cond))
-  hasInteraction <- (max(attr(terms(as.formula(formula(fit))), "order")) > 1)
+  Attempt <- try(max(attr(terms(as.formula(formula(fit))), "order")) > 1, silent=TRUE)
+  hasInteraction <- ifelse(class(Attempt)=='try-error', FALSE, Attempt)
   lev <- attr(cond, "lev")
 
   ## Get xy list
@@ -17,7 +18,7 @@ setupV <- function(fit, f, xvar, nn, cond, type, trans, xtrans, alpha, jitter, b
   if (!missing(by)) xy <- subsetV(xy, f, by, lev, type)
 
   ## Format
-  meta <- list(x=xvar, y=xy[[1]]$y$name, hasInteraction=hasInteraction, yName=yName, trans=trans)
+  meta <- list(x=xvar, y=xy[[1]]$y$name, hasInteraction=hasInteraction, yName=yName, trans=trans, class=class(fit))
   K <- xy[[1]]$y$n
   if (K==1) {
     if (!missing(by)) {
@@ -72,7 +73,7 @@ setupV <- function(fit, f, xvar, nn, cond, type, trans, xtrans, alpha, jitter, b
       class(v) <- "visreg.list"
     } else {
       v <- vector("list", J*K)
-      
+
       for (j in 1:J) {
         for (k in 1:K) {
           meta.jk <- meta

@@ -1,3 +1,11 @@
+2.2-1
+      * Changes to NAMESPACE for compatibility with development versions of R
+      * Minor changes to make visreg compatible with 'quantreg' and 'betareg'
+        packages
+      * Improved support for packages that do not provide a residuals() generic
+      * Deviance residuals now used for 'coxph' (survival) models instead
+        of martingale residuals
+
 2.2-0
       * Added support for random forests from the 'randomForest'
       	package
