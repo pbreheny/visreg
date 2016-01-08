@@ -1,3 +1,6 @@
+![version](http://www.r-pkg.org/badges/version/visreg)
+![downloads](http://cranlogs.r-pkg.org/badges/visreg)
+
 # Visualization of Regression Models
 
 `visreg` provides a number of plotting functions for visualizing fitted regression models: regression functions, confidence bands, partial residuals, interactions, and more.  For details on `visreg` syntax and how to use it, please consult the `R` help files.  For details on what `visreg` does and how it works, refer to the following paper:

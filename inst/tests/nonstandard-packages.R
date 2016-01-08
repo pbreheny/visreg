@@ -33,9 +33,14 @@ Data <- airquality[complete.cases(airquality),]
 fit <- gbm(Ozone ~ ., data=Data)
 visreg(fit, 'Wind')
 visreg(fit, 'Wind', partial=FALSE)
-residuals.gbm <- function(fit) Data$Ozone - fit$fit # suppling a resid() function
+residuals.gbm <- function(fit) Data$Ozone - fit$fit  # supplying a resid() function
 visreg(fit, 'Wind')
 fit <- gbm(Ozone ~ ., data=Data, n.trees=10000)
+gbm.perf(fit)
+visreg(fit, 'Wind')
+fit <- gbm(Ozone ~ ., data=Data, n.trees=20000, cv.folds = 10)
+gbm.perf(fit)
+visreg(fit, 'Wind', n.trees=gbm.perf(fit))
 visreg(fit, 'Wind')
 
 # gbm, binary outcome
