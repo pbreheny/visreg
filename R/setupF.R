@@ -36,16 +36,18 @@ setupF <- function(fit, xvar, call.env) {
 
   ## Handle some variable type issues
   needsUpdate <- FALSE
-  if (any(sapply(model.frame(fit, data=Data),class)=="character")) needsUpdate <- TRUE
-  if (any(sapply(f,class)=="logical")) {
+  f <- droplevels(f)
+  frameClasses <- sapply(f, class)
+  if (any(frameClasses=="character")) needsUpdate <- TRUE
+  if (any(frameClasses=="Surv")) needsUpdate <- TRUE
+  if (any(frameClasses=="logical")) {
     needsUpdate <- TRUE
     for (j in 1:ncol(f)) if (class(f[,j])[1]=="logical") f[,j] <- as.numeric(f[,j])
   }
-  for (j in 1:ncol(f)) if (class(f[,j])[1]=="factor") f[,j] <- droplevels(f[,j])
   inModel <- sapply(names(f), grepl, x=as.character(formula(fit)[3]), fixed=TRUE)
   if (missing(xvar)) xvar <- names(f)[which(inModel)]
-  if (any(sapply(model.frame(fit, data=Data),class)=="Surv")) needsUpdate <- TRUE
   for (i in 1:length(xvar)){if (!is.element(xvar[i],names(f))) stop(paste(xvar[i],"not in model"))}
+
   attr(f, "needsUpdate") <- needsUpdate
   attr(f, "xvar") <- xvar
   f

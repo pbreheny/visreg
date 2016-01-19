@@ -8,7 +8,7 @@ parseFormula(formula(fit)[3])
 
 ## locfit
 require(locfit)
-fit <- locfit(NOx~lp(E,nn=0.5), data=ethanol)
+fit <- locfit(NOx~lp(E, nn=0.5), data=ethanol)
 visreg(fit, "E")
 fit <- locfit(NOx~lp(E,C,nn=0.5,scale=0), data=ethanol)
 visreg(fit, "E", by="C")
