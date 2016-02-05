@@ -1,3 +1,9 @@
+2.2-2
+      * Fixed bug involvind an incompatibility between formulas with a . and
+        formulas with an s() in them (2.2-1 extended visreg to formulas with
+	a ., but this broke compatibility with formulas with s() and similar
+	terms).
+
 2.2-1
       * Changes to NAMESPACE for compatibility with development versions of R
       * Minor changes to make visreg compatible with 'quantreg' and 'betareg'
