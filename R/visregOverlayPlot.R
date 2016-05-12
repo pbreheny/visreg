@@ -28,7 +28,7 @@ visregOverlayPlot <- function(v, partial, band, rug, ask, whitespace, legend, st
   if (length(points.par)) points.args[names(points.par)] <- points.par
   fill.args <- list(col=acol, border=F)
   if (length(fill.par)) fill.args[names(fill.par)] <- fill.par
-  
+
   for (i in 1:length(lev)) {
     current.level <- lev[i]
     indfit <- v$fit[,v$meta$by]==current.level
@@ -60,8 +60,8 @@ visregOverlayPlot <- function(v, partial, band, rug, ask, whitespace, legend, st
       }
       if (rug==1) rug(x[indres], side=1, col=line.args.i$col)
       if (rug==2) {
-        rug(x[indres][!y[v$res$visregPos[indres]]], side=1, col=line.args.i$col)
-        rug(x[indres][y[v$res$visregPos[indres]]], side=3, col=line.args.i$col)
+        rug(x[indres][!v$res$visregPos[indres]], side=1, col=line.args.i$col)
+        rug(x[indres][v$res$visregPos[indres]], side=3, col=line.args.i$col)
       }
     }
   }

@@ -7,7 +7,7 @@ setupX <- function(fit, f, name, nn, cond, ...) {
   df <- fillFrame(f, xdf, cond)
   D <- rbind(f[,names(df)], df)
   form <- formula(fit)[3]
-  
+
   if ("lme" %in% class(fit)) {
     b <- nlme::fixed.effects(fit)
   } else if (sum(grep("merMod", class(fit)))) {
@@ -28,11 +28,14 @@ setupX <- function(fit, f, name, nn, cond, ...) {
     form <- formula(fit, fixed.only = TRUE)
     RHS <- formula(substitute(~R, list(R = form[[length(form)]])))
     X. <- model.matrix(RHS, D)[-(1:nrow(f)), ind]
+  } else if (grepl("glmmadmb", class(fit))) {
+    form <- as.formula(paste("~", as.character(fit$fixed[3])))
+    X. <- model.matrix(form,D)[-(1:nrow(f)), ind]
   } else {
     X. <- model.matrix(as.formula(paste("~",form)),D)[-(1:nrow(f)), ind]
   }
   X <- t(t(X.[-1,])-X.[1,])
-  
+
   ## Set up data frame with nn rows for prediction
   dots <- list(...)
   xx <- if (is.factor(x)) {
@@ -51,7 +54,7 @@ setupX <- function(fit, f, name, nn, cond, ...) {
     XX. <- model.matrix(RHS, DD)[-(1:nrow(f)), ind]
   } else XX. <- model.matrix(as.formula(paste("~",form)),DD)[-(1:nrow(f)), ind]
   XX <- t(t(XX.[-1,])-XX.[1,])
-  
+
   ## Remove extraneous intercept for coxph
   if ("coxph" %in% class(fit)) {
     XX <- XX[,-which(colnames(XX)=="(Intercept)"),drop=FALSE]
