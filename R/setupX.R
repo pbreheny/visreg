@@ -28,7 +28,7 @@ setupX <- function(fit, f, name, nn, cond, ...) {
     form <- formula(fit, fixed.only = TRUE)
     RHS <- formula(substitute(~R, list(R = form[[length(form)]])))
     X. <- model.matrix(RHS, D)[-(1:nrow(f)), ind]
-  } else if (grepl("glmmadmb", class(fit))) {
+  } else if (grepl("glmmadmb", class(fit)[1])) {
     form <- as.formula(paste("~", as.character(fit$fixed[3])))
     X. <- model.matrix(form,D)[-(1:nrow(f)), ind]
   } else {
