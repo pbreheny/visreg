@@ -1,5 +1,5 @@
 ## v is a list of three elements: fit, res, and meta
-## alternatively (class "visreg.list"), a list of visreg elements
+## alternatively (class "visregList"), a list of visreg elements
 setupV <- function(fit, f, xvar, nn, cond, type, trans, xtrans, alpha, jitter, by, yName, ...) {
   ## Initial setup
   if (length(xvar) > 1 & length(cond) > 1) stop("Cannot specify 'by' and multiple x variables simultaneously")
@@ -48,7 +48,7 @@ setupV <- function(fit, f, xvar, nn, cond, type, trans, xtrans, alpha, jitter, b
       if (J==1) {
         v <- v[[1]]
       } else {
-        class(v) <- "visreg.list"
+        class(v) <- "visregList"
       }
     }
   } else {
@@ -70,7 +70,7 @@ setupV <- function(fit, f, xvar, nn, cond, type, trans, xtrans, alpha, jitter, b
         }
         class(v[[k]]) <- "visreg"
       }
-      class(v) <- "visreg.list"
+      class(v) <- "visregList"
     } else {
       v <- vector("list", J*K)
 
@@ -89,7 +89,7 @@ setupV <- function(fit, f, xvar, nn, cond, type, trans, xtrans, alpha, jitter, b
           class(v[[l]]) <- "visreg"
         }
       }
-      class(v) <- "visreg.list"
+      class(v) <- "visregList"
     }
   }
   v

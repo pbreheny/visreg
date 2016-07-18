@@ -14,6 +14,6 @@ visregResid <- function(fit) {
   } else {
     rr <- residuals(fit)
   }
-  if (class(fit)[1]!="mlm" && length(rr)>0) rr <- rr[!is.na(rr)]
+  if (!is.matrix(rr) & length(rr)>0) rr <- rr[!is.na(rr)]
   rr
 }

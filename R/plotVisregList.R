@@ -1,4 +1,4 @@
-plot.visreg.list <- function(x, ask=TRUE, ...) {
+plot.visregList <- function(x, ask=TRUE, ...) {
   n <- length(x)
   prompt.user <- FALSE
   if (ask & (prod(par("mfcol")) < n) && dev.interactive()) {

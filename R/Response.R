@@ -12,6 +12,7 @@ Response <- function(fit, x, trans, alpha, ...) {
 
   ## Format output
   if (class(p)=="svystat") p <- list(fit=as.numeric(p), se.fit=sqrt(attr(p,"var")))
+  if ("rqs" %in% class(fit)) p <- list(fit=p, se.fit=NA)
   if ("rq" %in% class(fit)) p <- list(fit=as.numeric(p[,1]), se.fit=as.numeric(p[,3]-p[,2])/(2*qnorm(.975)))
   if ("rms" %in% class(fit)) p$fit <- p$linear.predictors
   if (is.numeric(p)) p <- list(fit=p, se.fit=NA)
@@ -19,7 +20,7 @@ Response <- function(fit, x, trans, alpha, ...) {
   upr <- p$fit + m*p$se.fit
   lwr <- p$fit - m*p$se.fit
   if (length(r)==0) r <- as.numeric(rep(NA, nrow(x$D)))
-  if (class(fit)[1]=="mlm") {
+  if (is.matrix(p$fit)) {
     val <- list(fit=matrix(trans(p$fit), ncol=ncol(p$fit)), lwr=matrix(trans(lwr), ncol=ncol(p$fit)), upr=matrix(trans(upr), ncol=ncol(p$fit)), r=matrix(trans(r), ncol=ncol(p$fit)))
     val$name <- colnames(val$fit) <- colnames(p$fit)
   } else {
@@ -27,6 +28,6 @@ Response <- function(fit, x, trans, alpha, ...) {
   }
   val$pos <- rr>0
   if (length(val$pos)==0) val$pos <- as.numeric(rep(NA, nrow(x$D)))
-  val$n <- if (class(fit)[1]=="mlm") ncol(p$fit) else 1
+  val$n <- if (is.matrix(p$fit)) ncol(p$fit) else 1
   val
 }

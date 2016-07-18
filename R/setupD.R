@@ -4,13 +4,13 @@ setupD <- function(fit, f, name, nn, cond, whitespace, ...) {
   xdf <- data.frame(x)
   names(xdf) <- name
   df <- fillFrame(f, xdf, cond)
-  
+
   form <- parseFormula(formula(fit)[3])
   D <- model.frame(as.formula(paste("~",form)),df)
   condNames <- setdiff(names(D), name)
   condNames <- intersect(condNames, names(df))
   D <- cbind(D, df[,setdiff(names(df),names(D)), drop=FALSE])
-  
+
   ## Set up nn-row data frame for prediction
   dots <- list(...)
   xx <- if (is.factor(x)) {
@@ -23,6 +23,6 @@ setupD <- function(fit, f, name, nn, cond, whitespace, ...) {
   df <- fillFrame(f,xxdf,cond)
   DD <- model.frame(as.formula(paste("~",form)),df)
   DD <- cbind(DD,df[,setdiff(names(df),names(DD)),drop=FALSE])
-  
+
   list(x=x, xx=xx, D=D, DD=DD, factor=is.factor(x), name=name, cond=D[1,condNames,drop=FALSE])
 }
