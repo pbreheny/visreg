@@ -4,6 +4,7 @@ runTests <- function() {
   files <- list.files(paste0(path, "/tests"))
   if (!("test.R" %in% files)) {
     for (f in files) {
+      print(paste("Testing", f))
       source(paste0(path, '/tests/', f))
     }
   }

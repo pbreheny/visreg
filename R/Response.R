@@ -11,12 +11,11 @@ Response <- function(fit, x, trans, alpha, ...) {
   p <- visregPred(fit, x$DD, se.fit=TRUE, ...)
 
   ## Format output
-  if (class(p)=="svystat") p <- list(fit=as.numeric(p), se.fit=sqrt(attr(p,"var")))
-  if ("rqs" %in% class(fit)) p <- list(fit=p, se.fit=NA)
-  if ("rq" %in% class(fit)) p <- list(fit=as.numeric(p[,1]), se.fit=as.numeric(p[,3]-p[,2])/(2*qnorm(.975)))
-  if ("rms" %in% class(fit)) p$fit <- p$linear.predictors
   if (is.numeric(p)) p <- list(fit=p, se.fit=NA)
-  m <- ifelse(identical(class(fit),"lm"),qt(1-alpha/2,fit$df.residual),qnorm(1-alpha/2))
+  if (class(p)=="svystat") p <- list(fit=as.numeric(p), se.fit=sqrt(attr(p,"var")))
+  if ("rq" %in% class(fit)) p <- list(fit=as.numeric(p$fit[,1]), se.fit=as.numeric(p$fit[,3]-p$fit[,2])/(2*qnorm(.975)))
+  if ("rms" %in% class(fit)) p$fit <- p$linear.predictors
+  m <- ifelse(identical(class(fit),"lm"), qt(1-alpha/2,fit$df.residual), qnorm(1-alpha/2))
   upr <- p$fit + m*p$se.fit
   lwr <- p$fit - m*p$se.fit
   if (length(r)==0) r <- as.numeric(rep(NA, nrow(x$D)))
