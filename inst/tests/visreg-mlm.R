@@ -1,4 +1,3 @@
-require(visreg)
 fit <- lm(cbind(Sepal.Length, Sepal.Width, Petal.Length) ~ Species + Petal.Width, iris)
 par(mfrow=c(3,1), mar=c(5, 5, 0.5, 0.5))
 visreg(fit, "Species")

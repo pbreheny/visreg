@@ -1,6 +1,5 @@
 ## Setup
 require(survival)
-require(visreg)
 data(ovarian)
 ovarian$rx <- factor(ovarian$rx)
 

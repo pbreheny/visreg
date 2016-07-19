@@ -1,5 +1,4 @@
 require(randomForest)
-require(visreg)
 
 ## Regression
 fit <- randomForest(Ozone ~ ., data=airquality, na.action=na.omit)

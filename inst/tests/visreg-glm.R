@@ -1,4 +1,3 @@
-require(visreg)
 data("birthwt",package="MASS")
 birthwt$race <- factor(birthwt$race,labels=c("White","Black","Other"))
 birthwt$smoke <- factor(birthwt$smoke,labels=c("Nonsmoker","Smoker"))

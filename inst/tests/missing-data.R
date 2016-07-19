@@ -1,5 +1,4 @@
 ## Tests missing / subsetted data in various / mixed locations
-require(visreg)
 ozone <- airquality
 
 fit <- lm(Ozone ~ Solar.R,data=ozone)

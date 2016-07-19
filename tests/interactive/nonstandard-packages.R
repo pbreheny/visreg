@@ -1,12 +1,5 @@
 source('~/dev/.visreg.setup.R')
 
-# quantreg
-require(quantreg)
-fit <- rq(Ozone ~ ., data=airquality)
-visreg(fit, 'Wind')
-fit <- rq(Ozone ~ ., data=airquality, tau=0.1)
-visreg(fit, 'Wind')
-
 # betareg
 require(betareg)
 data("GasolineYield", package = "betareg")

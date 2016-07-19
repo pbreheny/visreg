@@ -1,4 +1,3 @@
-require(visreg)
 airquality$Heat <- cut(airquality$Temp, 3, labels=c("Cool","Mild","Hot"))
 fit <- lm(Ozone ~ Wind*Heat, data=airquality)
 

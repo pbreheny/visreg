@@ -1,5 +1,6 @@
-![version](http://www.r-pkg.org/badges/version/visreg)
-![downloads](http://cranlogs.r-pkg.org/badges/visreg)
+[![version](http://www.r-pkg.org/badges/version/visreg)](https://cran.r-project.org/package=visreg)
+[![downloads](http://cranlogs.r-pkg.org/badges/visreg)](https://cran.r-project.org/package=visreg)
+[![codecov.io](https://codecov.io/github/pbreheny/visreg/coverage.svg?branch=master)](https://codecov.io/github/pbreheny/visreg?branch=master)
 
 # Visualization of Regression Models
 
@@ -7,7 +8,7 @@
 
 > [Breheny P and Burchett W. (2013).  Visualizing regression models using visreg.](http://myweb.uiowa.edu/pbreheny/publications/visreg.pdf)
 
-If you have a question or feature request, please e-mail me at <a href="mailto:patrick-breheny@uiowa.edu">patrick-breheny@uiowa.edu</a>.
+If you have a question or feature request, please [submit an issue](https://github.com/pbreheny/visreg/issues).
 
 To install:
 

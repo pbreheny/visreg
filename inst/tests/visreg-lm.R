@@ -1,4 +1,3 @@
-require(visreg)
 
 ## Basic
 fit <- lm(Ozone ~ Solar.R + Wind + Temp, data=airquality)

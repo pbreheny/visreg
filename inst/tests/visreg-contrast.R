@@ -1,4 +1,3 @@
-require(visreg)
 ## Tests of contrast plots
 ## Real example; overparameterized model
 CO2$Plant <- factor(as.character(CO2$Plant))

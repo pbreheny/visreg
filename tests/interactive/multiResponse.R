@@ -1,6 +1,0 @@
-source("~/dev/.visreg.setup.R")
-require(quantreg)
-fit <- rq(Ozone ~ Wind + Temp, tau=c(.25, .5, .75), data=airquality)
-v1 <- visreg(fit, "Wind", plot=FALSE)
-v2 <- visreg(fit, "Wind", plot=FALSE, collapse=TRUE)
-plot(v2, overlay=TRUE)
