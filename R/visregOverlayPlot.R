@@ -1,5 +1,5 @@
 visregOverlayPlot <- function(v, partial, band, rug, ask, whitespace, legend, strip.names, line.par, fill.par, points.par, ...) {
-  ## Setup
+  # Setup
   x <- v$res[,v$meta$x]
   y <- v$res$visregRes
   b <- v$res[,v$meta$by]
@@ -16,6 +16,8 @@ visregOverlayPlot <- function(v, partial, band, rug, ask, whitespace, legend, st
     ylim <- range(c(yy, lwr, upr), na.rm=TRUE)
   }
   ylab <- if (is.null(v$meta$yName)) paste("f(", v$meta$x, ")", sep="") else v$meta$yName
+
+  # Empty plot
   plot.args <- list(x=1, y=1, ylim=ylim, xlab=v$meta$x, ylab=ylab, type="n", xlim=xlim, xaxt=ifelse(is.factor(xx),'n','s'), las=1)
   new.args <- list(...)
   if (length(new.args)) plot.args[names(new.args)] <- new.args
@@ -29,6 +31,7 @@ visregOverlayPlot <- function(v, partial, band, rug, ask, whitespace, legend, st
   fill.args <- list(col=acol, border=F)
   if (length(fill.par)) fill.args[names(fill.par)] <- fill.par
 
+  # Add lines
   for (i in 1:length(lev)) {
     current.level <- lev[i]
     indfit <- v$fit[,v$meta$by]==current.level
@@ -65,15 +68,21 @@ visregOverlayPlot <- function(v, partial, band, rug, ask, whitespace, legend, st
       }
     }
   }
+
+  # Add legend
   if (legend) {
     if (identical(strip.names, FALSE)) {
       if (is.numeric(lev)) {
-        lgtext = round(lev, 3)
+        lgtext <- round(lev, 3)
       } else {
         lgtext <- lev
       }
     } else if (identical(strip.names, TRUE)) {
-      lgtext <- paste(v$meta$by, round(lev, 3), sep=" : ")
+      if (is.numeric(lev)) {
+        lgtext <- paste(v$meta$by, round(lev, 3), sep=" : ")
+      } else {
+        lgtext <- paste(v$meta$by, lev, sep=" : ")
+      }
     } else {
       lgtext <- strip.names
     }

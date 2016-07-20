@@ -23,10 +23,10 @@ Terms <- function(fit, f, x, trans, alpha, ...) {
   } else {
     V <- vcov(fit)
     SE <- sqrt(apply(x$XX * (x$XX %*% V),1,sum))
-    yy <- x$XX%*%b[is.finite(b)]
+    yy <- drop(x$XX%*%b[is.finite(b)])
     rr <- visregResid(fit)
     if (nrow(x$X) != length(rr)) warning("Residuals do not match data; have you changed the original data set?  If so, visreg is probably not displaying the residuals for the data set that was actually used to fit the model.")
-    r <- x$X%*%b[is.finite(b)] + rr
+    r <- drop(x$X%*%b[is.finite(b)]) + rr
   }
   if (!all(is.finite(b))) warning("prediction from a rank-deficient fit may be misleading")
   m <- ifelse(identical(class(fit),"lm") || identical(class(fit),"mlm"), qt(1-alpha/2,fit$df.residual), qnorm(1-alpha/2))

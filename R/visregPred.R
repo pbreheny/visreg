@@ -4,7 +4,7 @@ visregPred <- function(fit, Data, se.fit=FALSE, ...) {
   if (inherits(fit, "merMod")) predict.args$re.form <- NA
   if ("rq" %in% class(fit)) predict.args$interval <- "confidence"
   if ("multinom" %in% class(fit)) predict.args$type <- "probs"
-  if ("gbm" %in% class(fit)) predict.args$n.trees <- 5000
+  if ("gbm" %in% class(fit)) predict.args$n.trees <- length(fit$trees)
   dots <- list(...)
   if (length(dots)) predict.args[names(dots)] <- dots
 

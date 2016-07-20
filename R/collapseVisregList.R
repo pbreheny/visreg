@@ -17,4 +17,3 @@ collapse.visregList <- function(obj, labels, ...) {
   meta$by <- "visregCollapse"
   structure(list(fit=fit, res=res, meta=meta), class="visreg")
 }
-collapse <- function(obj, ...) UseMethod("collapse")
