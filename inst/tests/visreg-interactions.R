@@ -3,6 +3,7 @@ fit <- lm(Ozone ~ Wind*Heat, data=airquality)
 
 visreg(fit, "Wind", by="Heat")
 visreg(fit, "Wind", by="Heat", layout=c(3,1))
+visreg(fit, "Wind", by="Heat", layout=c(3,1), print.cond=TRUE)
 visreg(fit, "Wind", by="Heat", layout=c(3,1), type="contrast")
 visreg(fit, "Wind", by="Heat", layout=c(3,1), type="contrast", strip.names=TRUE)
 visreg(fit, "Wind", type="contrast", cond=list(Heat="Cool"))

@@ -1,4 +1,3 @@
-
 ## Basic
 fit <- lm(Ozone ~ Solar.R + Wind + Temp, data=airquality)
 par(mfrow=c(1,3))
@@ -15,14 +14,16 @@ fit <- lm(Ozone ~ Solar.R + Wind + I(Temp^2) + I(Wind^2), data=airquality)
 visreg(fit, "Temp")
 
 ## Transformations of y
-fit <- lm(log(Ozone) ~ Solar.R + Wind + Temp,data=airquality)
+fit <- lm(log(Ozone) ~ Solar.R + Wind + Temp, data=airquality)
 visreg(fit,"Wind", trans=exp, ylab="Ozone")
-fit <- lm(sqrt(Ozone) ~ Solar.R + Wind + Temp,data=airquality)
+fit <- lm(log(Ozone) ~ log(Wind), data=airquality)
+visreg(fit,"Wind", xtrans=log, ylab="log(Ozone)", xlab="log(Wind)")
+fit <- lm(sqrt(Ozone) ~ Solar.R + Wind + Temp, data=airquality)
 visreg(fit, "Wind", trans=function(x) x^2, ylab="Ozone")
 
 ## Cond
-visreg(fit,"Wind",cond=list('Temp'=100))
-visreg(fit,"Wind",cond=list('Temp'=0,'Solar.R'=0))
+visreg(fit, "Wind", cond=list('Temp'=100))
+visreg(fit, "Wind", cond=list('Temp'=0,'Solar.R'=0))
 
 ## Factors
 airquality$Heat <- cut(airquality$Temp,3,labels=c("Cool","Mild","Hot"))

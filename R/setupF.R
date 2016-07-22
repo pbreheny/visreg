@@ -21,7 +21,19 @@ setupF <- function(fit, xvar, call.env) {
     stop("visreg cannot find the data set used to fit your model; try attaching it to the fit with fit$data <- myData")
   }
   form <- formula(fit)
-  f <- as.data.frame(as.list(get_all_vars(form, Data)))
+  av <- get_all_vars(form, Data)    # https://bugs.r-project.org/bugzilla3/show_bug.cgi?id=14905
+  if ("mlm" %in% class(fit) && is.null(colnames(coef(fit)))) {
+    lhs <- fit$terms[[2L]]
+    ny <- ncol(coef(fit))
+    if (mode(lhs) == "call" && lhs[[1L]] == "cbind") {
+      ynames <- as.character(lhs)[-1L]
+    } else {
+      ynames <- paste0("Y", seq_len(ny))
+    }
+    names(av) <- c(ynames, head(names(av)[-1], n=ncol(av) - length(ynames)))
+  }
+  f <- as.data.frame(as.list(av))
+
   if (class(CALL$random)=="call") {
     rf <- as.data.frame(as.list(get_all_vars(CALL$random, Data)))
     rf <- rf[,setdiff(names(rf), names(f)),drop=FALSE]
