@@ -1,0 +1,70 @@
+% \VignetteIndexEntry{Quick start guide}
+% \VignettePackage{visreg}
+% \VignetteEngine{knitr::knitr}
+
+\documentclass{article}
+
+\usepackage{amsmath}
+\usepackage{fullpage}
+\usepackage[colorlinks=true, urlcolor=blue, pdfborder={0 0 0}]{hyperref}
+
+\title{Quick start guide for the {\tt visreg} package}
+\author{Patrick Breheny}
+\date{\today}
+
+<<include=FALSE, purl=FALSE>>=
+require(visreg)
+require(knitr)
+opts_chunk$set(background = "gray90")
+opts_chunk$set(prompt = TRUE)
+opts_chunk$set(comment = NA)
+opts_template$set(fig = list(fig.height=4, fig.width=5, out.width='.6\\linewidth', fig.align='center'))
+@
+
+\begin{document}
+\maketitle
+
+This guide is intended to briefly demonstrate the basic usage of {\tt visreg}.  For more details, see the documentation ({\tt ?visreg}, {\tt ?plot.visreg}, and {\tt ?visreg2d}), as well as the other vignette.
+
+The basic idea of visreg is that you fit some sort of regression model and visreg provides a convenient interface for visualizing it.  Let's fit the following model:
+
+<<>>=
+fit <- lm(Ozone ~ Solar.R + Wind + Temp,data=airquality)
+@
+
+We can then visualize what the model says about the relationship between the outcome and, say, "Wind", with:
+
+<<opts.label='fig'>>=
+visreg(fit, "Wind")
+@
+
+The plot displays (a) the model's estimated relationship between wind and ozone, (b) a confidence band about that estimate, and (c) the partial residuals, so that one can assess model fit.
+
+{\tt visreg} correctly displays factors, transformations, etc., and has many options to produce many types of plots.  As another example, suppose the model contains an interaction:
+
+<<>>=
+airquality$Heat <- cut(airquality$Temp, 3, labels=c("Cool","Mild","Hot"))
+fit.in1 <- lm(Ozone~ Solar.R + Wind*Heat,data=airquality)
+@
+
+Visreg can plot cross-sections of this fit, either in separate panels:
+
+<<fig.height=4, fig.width=8, out.width='\\linewidth', fig.align='center'>>=
+visreg(fit.in1, "Wind", by="Heat")
+@
+
+Or overlaid on top of one another:
+
+<<opts.label='fig'>>=
+visreg(fit.in1, "Wind", by="Heat", overlay=TRUE)
+@
+
+Or as a two-dimensional filled contour plot (level plot):
+
+<<opts.label='fig'>>=
+visreg2d(fit.in1, "Wind", "Heat")
+@
+
+{\tt visreg} is not limited to linear regression models.  It can be used with virtually any type of model in {\tt R} that provides generic functions for {\tt model.frame} and {\tt predict}, such as {\tt glm}, {\tt coxph}, {\tt rlm}, {\tt gam}, {\tt locfit}, {\tt quantreg}, {\tt gbm}, {\tt randomForest}, etc.  If there is a model that you think should work with {\tt visreg} but doesn't, please open an issue at \url{https://github.com/pbreheny/visreg/issues}.
+
+\end{document}
