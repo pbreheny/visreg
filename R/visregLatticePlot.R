@@ -1,4 +1,4 @@
-visregLatticePlot <- function(v, partial, band, rug, ask, whitespace, strip.names, line.par, fill.par, points.par, ...) {
+visregLatticePlot <- function(v, partial, band, rug, whitespace, strip.names, line.par, fill.par, points.par, ...) {
   ## Setup
   x <- v$res[,v$meta$x]
   y <- v$res$visregRes
