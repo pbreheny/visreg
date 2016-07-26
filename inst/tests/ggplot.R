@@ -8,5 +8,6 @@ if (require(ggplot2)) {
   visreg(fit, "Wind", by="Heat", gg=TRUE, band=FALSE)
   visreg(fit, "Wind", by="Heat", gg=TRUE, partial=FALSE, band=FALSE)
 
-  #visreg(fit, "Heat", by="Wind", gg=TRUE)
+  visreg(fit, "Heat", by="Wind", gg=TRUE)
+  visreg(fit, "Heat", by="Wind", gg=TRUE, partial=FALSE)
 }
