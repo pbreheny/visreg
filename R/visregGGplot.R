@@ -22,16 +22,29 @@ visregGGplot <- function(v, partial, band, rug, whitespace, strip.names, line.pa
     names(fillData)[3] <-names(lineData)[3] <- names(pointData)[3] <- v$meta$by
 
     # Plotting defaults
-    xlab <- v$meta$x
-    ylab <- if (is.null(v$meta$yName)) paste("f(", v$meta$x, ")", sep="") else v$meta$yName
-
+    dots <- list(...)
+    xlab <- if ("xlab" %in% names(dots)) dots$xlab else v$meta$x
+    if ("ylab" %in% names(dots)) {
+      ylab <- dots$ylab
+    } else {
+      ylab <- if (is.null(v$meta$yName)) paste("f(", v$meta$x, ")", sep="") else v$meta$yName
+    }
     p <- qplot(x=x, y=y, data=lineData, xlab=xlab, ylab=ylab, geom="blank")
     if (band) {
-      p <- p + geom_polygon(fill="gray", data=fillData)
+      fill.args <- list(fill="gray85")
+      if (length(fill.par)) fill.args[names(fill.par)] <- fill.par
+      fill.args$data <- fillData
+      p <- p + do.call("geom_polygon", fill.args)
     }
-    p <- p + geom_line(data=lineData, col="#008DFFFF", size=2)
+    line.args <- list(size=1, col="#008DFFFF")
+    if (length(line.par)) line.args[names(line.par)] <- line.par
+    line.args$data <- lineData
+    p <- p + do.call("geom_line", line.args)
     if (partial) {
-      p <- p + geom_point(data=pointData)
+      point.args <- list(size=0.8, col="gray50")
+      if (length(points.par)) point.args[names(points.par)] <- points.par
+      point.args$data <- pointData
+      p <- p + do.call("geom_point", point.args)
     }
   }
 

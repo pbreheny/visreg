@@ -10,4 +10,9 @@ if (require(ggplot2)) {
 
   visreg(fit, "Heat", by="Wind", gg=TRUE)
   visreg(fit, "Heat", by="Wind", gg=TRUE, partial=FALSE)
+
+  visreg(fit, "Wind", by="Heat", gg=TRUE, xlab="XXX", ylab="YYY")
+  visreg(fit, "Wind", by="Heat", gg=TRUE, line=list(col="blue", size=5), points=list(col="red", size=3), fill=list(fill="yellow", col="green"))
+  visreg(fit, "Heat", by="Wind", gg=TRUE, xlab="XXX", ylab="YYY")
+  visreg(fit, "Heat", by="Wind", gg=TRUE, line=list(col="blue", size=5), points=list(col="red", size=3), fill=list(fill="yellow", col="green"))
 }
