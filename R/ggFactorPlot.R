@@ -24,6 +24,17 @@ ggFactorPlot <- function(v, partial, band, rug, w, strip.names, line.par, fill.p
       p <- p + geom_polygon(fill="gray", data=fillData)
     }
   }
+  for(k in 1:K) {
+    x1 <- (k-1)/len
+    x2 <- (k-1)/len + (1-w)/len
+    xx <- c(x1,x2)
+
+    lineData <- data.frame(x = rep(xx, J),
+                           y = rep(v$fit$visregFit[(1:J-1)*J + k], each=2),
+                           z = rep(b, each=2))
+    names(lineData)[3] <- v$meta$by
+    p <- p + geom_line(data=lineData, col="#008DFFFF", size=2)
+  }
   if (partial) {
     for (j in 1:J) {
       for (k in 1:K) {
@@ -42,17 +53,6 @@ ggFactorPlot <- function(v, partial, band, rug, w, strip.names, line.par, fill.p
     }
     names(pointData)[3] <- v$meta$by
     p <- p + geom_point(data=pointData)
-  }
-  for(k in 1:K) {
-    x1 <- (k-1)/len
-    x2 <- (k-1)/len + (1-w)/len
-    xx <- c(x1,x2)
-
-    lineData <- data.frame(x = rep(xx, J),
-                           y = rep(v$fit$visregFit[(1:J-1)*J + k], each=2),
-                           z = rep(b, each=2))
-    names(lineData)[3] <- v$meta$by
-    p <- p + geom_line(data=lineData, col="#008DFFFF", size=2)
   }
   p
 }

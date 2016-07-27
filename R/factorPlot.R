@@ -8,7 +8,7 @@ factorPlot <- function(v, partial, band, rug, w, line.par, fill.par, points.par,
   yy <- v$fit$visregFit
   lwr <- v$fit$visregLwr
   upr <- v$fit$visregUpr
-  
+
   for(k in 1:K) {
     x1 <- (k-1)/len
     x2 <- (k-1)/len + (1-w)/len
@@ -16,8 +16,11 @@ factorPlot <- function(v, partial, band, rug, w, line.par, fill.par, points.par,
     if (band) {
       fill.args <- list(x=c(xx,rev(xx)), y=c(rep(lwr[k],2),rev(rep(upr[k],2))), col="gray85", border=F)
       if (length(fill.par)) fill.args[names(fill.par)] <- fill.par
-      do.call("polygon", fill.args)      
+      do.call("polygon", fill.args)
     }
+    line.args <- list(x=c(x1,x2), y=rep(yy[k],2), lwd=3, col="#008DFFFF")
+    if (length(line.par)) line.args[names(line.par)] <- line.par
+    do.call("lines", line.args)
     ind <- x==levels(x)[k]
     rx <- seq(x1,x2,len=sum(ind)+2)[c(-1,-(sum(ind)+2))]
     if (partial) {
@@ -25,9 +28,6 @@ factorPlot <- function(v, partial, band, rug, w, line.par, fill.par, points.par,
       if (length(points.par)) points.args[names(points.par)] <- points.par
       do.call("points", points.args)
     }
-    line.args <- list(x=c(x1,x2), y=rep(yy[k],2), lwd=3, col="#008DFFFF")
-    if (length(line.par)) line.args[names(line.par)] <- line.par
-    do.call("lines", line.args)
     if (rug==1) rug(rx,col=line.args$col)
     if (rug==2) {
       ind1 <- ind & !v$res$visregPos

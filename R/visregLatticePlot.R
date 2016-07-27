@@ -41,6 +41,8 @@ visregLatticePlot <- function(v, partial, band, rug, whitespace, strip.names, li
   if (length(new.args)) plot.args[names(new.args)] <- new.args
   if (is.null(dev.list())) trellis.device()
   opar <- trellis.par.get()
+
+  # Plot
   line.args <- list(lwd=3, col="#008DFFFF")
   if (length(line.par)) line.args[names(line.par)] <- line.par
   trellis.par.set(plot.line=line.args)

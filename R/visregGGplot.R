@@ -29,10 +29,10 @@ visregGGplot <- function(v, partial, band, rug, whitespace, strip.names, line.pa
     if (band) {
       p <- p + geom_polygon(fill="gray", data=fillData)
     }
+    p <- p + geom_line(data=lineData, col="#008DFFFF", size=2)
     if (partial) {
       p <- p + geom_point(data=pointData)
     }
-    p <- p + geom_line(data=lineData, col="#008DFFFF", size=2)
   }
 
   form <- as.formula(paste("~", v$meta$by))

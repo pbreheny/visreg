@@ -5,8 +5,8 @@ visregPanel <- function(x, y, subscripts, lframe, lresids, partial, band, rug, f
     do.call("panel.polygon", poly.args)
   }
   current.level <- lframe$by[subscripts][1]
-  if (partial) panel.points(lresids$x[lresids$by==current.level],lresids$r[lresids$by==current.level])
   panel.xyplot(x,y,subscripts=subscripts,...)
+  if (partial) panel.points(lresids$x[lresids$by==current.level],lresids$r[lresids$by==current.level])
   if (rug==1) panel.rug(lresids$x[lresids$by==current.level], lwd=1)
   if (rug==2) {
     panel.rug(lresids$x[lresids$by==current.level & !lresids$pos], lwd=1)
