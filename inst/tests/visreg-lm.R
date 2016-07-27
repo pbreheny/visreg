@@ -54,6 +54,11 @@ visreg(fit, "Wind", by="Heat", line=list(col=col, lwd=10), points=list(col=col, 
 col <- c("purple", "orange", "yellow", "red")
 visreg(fit, "Heat", by="Wind", line=list(col=col, lwd=10), points=list(col=col, cex=2), fill=list(col=rgb(.1,.1,.1,.3), border="green"), overlay=TRUE)
 
+# Axis label size
+fit <- lm(Ozone ~ Solar.R + Wind + Heat, data=airquality)
+visreg(fit, "Wind", cex.axis=2)
+visreg(fit, "Heat", cex.axis=2)
+
 ## Specifying by and cond at the same time
 fit <- lm(Ozone ~ Solar.R + Wind*Heat, data=airquality)
 visreg(fit,"Heat", by="Wind", cond=list(Solar.R=0))

@@ -1,4 +1,4 @@
-factorPlot <- function(v, partial, band, rug, w, line.par, fill.par, points.par, ax) {
+factorPlot <- function(v, partial, band, rug, w, line.par, fill.par, points.par, ...) {
   ## Setup
   x <- v$res[,v$meta$x]
   y <- v$res$visregRes
@@ -38,5 +38,10 @@ factorPlot <- function(v, partial, band, rug, w, line.par, fill.par, points.par,
       rug(rx2, side=3, col=line.args$col)
     }
   }
-  if (ax) axis(side=1,at=(0:(K-1))/len+(1-w)/(2*len),labels=levels(x))
+  new.args <- list(...)
+  if (!(("xaxt" %in% names(new.args)) && new.args$xaxt=="n")) {
+    axis.args <- list(side=1, at=(0:(K-1))/len+(1-w)/(2*len), labels=levels(x))
+    if (length(new.args)) axis.args[names(new.args)] <- new.args
+    do.call("axis", axis.args)
+  }
 }
