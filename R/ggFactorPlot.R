@@ -16,8 +16,8 @@ ggFactorPlot <- function(v, partial, band, rug, w, strip.names, line.par, fill.p
   } else {
     ylab <- if (is.null(v$meta$yName)) paste("f(", v$meta$x, ")", sep="") else v$meta$yName
   }
-  p <- qplot(x, y, data=df0, xlab=xlab, ylab=ylab, geom="blank")
-  p <- p + scale_x_continuous(breaks=(0:(K-1))/len+(1-w)/(2*len), labels = levels(v$fit[,v$meta$x]))
+  p <- ggplot2::qplot(x, y, data=df0, xlab=xlab, ylab=ylab, geom="blank")
+  p <- p + ggplot2::scale_x_continuous(breaks=(0:(K-1))/len+(1-w)/(2*len), labels = levels(v$fit[,v$meta$x]))
 
   # Plot bands
   if (band) {
@@ -32,7 +32,7 @@ ggFactorPlot <- function(v, partial, band, rug, w, strip.names, line.par, fill.p
       fill.args <- list(fill="gray85")
       if (length(fill.par)) fill.args[names(fill.par)] <- fill.par
       fill.args$data <- fillData
-      p <- p + do.call("geom_polygon", fill.args)
+      p <- p + do.call("geom_polygon", fill.args, envir=asNamespace("ggplot2"))
     }
   }
 
@@ -49,7 +49,7 @@ ggFactorPlot <- function(v, partial, band, rug, w, strip.names, line.par, fill.p
     line.args <- list(size=1, col="#008DFFFF")
     if (length(line.par)) line.args[names(line.par)] <- line.par
     line.args$data <- lineData
-    p <- p + do.call("geom_line", line.args)
+    p <- p + do.call("geom_line", line.args, envir=asNamespace("ggplot2"))
   }
 
   # Plot points
@@ -73,7 +73,7 @@ ggFactorPlot <- function(v, partial, band, rug, w, strip.names, line.par, fill.p
     point.args <- list(size=0.8, col="gray50")
     if (length(points.par)) point.args[names(points.par)] <- points.par
     point.args$data <- pointData
-    p <- p + do.call("geom_point", point.args)
+    p <- p + do.call("geom_point", point.args, envir=asNamespace("ggplot2"))
   }
   p
 }
