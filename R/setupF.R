@@ -30,7 +30,7 @@ setupF <- function(fit, xvar, call.env) {
     } else {
       ynames <- paste0("Y", seq_len(ny))
     }
-    names(av) <- c(ynames, head(names(av)[-1], n=ncol(av) - length(ynames)))
+    names(av) <- c(ynames, utils::head(names(av)[-1], n=ncol(av) - length(ynames)))
   }
   f <- as.data.frame(as.list(av))
 

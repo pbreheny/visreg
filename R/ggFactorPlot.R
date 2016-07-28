@@ -16,6 +16,7 @@ ggFactorPlot <- function(v, partial, band, rug, w, strip.names, line.par, fill.p
   } else {
     ylab <- if (is.null(v$meta$yName)) paste("f(", v$meta$x, ")", sep="") else v$meta$yName
   }
+  x <- y <- NULL
   p <- ggplot2::qplot(x, y, data=df0, xlab=xlab, ylab=ylab, geom="blank")
   p <- p + ggplot2::scale_x_continuous(breaks=(0:(K-1))/len+(1-w)/(2*len), labels = levels(v$fit[,v$meta$x]))
 

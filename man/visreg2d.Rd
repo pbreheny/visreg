@@ -111,6 +111,3 @@ visreg2d(fit,x="Wind",y="Temp",plot.type="rgl")
 }
 
 }
-\keyword{models}
-\keyword{regression}
-\keyword{graphics}

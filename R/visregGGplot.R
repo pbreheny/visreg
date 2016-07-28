@@ -29,7 +29,10 @@ visregGGplot <- function(v, partial, band, rug, whitespace, strip.names, line.pa
     } else {
       ylab <- if (is.null(v$meta$yName)) paste("f(", v$meta$x, ")", sep="") else v$meta$yName
     }
-    p <- ggplot2::qplot(x=x, y=y, data=lineData, xlab=xlab, ylab=ylab, geom="blank")
+
+    # Plot
+    x <- y <- NULL
+    p <- ggplot2::qplot(x, y, data=lineData, xlab=xlab, ylab=ylab, geom="blank")
     if (band) {
       fill.args <- list(fill="gray85")
       if (length(fill.par)) fill.args[names(fill.par)] <- fill.par
