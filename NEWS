@@ -14,6 +14,7 @@
       * Added fix for mlm objects with no y names
       * Added support for glmmADMB models.
       * Fixed bug that arose for gamm4 models.
+      * Fixed some issues with svm models (package: e1071)
 
 2.2-2
       * Fixed bug involvind an incompatibility between formulas with a . and

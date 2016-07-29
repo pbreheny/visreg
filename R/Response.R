@@ -5,7 +5,11 @@ Response <- function(fit, x, trans, alpha, ...) {
   nr <- if (is.matrix(rr)) nrow(rr) else length(rr)
   if (nr>0 && nrow(x$D) != nr) warning("Residuals do not match data; have you changed the original data set?  If so, visreg is probably not displaying the residuals for the data set that was actually used to fit the model.")
   y <- visregPred(fit, x$D, ...)
-  r <- y + rr
+  if (is.null(rr)) {
+    r <- NULL
+  } else {
+    r <- y + rr
+  }
 
   # Calculate predictions
   p <- visregPred(fit, x$DD, se.fit=TRUE, ...)
@@ -26,7 +30,13 @@ Response <- function(fit, x, trans, alpha, ...) {
     val <- list(fit=as.numeric(trans(p$fit)), lwr=as.numeric(trans(lwr)), upr=as.numeric(trans(upr)), r=as.numeric(trans(r)), name=as.character(formula(fit)[2]))
   }
   val$pos <- rr>0
-  if (length(val$pos)==0) val$pos <- as.numeric(rep(NA, nrow(x$D)))
+  if (length(val$pos)==0) {
+    if (is.matrix(p$fit)) {
+      val$pos <- matrix(NA, nrow(x$D), ncol(p$fit))
+    } else {
+      val$pos <- as.numeric(rep(NA, nrow(x$D)))
+    }
+  }
   val$n <- if (is.matrix(p$fit)) ncol(p$fit) else 1
   val
 }

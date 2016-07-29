@@ -27,12 +27,12 @@ visreg(fit, "Wind", cond=list('Temp'=0,'Solar.R'=0))
 
 ## Factors
 airquality$Heat <- cut(airquality$Temp,3,labels=c("Cool","Mild","Hot"))
-fit <- lm(Ozone ~ Solar.R + Wind + Heat,data=airquality)
+fit <- lm(Ozone ~ Solar.R + Wind + Heat, data=airquality)
 visreg(fit,"Wind")
-visreg(fit,"Wind",cond=list(Heat='Mild')) ## Same as above
-visreg(fit,"Wind",type="contrast")
-visreg(fit,"Wind",cond=list(Solar.R=250))
-visreg(fit,"Wind",cond=list(Heat = 'Cool'))
+visreg(fit,"Wind", cond=list(Heat='Mild')) ## Same as above
+visreg(fit,"Wind", type="contrast")
+visreg(fit,"Wind", cond=list(Solar.R=250))
+visreg(fit,"Wind", cond=list(Heat = 'Cool'))
 visreg(fit,"Heat")
 ## Reorder
 airquality$Heat <- factor(airquality$Heat,levels=c("Hot","Mild","Cool"))

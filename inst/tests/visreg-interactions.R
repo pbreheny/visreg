@@ -24,12 +24,15 @@ visreg(fit,"Heat", by="Wind", overlay=TRUE, partial=FALSE, band=FALSE)
 ## Breaks
 fit <- lm(Ozone ~ Wind*Solar.R, data=airquality)
 visreg(fit,"Wind", by="Solar.R")
-visreg(fit,"Wind", by="Solar.R",breaks=9)
+visreg(fit,"Wind", by="Solar.R", breaks=9)
 visreg(fit,"Wind", by="Solar.R", overlay=TRUE, breaks=9)
 
+fit <- lm(Ozone ~ Wind*Heat, data=airquality)
+v <- visreg(fit, "Wind", "Heat", breaks=c("Hot", "Cool"))
+
 fit <- lm(log(Ozone) ~ Solar.R + Wind + Temp + Wind*Temp + Wind*Solar.R, data=airquality)
-visreg(fit,"Wind",by='Temp',breaks=9,trans=exp)
-visreg(fit,"Wind",by='Solar.R',trans=exp)
+visreg(fit,"Wind", by='Temp', breaks=9, trans=exp)
+visreg(fit,"Wind", by='Solar.R', trans=exp)
 visreg(fit,"Wind", by='Solar.R', trans=exp, overlay=TRUE)
 
 ## Numeric variables with few unique values
