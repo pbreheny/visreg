@@ -29,6 +29,6 @@ visregPred <- function(fit, Data, se.fit=FALSE, ...) {
       p <- suppressWarnings(do.call("predict", predict.args))
     }
   }
-  if ("svm" %in% class(fit)) p <- attr(p, "probabilities")
+  if ("svm" %in% class(fit) && fit$type < 3) p <- attr(p, "probabilities")
   p
 }
