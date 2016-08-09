@@ -33,7 +33,7 @@ visregLatticePlot <- function(v, partial, band, rug, whitespace, strip.names, li
   } else if (identical(strip.names, TRUE)) {
     strip <- strip.custom(strip.names=TRUE, var.name=v$meta$by)
   } else {
-    strip <- strip.custom(strip.names=FALSE, factor.levels=strip.names, strip.levels=c(TRUE, TRUE), fg=trellis.par.get("strip.background")$col)
+    strip <- strip.custom(strip.names=FALSE, factor.levels=strip.names, strip.levels=c(TRUE, TRUE), fg=trellis.par.get("strip.background")$col, shingle.intervals=NULL)
   }
   lframe <- data.frame(fit=yy, lwr=lwr, upr=upr, xx=xx, by=bb)
   lresids <- data.frame(r=y, x=x, by=b, pos=v$res$visregPos)
