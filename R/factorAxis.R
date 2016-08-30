@@ -1,4 +1,11 @@
-factorAxis <- function(xx, w, nn) {
+factorAxis <- function(x, w, new.args) {
+  K <- length(levels(x))
+  len <- K*(1-w)+(K-1)*w
+  axis.args <- list(side=1, at=(0:(K-1))/len+(1-w)/(2*len), labels=levels(x))
+  if (length(new.args)) axis.args[names(new.args)] <- new.args
+  do.call("axis", axis.args)
+}
+factorAxis2d <- function(xx, w, nn) {
   l <- levels(xx)
   K <- length(levels(xx))
   len <- K*(1-w)+(K-1)*w

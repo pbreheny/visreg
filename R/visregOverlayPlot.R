@@ -41,12 +41,11 @@ visregOverlayPlot <- function(v, partial, band, rug, ask, whitespace, legend, st
     points.args.i <- lapply(points.args, fun)
     fill.args.i <- lapply(fill.args, fun)
     if (is.factor(x)) {
-      ax <- if (i==1) TRUE else FALSE
-      if (("xaxt" %in% names(new.args)) && new.args$xaxt=="n") ax <- FALSE
+      if (i==1 && !("xaxt" %in% names(new.args) && new.args$xaxt=="n")) factorAxis(x, whitespace, new.args)
       v.i <- v
       v.i$fit <- subset(v.i$fit, indfit)
       v.i$res <- subset(v.i$res, indres)
-      factorPlot(v.i, partial, band, rug, whitespace, line.args.i, fill.args.i, points.args.i, ax=ax)
+      factorPlot(v.i, partial, band, rug, whitespace, line.args.i, fill.args.i, points.args.i)
     } else {
       if (band) {
         fill.args.i$x <- c(xx[indfit],rev(xx[indfit]))

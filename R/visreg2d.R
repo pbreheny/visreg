@@ -1,4 +1,4 @@
-visreg2d <- function(fit, xvar, yvar, type=c("conditional", "contrast", "effect"), trans=I, scale=c("linear","response"), 
+visreg2d <- function(fit, xvar, yvar, type=c("conditional", "contrast", "effect"), trans=I, scale=c("linear","response"),
                      plot.type=c("image","persp","rgl"), nn=ifelse(plot.type=="persp",49,99), cond=list(), print.cond=FALSE, whitespace=0.2, ...) {
   ## Setup
   type <- match.arg(type)
@@ -10,7 +10,7 @@ visreg2d <- function(fit, xvar, yvar, type=c("conditional", "contrast", "effect"
     warning("Please note that type='effect' is deprecated and may not be supported in future versions of visreg.  Use type='contrast' instead.")
     type <- "contrast"
   }
-  
+
   ## Set up f
   f <- setupF(fit, c(xvar, yvar), parent.frame())
   if (attr(f, "needsUpdate")) fit <- update(fit, data=f)
@@ -20,7 +20,7 @@ visreg2d <- function(fit, xvar, yvar, type=c("conditional", "contrast", "effect"
   v <- setupV2(fit, f, xvar, yvar, nn, cond, type, trans)
   zName <- makeYName(fit, scale, trans, type)
   if (plot.type %in% c("persp", "rgl") & is.expression(zName)) zName <- NULL ## persp cannot handle expressions
-  
+
   for (i in 1:v$n) {
     z <- if (v$n > 1) v$z[[i]] else v$z
     zlab <- if (is.null(zName)) paste("f(", xvar, ", ", yvar, ")", sep="") else zName[i]
@@ -29,7 +29,7 @@ visreg2d <- function(fit, xvar, yvar, type=c("conditional", "contrast", "effect"
     mx <- my <- NULL
     lx <- ly <- TRUE
     if (is.factor(v$x)) {
-      xAxis <- factorAxis(v$x, whitespace, nn)
+      xAxis <- factorAxis2d(v$x, whitespace, nn)
       x <- xAxis$x
       mx <- xAxis$m
       lx <- xAxis$l
@@ -38,7 +38,7 @@ visreg2d <- function(fit, xvar, yvar, type=c("conditional", "contrast", "effect"
       x <- v$x
     }
     if (is.factor(v$y)) {
-      yAxis <- factorAxis(v$y,whitespace,nn)
+      yAxis <- factorAxis2d(v$y,whitespace,nn)
       y <- yAxis$x
       my <- yAxis$m
       ly <- yAxis$l
@@ -48,7 +48,7 @@ visreg2d <- function(fit, xvar, yvar, type=c("conditional", "contrast", "effect"
     }
     xlim <- if (is.factor(v$x)) c(0,1) else range(v$x)
     ylim <- if (is.factor(v$y)) c(0,1) else range(v$y)
-    
+
     if (plot.type=="image") {
       color.palette=colorRampPalette(c(pal(3)[3],"gray90",pal(3)[1]),space="Lab")
       plot.args <- list(x=x, y=y, z=z, xlim=xlim, ylim=ylim, xlab=xvar, ylab=yvar, color.palette=color.palette, main=zlab)
