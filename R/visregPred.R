@@ -16,8 +16,11 @@ visregPred <- function(fit, Data, se.fit=FALSE, ...) {
       predict.args$type <- "prob"
       P <- suppressWarnings(do.call("predict", predict.args))
       p <- list(fit=P[,2], se.fit=NA)
+    } else if (class(fit)[1] %in% c("loess")) {
+      predict.args$se <- TRUE
+      p <- suppressWarnings(do.call("predict", predict.args))
     } else {
-      predict.args$se.fit <- TRUE ## note: se.fit required by some; add $se on case-by-case basis
+      predict.args$se.fit <- TRUE
       p <- suppressWarnings(do.call("predict", predict.args))
     }
   } else {
