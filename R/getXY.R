@@ -8,7 +8,7 @@ getXY <- function(fit, f, name, nn, cond, type, trans, xtrans, alpha, jitter, ..
     x <- setupD(fit, f, name, nn, cond, ...)
   }
   
-  if (jitter) x$x <- jitter(x$x)
+  if (jitter && is.numeric(x$x)) x$x <- jitter(x$x)
   if (!missing(xtrans)) {
     x$xx <- xtrans(x$xx)
     x$x <- xtrans(x$x)
