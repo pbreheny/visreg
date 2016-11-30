@@ -10,6 +10,7 @@ parseFormula <- function(form) {
     f[i] <- gsub("\\bns\\(([^,]+).*\\)", "\\1", f[i])
     f[i] <- gsub("\\bpspline\\(([^,]+).*\\)", "\\1", f[i])
     f[i] <- gsub("\\bpoly\\(([^,]+).*\\)", "\\1", f[i])
+    f[i] <- gsub("\\bscale\\(([^,]+).*\\)", "\\1", f[i])
     if (substr(f[i], 1, 3) %in% c("te(", "ti(", "lp(") || substr(f[i], 1, 2) %in% c("s(")) {
       f[i] <- gsub(".*\\(([^\\)]+).*\\)", "\\1", f[i])
       fi <- unlist(strsplit(f[i], ","))
