@@ -16,14 +16,14 @@ visreg <- function(fit, xvar, by, breaks=3, type=c("conditional", "contrast", "e
     type <- "contrast"
   }
 
-  f <- setupF(fit, xvar, parent.frame())
-  xvar <- attr(f, "xvar")
-  if (attr(f, "needsUpdate")) fit <- update(fit, data=f)
-  cond <- setupCond(cond, f, by, breaks)
+  Data <- setupF(fit, xvar, parent.frame())
+  xvar <- attr(Data, "xvar")
+  if (attr(Data, "needsUpdate")) fit <- update(fit, formula=formula(fit), data=Data)
+  cond <- setupCond(cond, Data, by, breaks)
 
   ## Calculate v
   yName <- makeYName(fit, scale, trans, type)
-  v <- setupV(fit, f, xvar, nn, cond, type, trans, xtrans, alpha, jitter, by, yName, ...)
+  v <- setupV(fit, Data, xvar, nn, cond, type, trans, xtrans, alpha, jitter, by, yName, ...)
   if (collapse) v <- collapse.visregList(v)
 
   ## Plot/return
