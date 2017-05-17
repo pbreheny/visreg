@@ -1,7 +1,17 @@
 setupX <- function(fit, f, name, nn, cond, ...) {
   ## Set up n x p matrix for (conditional) partial residuals
   x <- f[,name]
-  x <- if (is.factor(x)) factor(c(1,as.integer(x)),labels=levels(x)) else c(mean(x),x)
+	# Get the reference to plot contrasts from `cond` - if not present, fall back on using the mean (numerical) or the first factor
+	xref <- if (is.factor(x)) {
+		if (name %in% names(cond)) {
+			if (cond[[name]] %in% levels(x)) which(levels(x) == cond[[name]]) else xref = type.convert(cond[[name]], na.strings='')
+		} else {
+			1
+		}
+	} else {
+		if (name %in% names(cond)) cond[[name]] else mean(x)
+	}
+  x <- if (is.factor(x)) factor(c(xref, as.integer(x)), labels=levels(x)) else c(xref, x)
   xdf <- data.frame(x)
   names(xdf) <- name
   df <- fillFrame(f, xdf, cond)
@@ -39,9 +49,9 @@ setupX <- function(fit, f, name, nn, cond, ...) {
   ## Set up data frame with nn rows for prediction
   dots <- list(...)
   xx <- if (is.factor(x)) {
-    factor(c(1,1:length(levels(x))),labels=levels(x))
+    factor(c(xref, 1:length(levels(x))),labels=levels(x))
   } else {
-    if ("xlim" %in% names(dots)) c(mean(x), seq(dots$xlim[1], dots$xlim[2], length=nn)) else c(mean(x), seq(min(x),max(x),length=nn))
+    if ("xlim" %in% names(dots)) c(xref, seq(dots$xlim[1], dots$xlim[2], length=nn)) else c(xref, seq(min(x),max(x),length=nn))
   }
   xxdf <- data.frame(xx)
   names(xxdf) <- name
