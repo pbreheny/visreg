@@ -5,7 +5,7 @@
 \documentclass{article}
 
 \usepackage{amsmath}
-\usepackage{fullpage}
+\usepackage[margin=1in]{geometry}
 \usepackage[colorlinks=true, urlcolor=blue, pdfborder={0 0 0}]{hyperref}
 
 \title{Quick start guide for the {\tt visreg} package}
