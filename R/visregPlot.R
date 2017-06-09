@@ -38,6 +38,7 @@ visregPlot <- function(v, partial, rug, band, whitespace, line.par, fill.par, po
       if (length(points.par)) points.args[names(points.par)] <- points.par
       do.call("points", points.args)
     }
+    do.call("lines", line.args)
     if (rug==1) rug(x, side=1)
     if (rug==2) {
       rug(x[!v$res$visregPos], side=1)

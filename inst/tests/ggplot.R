@@ -1,5 +1,11 @@
 if (require(ggplot2)) {
   airquality$Heat <- cut(airquality$Temp, 3, labels=c("Cool","Mild","Hot"))
+  fit <- lm(Ozone ~ Wind + Heat, data=airquality)
+  visreg(fit, "Wind", gg=TRUE)
+  visreg(fit, "Wind", gg=TRUE) + geom_smooth(col='red', method='loess')
+  visreg(fit, "Heat", gg=TRUE)
+  visreg(fit, "Heat", gg=TRUE, line.par=list(col="green"))
+
   fit <- lm(Ozone ~ Wind*Heat, data=airquality)
   visreg(fit, "Wind", by="Heat", gg=TRUE)
   visreg(fit, "Wind", by="Heat", gg=TRUE, strip.names=TRUE)

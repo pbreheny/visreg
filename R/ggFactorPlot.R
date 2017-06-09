@@ -1,6 +1,12 @@
 ggFactorPlot <- function(v, partial, band, rug, w, strip.names, line.par, fill.par, points.par, ...) {
-  b <- unique(v$fit[,v$meta$by])
-  J <- length(b)
+  if ("by" %in% names(v$meta)) {
+    b <- unique(v$fit[,v$meta$by])
+    J <- length(b)
+    facet <- TRUE
+  } else {
+    J <- 1
+    facet <- FALSE
+  }
   K <- length(levels(v$fit[,v$meta$x]))
   len <- K*(1-w)+(K-1)*w
 
@@ -20,16 +26,18 @@ ggFactorPlot <- function(v, partial, band, rug, w, strip.names, line.par, fill.p
   p <- ggplot2::qplot(x, y, data=df0, xlab=xlab, ylab=ylab, geom="blank")
   p <- p + ggplot2::scale_x_continuous(breaks=(0:(K-1))/len+(1-w)/(2*len), labels = levels(v$fit[,v$meta$x]))
 
-  # Plot bands
+  # Bands
   if (band) {
     for(k in 1:K) {
       x1 <- (k-1)/len
       x2 <- (k-1)/len + (1-w)/len
       xx <- c(x1, x2, x2, x1)
       fillData <- data.frame(x = rep(xx, J),
-                             y = as.numeric(apply(v$fit[(1:J-1)*J + k, c("visregLwr", "visregUpr")], 1, function(x) rep(x, each=2))),
-                             z = rep(b, each=4))
-      names(fillData)[3] <- v$meta$by
+                             y = as.numeric(apply(v$fit[(1:J-1)*J + k, c("visregLwr", "visregUpr")], 1, function(x) rep(x, each=2))))
+      if (facet) {
+        fillData$z <- rep(b, each=4)
+        names(fillData)[3] <- v$meta$by
+      }
       fill.args <- list(fill="gray85")
       if (length(fill.par)) fill.args[names(fill.par)] <- fill.par
       fill.args$data <- fillData
@@ -44,9 +52,11 @@ ggFactorPlot <- function(v, partial, band, rug, w, strip.names, line.par, fill.p
     xx <- c(x1,x2)
 
     lineData <- data.frame(x = rep(xx, J),
-                           y = rep(v$fit$visregFit[(1:J-1)*J + k], each=2),
-                           z = rep(b, each=2))
-    names(lineData)[3] <- v$meta$by
+                           y = rep(v$fit$visregFit[(1:J-1)*J + k], each=2))
+    if (facet) {
+      lineData$z <- rep(b, each=2)
+      names(lineData)[3] <- v$meta$by
+    }
     line.args <- list(size=1, col="#008DFFFF")
     if (length(line.par)) line.args[names(line.par)] <- line.par
     line.args$data <- lineData
@@ -62,19 +72,36 @@ ggFactorPlot <- function(v, partial, band, rug, w, strip.names, line.par, fill.p
         xx <- c(x1,x2)
         x <- v$res[,v$meta$x]
         z <- v$res[,v$meta$by]
-        ind <- (x==levels(x)[k]) & (z==b[j])
-        rx <- seq(x1, x2, len=sum(ind)+2)[c(-1,-(sum(ind)+2))]
-        df <- data.frame(x = rx,
-                         y = v$res$visregRes[ind],
-                         z = b[j])
+        if ("by" %in% names(v$meta)) {
+          ind <- (x==levels(x)[k]) & (z==b[j])
+          rx <- seq(x1, x2, len=sum(ind)+2)[c(-1,-(sum(ind)+2))]
+          df <- data.frame(x = rx,
+                           y = v$res$visregRes[ind],
+                           z = b[j])
+        } else {
+          ind <- (x==levels(x)[k])
+          rx <- seq(x1, x2, len=sum(ind)+2)[c(-1,-(sum(ind)+2))]
+          df <- data.frame(x = rx,
+                           y = v$res$visregRes[ind])
+        }
         pointData <- rbind(pointData, df)
       }
     }
-    names(pointData)[3] <- v$meta$by
+    if (facet) names(pointData)[3] <- v$meta$by
     point.args <- list(size=0.8, col="gray50")
     if (length(points.par)) point.args[names(points.par)] <- points.par
     point.args$data <- pointData
     p <- p + do.call("geom_point", point.args, envir=asNamespace("ggplot2"))
+  }
+
+  # Facet
+  if ("by" %in% names(v$meta)) {
+    form <- as.formula(paste("~", v$meta$by))
+    if (strip.names==TRUE) {
+      p <- p + ggplot2::facet_grid(form, labeller=ggplot2::label_both)
+    } else {
+      p <- p + ggplot2::facet_grid(form)
+    }
   }
   p
 }

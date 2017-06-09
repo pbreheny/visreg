@@ -1,261 +1,235 @@
-2.3-0
-      * Added support for multi-response models such multinom, with accompanying
-        visregList() function and collapse option for further control/options.
-      * Added option to use ggplot2 instead of lattice to produce multi-panel
-        plots.
-      * Added quick-start vignette.
-      * Fixed bug in which user options were not being passed to axis() when
-        the horizontal axis was a factor.
-      * Fixed bug in rounding for legend in overlay plots with numeric by
-        variable.
-      * Changed order of plotting so that partial residuals appear on top of
-        lines and therefore cannot be hidden by them.
-      * Reorganized and greatly expanded suite of tests
-      * Added fix for mlm objects with no y names
-      * Added support for glmmADMB models.
-      * Fixed bug that arose for gamm4 models.
-      * Fixed some issues with svm models (package: e1071)
+2.4-0 (2017-06-09)
+  * New: gg=TRUE works for regular plots, not just cross-sectional plots
+  * New: gg=TRUE returns a gg object, which can then be manipulated further
+  * Fixed: bug in coxph models with type='contrast'
 
-2.2-2
-      * Fixed bug involvind an incompatibility between formulas with a . and
-        formulas with an s() in them (2.2-1 extended visreg to formulas with
-        a ., but this broke compatibility with formulas with s() and similar
-        terms).
+2.3-0 (2016-07-30)
+  * New: Added support for multi-response models such multinom, with
+    accompanying visregList() function and collapse option for further
+    control/options
+  * New: Added option to use ggplot2 instead of lattice to produce multi-panel
+    plots
+  * New: Support for glmmADMB models.
+  * Documentation: Added quick-start vignette
+  * Fixed: Bug in which user options were not being passed to axis() when
+    the horizontal axis was a factor
+  * Fixed: Bug in rounding for legend in overlay plots with numeric by
+    variable
+  * Changed: Partial residuals are now on top of lines so that they cannot be
+    hidden by them
+  * Internal: Reorganized and greatly expanded suite of tests
+  * Fixed: Now handles mlm objects with no y names
+  * Fixed: Now handles gamm4 models
+  * Fixed: Some issues with svm models (package: e1071)
 
-2.2-1
-      * Changes to NAMESPACE for compatibility with development versions of R
-      * Minor changes to make visreg compatible with 'quantreg' and 'betareg'
-        packages
-      * Improved support for packages that do not provide a residuals() generic
-      * Deviance residuals now used for 'coxph' (survival) models instead
-        of martingale residuals
+2.2-2 (2016-02-06)
+  * Fixed: bug involving an incompatibility between formulas with a . and
+    formulas with an s() in them (2.2-1 extended visreg to formulas with
+    a ., but this broke compatibility with formulas with s() and similar
+    terms)
 
-2.2-0
-      * Added support for random forests from the 'randomForest'
-        package
-      * Added support for models from the 'rms' package.
+2.2-1 (2016-01-05)
+  * New: Improved support for packages that do not provide a residuals() generic
+  * Changed: Deviance residuals now used for 'coxph' (survival) models instead
+    of martingale residuals
+  * Internal: Changes to NAMESPACE for compatibility with development versions
+    of R
+  * Fixed: Now compatible with 'quantreg' and 'betareg' packages
 
-2.1-1
-      * Some bug fixes for contrast plots with lme4 models.
-      * Fixed spline dependency in survival examples.
-      * plot.visreg can now return trellis objects so that you can
-        arrange multiple trellis plots to your liking.
+2.2-0 (2015-04-22)
+  * New: Added support for random forests from the 'randomForest' package
+  * New: Added support for models from the 'rms' package
 
-2.1-0
-      * Major overhaul to visreg's internal structure.  visreg now
-        returns simple, structured objects that a user can modify and
-        inspect prior to plotting.
-      * Related to that, visreg() now separated from plot.visreg()
-      * Improved formula parsing so that it now works properly for
-        te() and ti() models (mgcv), pspline models (survival), more 
-        complex formulas from lme4, and more (thank you to Andrew
-        Vitale for giving me a good, complex model formula to test
-        against).
-      * Bug fixes with strip.names: now works for factors and shingles
-        for both overlay and lattice plots (thank you to Dan Silver
-        for pointing this out).
+2.1-1 (2015-02-25)
+  * New: plot.visreg can now return trellis objects so that you can
+    arrange multiple trellis plots to your liking.
+  * Fixed: Contrast plots now work for lme4 models
+  * Fixed: Survival examples no longer depend on splines
 
-2.0-6
-      * Fixed issue with S4 models not being compatible with
-        as.formula().  visreg now refrains from calling as.formula.
-        Thank you to Nick Livingston for bringing this issue to my
-        attention.
-      * Changed defaults so that rugs are plotted instead of partial
-        residuals when a transformation has been applied.
+2.1-0 (2014-11-27)
+  * New: visreg now returns simple, structured objects that a user can modify
+    and inspect prior to plotting
+  * Internal: Major overhaul to visreg's internal structure
+  * Internal: visreg() now separated from plot.visreg()
+  * Fixed: Improved formula parsing so that it now works properly for
+    te() and ti() models (mgcv), pspline models (survival), more 
+    complex formulas from lme4, and more (thank you to Andrew
+    Vitale for giving me a good, complex model formula to test
+    against)
+  * Fixed: strip.names now works for factors and shingles for both overlay and
+    lattice plots (thank you to Dan Silver for pointing this out).
 
-2.0-5
-      * Fixed bug arising when passing plot options such as 'xlim'
-        when used in conjunction with lme4 models.  Thank you to
-        Vincent Maire for pointing this bug out.
+2.0-6 (2015-08-26)
+  * Changed: Rugs are now plotted by default instead of partial
+    residuals when a transformation has been applied
+  * Fixed: Issue with S4 models not being compatible with
+    as.formula(); visreg now refrains from calling as.formula (thank you to
+    Nick Livingston for bringing this issue to my attention)
 
-2.0-4
-      * Added compatibility with models from the 'lme4' package
-         (Thank you to Jack Hogg for pointing out this
-         incompatibility); same limitations regarding error bands as
-         'lme' models
+2.0-5 (2014-05-30)
+  * Fixed: Bug arising when passing plot options such as 'xlim'
+    when used in conjunction with lme4 models; thank you to
+    Vincent Maire for pointing this bug out
 
-2.0-3
-      * Added compatibility with 'lme' models; conditional models
-         still cannot include error bands due to lack of this feature
-         in predict.lme, but the package will produce reasonable plots
-         of means and partial residuals (Thank you to Jason Rohr for 
-         pointing out this incompatibility and the bugs below)
-      * Fixed bug in passing 'scales' to latticePlot
-      * Fixed bug when trying to panel by every unique value of 'by'
-         variable
-      * Added option to manually relabel panel strips
+2.0-4 (2013-10-29)
+  * New: Added compatibility with models from the 'lme4' package; tThank you to
+    Jack Hogg for pointing out this incompatibility (same limitations regarding
+    error bands as 'lme' models)
 
-2.0-2
-      *  Made compatible with output from the 'survey' package (Thank
-          you to Marco Pomati for pointing this incompatibility out)
-      *  Fixed calling of generics to be compatible with changes in
-          R version 3.1.
-      *  Fixed bug for mlm models in which users received an incorrect
-          warning about residuals.
-      *  Improved generalizability of fillFrame with factors; was
-          incompatible with some instances of predict().
+2.0-3 (2013-09-27)
+  * New: Added compatibility with 'lme' models; conditional models
+    still cannot include error bands due to lack of this feature
+    in predict.lme, but the package will produce reasonable plots
+    of means and partial residuals (Thank you to Jason Rohr for 
+    pointing out this incompatibility and the bugs below)
+  * New: Pption to manually relabel panel strips
+  * Fixed: Bug in passing 'scales' to latticePlot
+  * Fixed: Bug when trying to panel by every unique value of 'by' variable
 
-2.0-1
-      *  Bug fix for spline models of variables with '.' in their names
-      *  Bug fix for survival models in which the Surv object is
-          created outside the call to visreg
-      *  Fixed issue with levels of a factor being dropped from the
-          model (Thank you to Johannes Kutsam for pointing this out)
-      *  Scoping issue resolved; can now call visreg, visreg2d from a
-          function without fit or data present in the global
-          environment (Thank you to Johannes Kutsam for pointing this
-          out)
+2.0-2 (2013-08-28)
+  * New: Compatible with output from the 'survey' package; thank
+    you to Marco Pomati for pointing this incompatibility out
+  * Internal: Fixed calling of generics to be compatible with changes in
+    R version 3.1
+  * Fixed: Bug for mlm models in which users received an incorrect warning
+    about residuals
+  * Fixed: Improved generalizability of fillFrame with factors; was incompatible
+    with some instances of predict()
 
-2.0-0
-      *  Added 'overlay' option
-      *  Substantial internal refactoring to separate calculations /
-          model manipulations from plotting
-      *  Changed how 'breaks' are handled for continuous 'by'
-          variables, both in setup and appearance, with option to
-          directly specify where breaks should occur
-      *  Added print.cond option, with warning when user tries to plot
-          a main effect in the presence of interactions
-      *  Extrapolation now allowed
-      *  Addition of 'rug' option
-      *  Addition of 'band' option to suppress confidence bands
-      *  Fixed bug for models which were called with 'subset' option
-      *  Added 'ask' option to turn off prompting when starting a new
-          page of plots
-      *  Minor bug fix for passing of lattice options
-      *  Expanded suite of tests
+2.0-1 (2013-08-10)
+  * Fixed: Bug for spline models of variables with '.' in their names
+  * Fixed: Bug for survival models in which the Surv object is created outside
+    the call to visreg
+  * Fixed: Levels of a factor no longer dropped from the model; thank you to
+    Johannes Kutsam for pointing this out
+  * Fixed: Scoping issue resolved -- can now call visreg, visreg2d from a
+    function without fit or data present in the global environment; thank you
+    to Johannes Kutsam for pointing this out
 
-1.2-1
-      *  Fixed bug in calculation of confidence bands for
-          quasilikelihood models (thank you to Ariel Muldoon for
-          pointing this out)
-      *  Fixed side-effect which caused trellis settings to be changed
-          when visreg changed them internally
+2.0-0 (2013-05-23)
+  * New: Added 'overlay' option
+  * New: Extrapolation now allowed
+  * New: print.cond option, with warning when user tries to plot a main effect
+    in the presence of interactions
+  * New: 'rug' option
+  * New: 'band' option to suppress confidence bands
+  * New: 'ask' option to turn off prompting when starting a new page of plots
+  * Changed: Changed how 'breaks' are handled for continuous 'by' variables,
+    both in setup and appearance, with option to directly specify where breaks
+    should occur
+  * Fixed: Bug for models which were called with 'subset' option
+  * Fixed: Minor bug in passing lattice options
+  * Internal: Substantial internal refactoring to separate calculations /
+    model manipulations from plotting
+  * Internal: Expanded suite of tests
 
-1.2-0
-      *  Fixed bug in 'removeFormulaFormatting'; further compatibility
-          for splines with use of 'cond'
-      *  Added support for models from the 'gam' package
-      *  Improved support for 'coxph' models from 'survival' package
-      *  Fixed bug in use of ns/bs with type='effect'
+1.2-1 (2013-02-21)
+  * Fixed: Bug in calculation of confidence bands for quasilikelihood models;
+    thank you to Ariel Muldoon for pointing this out
+  * Fixed: Side-effect which caused trellis settings to be changed when visreg
+    changed them internally
 
-1.1-1
-      *  Fixed bug in 'removeFormulaFormatting'; old version was
-          incompatible with use of ns() or bs() for splines
+1.2-0 (2013-01-20)
+  * New: Support for models from the 'gam' package
+  * New: Improved support for 'coxph' models from 'survival' package
+  * Fixed: Bug in 'removeFormulaFormatting' to allow further compatibility for
+    splines with use of 'cond'
+  * Fixed: Bug in use of ns/bs with type='effect'
 
-1.1-0
-      *  Added support for multiple response (class 'mlm') models
-      *  Fixed bug in 'ask' behavior when multiple plots created
-      *  Allow finer control of plots with line.par, fill.par,
-          points.par
-      *  Fixed bug with formatting names for locfit objects
-      *  Fixed bug with visregFactorPanel when partial=FALSE
-      *  Changed default for ylabels to las=1 (always horizontal) 
-          (Thank you to Doug Bates for this advice)
+1.1-1 (2012-11-14)
+  * Fixed: Bug in 'removeFormulaFormatting'; now compatible with ns() and bs()
+    from the 'splines' package
 
-1.0-0
-      *  Submitted to CRAN
-      *  Improved support for effect plots:
-          - extensive revision to implementation
-          - 'x' can now be categorical
-          - interactions/conditioning allowed
-      *  Improved support for visreg2d
-          - Interface/options consistent with visreg 
-          - Internal refactoring to share code between visreg and
-            visreg2d
-          - Should work now with glm/rlm/gam/etc., although I haven't
-            tested all of these
-      *  Fixed bug in 'ask' behavior when multple plots created
-      *  Changed default (effect/conditional) for coxph models and
-          fixed bug that occurred for coxph effect plots
-      *  Default 'ylim' now depends on 'partial' argument
-      *  Removed 'fill' option; always median fill from now on
-      *  Patched get_all_vars bug when variables are in environment
-          rather than data frame
-      *  Added option to display panel strip names T/F
-      *  Added some padding to xlim/ylim for lattice plots
-      *  Default for 'ylab' changed: Delta added for effect plot
-      *  Improved support for gam/locfit models
+1.1-0 (2012-09-28)
+  * New: Finer control of plots with line.par, fill.par, points.par
+  * New: Support for multiple response (class 'mlm') models
+  * Fixed: Bug in 'ask' behavior when multiple plots created
+  * Fixed: Bug with formatting names for locfit objects
+  * Fixed: Bug with visregFactorPanel when partial=FALSE
+  * Changed: Default for ylabels now las=1 (always horizontal); thank you to
+    Doug Bates for this advice
 
-0.4-0
-      *  Substantial refactoring of visreg:
-          - new setupCond function to handle setting up of cond when
-            'by' variables are present
-          - new functions visregPlot and visregLatticePlot to
-            separate work done by the two types of plots ('by' present
-            or absent)
-          - new function getXY for code that visregPlot and
-            visregLatticePlot share
-      *  Internal changes to handling of whitespace when 'x' is a
-          factor
-      *  Default for 'ylab' changed to always be name of response
-          variable; virtually impossible in the presense of
-          transformations, link functions, etc., to automatically
-          choose an appropriate name
-      *  Plotting options now pass to lattice correctly
-      *  ylim for lattice plots fixed
-      *  xtrans for lattice fixed
-      *  Changed manner in which cross-sections are taken when 'by' is
-          numeric; number of observations in each cross-section is now
-          more even
+1.0-0 (2012-05-31)
+  * New: Now on CRAN!
+  * New: Improved support for contrast plots:
+    * Extensive revision to implementation
+    * 'x' can now be categorical
+    * interactions/conditioning allowed
+  * New: Improved support for visreg2d
+    * Interface/options consistent with visreg
+    * Internal refactoring to share code between visreg and visreg2d
+    * Works now with glm/rlm/gam/etc.
+  * New: Option to display panel strip names T/F
+  * New: Improved support for gam/locfit models
+  * Changed: Default (contrast/conditional) for coxph models and
+  * Changed: Default 'ylim' now depends on 'partial' argument
+  * Changed: Added some padding to xlim/ylim for lattice plots
+  * Changed: Default for 'ylab': Delta added for effect plot
+  * Deprecated: 'fill' option; always median fill from now on
+  * Fixed: Bug in 'ask' behavior when multple plots created
+  * Fixed: Bug in coxph contrast plots
+  * Fixed: Patched 'get_all_vars' bug when variables are in environment rather
+    than data frame
 
-0.3-0
-      *  Reorganized frame construction again, using 'get_all_vars';
-          now works with missing data and various other strange
-          situations where f(x) is in the model but x isn't
-      *  Added 'jitter' option
-      *  Improved handling of trellis parameters
+0.4-0 (2012-02-18)
+  * Internal: New 'setupCond' function to handle setting up of cond when 'by'
+    variables are present
+  * Internal: New functions 'visregPlot' and 'visregLatticePlot' to separate
+    work done by the two types of plots ('by' present or absent)
+  * Internal: New function getXY for shared code
+  * Changed: Handling of whitespace when 'x' is a factor
+  * Changed: Default for 'ylab' changed to always be name of response variable;
+    virtually impossible in the presense of transformations, link functions,
+    etc., to automatically choose an appropriate name
+  * Fixed: Plotting options now pass to lattice correctly
+  * Fixed: ylim for lattice plots
+  * Fixed: xtrans for lattice
+  * Changed: Manner in which cross-sections are taken when 'by' is numeric;
+    number of observations in each cross-section is now more even
 
-0.2-0
-      *  Added by argument to support interactions (still buggy)
-      *  visreg() now returns 'x' and 'y' invisibly
-      *  Reorganized frame construction, using 'extract.frame' to
-          reduce redundancy
-      *  Modified default behavior of CI widths to make compatible with
-          coxph models
-      *  Resolved type/type2 conflict in visreg2d with 'plot.type'
-          option
-      *  Added 'scale' option for GLMs
-      *  Added documentation (not finished)
+0.3-0 (2011-12-03)
+  * New: Added 'jitter' option
+  * New: Improved handling of trellis parameters
+  * Internal: Reorganized frame construction again, using 'get_all_vars';
+    now works with missing data and various other strange situations where f(x)
+    is in the model but x isn't
 
-0.1-0
-      *  Added glm suport
-      *  Added factor support in 1d version
-      *  Added "terms" option for 2d plots
-      *  Added 'cond' option for setting specific predictor variables
-          for both versions (1d and 2d)
-      *  The most common instance of each factor is chosen by default
-          if the model includes factors
-      *  Fixed bug for transformations for 2d plots
-      *  Fixed bug that occurs when model is fit without supplying a
-          data frame (i.e., when all variables are in the global
-          environment)
-      *  Fixed bug that occurs when a variable is class 'logical'
-      *  Added 'partial' and 'xtrans' options
+0.2-0 (2011-08-23)
+  * New: Added 'by' argument to support interactions
+  * New: visreg() now returns 'x' and 'y' invisibly
+  * New: Added 'scale' option for GLMs
+  * Internal: Reorganized frame construction, using 'extract.frame'
+  * Changed: Default behavior of CI widths to make compatible with coxph models
+  * Changed: Resolved type/type2 conflict in visreg2d with 'plot.type' option
+  * Documentation: Added documentation
 
-0.0-3
-      *  Added 'trans' option for transforming response variable,
-          axes still need changing when option is used, the centerFrame
-          function is causing a problem when a transformed variable is
-          used in the model
-      *  Changed internal data frame evaluation, allowing the ability
-          to lookup variables in the original data frame when
-          constructing derived variables
-          NOTE: Doing so rendered fillX obsolete and resulted in
-                substantial changes to fillFrame, centerFrame, and
-                setupD
-          NOTE: This issue still causes an error if the variable is
-                located in the global environment instead of the data
-                frame; I see no easy way to resolve this error.
+0.1-0 (2011-07-22)
+  * New: Added glm suport
+  * New: Added factor support in 1d version
+  * New: Added "terms" option for 2d plots
+  * New: Added 'cond' option for setting specific predictor variables
+  * New: 'partial' and 'xtrans' options
+  * Changed: The most common instance of each factor is now chosen by default
+    if the model includes factors
+  * Fixed: Bug for transformations for 2d plots
+  * Fixed: Bug that occurs when model is fit without supplying a data frame
+    (i.e., when all variables are in the global environment)
+  * Fixed: Bug that occurs when a variable is class 'logical'
 
-0.0-2
-      *  Added fill='median' option
+0.0-3 (2011-07-02)
+  * New: 'trans' option for transforming response variable
+  * Intenal: Changed internal data frame evaluation, allowing the ability to
+    lookup variables in the original data frame when constructing derived
+    variables
 
-0.0-1 
-      *  Added 'type' option to visreg, allowing both conditional and
-          term plots
-      *  Changed default y label in visreg
-      *  Added fill='zero' option
+0.0-2 (2011-06-24)
+  * New: fill='median' option
 
-0.0-0 
-      *  Package infrastructure established
-      *   visreg.R, visreg2d.R: Polynomial terms handled correctly
+0.0-1 (2011-06-09)
+  * New: 'type' option to visreg, allowing both conditional and contrast plots
+  * New: fill='zero' option
+  * Changed: Default y label in visreg
+
+0.0-0 (2011-05-12)
+  * New: Package infrastructure established
+  * New: visreg.R, visreg2d.R: Polynomial terms handled correctly

@@ -57,10 +57,12 @@ setupX <- function(fit, f, name, nn, cond, ...) {
 
   ## Remove extraneous columns for coxph
   if ("coxph" %in% class(fit)) {
-    XX <- XX[,-which(colnames(XX)=="(Intercept)"),drop=FALSE]
-    XX <- XX[,-grep("cluster(", colnames(XX), fixed=TRUE),drop=FALSE]
-    X <- X[,-which(colnames(X)=="(Intercept)"),drop=FALSE]
-    X <- X[,-grep("cluster(", colnames(X), fixed=TRUE),drop=FALSE]
+    remove.xx <- c(grep("(Intercept)", colnames(XX), fixed=TRUE),
+                   grep("cluster(", colnames(XX), fixed=TRUE))
+    remove.x <- c(grep("(Intercept)", colnames(X), fixed=TRUE),
+                  grep("cluster(", colnames(X), fixed=TRUE))
+    XX <- XX[, -remove.xx, drop=FALSE]
+    X <- X[, -remove.xx, drop=FALSE]
   }
   condNames <- names(model.frame(as.formula(paste("~", parseFormula(formula(fit)[3]))), df))
   condNames <- setdiff(condNames, name)

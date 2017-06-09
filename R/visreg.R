@@ -27,6 +27,9 @@ visreg <- function(fit, xvar, by, breaks=3, type=c("conditional", "contrast", "e
   if (collapse) v <- collapse.visregList(v)
 
   ## Plot/return
-  if (plot) plot(v, ...)
+  if (plot) {
+    p <- plot(v, ...)
+    if (!is.null(p) && 'gg' %in% class(p)) return(p)
+  }
   invisible(v)
 }

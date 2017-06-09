@@ -28,6 +28,7 @@ factorPlot <- function(v, partial, band, rug, w, line.par, fill.par, points.par,
       if (length(points.par)) points.args[names(points.par)] <- points.par
       do.call("points", points.args)
     }
+    do.call("lines", line.args)
     if (rug==1) rug(rx,col=line.args$col)
     if (rug==2) {
       ind1 <- ind & !v$res$visregPos
