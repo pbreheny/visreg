@@ -1,5 +1,6 @@
 printCond <- function(v, warn=FALSE) {
-  if (warn) writeLines(c(strwrap("Please note that you are attempting to plot a 'main effect' in a model that contains an interaction.  This is potentially misleading; you may wish to consider using the 'by' argument."), ""))
+  if (warn) warning("Please note that you are attempting to plot a 'main effect' in a model that contains an interaction.
+  This is potentially misleading; you may wish to consider using the 'by' argument.")
   p <- ncol(v$fit)-4
   X <- v$fit[,1:p,drop=FALSE]
   X <- X[,-which(names(X)==v$meta$x),drop=FALSE]
@@ -10,7 +11,7 @@ printCond <- function(v, warn=FALSE) {
   for (j in varying.columns) {
     x <- paste(unique(X[,j]), collapse= " / ")
     cat(names(X)[j], ": ", x, "\n", sep="")
-  }    
+  }
   for (j in constant.columns) {
     cat(names(X)[j], ": ", X[1,j], "\n", sep="")
   }

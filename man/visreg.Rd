@@ -10,9 +10,9 @@ performs the calculations and, if \code{plot=TRUE} (the default), these
 calculations are passed to \code{plot.visreg} for plotting.
 }
 \usage{
-visreg(fit, xvar, by, breaks=3, type=c("conditional", "contrast",
-"effect"), trans=I, scale=c("linear","response"), xtrans,  alpha=.05,
-nn=101, cond=list(), jitter=FALSE, collapse=FALSE, plot=TRUE, ...)
+visreg(fit, xvar, by, breaks=3, type=c("conditional", "contrast"),
+trans=I, scale=c("linear","response"), xtrans,  alpha=.05, nn=101,
+cond=list(), jitter=FALSE, collapse=FALSE, plot=TRUE, ...)
 }
 \arguments{
 

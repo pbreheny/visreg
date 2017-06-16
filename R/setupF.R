@@ -20,7 +20,7 @@ setupF <- function(fit, xvar, call.env) {
   } else {
     stop("visreg cannot find the data set used to fit your model; try attaching it to the fit with fit$data <- myData")
   }
-  form <- formula(fit)
+  form <- as.formula(paste(formula(fit)[2], "~", parseFormula(formula(fit)[3])))
   av <- get_all_vars(form, Data)    # https://bugs.r-project.org/bugzilla3/show_bug.cgi?id=14905
   if ("mlm" %in% class(fit) && is.null(colnames(coef(fit)))) {
     lhs <- fit$terms[[2L]]
@@ -32,7 +32,7 @@ setupF <- function(fit, xvar, call.env) {
     }
     names(av) <- c(ynames, utils::head(names(av)[-1], n=ncol(av) - length(ynames)))
   }
-  f <- as.data.frame(as.list(av))
+  f <- as.data.frame(av)
 
   if (class(CALL$random)=="call") {
     rf <- as.data.frame(as.list(get_all_vars(CALL$random, Data)))
@@ -42,9 +42,9 @@ setupF <- function(fit, xvar, call.env) {
   if ("subset" %in% names(CALL)) {
     s <- CALL$subset
     subset <- eval(substitute(s), Data, env)
-    f <- f[which(subset==TRUE),]
+    f <- f[which(subset==TRUE),,drop=FALSE]
   }
-  suppressWarnings(f <- f[!apply(is.na(f), 1, any),])
+  suppressWarnings(f <- f[!apply(is.na(f), 1, any),,drop=FALSE])
 
   ## Handle some variable type issues
   needsUpdate <- FALSE

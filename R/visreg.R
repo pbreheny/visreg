@@ -1,7 +1,11 @@
-visreg <- function(fit, xvar, by, breaks=3, type=c("conditional", "contrast", "effect"), trans=I,
+visreg <- function(fit, xvar, by, breaks=3, type=c("conditional", "contrast"), trans=I,
                    scale=c("linear","response"), xtrans, alpha=.05, nn=101, cond=list(), jitter=FALSE, collapse=FALSE,
                    plot=TRUE, ...) {
   ## Setup
+  if (type[1]=="effect") {
+    warning("Please note that type='effect' is deprecated and may not be supported in future versions of visreg.  Use type='contrast' instead.")
+    type <- "contrast"
+  }
   type <- match.arg(type)
   scale <- match.arg(scale)
   if (scale=="response") {
@@ -10,10 +14,6 @@ visreg <- function(fit, xvar, by, breaks=3, type=c("conditional", "contrast", "e
     } else {
       trans <- family(fit)$linkinv
     }
-  }
-  if (type=="effect") {
-    warning("Please note that type='effect' is deprecated and may not be supported in future versions of visreg.  Use type='contrast' instead.")
-    type <- "contrast"
   }
 
   Data <- setupF(fit, xvar, parent.frame())
