@@ -52,7 +52,7 @@ ggFactorPlot <- function(v, partial, band, rug, w, strip.names, line.par, fill.p
     xx <- c(x1,x2)
 
     lineData <- data.frame(x = rep(xx, J),
-                           y = rep(v$fit$visregFit[(1:J-1)*J + k], each=2))
+                           y = rep(v$fit$visregFit[(1:J-1)*K + k], each=2))
     if (facet) {
       lineData$z <- rep(b, each=2)
       names(lineData)[3] <- v$meta$by
@@ -72,17 +72,22 @@ ggFactorPlot <- function(v, partial, band, rug, w, strip.names, line.par, fill.p
         xx <- c(x1,x2)
         x <- v$res[,v$meta$x]
         z <- v$res[,v$meta$by]
+        df <- NULL
         if ("by" %in% names(v$meta)) {
           ind <- (x==levels(x)[k]) & (z==b[j])
-          rx <- seq(x1, x2, len=sum(ind)+2)[c(-1,-(sum(ind)+2))]
-          df <- data.frame(x = rx,
-                           y = v$res$visregRes[ind],
-                           z = b[j])
+          if (any(ind)) {
+            rx <- seq(x1, x2, len=sum(ind)+2)[c(-1,-(sum(ind)+2))]
+            df <- data.frame(x = rx,
+                             y = v$res$visregRes[ind],
+                             z = b[j])
+          }
         } else {
-          ind <- (x==levels(x)[k])
-          rx <- seq(x1, x2, len=sum(ind)+2)[c(-1,-(sum(ind)+2))]
-          df <- data.frame(x = rx,
-                           y = v$res$visregRes[ind])
+          if (any(ind)) {
+            ind <- (x==levels(x)[k])
+            rx <- seq(x1, x2, len=sum(ind)+2)[c(-1,-(sum(ind)+2))]
+            df <- data.frame(x = rx,
+                             y = v$res$visregRes[ind])
+          }
         }
         pointData <- rbind(pointData, df)
       }

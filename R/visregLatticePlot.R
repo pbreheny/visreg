@@ -31,9 +31,14 @@ visregLatticePlot <- function(v, partial, band, rug, whitespace, strip.names, li
   if (identical(strip.names, FALSE)) {
     strip <- strip.custom(strip.names=FALSE, factor.levels=levels(as.factor(bb)), strip.levels=c(TRUE, TRUE), fg=trellis.par.get("strip.background")$col)
   } else if (identical(strip.names, TRUE)) {
-    strip <- strip.custom(strip.names=TRUE, var.name=v$meta$by)
+    if (is.factor(v$fit[,v$meta$by])) {
+      strip <- strip.custom(strip.names=TRUE, strip.levels=c(TRUE, TRUE), var.name=v$meta$by)
+    } else {
+      lab <- format(signif(unique(bb), 3), drop0trailing=FALSE, trim=TRUE)
+      strip <- strip.custom(strip.names=FALSE, factor.levels=paste(v$meta$by, lab, sep=": "), strip.levels=c(TRUE, TRUE), fg=trellis.par.get("strip.background")$col)
+    }
   } else {
-    strip <- strip.custom(strip.names=FALSE, factor.levels=strip.names, strip.levels=c(TRUE, TRUE), fg=trellis.par.get("strip.background")$col, shingle.intervals=NULL)
+    strip <- strip.custom(strip.names=FALSE, factor.levels=strip.names, strip.levels=c(TRUE, TRUE), fg=trellis.par.get("strip.background")$col)
   }
   lframe <- data.frame(fit=yy, lwr=lwr, upr=upr, xx=xx, by=bb)
   lresids <- data.frame(r=y, x=x, by=b, pos=v$res$visregPos)
