@@ -34,8 +34,7 @@ visregLatticePlot <- function(v, partial, band, rug, whitespace, strip.names, li
     if (is.factor(v$fit[,v$meta$by])) {
       strip <- strip.custom(strip.names=TRUE, strip.levels=c(TRUE, TRUE), var.name=v$meta$by)
     } else {
-      lab <- format(signif(unique(bb), 3), drop0trailing=FALSE, trim=TRUE)
-      strip <- strip.custom(strip.names=FALSE, factor.levels=paste(v$meta$by, lab, sep=": "), strip.levels=c(TRUE, TRUE), fg=trellis.par.get("strip.background")$col)
+      strip <- strip.custom(strip.names=FALSE, factor.levels=paste(v$meta$by, abbrNum(bb), sep=": "), strip.levels=c(TRUE, TRUE), fg=trellis.par.get("strip.background")$col)
     }
   } else {
     strip <- strip.custom(strip.names=FALSE, factor.levels=strip.names, strip.levels=c(TRUE, TRUE), fg=trellis.par.get("strip.background")$col)
