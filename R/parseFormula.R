@@ -1,5 +1,6 @@
 parseFormula <- function(form) {
   form <- gsub("\\|", "\\+", as.character(form))
+  form <- gsub("\\*", "\\+", as.character(form))
   #form <- gsub("\\(([^\\|\\)]+)\\|([^\\)]+)\\)", "\\1 + \\2", as.character(form))
   ##form <- gsub("\\(([^\\|\\)]+)\\|([^\\)]+)\\)", "\\1 + \\2", as.character(form))
   f <- if (grepl("\\+",form)) unlist(strsplit(form, "\\+")) else form
