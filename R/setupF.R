@@ -20,7 +20,7 @@ setupF <- function(fit, xvar, call.env) {
   } else {
     stop("visreg cannot find the data set used to fit your model; try attaching it to the fit with fit$data <- myData")
   }
-  form <- as.formula(paste(formula(fit)[2], "~", parseFormula(formula(fit)[3])))
+  form <- formula(fit)
   av <- get_all_vars(form, Data)    # https://bugs.r-project.org/bugzilla3/show_bug.cgi?id=14905
   if ("mlm" %in% class(fit) && is.null(colnames(coef(fit)))) {
     lhs <- fit$terms[[2L]]
@@ -57,7 +57,10 @@ setupF <- function(fit, xvar, call.env) {
     for (j in 1:ncol(f)) if (class(f[,j])[1]=="logical") f[,j] <- as.numeric(f[,j])
   }
   inModel <- sapply(names(f), grepl, x=as.character(formula(fit)[3]), fixed=TRUE)
-  if (missing(xvar)) xvar <- names(f)[which(inModel)]
+  if (missing(xvar)) {
+    const <- sapply(f, function(x) all(x==x[1]))
+    xvar <- names(f)[!const & inModel]
+  }
   for (i in 1:length(xvar)){if (!is.element(xvar[i],names(f))) stop(paste(xvar[i],"not in model"))}
 
   attr(f, "needsUpdate") <- needsUpdate
