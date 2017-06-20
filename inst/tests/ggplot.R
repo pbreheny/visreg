@@ -1,6 +1,7 @@
 if (require(ggplot2)) {
   airquality$Heat <- cut(airquality$Temp, 3, labels=c("Cool","Mild","Hot"))
-  fit <- lm(Ozone ~ Wind + Heat, data=airquality)
+  airquality$Sun <- cut(airquality$Solar.R, 3, labels=c("Low", "Medium", "High"))
+  fit <- lm(Ozone ~ Wind + Heat + Sun, data=airquality)
   visreg(fit, "Wind", gg=TRUE)
   visreg(fit, "Wind", gg=TRUE) + geom_smooth(col='red', method='loess')
   visreg(fit, "Heat", gg=TRUE)
@@ -16,6 +17,8 @@ if (require(ggplot2)) {
 
   visreg(fit, "Heat", by="Wind", gg=TRUE)
   visreg(fit, "Heat", by="Wind", gg=TRUE, partial=FALSE)
+  visreg(fit, "Heat", by="Wind", gg=TRUE, breaks=4)
+  visreg(fit, "Heat", by="Sun", gg=TRUE)
 
   visreg(fit, "Wind", by="Heat", gg=TRUE, xlab="XXX", ylab="YYY")
   visreg(fit, "Wind", by="Heat", gg=TRUE, line=list(col="blue", size=5), points=list(col="red", size=3), fill=list(fill="yellow", col="green"))
