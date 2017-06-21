@@ -6,7 +6,9 @@
 
 `visreg` provides a number of plotting functions for visualizing fitted regression models: regression functions, confidence bands, partial residuals, interactions, and more.  `visreg` is compatible with virtually all formula-based models in R that provide a `predict` method: `lm`, `glm`, `gam`, `rlm`, `nlme`, `lmer`, `coxph`, `svm`, `randomForest` and many more.
 
+<p align="center">
 <img alt="example image" src="http://pbreheny.github.io/visreg/img/transformations-unnamed-chunk-5-1.png" style="margin:auto;">
+</p>
 
 For details on `visreg` syntax and how to use it, see:
 
