@@ -24,22 +24,22 @@ line.par=NULL, fill.par=NULL, points.par=NULL, gg=FALSE, ...)
 
   \item{overlay}{
     When \code{by} is specified, by default separate panels are used to
-    display each cross-section.  If \code{overlay=TRUE}, these cross-sections
-    are overlaid on top of each other in a single plot.
+    display each cross-section.  If \code{overlay=TRUE}, these
+    cross-sections are overlaid on top of each other in a single plot.
   }
 
   \item{print.cond}{
-    If \code{print.cond=TRUE}, the explanatory variable values conditioned on
-    in a conditional plot are printed to the console (default: \code{FALSE}).
-    If \code{print.cond=TRUE} and \code{type="contrast"}, the conditions will
-    still be printed, but they have no bearing on the plot unless interactions
-    are present.
+    If \code{print.cond=TRUE}, the explanatory variable values
+    conditioned on in a conditional plot are printed to the console
+    (default: \code{FALSE}). If \code{print.cond=TRUE} and
+    \code{type="contrast"}, the conditions will still be printed, but
+    they have no bearing on the plot unless interactions are present.
   }
 
   \item{whitespace}{
-    When \code{xvar} is a factor, whitespace determines the amount of space in
-    between factors on the x-axis.  Default is 0.2, meaning that 20 percent of
-    the horizontal axis is whitespace.
+    When \code{xvar} is a factor, whitespace determines the amount of
+    space in between factors on the x-axis.  Default is 0.2, meaning
+    that 20 percent of the horizontal axis is whitespace.
   }
 
   \item{partial}{
@@ -48,7 +48,8 @@ line.par=NULL, fill.par=NULL, points.par=NULL, gg=FALSE, ...)
   }
 
   \item{band}{
-    If \code{band=TRUE} (the default), confidence bands are shown on the plot.
+    If \code{band=TRUE} (the default), confidence bands are shown on the
+    plot.
   }
 
   \item{rug}{
@@ -80,25 +81,26 @@ line.par=NULL, fill.par=NULL, points.par=NULL, gg=FALSE, ...)
   }
 
   \item{line.par}{
-    List of parameters (see \code{\link{par}}) to pass to \code{lines(...)}
-    when lines are drawn in the plots.
+    List of parameters (see \code{\link{par}}) to pass to
+    \code{lines(...)} when lines are drawn in the plots.
   }
 
   \item{fill.par}{
-    List of parameters (see \code{\link{par}}) to pass to \code{polygon(...)}
-    when shaded confidence regions are drawn in the plots.
+    List of parameters (see \code{\link{par}}) to pass to
+    \code{polygon(...)} when shaded confidence regions are drawn in the
+    plots.
   }
 
   \item{points.par}{
-    List of parameters (see \code{\link{par}}) to pass to \code{points(...)}
-    when partial residuals are drawn in the plots.
+    List of parameters (see \code{\link{par}}) to pass to
+    \code{points(...)} when partial residuals are drawn in the plots.
   }
 
   \item{gg}{
-    By default (\code{gg=FALSE}), \code{visreg} will use the \code{lattice}
-    package to render the plot if multiple panels are required.  If
-    \code{gg=TRUE}, it will use the \code{ggplot2} package instead, provided
-    that it is installed.
+    By default (\code{gg=FALSE}), \code{visreg} will use the
+    \code{lattice} package to render the plot if multiple panels are
+    required.  If \code{gg=TRUE}, it will use the \code{ggplot2} package
+    instead, provided that it is installed.
   }
 
   \item{\dots}{
@@ -108,14 +110,18 @@ line.par=NULL, fill.par=NULL, points.par=NULL, gg=FALSE, ...)
   }
 }
 \references{
-  Breheny, P. and Burchett, W. (2012), Visualizing regression models
-  using visreg.
-  \url{http://myweb.uiowa.edu/pbreheny/publications/visreg.pdf}
+  \itemize{
+    \item \url{http://pbreheny.github.io/visreg}
+    \item Breheny, P. and Burchett, W. (2012), Visualizing regression
+    models using visreg.
+    \url{http://myweb.uiowa.edu/pbreheny/publications/visreg.pdf}
+  }
 }
 \author{
   Patrick Breheny and Woodrow Burchett
 }
 \seealso{
+  \code{\url{http://pbreheny.github.io/visreg/options.html}}
   \code{\link{visreg}}
   \code{\link{visreg2d}}
   \code{\link{visreg-faq}}
@@ -123,5 +129,9 @@ line.par=NULL, fill.par=NULL, points.par=NULL, gg=FALSE, ...)
 \examples{
 fit <- lm(Ozone ~ Solar.R + Wind + Temp,data=airquality)
 visreg(fit, "Wind", line=list(col="red"), points=list(cex=1, pch=1))
-## See ?visreg for more examples
+
+## Changing appearance
+visreg(fit, "Wind", line=list(col="red"), points=list(cex=1, pch=1))
+
+## See ?visreg and http://pbreheny.github.io/visreg for more examples
 }

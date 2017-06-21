@@ -58,7 +58,7 @@ visreg2d <- function(fit, xvar, yvar, type=c("conditional", "contrast", "effect"
       do.call("filled.contour", plot.args)
     } else if (plot.type=="persp") {
       ticktype <- ifelse(is.factor(v$x) | is.factor(v$y),"simple","detailed")
-      plot.args <- list(x=x, y=y, z=z, xlim=xlim, ylim=ylim, xlab=xvar, ylab=yvar, zlab=zlab, ticktype=ticktype, theta=-30)
+      plot.args <- list(x=x, y=y, z=z, xlim=xlim, ylim=ylim, xlab=xvar, ylab=yvar, zlab=zlab, ticktype=ticktype, theta=-30, col="#2fa4e7")
       new.args <- list(...)
       if (length(new.args)) plot.args[names(new.args)] <- new.args
       do.call("persp", plot.args)
