@@ -1,4 +1,4 @@
-plot.visreg <- function(x, overlay=FALSE, print.cond=FALSE, whitespace=0.2, partial=identical(x$meta$trans, I), band=TRUE, rug=!partial,
+plot.visreg <- function(x, overlay=FALSE, print.cond=FALSE, whitespace=0.2, partial=identical(x$meta$trans, I), band=TRUE, rug=(2*!partial),
                         strip.names=is.numeric(x$fit[,x$meta$by]), legend=TRUE, line.par=NULL, fill.par=NULL,
                         points.par=NULL, gg=FALSE, ...) {
   warn <- FALSE
