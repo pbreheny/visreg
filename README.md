@@ -6,6 +6,30 @@
 
 `visreg` provides a number of plotting functions for visualizing fitted regression models: regression functions, confidence bands, partial residuals, interactions, and more.  `visreg` is compatible with virtually all formula-based models in R that provide a `predict` method: `lm`, `glm`, `gam`, `rlm`, `nlme`, `lmer`, `coxph`, `svm`, `randomForest` and many more.
 
+The basic usage is that you fit a model, for example:
+
+```r
+fit <- lm(Ozone ~ Solar.R + Wind + Temp, data=airquality)
+```
+
+and then you pass it to `visreg`:
+
+```r
+visreg(fit, "Wind")
+```
+
+<p align="center">
+<img alt="img" src="http://pbreheny.github.io/visreg/img/index-wind-1.png">
+</p>
+
+A more complex example, using the `mgcv` package:
+
+```r
+airquality$Heat <- cut(airquality$Temp, 3, labels=c("Cool", "Mild", "Hot"))
+fit <- gam(Ozone ~ s(Wind, by=Heat, sp=0.1), data=airquality)
+visreg(fit, "Wind", "Heat", gg=TRUE, ylab="Ozone")
+```
+
 <p align="center">
 <img alt="img" src="http://pbreheny.github.io/visreg/img/index-mgcv-1.png" style="margin:auto;">
 </p>
