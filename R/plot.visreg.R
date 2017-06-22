@@ -14,7 +14,7 @@ plot.visreg <- function(x, overlay=FALSE, print.cond=FALSE, whitespace=0.2, part
     } else {
       p <- ggContPlot(x, partial, band, rug, whitespace, strip.names, line.par, fill.par, points.par, ...)
     }
-    return(invisible(p))
+    return(p)
   } else {
     if ("by" %in% names(x$meta)) {
       if (overlay) {
