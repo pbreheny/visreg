@@ -7,8 +7,9 @@ response in regression models.
 }
 \usage{
 visreg2d(fit, xvar, yvar, type=c("conditional", "contrast", "effect"),
-trans=I, scale=c("linear","response"),
-plot.type=c("image","persp","rgl"), nn=ifelse(plot.type=="persp",49,99),
+trans=I, scale=c("linear", "response"),
+plot.type=c("image", "persp", "rgl"), nn=ifelse(plot.type=="persp", 49,
+99), 
 cond=list(), print.cond=FALSE, whitespace=0.2, ...)
 }
 \arguments{
@@ -106,7 +107,7 @@ cond=list(), print.cond=FALSE, whitespace=0.2, ...)
   Patrick Breheny and Woodrow Burchett
 }
 \seealso{
-  \code{\url{http://pbreheny.github.io/visreg/surface.html}}
+  \url{http://pbreheny.github.io/visreg/surface.html}
   \code{\link{visreg}}
 }
 \examples{

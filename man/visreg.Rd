@@ -156,7 +156,7 @@ cond=list(), jitter=FALSE, collapse=FALSE, plot=TRUE, ...)
   Patrick Breheny and Woodrow Burchett
 }
 \seealso{
-  \code{\url{http://pbreheny.github.io/visreg}}
+  \url{http://pbreheny.github.io/visreg}
   \code{\link{plot.visreg}}
   \code{\link{visreg2d}}
   \code{\link{visreg-faq}}

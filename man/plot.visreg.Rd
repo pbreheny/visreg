@@ -12,8 +12,9 @@ accepts a \code{visreg} or \code{visregList} object as calculated by
 \usage{
 \method{plot}{visreg}(x, overlay=FALSE, print.cond=FALSE,
 whitespace=0.2, partial=identical(x$meta$trans, I), band=TRUE,
-rug=!partial, strip.names=is.numeric(x$fit[,x$meta$by]), legend=TRUE,
-line.par=NULL, fill.par=NULL, points.par=NULL, gg=FALSE, ...)
+rug=ifelse(partial, 0, 2), strip.names=is.numeric(x$fit[,x$meta$by]),
+legend=TRUE, line.par=NULL, fill.par=NULL, points.par=NULL, gg=FALSE,
+...)
 }
 \arguments{
 
@@ -121,7 +122,7 @@ line.par=NULL, fill.par=NULL, points.par=NULL, gg=FALSE, ...)
   Patrick Breheny and Woodrow Burchett
 }
 \seealso{
-  \code{\url{http://pbreheny.github.io/visreg/options.html}}
+  \url{http://pbreheny.github.io/visreg/options.html}
   \code{\link{visreg}}
   \code{\link{visreg2d}}
   \code{\link{visreg-faq}}

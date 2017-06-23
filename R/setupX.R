@@ -1,16 +1,24 @@
 setupX <- function(fit, f, name, nn, cond, ...) {
   ## Set up n x p matrix for (conditional) partial residuals
   x <- f[,name]
-	# Get the reference to plot contrasts from `cond` - if not present, fall back on using the mean (numerical) or the first factor
-	xref <- if (is.factor(x)) {
-		if (name %in% names(cond)) {
-			if (cond[[name]] %in% levels(x)) which(levels(x) == cond[[name]]) else xref = type.convert(cond[[name]], na.strings='')
-		} else {
-			1
-		}
-	} else {
-		if (name %in% names(cond)) cond[[name]] else mean(x)
-	}
+  if (is.factor(x)) {
+    xref <- 1
+    if (name %in% names(cond)) {
+      if (cond[[name]] %in% levels(x)) {
+        xref <- which(levels(x) == cond[[name]])
+      } else if (cond[[name]] %in% 1:length(levels(x))) {
+        xref <- cond[[name]]
+      } else {
+        warning(paste0("You have specified a value for ", name, " that is not one of its levels.\n  Using reference level instead."))
+      }
+    }
+  } else {
+    if (name %in% names(cond)) {
+      xref <- cond[[name]]
+    } else {
+      xref <- mean(x)
+    }
+  }
   x <- if (is.factor(x)) factor(c(xref, as.integer(x)), labels=levels(x)) else c(xref, x)
   xdf <- data.frame(x)
   names(xdf) <- name

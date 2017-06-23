@@ -1,3 +1,15 @@
+2.4-1 (2017-06-23)
+  * New: Can now specify reference level for contrast plots by including x
+    variable in 'cond' list (thank you GitHub@jealie for implementing this!)
+  * Changed: Default for transformed outcomes now rug=2
+  * Changed: Default color for persp plot
+  * Changed: visreg(fit) no longer plots constant objects
+  * Changed: Appearance of strip names for numeric 'by' variables
+  * Fixed: plot.visreg wasn't plotting gg objects by default
+  * Fixed: Bug in formula parsing w/ complicated interactions
+  * Fixed: Bugs in ggFactorPlot
+  * Fixed: print.cond warning using warning() instead of printing text
+
 2.4-0 (2017-06-09)
   * New: gg=TRUE works for regular plots, not just cross-sectional plots
   * New: gg=TRUE returns a gg object, which can then be manipulated further
