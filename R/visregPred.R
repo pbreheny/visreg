@@ -6,6 +6,7 @@ visregPred <- function(fit, Data, se.fit=FALSE, ...) {
   if ("svm" %in% class(fit)) predict.args$probability <- TRUE
   if ("multinom" %in% class(fit)) predict.args$type <- "probs"
   if ("gbm" %in% class(fit)) predict.args$n.trees <- length(fit$trees)
+  if ("betareg" %in% class(fit)) predict.args$type <- "link"
   dots <- list(...)
   if (length(dots)) predict.args[names(dots)] <- dots
 

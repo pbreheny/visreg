@@ -11,6 +11,8 @@ visreg <- function(fit, xvar, by, breaks=3, type=c("conditional", "contrast"), t
   if (scale=="response") {
     if (class(fit)[1]=="lrm") {
       trans <- binomial()$linkinv
+    } else if (class(fit)[1] == "betareg") {
+      trans <- fit$link$mean$linkinv
     } else {
       trans <- family(fit)$linkinv
     }

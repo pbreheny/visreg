@@ -9,8 +9,6 @@ visregResid <- function(fit) {
 #     rr <- fit$y - fit$fitted
   } else if ('coxph' %in% class(fit)) {
     rr <- residuals(fit, type='deviance')
-  } else if ('betareg' %in% class(fit)) {
-    rr <- residuals(fit, type='response')
   } else {
     rr <- residuals(fit)
   }
