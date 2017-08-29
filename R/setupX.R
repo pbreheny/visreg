@@ -81,6 +81,11 @@ setupX <- function(fit, f, name, nn, cond, ...) {
                   grep("cluster(", colnames(X), fixed=TRUE))
     XX <- XX[, -remove.xx, drop=FALSE]
     X <- X[, -remove.xx, drop=FALSE]
+  } else if ("polr" %in% class(fit)) {
+    remove.xx <- grep("(Intercept)", colnames(XX), fixed=TRUE)
+    remove.x <- grep("(Intercept)", colnames(X), fixed=TRUE)
+    XX <- XX[, -remove.xx, drop=FALSE]
+    X <- X[, -remove.xx, drop=FALSE]
   }
   condNames <- names(model.frame(as.formula(paste("~", parseFormula(formula(fit)[3]))), df))
   condNames <- setdiff(condNames, name)

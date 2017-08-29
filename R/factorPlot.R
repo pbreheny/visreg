@@ -29,14 +29,17 @@ factorPlot <- function(v, partial, band, rug, w, line.par, fill.par, points.par,
       do.call("points", points.args)
     }
     do.call("lines", line.args)
-    if (rug==1) rug(rx,col=line.args$col)
-    if (rug==2) {
-      ind1 <- ind & !v$res$visregPos
-      ind2 <- ind & v$res$visregPos
-      rx1 <- seq(x1, x2, len=sum(ind1)+2)[c(-1,-(sum(ind1)+2))]
-      rx2 <- seq(x1, x2, len=sum(ind2)+2)[c(-1,-(sum(ind2)+2))]
-      rug(rx1, col=line.args$col)
-      rug(rx2, side=3, col=line.args$col)
+    if (!all(is.na(v$res$visregPos))) {
+      if (rug==1) rug(rx,col=line.args$col)
+      if (rug==2) {
+        browser()
+        ind1 <- ind & !v$res$visregPos
+        ind2 <- ind & v$res$visregPos
+        rx1 <- seq(x1, x2, len=sum(ind1)+2)[c(-1,-(sum(ind1)+2))]
+        rx2 <- seq(x1, x2, len=sum(ind2)+2)[c(-1,-(sum(ind2)+2))]
+        rug(rx1, col=line.args$col)
+        rug(rx2, side=3, col=line.args$col)
+      }
     }
   }
 }

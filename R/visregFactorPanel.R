@@ -16,16 +16,17 @@ visregFactorPanel <- function(x, y, w, subscripts, lframe, lresids, partial, ban
     ind <- (lresids$by==lframe$by[subscripts][1]) & (lresids$x==levels(lresids$x)[k])
     rx <- seq(x1, x2, len=sum(ind)+2)[c(-1,-(sum(ind)+2))]
     if (partial) panel.points(rx, lresids$r[ind])
-    if (rug==1) panel.rug(rx)
-    if (rug==2) {
-      ind1 <- ind & !lresids$pos
-      ind2 <- ind & lresids$pos
-      rx1 <- seq(x1, x2, len=sum(ind1)+2)[c(-1,-(sum(ind1)+2))]
-      rx2 <- seq(x1, x2, len=sum(ind2)+2)[c(-1,-(sum(ind2)+2))]
-      panel.rug(rx1)
-      panel.rug(rx2, regular=FALSE)
+    if (!all(is.na(lresids$pos))) {
+      if (rug==1) panel.rug(rx)
+      if (rug==2) {
+        ind1 <- ind & !lresids$pos
+        ind2 <- ind & lresids$pos
+        rx1 <- seq(x1, x2, len=sum(ind1)+2)[c(-1,-(sum(ind1)+2))]
+        rx2 <- seq(x1, x2, len=sum(ind2)+2)[c(-1,-(sum(ind2)+2))]
+        panel.rug(rx1)
+        panel.rug(rx2, regular=FALSE)
+      }
     }
   }
-
   panel.xyplot(0,0,subscripts=subscripts,...)
 }
