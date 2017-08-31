@@ -22,11 +22,16 @@ Response <- function(fit, x, trans, alpha, ...) {
   m <- ifelse(identical(class(fit),"lm"), qt(1-alpha/2,fit$df.residual), qnorm(1-alpha/2))
   upr <- p$fit + m*p$se.fit
   lwr <- p$fit - m*p$se.fit
-  if (length(r)==0) r <- as.numeric(rep(NA, nrow(x$D)))
   if (is.matrix(p$fit)) {
-    val <- list(fit=matrix(trans(p$fit), ncol=ncol(p$fit)), lwr=matrix(trans(lwr), ncol=ncol(p$fit)), upr=matrix(trans(upr), ncol=ncol(p$fit)), r=matrix(trans(r), ncol=ncol(p$fit)))
+    if (length(r)==0) {
+      R <- matrix(NA, nrow(x$D), ncol=ncol(p$fit))
+    } else {
+      R <- matrix(trans(r), ncol=ncol(p$fit))
+    }
+    val <- list(fit=matrix(trans(p$fit), ncol=ncol(p$fit)), lwr=matrix(trans(lwr), ncol=ncol(p$fit)), upr=matrix(trans(upr), ncol=ncol(p$fit)), r=R)
     val$name <- colnames(val$fit) <- colnames(p$fit)
   } else {
+    if (length(r)==0) r <- as.numeric(rep(NA, nrow(x$D)))
     val <- list(fit=as.numeric(trans(p$fit)), lwr=as.numeric(trans(lwr)), upr=as.numeric(trans(upr)), r=as.numeric(trans(r)), name=as.character(formula(fit)[2]))
   }
   val$pos <- rr>0

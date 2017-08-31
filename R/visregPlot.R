@@ -8,6 +8,7 @@ visregPlot <- function(v, partial, rug, band, whitespace, line.par, fill.par, po
   upr <- v$fit$visregUpr
   xlim <- if (is.factor(xx)) c(0,1) else range(xx)
   ylab <- if (is.null(v$meta$yName)) paste("f(", v$meta$x, ")", sep="") else v$meta$yName
+
   if (partial && sum(!is.na(y))>0) {
     ylim <- range(c(y, lwr, upr), na.rm=TRUE)
   } else if (band) {
@@ -15,7 +16,6 @@ visregPlot <- function(v, partial, rug, band, whitespace, line.par, fill.par, po
   } else {
     ylim <- range(yy)
   }
-  if (partial && sum(!is.na(y))==0) warning(paste0("The generic function residuals() is not set up for this type of model object.  To plot partial residuals, you will need to define your own residuals.", v$meta$class[1], " function."))
   plot.args <- list(x=1, y=1, ylim=ylim, xlab=v$meta$x, ylab=ylab, type="n", xlim=xlim, xaxt=ifelse(is.factor(xx),'n','s'), las=1)
   new.args <- list(...)
   if (length(new.args)) plot.args[names(new.args)] <- new.args
