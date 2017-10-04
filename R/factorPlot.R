@@ -32,7 +32,6 @@ factorPlot <- function(v, partial, band, rug, w, line.par, fill.par, points.par,
     if (!all(is.na(v$res$visregPos))) {
       if (rug==1) rug(rx,col=line.args$col)
       if (rug==2) {
-        browser()
         ind1 <- ind & !v$res$visregPos
         ind2 <- ind & v$res$visregPos
         rx1 <- seq(x1, x2, len=sum(ind1)+2)[c(-1,-(sum(ind1)+2))]
