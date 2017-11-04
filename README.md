@@ -37,7 +37,7 @@ visreg(fit, "Wind", "Heat", gg=TRUE, ylab="Ozone")
 For details on `visreg` syntax and how to use it, see:
 
 * The online documentation at <http://pbreheny.github.io/visreg> contains many examples of visreg plots and the code to create them.
-* [Breheny P and Burchett W. (2013).  Visualizing regression models using visreg.](http://myweb.uiowa.edu/pbreheny/publications/visreg.pdf)
+* [Breheny P and Burchett W. (2017).  Visualizing regression models using visreg.  *R Journal*.](https://journal.r-project.org/archive/2017/RJ-2017-046/index.html)
 
 The website focuses more on syntax, options, and user interface, while the paper goes into more depth regarding the statistical details.
 
