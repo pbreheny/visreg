@@ -18,9 +18,12 @@ question or feature request, please e-mail me at
   
 Maintainer: Patrick Breheny <patrick-breheny@uiowa.edu>}
 \references{
-  Breheny, P. and Burchett, W. (2013), Visualizing regression models
-  using visreg.
-  \url{http://myweb.uiowa.edu/pbreheny/publications/visreg.pdf}
+  \itemize{
+    \item \url{http://pbreheny.github.io/visreg}
+    \item Breheny, P. and Burchett, W. (2017), Visualizing regression
+    models using visreg.
+    \url{https://journal.r-project.org/archive/2017/RJ-2017-046/index.html}
+  }
 }
 \keyword{ package }
 \seealso{

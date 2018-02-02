@@ -113,9 +113,9 @@ legend=TRUE, line.par=NULL, fill.par=NULL, points.par=NULL, gg=FALSE,
 \references{
   \itemize{
     \item \url{http://pbreheny.github.io/visreg}
-    \item Breheny, P. and Burchett, W. (2012), Visualizing regression
+    \item Breheny, P. and Burchett, W. (2017), Visualizing regression
     models using visreg.
-    \url{http://myweb.uiowa.edu/pbreheny/publications/visreg.pdf}
+    \url{https://journal.r-project.org/archive/2017/RJ-2017-046/index.html}
   }
 }
 \author{
