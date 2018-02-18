@@ -1,4 +1,4 @@
-ggContPlot <- function(v, partial, band, rug, whitespace, strip.names, line.par, fill.par, points.par, ...) {
+ggContPlot <- function(v, partial, band, rug, whitespace, strip.names, line.par, fill.par, points.par, overlay, ...) {
 
   # Setup data frames
   xx <- v$fit[,v$meta$x]
@@ -28,29 +28,42 @@ ggContPlot <- function(v, partial, band, rug, whitespace, strip.names, line.par,
   } else {
     ylab <- if (is.null(v$meta$yName)) paste("f(", v$meta$x, ")", sep="") else v$meta$yName
   }
-
-  # Plot
-  x <- y <- NULL
-  p <- ggplot2::qplot(x, y, data=pointData, xlab=xlab, ylab=ylab, geom="blank")
-  if (band) {
+  
+  # Base gg object and aesthetic defaults
+  if ("by" %in% names(v$meta) & overlay){
+    p <- ggplot2::ggplot(pointData, ggplot2::aes_string('x', 'y', group=v$meta$by)) +
+      ggplot2::scale_fill_manual(values=pal(length(levels(bb)), alpha=0.5))
+    #fill.args <- list(fill=pal(length(levels(bb)), alpha=0.5)[fillData[,v$meta$by]])
+    #line.args <- list(size=1, col=pal(length(levels(bb)), alpha=0.5)[lineData[,v$meta$by]])
+    #point.args <- list(size=0.8, col=pal(length(levels(bb)), alpha=0.5)[pointData[,v$meta$by]])
+    fill.args <- list(mapping=ggplot2::aes_string(fill=v$meta$by))
+    line.args <- list(mapping=ggplot2::aes_string(color=v$meta$by), size=1)
+    point.args <- list(mapping=ggplot2::aes_string(color=v$meta$by), size=0.8)
+  } else {
+    p <- ggplot2::ggplot(pointData, ggplot2::aes_string('x', 'y'))
     fill.args <- list(fill="gray85")
+    line.args <- list(size=1, col="#008DFFFF")
+    point.args <- list(size=0.8, col="gray50")
+  }
+
+  # Add geoms
+  if (band) {
     if (length(fill.par)) fill.args[names(fill.par)] <- fill.par
     fill.args$data <- fillData
+    #p <- p + ggplot2::geom_polygon(mapping=ggplot2::aes_string(fill=v$meta$by), data=fillData)
     p <- p + do.call("geom_polygon", fill.args, envir=asNamespace("ggplot2"))
   }
-  line.args <- list(size=1, col="#008DFFFF")
   if (length(line.par)) line.args[names(line.par)] <- line.par
   line.args$data <- lineData
   p <- p + do.call("geom_line", line.args, envir=asNamespace("ggplot2"))
   if (partial) {
-    point.args <- list(size=0.8, col="gray50")
     if (length(points.par)) point.args[names(points.par)] <- points.par
     point.args$data <- pointData
     p <- p + do.call("geom_point", point.args, envir=asNamespace("ggplot2"))
   }
 
   # Facet
-  if ("by" %in% names(v$meta)) {
+  if ("by" %in% names(v$meta) & !overlay) {
     form <- as.formula(paste("~", v$meta$by))
     if (strip.names==TRUE) {
       p <- p + ggplot2::facet_grid(form, labeller=ggplot2::label_both)

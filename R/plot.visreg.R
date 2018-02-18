@@ -16,9 +16,9 @@ plot.visreg <- function(x, overlay=FALSE, print.cond=FALSE, whitespace=0.2, part
   if (gg) {
     if (!requireNamespace("ggplot2")) stop("You must first install the ggplot2 package: install.packages('ggplot2')")
     if (is.factor(x$fit[,x$meta$x])) {
-      p <- ggFactorPlot(x, partial, band, rug, whitespace, strip.names, line.par, fill.par, points.par, ...)
+      p <- ggFactorPlot(x, partial, band, rug, whitespace, strip.names, line.par, fill.par, points.par, overlay, ...)
     } else {
-      p <- ggContPlot(x, partial, band, rug, whitespace, strip.names, line.par, fill.par, points.par, ...)
+      p <- ggContPlot(x, partial, band, rug, whitespace, strip.names, line.par, fill.par, points.par, overlay, ...)
     }
     return(p)
   } else {
