@@ -76,8 +76,10 @@ setupX <- function(fit, f, name, nn, cond, ...) {
   ## Remove extraneous columns for coxph
   if ("coxph" %in% class(fit)) {
     remove.xx <- c(grep("(Intercept)", colnames(XX), fixed=TRUE),
+                   grep("strata(", colnames(XX), fixed=TRUE),
                    grep("cluster(", colnames(XX), fixed=TRUE))
     remove.x <- c(grep("(Intercept)", colnames(X), fixed=TRUE),
+                  grep("strata(", colnames(XX), fixed=TRUE),
                   grep("cluster(", colnames(X), fixed=TRUE))
     XX <- XX[, -remove.xx, drop=FALSE]
     X <- X[, -remove.xx, drop=FALSE]
