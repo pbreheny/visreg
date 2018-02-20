@@ -92,38 +92,47 @@ ggFactorPlot <- function(v, partial, band, rug, w, strip.names, overlay, line.pa
   }
 
   # Plot points
-  if (partial) {
-    for (j in 1:J) {
-      for (k in 1:K) {
-        x1 <- (k-1)/len
-        x2 <- (k-1)/len + (1-w)/len
-        xx <- c(x1,x2)
-        x <- v$res[,v$meta$x]
-        df <- NULL
-        if ("by" %in% names(v$meta)) {
-          ind <- (x==levels(x)[k]) & (vrz==vrb[j])
-          if (any(ind)) {
-            rx <- seq(x1, x2, len=sum(ind)+2)[c(-1,-(sum(ind)+2))]
-            df <- data.frame(visregGGX = rx,
-                             visregGGY = v$res$visregRes[ind],
-                             visregGGZ = b[j])
-          }
-        } else {
-          ind <- (x==levels(x)[k])
-          if (any(ind)) {
-            rx <- seq(x1, x2, len=sum(ind)+2)[c(-1,-(sum(ind)+2))]
-            df <- data.frame(visregGGX = rx,
-                             visregGGY = v$res$visregRes[ind])
-          }
+  for (j in 1:J) {
+    for (k in 1:K) {
+      x1 <- (k-1)/len
+      x2 <- (k-1)/len + (1-w)/len
+      xx <- c(x1,x2)
+      x <- v$res[,v$meta$x]
+      df <- NULL
+      if ("by" %in% names(v$meta)) {
+        ind <- (x==levels(x)[k]) & (vrz==vrb[j])
+        if (any(ind)) {
+          rx <- seq(x1, x2, len=sum(ind)+2)[c(-1,-(sum(ind)+2))]
+          df <- data.frame(visregGGX = rx,
+                           visregGGY = v$res$visregRes[ind],
+                           visregGGZ = b[j],
+                           visregGGP = v$res$visregPos[ind])
         }
-        pointData <- rbind(pointData, df)
+      } else {
+        ind <- (x==levels(x)[k])
+        if (any(ind)) {
+          rx <- seq(x1, x2, len=sum(ind)+2)[c(-1,-(sum(ind)+2))]
+          df <- data.frame(visregGGX = rx,
+                           visregGGY = v$res$visregRes[ind],
+                           visregGGP = v$res$visregPos[ind])
+        }
       }
+      pointData <- rbind(pointData, df)
     }
-    if ("by" %in% names(v$meta)) names(pointData)[3] <- v$meta$by
+  }
+  if ("by" %in% names(v$meta)) names(pointData)[3] <- v$meta$by
+  if (partial) {
     point.args$data <- pointData
     p <- p + do.call("geom_point", point.args, envir=asNamespace("ggplot2"))
   }
-
+  
+  # Rug
+  if (rug==1) p <- p + ggplot2::geom_rug(data=pointData, mapping=ggplot2::aes_string(color=v$meta$by), sides='b')
+  if (rug==2) {
+    p <- p + ggplot2::geom_rug(data=pointData[pointData$visregGGP,], mapping=ggplot2::aes_string(color=v$meta$by), sides='t')
+    p <- p + ggplot2::geom_rug(data=pointData[!pointData$visregGGP,], mapping=ggplot2::aes_string(color=v$meta$by), sides='b')
+  }
+  
   # Facet
   if (facet) {
     form <- as.formula(paste("~", v$meta$by))

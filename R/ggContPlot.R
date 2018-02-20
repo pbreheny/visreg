@@ -9,14 +9,17 @@ ggContPlot <- function(v, partial, band, rug, whitespace, strip.names, overlay, 
   pointData <- data.frame(x = v$res[,v$meta$x],
                           y = v$res$visregRes)
   if ("by" %in% names(v$meta)) {
-    bb <- v$fit[,v$meta$by]
-    if (is.factor(bb)) {
-      fillData$z <- factor(c(bb, rev(bb)), labels=levels(bb))
-    } else {
-      fillData$z <- c(bb, rev(bb))
-    }
+    # bb <- v$fit[,v$meta$by]
+    # if (is.factor(bb)) {
+    #   fillData$z <- factor(c(bb, rev(bb)), labels=levels(bb))
+    # } else {
+    #   fillData$z <- c(bb, rev(bb))
+    # }
+    # pointData$z <- v$res[,v$meta$by]
+    bb <- factor(v$fit[,v$meta$by])
+    fillData$z <- factor(c(bb, rev(bb)), labels=levels(bb))
     lineData$z <- bb
-    pointData$z <- v$res[,v$meta$by]
+    pointData$z <- factor(v$res[,v$meta$by])
     names(fillData)[3] <- names(lineData)[3] <- names(pointData)[3] <- v$meta$by
   }
 
@@ -59,6 +62,11 @@ ggContPlot <- function(v, partial, band, rug, whitespace, strip.names, overlay, 
   if (partial) {
     point.args$data <- pointData
     p <- p + do.call("geom_point", point.args, envir=asNamespace("ggplot2"))
+  }
+  if (rug==1) p <- p + ggplot2::geom_rug(data=pointData, mapping=ggplot2::aes_string(color=v$meta$by), sides='b')
+  if (rug==2) {
+    p <- p + ggplot2::geom_rug(data=pointData[v$res$visregPos,], mapping=ggplot2::aes_string(color=v$meta$by), sides='t')
+    p <- p + ggplot2::geom_rug(data=pointData[!v$res$visregPos,], mapping=ggplot2::aes_string(color=v$meta$by), sides='b')
   }
 
   # Facet
