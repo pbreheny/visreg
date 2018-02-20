@@ -22,6 +22,7 @@ setupF <- function(fit, xvar, call.env) {
   }
   form <- formula(fit)
   av <- get_all_vars(form, Data)    # https://bugs.r-project.org/bugzilla3/show_bug.cgi?id=14905
+  av <- av[,!is.na(names(av))]
   if ("mlm" %in% class(fit) && is.null(colnames(coef(fit)))) {
     lhs <- fit$terms[[2L]]
     ny <- ncol(coef(fit))
