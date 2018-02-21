@@ -69,7 +69,7 @@ plot.visreg2d <- function(x, plot.type=c("image","persp","rgl", "gg"), xlab, yla
     if (!requireNamespace("ggplot2")) stop("You must first install the ggplot2 package: install.packages('ggplot2')")
     df <- data.frame(x = xx[row(zz)], y = yy[col(zz)], z = c(zz))
     p <- ggplot2::ggplot(df, ggplot2::aes_string('x', 'y')) +
-      ggplot2::geom_raster(ggplot2::aes <- string(fill='z')) +
+      ggplot2::geom_raster(ggplot2::aes_string(fill='z')) +
       #ggplot2::geom_contour(ggplot2::aes(z=z), color="#BEBEBE7F") +
       ggplot2::scale_x_continuous(expand = c(0, 0), labels=lx, breaks=mx) +
       ggplot2::scale_y_continuous(expand = c(0, 0), labels=ly, breaks=my) +

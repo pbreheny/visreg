@@ -1,4 +1,5 @@
 fit <- lm(Ozone ~ Solar.R + Wind + Temp + I(Wind^2) + I(Temp^2) + I(Wind*Temp)+I(Wind*Temp^2) + I(Temp*Wind^2) + I(Temp^2*Wind^2),data=airquality)
+visreg2d(fit, "Wind", "Temp", plot.type="gg")
 
 # Conditional plots
 visreg2d(fit, x="Wind", y="Temp")
