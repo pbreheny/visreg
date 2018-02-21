@@ -1,6 +1,6 @@
-## setupV for visreg2d
-## Returns a list of x, y, and z for plotting
-setupV2 <- function(fit, f, xvar, yvar, nn, cond, type, trans) {
+# setupV for visreg2d
+# Returns a list of x, y, and z for plotting
+setupV2 <- function(fit, f, xvar, yvar, nn, cond, type, scale, trans) {
   n.z <- if (class(fit)[1]=="mlm") ncol(coef(fit)) else 1
   form <- parseFormula(formula(fit)[3])
   x <- f[,xvar]
@@ -40,10 +40,27 @@ setupV2 <- function(fit, f, xvar, yvar, nn, cond, type, trans) {
       z <- matrix(trans(XX%*%coef(fit)[ind]),nrow=length(xx),ncol=length(yy))
     }
   }
-  zname <- if (class(fit)[1]=="mlm") colnames(fit$fitted.values) else as.character(formula(fit)[2])
+  #zname <- if (class(fit)[1]=="mlm") colnames(fit$fitted.values) else as.character(formula(fit)[2])
+  zname <- makeYName(fit, scale, trans, type)
   D <- model.frame(as.formula(paste("~",form)),df)
   condNames <- setdiff(names(D), c(xvar, yvar))
   condNames <- intersect(condNames, names(df))
+  baseMeta <- list(x=xvar, y=yvar, trans=trans, class=class(fit), cond=D[1,condNames,drop=FALSE])
 
-  list(x=xx, y=yy, z=z, n=n.z, zname=zname, cond=D[1,condNames,drop=FALSE])
+  if (n.z > 1) {
+    v <- vector("list", n.z)
+    for (i in 1:n.z) {
+      meta <- baseMeta
+      meta$z <- zname[i]
+      v[[i]] <- list(x=xx, y=yy, z=z[[i]], meta=meta)
+      class(v[[i]]) <- 'visreg2d'
+    }
+    class(v) <- 'visregList'
+  } else {
+    meta <- baseMeta
+    meta$z <- zname
+    v <- list(x=xx, y=yy, z=z, meta=meta)
+    class(v) <- 'visreg2d'
+  }
+  v
 }

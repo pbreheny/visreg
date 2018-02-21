@@ -8,7 +8,15 @@ plot.visregList <- function(x, ask=TRUE, ...) {
   }
 
   for (i in 1:length(x)) {
-    plot(x[[i]], ...)
-    if (prompt.user) devAskNewPage(TRUE)
+    p <- plot(x[[i]], ...)
+    if ('gg' %in% class(p)) {
+      if (i==1) {
+        ggList <- vector('list', length(x))
+      }
+      ggList[[i]] <- p
+    } else {
+      if (prompt.user) devAskNewPage(TRUE)
+    }
   }
+  if ('gg' %in% class(p)) return(ggList)
 }
