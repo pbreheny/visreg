@@ -14,9 +14,15 @@ library(visreg)
 knitr::opts_knit$set(aliases=c(h = 'fig.height', w = 'fig.width'))
 ```
 
-This guide is intended to briefly demonstrate the basic usage of `visreg`.  For more details, see the documentation (`?visreg`, `?plot.visreg`, and `?visreg2d`), as well as
+This guide is intended to briefly demonstrate the basic usage of `visreg`.
 
-* [The visreg homepage](http://pbreheny.github.io/visreg), which provides many more examples of how to use the software.
+For details on `visreg` syntax and how to use it, see:
+
+* The online documentation at <http://pbreheny.github.io/visreg> contains many examples of visreg plots and the code to create them.
+* [Breheny P and Burchett W (2017).  Visualization of Regression Models Using visreg. *The R Journal*, 9: 56-71.](https://journal.r-project.org/archive/2017/RJ-2017-046/index.html)
+* The R help files `?visreg`, `?plot.visreg`, and `?visreg2d`
+
+The website focuses more on syntax, options, and user interface, while the paper goes into more depth regarding the statistical details.
 
 The basic idea of visreg is that you fit some sort of regression model and visreg provides a convenient interface for visualizing it.  Let's fit the following model:
 
