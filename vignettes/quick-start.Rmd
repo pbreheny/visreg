@@ -1,0 +1,61 @@
+---
+title: "Quick start guide for visreg"
+output:
+  rmarkdown::html_vignette:
+    css: vignette.css
+vignette: >
+  %\VignetteIndexEntry{Quick start guide}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include=FALSE}
+library(visreg)
+knitr::opts_knit$set(aliases=c(h = 'fig.height', w = 'fig.width'))
+```
+
+This guide is intended to briefly demonstrate the basic usage of `visreg`.  For more details, see the documentation (`?visreg`, `?plot.visreg`, and `?visreg2d`), as well as
+
+* [The visreg homepage](http://pbreheny.github.io/visreg), which provides many more examples of how to use the software.
+
+The basic idea of visreg is that you fit some sort of regression model and visreg provides a convenient interface for visualizing it.  Let's fit the following model:
+
+```{r}
+fit <- lm(Ozone ~ Solar.R + Wind + Temp, data=airquality)
+```
+
+We can then visualize what the model says about the relationship between the outcome and, say, wind, with:
+
+```{r, h=5, w=5}
+visreg(fit, "Wind")
+```
+
+The plot displays (a) the model's estimated relationship between wind and ozone, (b) a confidence band about that estimate, and (c) the partial residuals, so that one can assess model fit.
+
+`visreg` correctly displays factors, transformations, etc., and has many options to produce many types of plots.  As another example, suppose the model contains an interaction:
+
+```{r}
+airquality$Heat <- cut(airquality$Temp, 3, labels=c("Cool","Mild","Hot"))
+fit <- lm(Ozone~ Solar.R + Wind*Heat, data=airquality)
+```
+
+Visreg can plot cross-sections of this fit, either in separate panels:
+
+```{r, h=4, w=9, out.width='100%'}
+visreg(fit, "Wind", by="Heat")
+```
+
+Or overlaid on top of one another:
+
+```{r, h=5, w=5}
+visreg(fit, "Wind", by="Heat", overlay=TRUE)
+```
+
+Or as a two-dimensional filled contour plot (level plot):
+
+```{r, h=5, w=6}
+fit <- lm(Ozone~ poly(Wind, 2)*poly(Temp, 2), data=airquality)
+visreg2d(fit, "Wind", "Temp")
+```
+
+`visreg` is not limited to linear regression models.  It can be used with virtually any type of model in `R` that provides generic functions for `model.frame` and `predict`, such as `glm`, `coxph`, `rlm`, `gam`, `locfit`, `quantreg`, `gbm`, `randomForest`, etc.  See the [homepage](http://pbreheny.github.io/visreg) for additional examples with other types of models.  If there is a model that you think should work with `visreg` but doesn't, please [open an issue](https://github.com/pbreheny/visreg/issues).
