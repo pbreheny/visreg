@@ -6,11 +6,8 @@ A function used to visualize how two variables interact to affect the
 response in regression models.
 }
 \usage{
-visreg2d(fit, xvar, yvar, type=c("conditional", "contrast", "effect"),
-trans=I, scale=c("linear", "response"),
-plot.type=c("image", "persp", "rgl"), nn=ifelse(plot.type=="persp", 49,
-99), 
-cond=list(), print.cond=FALSE, whitespace=0.2, ...)
+visreg2d(fit, xvar, yvar, type=c("conditional", "contrast"), trans=I,
+scale=c("linear", "response"), nn=99, cond=list(), plot=TRUE, ...)
 }
 \arguments{
   \item{fit}{
@@ -51,16 +48,6 @@ cond=list(), print.cond=FALSE, whitespace=0.2, ...)
     function will be applied so that the model is plotted on the scale
     of the original response.
   }
-  \item{plot.type}{
-    The style of plot to be produced.  The following three options are
-    supported:
-    \itemize{
-      \item \code{'image'}, a filled contour plot.
-      \item \code{'persp'}, a 3 dimensional perspective plot.
-      \item \code{'rgl'}, a version of the perspective plot that can be
-      rotated. Note: requires the rgl package to use.
-    }
-  }
   \item{nn}{
     Resolution of the three dimensional plot.  Higher values will
     results in a smoother looking plot.
@@ -73,27 +60,22 @@ cond=list(), print.cond=FALSE, whitespace=0.2, ...)
     can be overridden by specifying their values using \code{cond} (see
     examples).
   }
-  \item{print.cond}{
-    If \code{print.cond==TRUE}, the explanatory variable values
-    conditioned on in a conditional plot are printed to the console
-    (default: \code{FALSE}). If \code{print.cond==TRUE} and
-    \code{type=="contrast"}, the conditions will still be printed, but
-    they have no bearing on the plot unless interactions are present.
-  }
-  \item{whitespace}{
-    When \code{xvar} or \code{yvar} is a factor, whitespace determines
-    the amount of space in between the factors.  Default is 0.2, meaning
-    that 20 percent of the axis is whitespace.
+  \item{plot}{
+    Send the calculations to \code{\link{plot.visreg2d}}, producing a
+    plot?  Default is TRUE.
   }
   \item{\dots}{
-    Graphical parameters can be passed to the function to customize the
-    plots.
+    Graphical parameters (e.g., \code{ylab}) can be passed to the
+    function to customize the plots.
   }
 }
 \value{
-  In addition to providing plots, the \code{visreg2d} function also
-  invisibly returns the x, y, and Z values used in the creation of its
-  plots.
+  A \code{visreg2d} object consisting of:
+  \item{x}{Values of \code{xvar} to be plotted}
+  \item{y}{Values of \code{yvar} to be plotted}
+  \item{z}{Values of outcome to be plotted}
+  \item{meta}{Meta-information needed to construct plots, such as the
+    name of the x and y variables.}  
 }
 \references{
   \itemize{
@@ -115,12 +97,17 @@ fit <- lm(Ozone ~ Solar.R + Wind + Temp + I(Wind^2) + I(Temp^2) +
 I(Wind*Temp)+I(Wind*Temp^2) + I(Temp*Wind^2) + I(Temp^2*Wind^2),
 data=airquality)
 
-visreg2d(fit,x="Wind",y="Temp",plot.type="image")
-visreg2d(fit,x="Wind",y="Temp",plot.type="persp")
+visreg2d(fit, x="Wind", y="Temp", plot.type="image")
+visreg2d(fit, x="Wind", y="Temp", plot.type="persp")
 
 ## Requires the rgl package
 \dontrun{
-visreg2d(fit,x="Wind",y="Temp",plot.type="rgl")
+visreg2d(fit, x="Wind", y="Temp", plot.type="rgl")
+}
+
+## Requires the ggplot2 package
+\dontrun{
+visreg2d(fit, x="Wind", y="Temp", plot.type="gg")
 }
 
 }

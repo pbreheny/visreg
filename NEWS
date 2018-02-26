@@ -1,3 +1,15 @@
+2.5-0 (2018-02-26)
+  * New: Overlay now works for gg plots
+  * New: gg option for visreg2d
+  * New: Improved support for betareg models
+  * New: Support for polr models
+  * Changed: visreg2d now split into calculation and plotting functions
+  * Changed: vignette now HTML instead of PDF
+  * Fixed: Formula parser now handles nested parentheses
+  * Fixed: Multi-reponse models with missing residuals() methods
+  * Fixed: Rugs now work with gg plots
+  * Fixed: Formula parsing for strata() in coxph models
+
 2.4-1 (2017-06-23)
   * New: Can now specify reference level for contrast plots by including x
     variable in 'cond' list (thank you GitHub@jealie for implementing this!)
@@ -21,7 +33,7 @@
     control/options
   * New: Added option to use ggplot2 instead of lattice to produce multi-panel
     plots
-  * New: Support for glmmADMB models.
+  * New: Support for glmmADMB models
   * Documentation: Added quick-start vignette
   * Fixed: Bug in which user options were not being passed to axis() when
     the horizontal axis was a factor
