@@ -9,6 +9,8 @@ visregResid <- function(fit) {
 #     rr <- fit$y - fit$fitted
   } else if ('coxph' %in% class(fit)) {
     rr <- residuals(fit, type='deviance')
+  } else if ('gamlss' %in% class(fit)) {
+    rr <- residuals(fit, what='mu')
   } else {
     rr <- residuals(fit)
   }
