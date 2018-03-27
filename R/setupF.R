@@ -62,7 +62,8 @@ setupF <- function(fit, xvar, call.env) {
     const <- sapply(f, function(x) all(x==x[1]))
     xvar <- names(f)[!const & inModel]
   }
-  for (i in 1:length(xvar)){if (!is.element(xvar[i],names(f))) stop(paste(xvar[i],"not in model"))}
+  if (length(xvar)==0) stop("The model has no predictors; visreg has nothing to plot.", call.=FALSE)
+  for (i in 1:length(xvar)){if (!is.element(xvar[i],names(f))) stop(paste(xvar[i], "not in model"))}
 
   attr(f, "needsUpdate") <- needsUpdate
   attr(f, "xvar") <- xvar
