@@ -57,8 +57,9 @@ setupF <- function(fit, xvar, call.env) {
     needsUpdate <- TRUE
     for (j in 1:ncol(f)) if (class(f[,j])[1]=="logical") f[,j] <- as.numeric(f[,j])
   }
-  inModel <- sapply(names(f), grepl, x=as.character(formula(fit)[3]), fixed=TRUE)
   if (missing(xvar)) {
+    all_x <- strsplit(parseFormula(formula(fit)[3]), ' + ', fixed=TRUE)[[1]]
+    inModel <- sapply(names(f), function(x) x %in% all_x)
     const <- sapply(f, function(x) all(x==x[1]))
     xvar <- names(f)[!const & inModel]
   }
