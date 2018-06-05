@@ -14,14 +14,12 @@ visreg(fit, "Wind", type="contrast", cond=list(Wind=5))
 visreg(fit, "Wind", type="contrast", cond=list(Wind=20))
 visreg(fit, "Heat", type="contrast")
 visreg(fit, "Heat", type="contrast", cond=list(Heat="Hot"))
-visreg(fit, "Heat", type="contrast", cond=list(Heat=3))
-visreg(fit, "Heat", type="contrast", cond=list(Heat=10))
 
 # Real example; overparameterized model
 CO2$Plant <- factor(as.character(CO2$Plant))
-fit <- lm(uptake~.,CO2)
-visreg(fit,"conc",type="contrast")
-visreg(fit,"Plant",type="contrast")
+fit <- lm(uptake~., CO2)
+visreg(fit, "conc", type="contrast")
+visreg(fit, "Plant", type="contrast")
 
 
 ## Toy example

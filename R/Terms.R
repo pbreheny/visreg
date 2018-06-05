@@ -22,8 +22,13 @@ Terms <- function(fit, f, x, trans, alpha, ...) {
     }
   } else {
     V <- vcov(fit)
+    dg <- if ('package' %in% names(attributes(class(V))) && attr(class(V), 'package')=='Matrix') dg <- Matrix::diag(V) else diag(V)
     if ('polr' %in% class(fit)) {
       remove <- grep("|", colnames(V), fixed=TRUE)
+      V <- V[-remove,-remove,drop=FALSE]
+    }
+    if (any(is.na(dg))) {
+      remove <- which(is.na(dg))
       V <- V[-remove,-remove,drop=FALSE]
     }
     SE <- sqrt(apply(x$XX * (x$XX %*% V),1,sum))

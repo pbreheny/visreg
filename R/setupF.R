@@ -1,24 +1,33 @@
 setupF <- function(fit, xvar, call.env) {
   if (isS4(fit)) {
     CALL <- fit@call
-    ENV <- NULL
+    FRAME <- try(fit@frame, silent=TRUE)
+    DATA <- try(fit@data, silent=TRUE)
+    if (class(DATA) != 'try-error') {
+      Data <- DATA
+    } else if (class(FRAME) != 'try-error') {
+      Data <- FRAME
+    } else {
+      stop("visreg cannot find the data set used to fit your model; try attaching it to the fit with fit@data <- myData")
+    }
   } else {
     CALL <- fit$call
     ENV <- environment(fit$terms)
-  }
-  if ("data" %in% names(fit) && is.data.frame(fit$data)) {
-    Data <- fit$data
-    env <- NULL
-  } else if (is.null(CALL$data)) {
-    env <- NULL
-    Data <- NULL
-  } else if (exists(as.character(CALL$data), call.env)) {
-    env <- call.env
-    Data <- eval(CALL$data, envir=env)
-  } else if (exists(as.character(CALL$data), ENV)) {
-    Data <- eval(CALL$data, envir=ENV)
-  } else {
-    stop("visreg cannot find the data set used to fit your model; try attaching it to the fit with fit$data <- myData")
+    if ("data" %in% names(fit) && is.data.frame(fit$data)) {
+      Data <- fit$data
+      env <- NULL
+    } else if (isS4(fit)) {
+    } else if (is.null(CALL$data)) {
+      env <- NULL
+      Data <- NULL
+    } else if (exists(as.character(CALL$data), call.env)) {
+      env <- call.env
+      Data <- eval(CALL$data, envir=env)
+    } else if (exists(as.character(CALL$data), ENV)) {
+      Data <- eval(CALL$data, envir=ENV)
+    } else {
+      stop("visreg cannot find the data set used to fit your model; try attaching it to the fit with fit$data <- myData")
+    }
   }
   form <- formula(fit)
   av <- get_all_vars(form, Data)    # https://bugs.r-project.org/bugzilla3/show_bug.cgi?id=14905
