@@ -30,6 +30,7 @@ setupF <- function(fit, xvar, call.env) {
     }
   }
   form <- formula(fit)
+  if (!is.null(Data)) names(Data) <- gsub('offset\\((.*)\\)', '\\1', names(Data))
   av <- get_all_vars(form, Data)    # https://bugs.r-project.org/bugzilla3/show_bug.cgi?id=14905
   #av <- av[,!is.na(names(av))]     # Breaks mlm if dimnames(Y) not set
   if ("mlm" %in% class(fit) && is.null(colnames(coef(fit)))) {
