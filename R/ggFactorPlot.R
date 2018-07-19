@@ -43,6 +43,9 @@ ggFactorPlot <- function(v, partial, band, rug, w, strip.names, overlay, line.pa
     col <- pal(length(lev))
     acol <- pal(length(lev), alpha=0.3)
     aacol <- pal(length(lev), alpha=0.3/K)
+    if (length(fill.par)) fill.args[names(fill.par)] <- fill.par
+    if (length(line.par)) line.args[names(line.par)] <- line.par
+    if (length(points.par)) point.args[names(points.par)] <- points.par
     p <- p + ggplot2::scale_fill_manual(values=acol) +
       ggplot2::scale_color_manual(values=col) +
       ggplot2::guides(fill=ggplot2::guide_legend(override.aes = list(fill=aacol)))

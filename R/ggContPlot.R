@@ -40,6 +40,9 @@ ggContPlot <- function(v, partial, band, rug, whitespace, strip.names, overlay, 
     point.args <- list(mapping=ggplot2::aes_string(color=v$meta$by), size=0.8)
     acol <- pal(length(levels(bb)), alpha=0.3)
     col <- pal(length(levels(bb)))
+    if (length(fill.par)) fill.args[names(fill.par)] <- fill.par
+    if (length(line.par)) line.args[names(line.par)] <- line.par
+    if (length(points.par)) point.args[names(points.par)] <- points.par
     p <- p + ggplot2::scale_fill_manual(values=acol) + ggplot2::scale_color_manual(values=col)
   } else {
     p <- ggplot2::ggplot(pointData, ggplot2::aes_string('x', 'y'))
