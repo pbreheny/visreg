@@ -32,6 +32,7 @@ visreg <- function(fit, xvar, by, breaks=3, type=c("conditional", "contrast"), t
   if (plot) {
     p <- plot(v, ...)
     if (!is.null(p) && 'gg' %in% class(p)) return(p)
+    if (!is.null(p) && class(p) == 'list' && 'gg' %in% class(p[[1]])) return(p)
   }
   invisible(v)
 }
