@@ -29,30 +29,31 @@ visregLatticePlot <- function(v, partial, band, rug, whitespace, strip.names, li
   ylab <- if (is.null(v$meta$yName)) paste("f(", v$meta$x, ")", sep="") else v$meta$yName
   new.args <- list(...)
   if (identical(strip.names, FALSE)) {
-    strip <- strip.custom(strip.names=FALSE, factor.levels=levels(as.factor(bb)), strip.levels=c(TRUE, TRUE), fg=trellis.par.get("strip.background")$col)
+    strip <- lattice::strip.custom(strip.names=FALSE, factor.levels=levels(as.factor(bb)), strip.levels=c(TRUE, TRUE), fg=lattice::trellis.par.get("strip.background")$col)
   } else if (identical(strip.names, TRUE)) {
     if (is.factor(v$fit[,v$meta$by])) {
-      strip <- strip.custom(strip.names=TRUE, strip.levels=c(TRUE, TRUE), var.name=v$meta$by)
+      strip <- lattice::strip.custom(strip.names=TRUE, strip.levels=c(TRUE, TRUE), var.name=v$meta$by)
     } else {
-      strip <- strip.custom(strip.names=FALSE, factor.levels=paste(v$meta$by, abbrNum(bb), sep=": "), strip.levels=c(TRUE, TRUE), fg=trellis.par.get("strip.background")$col)
+      strip <- lattice::strip.custom(strip.names=FALSE, factor.levels=paste(v$meta$by, abbrNum(bb), sep=": "), strip.levels=c(TRUE, TRUE), fg=lattice::trellis.par.get("strip.background")$col)
     }
   } else {
-    strip <- strip.custom(strip.names=FALSE, factor.levels=strip.names, strip.levels=c(TRUE, TRUE), fg=trellis.par.get("strip.background")$col)
+    strip <- lattice::strip.custom(strip.names=FALSE, factor.levels=strip.names, strip.levels=c(TRUE, TRUE), fg=lattice::trellis.par.get("strip.background")$col)
   }
   lframe <- data.frame(fit=yy, lwr=lwr, upr=upr, xx=xx, by=bb)
   lresids <- data.frame(r=y, x=x, by=b, pos=v$res$visregPos)
   plot.args <- list(x=formula(lframe$fit~lframe$xx | lframe$by), type="l", ylim=ylim, xlab=v$meta$x, ylab=ylab, lframe=lframe, lresids=lresids, partial=partial, band=band, rug=rug, xlim=xlim, strip=strip, fill.par=fill.par)
   if (length(new.args)) plot.args[names(new.args)] <- new.args
   if (is.null(dev.list())) trellis.device()
-  opar <- trellis.par.get()
+  opar <- lattice::trellis.par.get()
 
   # Plot
   line.args <- list(lwd=3, col="#008DFFFF")
   if (length(line.par)) line.args[names(line.par)] <- line.par
-  trellis.par.set(plot.line=line.args)
+  lattice::trellis.par.set(plot.line=line.args)
   points.args <- list(cex=0.4, pch=19, col="gray50")
   if (length(points.par)) points.args[names(points.par)] <- points.par
-  trellis.par.set(plot.symbol=points.args)
+  lattice::trellis.par.set(plot.symbol=points.args)
+  FUN <- getFromNamespace('xyplot', 'lattice')
   if (is.factor(x)) {
     K <- length(levels(x))
     len <- K*(1-whitespace)+(K-1)*whitespace
@@ -66,13 +67,13 @@ visregLatticePlot <- function(v, partial, band, rug, whitespace, strip.names, li
     }
     plot.args$panel <- visregFactorPanel
     plot.args$w <- whitespace
-    tp <- do.call("xyplot", plot.args)
+    tp <- do.call(FUN, plot.args)
     plot(tp)
   } else {
     plot.args$panel <- visregPanel
-    tp <- do.call("xyplot",plot.args)
+    tp <- do.call(FUN, plot.args)
     plot(tp)
   }
-  trellis.par.set(opar)
+  lattice::trellis.par.set(opar)
   return(tp)
 }
