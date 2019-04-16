@@ -50,7 +50,7 @@ setupF <- function(fit, xvar, call.env) {
     rf <- rf[,setdiff(names(rf), names(f)),drop=FALSE]
     f <- cbind(f, rf)
   }
-  if ("subset" %in% names(CALL) & class(fit) != 'averaging') {
+  if ("subset" %in% names(CALL) & !('averaging' %in% class(fit))) {
     s <- CALL$subset
     subset <- eval(substitute(s), Data, env)
     f <- f[which(subset==TRUE),,drop=FALSE]
