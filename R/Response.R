@@ -15,10 +15,15 @@ Response <- function(fit, x, trans, alpha, ...) {
   p <- visregPred(fit, x$DD, se.fit=TRUE, ...)
 
   ## Format output
-  if (is.numeric(p)) p <- list(fit=p, se.fit=NA)
-  if (class(p)=="svystat") p <- list(fit=as.numeric(p), se.fit=sqrt(attr(p,"var")))
-  if ("rq" %in% class(fit)) p <- list(fit=as.numeric(p$fit[,1]), se.fit=as.numeric(p$fit[,3]-p$fit[,2])/(2*qnorm(.975)))
-  if ("rms" %in% class(fit)) p$fit <- p$linear.predictors
+  if (inherits(p, "svystat")) {
+    p <- list(fit=as.numeric(p), se.fit=sqrt(attr(p,"var")))
+  } else if (inherits(fit, "rq")) {
+    p <- list(fit=as.numeric(p[,1]), se.fit=as.numeric(p[,3]-p[,2])/(2*qnorm(.975)))
+  } else if (inherits(fit, "rms")) {
+    p$fit <- p$linear.predictors
+  } else if (is.numeric(p)) {
+    p <- list(fit=p, se.fit=NA)
+  }
   m <- ifelse(identical(class(fit),"lm"), qt(1-alpha/2,fit$df.residual), qnorm(1-alpha/2))
   upr <- p$fit + m*p$se.fit
   lwr <- p$fit - m*p$se.fit
