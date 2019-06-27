@@ -1,4 +1,2 @@
-if(require(loess)) {
-  fit <- loess(Ozone ~ Wind, data = airquality)
-  visreg(fit, 'Wind')
-}
+fit <- loess(Ozone ~ Wind, data = airquality)
+visreg(fit, 'Wind')
