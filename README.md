@@ -1,6 +1,7 @@
 [![version](http://www.r-pkg.org/badges/version/visreg)](https://cran.r-project.org/package=visreg)
 [![downloads](http://cranlogs.r-pkg.org/badges/visreg)](https://cran.r-project.org/package=visreg)
 [![codecov.io](https://codecov.io/github/pbreheny/visreg/coverage.svg?branch=master)](https://codecov.io/github/pbreheny/visreg?branch=master)
+[![Travis build status](https://travis-ci.org/pbreheny/breheny.svg?branch=master)](https://travis-ci.org/pbreheny/breheny)
 
 # Visualization of Regression Models
 
