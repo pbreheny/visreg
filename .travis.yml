@@ -7,7 +7,6 @@ r_packages:
   - gbm
   - lme4
   - locfit
-  - loess
   - mgcv
   - nnet
   - quantreg
