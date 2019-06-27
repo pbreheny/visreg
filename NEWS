@@ -1,3 +1,7 @@
+2.5-1 (2019-06-26)
+  * Fixed: Restoring compatibility with current version of quantreg
+  * Fixed: Restoring compatibility with current version of survey
+
 2.5-0 (2018-02-26)
   * New: Overlay now works for gg plots
   * New: gg option for visreg2d
