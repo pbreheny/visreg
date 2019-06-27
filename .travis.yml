@@ -1,4 +1,4 @@
 language: r
-r_packages: betareg e1071 gamlss gamm4 gbm lme4 locfit loess mgcv nnet quantreg randomForest
+r_packages: betareg, e1071, gamlss, gamm4, gbm, lme4, locfit, loess, mgcv, nnet, quantreg, randomForest
 warnings_are_errors: false
 r_check_args: --test-dir=inst/tests
