@@ -11,5 +11,5 @@ r_packages:
   - nnet
   - quantreg
   - randomForest
-warnings_are_errors: false
-r_check_args: --test-dir=inst/tests
+cache: packages
+r_check_args: --test-dir=tests/run
