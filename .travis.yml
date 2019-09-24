@@ -1,3 +1,5 @@
+before_install:
+  - sudo apt install libcgal-dev libglu1-mesa-dev mesa-common-dev
 language: r
 r_packages:
   - betareg
@@ -11,5 +13,6 @@ r_packages:
   - nnet
   - quantreg
   - randomForest
+  - rgl
 cache: packages
 r_check_args: --test-dir=tests/run
