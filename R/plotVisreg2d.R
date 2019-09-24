@@ -57,7 +57,8 @@ plot.visreg2d <- function(x, plot.type=c("image","persp","rgl", "gg"), xlab, yla
     plot.args <- list(x=xx, y=yy, z=zz, xlim=xlim, ylim=ylim, xlab=xlab, ylab=ylab, zlab=zlab, ticktype=ticktype, theta=-30, col=color, border="#BEBEBE33", shade=0.5)
     new.args <- list(...)
     if (length(new.args)) plot.args[names(new.args)] <- new.args
-    do.call("persp", plot.args)
+    p <- do.call("persp", plot.args)
+    return(p)
   } else if (plot.type=="rgl") {
     if (!requireNamespace("rgl")) stop("You must first install the rgl package: install.packages('rgl')")
     plot.args <- list(x=xx, y=yy, z=zz, xlab=xlab, ylab=ylab, zlab=zlab, color=color)
