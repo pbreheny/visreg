@@ -16,7 +16,6 @@ setupF <- function(fit, xvar, call.env) {
     if ("data" %in% names(fit) && is.data.frame(fit$data)) {
       Data <- fit$data
       env <- NULL
-    } else if (isS4(fit)) {
     } else if (is.null(CALL$data)) {
       env <- NULL
       Data <- NULL

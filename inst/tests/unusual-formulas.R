@@ -2,6 +2,17 @@ fit <- lm(Ozone ~ Solar.R + poly(Wind, 4) + poly(Temp, 4), airquality)
 visreg(fit, "Wind")
 visreg(fit, "Temp")
 
+fit <- lm(Ozone ~ I(Solar.R/2) + Wind + Temp, data=airquality)
+visreg(fit, "Solar.R")
+fit <- lm(Ozone ~ I(Solar.R^2) + Wind + Temp, data=airquality)
+visreg(fit, "Solar.R")
+fit <- lm(Ozone ~ I(Solar.R+2) + Wind + Temp, data=airquality)
+visreg(fit, "Solar.R")
+fit <- lm(Ozone ~ I(Solar.R*2) + Wind + Temp, data=airquality)
+visreg(fit, "Solar.R")
+fit <- lm(Ozone ~ I(Solar.R/Wind) + Temp, data=airquality)
+visreg(fit, "Solar.R")
+
 if (require(lme4)) {
   data(Orthodont, package="nlme")
   Orthodont$nsex <- as.numeric(Orthodont$Sex=="Male")

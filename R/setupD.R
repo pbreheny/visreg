@@ -4,9 +4,12 @@ setupD <- function(fit, f, name, nn, cond, whitespace, ...) {
   xdf <- data.frame(x)
   names(xdf) <- name
   df <- fillFrame(f, xdf, cond)
-
-  form <- parseFormula(formula(fit)[3])
-  D <- model.frame(as.formula(paste("~",form)),df)
+  
+  rhs_form <- formula(fit)
+  rhs_form[2] <- NULL
+  simple_rhs <- paste(all.vars(rhs_form), collapse = ' + ')
+  simple_form <- as.formula(paste("~", simple_rhs))
+  D <- model.frame(simple_form, df)
   condNames <- setdiff(names(D), name)
   condNames <- intersect(condNames, names(df))
   D <- cbind(D, df[,setdiff(names(df),names(D)), drop=FALSE])
@@ -21,7 +24,7 @@ setupD <- function(fit, f, name, nn, cond, whitespace, ...) {
   xxdf <- data.frame(xx)
   names(xxdf) <- name
   df <- fillFrame(f,xxdf,cond)
-  DD <- model.frame(as.formula(paste("~",form)),df)
+  DD <- model.frame(simple_form, df)
   DD <- cbind(DD,df[,setdiff(names(df),names(DD)),drop=FALSE])
 
   list(x=x, xx=xx, D=D, DD=DD, factor=is.factor(x), name=name, cond=D[1,condNames,drop=FALSE])
