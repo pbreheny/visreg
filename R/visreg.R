@@ -1,7 +1,7 @@
 visreg <- function(fit, xvar, by, breaks=3, type=c("conditional", "contrast"), trans=I,
                    scale=c("linear","response"), xtrans, alpha=.05, nn=101, cond=list(), jitter=FALSE, collapse=FALSE,
                    plot=TRUE, ...) {
-  ## Setup
+  # Setup
   if (type[1]=="effect") {
     warning("Please note that type='effect' is deprecated and may not be supported in future versions of visreg.  Use type='contrast' instead.")
     type <- "contrast"
@@ -20,15 +20,21 @@ visreg <- function(fit, xvar, by, breaks=3, type=c("conditional", "contrast"), t
 
   Data <- setupF(fit, xvar, parent.frame())
   xvar <- attr(Data, "xvar")
-  if (attr(Data, "needsUpdate")) fit <- update(fit, formula=formula(fit), data=Data)
+  if (attr(Data, "needsUpdate")) {
+    if (inherits(fit, 'coxph')) {
+      fit <- update(fit, formula=formula(fit), data=Data, model=TRUE)
+    } else {
+      fit <- update(fit, formula=formula(fit), data=Data)
+    }
+  }
   cond <- setupCond(cond, Data, by, breaks)
 
-  ## Calculate v
+  # Calculate v
   yName <- makeYName(fit, scale, trans, type)
   v <- setupV(fit, Data, xvar, nn, cond, type, trans, xtrans, alpha, jitter, by, yName, ...)
   if (collapse) v <- collapse.visregList(v)
 
-  ## Plot/return
+  # Plot/return
   if (plot) {
     p <- plot(v, ...)
     if (!is.null(p) && 'gg' %in% class(p)) return(p)

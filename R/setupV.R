@@ -1,14 +1,16 @@
-## v is a list of three elements: fit, res, and meta
-## alternatively (class "visregList"), a list of visreg elements
+# v is a list of three elements: fit, res, and meta
+# alternatively (class "visregList"), a list of visreg elements
+
 setupV <- function(fit, f, xvar, nn, cond, type, trans, xtrans, alpha, jitter, by, yName, ...) {
-  ## Initial setup
+  
+  # Initial setup
   if (length(xvar) > 1 & length(cond) > 1) stop("Cannot specify 'by' and multiple x variables simultaneously")
   J <- max(length(xvar), length(cond))
   Attempt <- try(max(attr(terms(as.formula(formula(fit))), "order")) > 1, silent=TRUE)
   hasInteraction <- ifelse(class(Attempt)=='try-error', FALSE, Attempt)
   lev <- attr(cond, "lev")
 
-  ## Get xy list
+  # Get xy list
   xy <- vector("list", J)
   for (j in 1:J) {
     cond.j <- if (length(cond) > 1) cond[[j]] else cond[[1]]
@@ -17,7 +19,7 @@ setupV <- function(fit, f, xvar, nn, cond, type, trans, xtrans, alpha, jitter, b
   }
   if (!missing(by)) xy <- subsetV(xy, f, by, lev, type)
 
-  ## Format
+  # Format
   meta <- list(x=xvar, y=xy[[1]]$y$name, hasInteraction=hasInteraction, yName=yName, trans=trans, class=class(fit))
   K <- xy[[1]]$y$n
   if (K==1) {
