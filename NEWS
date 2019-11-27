@@ -1,3 +1,11 @@
+2.6-0 (2019-11-27)
+  * New: visreg(), visreg2d() now accept data= option for explicit data passing
+  * Fixed: coxph models now work when update() is required (#76)
+  * Fixed: Improved formula parsing (now uses all.vars)
+  * Changed: plot.visreg2d() now returns transformation matrix for persp plots
+  * Internal: TravisCI now used for automatic testing
+  * Internal: More consistent handling of matrix outcome (mlm)
+
 2.5-1 (2019-06-26)
   * Fixed: Restoring compatibility with current version of quantreg
   * Fixed: Restoring compatibility with current version of survey
