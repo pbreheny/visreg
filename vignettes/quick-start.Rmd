@@ -42,7 +42,7 @@ The plot displays (a) the model's estimated relationship between wind and ozone,
 
 ```{r}
 airquality$Heat <- cut(airquality$Temp, 3, labels=c("Cool","Mild","Hot"))
-fit <- lm(Ozone~ Solar.R + Wind*Heat, data=airquality)
+fit <- lm(Ozone ~ Solar.R + Wind*Heat, data=airquality)
 ```
 
 Visreg can plot cross-sections of this fit, either in separate panels:
@@ -60,7 +60,7 @@ visreg(fit, "Wind", by="Heat", overlay=TRUE)
 Or as a two-dimensional filled contour plot (level plot):
 
 ```{r, h=5, w=6}
-fit <- lm(Ozone~ poly(Wind, 2)*poly(Temp, 2), data=airquality)
+fit <- lm(Ozone ~ poly(Wind, 2)*poly(Temp, 2), data=airquality)
 visreg2d(fit, "Wind", "Temp")
 ```
 

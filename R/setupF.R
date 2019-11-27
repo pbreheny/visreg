@@ -19,6 +19,9 @@ setupF <- function(fit, xvar, call.env, data) {
     if ("data" %in% names(fit) && is.data.frame(fit$data)) {
       Data <- fit$data
       env <- NULL
+    } else if (inherits(fit, 'lm')) {
+      Data <- model.frame(fit)
+      env <- NULL
     } else if (is.null(CALL$data)) {
       env <- NULL
       Data <- NULL
