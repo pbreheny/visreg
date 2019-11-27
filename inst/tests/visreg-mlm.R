@@ -14,7 +14,7 @@ fit <- lm(Y ~ Species + Petal.Width, iris)
 visreg:::se.mlm(fit)
 visreg(fit, "Species")
 
-## Rug
+# Rug
 par(mfrow=c(3,1), mar=c(5, 5, 0.5, 0.5), oma=c(0,0,2,0))
 visreg(fit, "Petal.Width", rug=TRUE, jitter=TRUE)
 visreg(fit, "Petal.Width", rug=TRUE, jitter=TRUE, type="contrast")

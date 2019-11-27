@@ -1,5 +1,8 @@
-setupF <- function(fit, xvar, call.env) {
-  if (isS4(fit)) {
+setupF <- function(fit, xvar, call.env, data) {
+  if (!is.null(data)) {
+    Data <- data
+    CALL <- if (isS4(fit)) fit@call else fit$call
+  } else if (isS4(fit)) {
     CALL <- fit@call
     FRAME <- try(fit@frame, silent=TRUE)
     DATA <- try(fit@data, silent=TRUE)
@@ -8,7 +11,7 @@ setupF <- function(fit, xvar, call.env) {
     } else if (class(FRAME) != 'try-error') {
       Data <- FRAME
     } else {
-      stop("visreg cannot find the data set used to fit your model; try attaching it to the fit with fit@data <- myData")
+      stop("visreg cannot find the data set used to fit your model; supply it using the 'data=' option")
     }
   } else {
     CALL <- fit$call
@@ -23,24 +26,20 @@ setupF <- function(fit, xvar, call.env) {
       env <- call.env
       Data <- eval(CALL$data, envir=env)
     } else if (exists(as.character(CALL$data), ENV)) {
+      env <- ENV
       Data <- eval(CALL$data, envir=ENV)
     } else {
-      stop("visreg cannot find the data set used to fit your model; try attaching it to the fit with fit$data <- myData")
+      stop("visreg cannot find the data set used to fit your model; supply it using the 'data=' option")
     }
   }
   form <- formula(fit)
   if (!is.null(Data)) names(Data) <- gsub('offset\\((.*)\\)', '\\1', names(Data))
-  av <- get_all_vars(form, Data)    # https://bugs.r-project.org/bugzilla3/show_bug.cgi?id=14905
-  #av <- av[,!is.na(names(av))]     # Breaks mlm if dimnames(Y) not set
-  if ("mlm" %in% class(fit) && is.null(colnames(coef(fit)))) {
-    lhs <- fit$terms[[2L]]
-    ny <- ncol(coef(fit))
-    if (mode(lhs) == "call" && lhs[[1L]] == "cbind") {
-      ynames <- as.character(lhs)[-1L]
-    } else {
-      ynames <- paste0("Y", seq_len(ny))
-    }
-    names(av) <- c(ynames, utils::head(names(av)[-1], n=ncol(av) - length(ynames)))
+  if (inherits(fit, 'mlm') && fit$terms[[2L]] != 'call') {
+    ff <- form
+    ff[[2]] <- NULL
+    av <- get_all_vars(ff, Data)      # If mlm with matrix as Y, outside of data frame framework
+  } else {
+    av <- get_all_vars(form, Data)    # https://bugs.r-project.org/bugzilla3/show_bug.cgi?id=14905
   }
   f <- as.data.frame(av)
 
@@ -56,7 +55,7 @@ setupF <- function(fit, xvar, call.env) {
   }
   suppressWarnings(f <- f[!apply(is.na(f), 1, any),,drop=FALSE])
 
-  ## Handle some variable type issues
+  # Handle some variable type issues
   needsUpdate <- FALSE
   f <- droplevels(f)
   frameClasses <- sapply(f, class)

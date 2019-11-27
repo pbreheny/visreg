@@ -6,8 +6,9 @@ A function used to visualize how two variables interact to affect the
 response in regression models.
 }
 \usage{
-visreg2d(fit, xvar, yvar, type=c("conditional", "contrast"), trans=I,
-scale=c("linear", "response"), nn=99, cond=list(), plot=TRUE, ...)
+visreg2d(fit, xvar, yvar, type=c("conditional", "contrast"), data=NULL,
+trans=I, scale=c("linear", "response"), nn=99, cond=list(), plot=TRUE,
+...)
 }
 \arguments{
   \item{fit}{
@@ -37,6 +38,12 @@ scale=c("linear", "response"), nn=99, cond=list(), plot=TRUE, ...)
     taken to be the mean).
     }
     For more details, see references.
+  }
+  \item{data}{
+    The data frame used to fit the model.  Typically, visreg() can
+    figure out where the data is, so it is not necessary to provide
+    this.  In some cases, however, the data set cannot be located and
+    must be supplied explicitly.
   }
   \item{trans}{
     (Optional) A function specifying a transformation for the vertical

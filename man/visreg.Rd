@@ -11,8 +11,8 @@ calculations are passed to \code{plot.visreg} for plotting.
 }
 \usage{
 visreg(fit, xvar, by, breaks=3, type=c("conditional", "contrast"),
-trans=I, scale=c("linear","response"), xtrans,  alpha=.05, nn=101,
-cond=list(), jitter=FALSE, collapse=FALSE, plot=TRUE, ...)
+data=NULL, trans=I, scale=c("linear","response"), xtrans,  alpha=.05,
+nn=101, cond=list(), jitter=FALSE, collapse=FALSE, plot=TRUE, ...)
 }
 \arguments{
 
@@ -60,6 +60,13 @@ cond=list(), jitter=FALSE, collapse=FALSE, plot=TRUE, ...)
     taken to be the mean).
     }
     For more details, see references.
+  }
+
+  \item{data}{
+    The data frame used to fit the model.  Typically, visreg() can
+    figure out where the data is, so it is not necessary to provide
+    this.  In some cases, however, the data set cannot be located and
+    must be supplied explicitly.
   }
 
   \item{trans}{

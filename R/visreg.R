@@ -1,4 +1,4 @@
-visreg <- function(fit, xvar, by, breaks=3, type=c("conditional", "contrast"), trans=I,
+visreg <- function(fit, xvar, by, breaks=3, type=c("conditional", "contrast"), data=NULL, trans=I,
                    scale=c("linear","response"), xtrans, alpha=.05, nn=101, cond=list(), jitter=FALSE, collapse=FALSE,
                    plot=TRUE, ...) {
   # Setup
@@ -18,7 +18,7 @@ visreg <- function(fit, xvar, by, breaks=3, type=c("conditional", "contrast"), t
     }
   }
 
-  Data <- setupF(fit, xvar, parent.frame())
+  Data <- setupF(fit, xvar, parent.frame(), data)
   xvar <- attr(Data, "xvar")
   if (attr(Data, "needsUpdate")) {
     if (inherits(fit, 'coxph')) {

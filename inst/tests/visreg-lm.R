@@ -59,18 +59,18 @@ fit <- lm(Ozone ~ Solar.R + Wind + Heat, data=airquality)
 visreg(fit, "Wind", cex.axis=2)
 visreg(fit, "Heat", cex.axis=2)
 
-## Specifying by and cond at the same time
+# Specifying by and cond at the same time
 fit <- lm(Ozone ~ Solar.R + Wind*Heat, data=airquality)
 visreg(fit,"Heat", by="Wind", cond=list(Solar.R=0))
 visreg(fit,"Heat", by="Wind", cond=list(Solar.R=500))
 
-## Extrapolation
+# Extrapolation
 fit <- lm(Ozone ~ Solar.R + Wind + Temp, data=airquality)
 par(mfrow=c(1,1))
 visreg(fit, "Temp", xlim=c(50,150))
 visreg(fit, "Temp", type="contrast", xlim=c(50,150))
 
-## Rug
+# Rug
 airquality$Heat <- cut(airquality$Temp,3,labels=c("Cool","Mild","Hot"))
 fit <- lm(Ozone ~ Solar.R + Wind + Heat, data=airquality)
 visreg(fit, "Wind", rug=TRUE, jitter=TRUE)
