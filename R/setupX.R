@@ -56,10 +56,10 @@ setupX <- function(fit, f, name, nn, cond, ...) {
 
   ## Set up data frame with nn rows for prediction
   dots <- list(...)
-  xx <- if (is.factor(x)) {
-    factor(c(xref, 1:length(levels(x))),labels=levels(x))
+  if (is.factor(x)) {
+    xx <- factor(c(xref, 1:length(levels(x))),labels=levels(x))
   } else {
-    if ("xlim" %in% names(dots)) c(xref, seq(dots$xlim[1], dots$xlim[2], length=nn)) else c(xref, seq(min(x),max(x),length=nn))
+    xx <- c(xref, seq(min(x), max(x), length=nn))
   }
   xxdf <- data.frame(xx)
   names(xxdf) <- name

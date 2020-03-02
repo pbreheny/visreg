@@ -19,7 +19,7 @@ setupD <- function(fit, f, name, nn, cond, whitespace, ...) {
   xx <- if (is.factor(x)) {
     factor(levels(x),levels=levels(x))
   } else {
-    if ("xlim" %in% names(dots)) seq(dots$xlim[1], dots$xlim[2], length=nn) else seq(min(x),max(x),length=nn)
+    xx <- seq(min(x), max(x), length=nn)
   }
   xxdf <- data.frame(xx)
   names(xxdf) <- name
