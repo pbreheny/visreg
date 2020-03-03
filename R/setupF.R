@@ -1,20 +1,21 @@
 setupF <- function(fit, xvar, call.env, data) {
+  CALL <- if (isS4(fit)) fit@call else fit$call
   if (!is.null(data)) {
     Data <- data
-    CALL <- if (isS4(fit)) fit@call else fit$call
+  } else if (!is.null(CALL) && ('data' %in% names(CALL)) && exists(as.character(CALL$data), call.env)) {
+    env <- call.env
+    Data <- eval(CALL$data, envir=env)
   } else if (isS4(fit)) {
-    CALL <- fit@call
     FRAME <- try(fit@frame, silent=TRUE)
     DATA <- try(fit@data, silent=TRUE)
-    if (class(DATA) != 'try-error') {
+    if (!inherits(DATA, 'try-error')) {
       Data <- DATA
-    } else if (class(FRAME) != 'try-error') {
+    } else if (!inherits(FRAME, 'try-error')) {
       Data <- FRAME
     } else {
       stop("visreg cannot find the data set used to fit your model; supply it using the 'data=' option")
     }
   } else {
-    CALL <- fit$call
     ENV <- environment(fit$terms)
     if ("data" %in% names(fit) && is.data.frame(fit$data)) {
       Data <- fit$data
