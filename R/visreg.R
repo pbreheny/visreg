@@ -17,7 +17,8 @@ visreg <- function(fit, xvar, by, breaks=3, type=c("conditional", "contrast"), d
       trans <- family(fit)$linkinv
     }
   }
-
+  if (!identical(trans, I) & type=="contrast") warning("You are attempting to transform a contrast.  The resulting plot is not guaranteed to be meaningful.", call.=FALSE)
+  
   Data <- setupF(fit, xvar, parent.frame(), data)
   xvar <- attr(Data, "xvar")
   if (attr(Data, "needsUpdate")) {

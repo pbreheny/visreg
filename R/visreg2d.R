@@ -9,7 +9,8 @@ visreg2d <- function(fit, xvar, yvar, type=c("conditional", "contrast"), data=NU
   scale <- match.arg(scale)
   if (scale=="response") trans <- family(fit)$linkinv
   if (missing(xvar) | missing(yvar)) stop("Must specify and x and y variable")
-
+  if (!identical(trans, I) & type=="contrast") warning("You are attempting to transform a contrast.  The resulting plot is not guaranteed to be meaningful.", call.=FALSE)
+  
   # Set up f
   f <- setupF(fit, c(xvar, yvar), parent.frame(), data)
   if (attr(f, "needsUpdate")) fit <- update(fit, data=f)
