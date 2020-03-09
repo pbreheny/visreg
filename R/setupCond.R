@@ -12,8 +12,7 @@ setupCond <- function(cond, f, by, breaks) {
           lev <- sort(unique.by)
         } else {
           a <- 1/5/2^(breaks-2)
-          lev <- as.numeric(quantile(f[,by], seq(a,1-a,length=breaks), type=1))
-          ##lev <- round(seq(min(f[,by]), max(f[,by]), length=breaks), digits=1-log10(sd(f[,by])))
+          lev <- as.double(quantile(f[,by], seq(a,1-a,length=breaks), type=1))
         }
       } else {
         lev <- breaks

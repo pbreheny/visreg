@@ -68,7 +68,7 @@ ggFactorPlot <- function(v, partial, band, rug, w, strip.names, overlay, line.pa
       x2 <- (k-1)/len + (1-w)/len
       xx <- c(x1, x2, x2, x1)
       fillData <- data.frame(visregGGX = rep(xx, J),
-                             visregGGY = as.numeric(apply(v$fit[(1:J-1)*K + k, c("visregLwr", "visregUpr")], 1, function(x) rep(x, each=2))))
+                             visregGGY = as.double(apply(v$fit[(1:J-1)*K + k, c("visregLwr", "visregUpr")], 1, function(x) rep(x, each=2))))
       if ("by" %in% names(v$meta)) {
         fillData$visregGGZ <- rep(b, each=4)
         names(fillData)[3] <- v$meta$by

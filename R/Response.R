@@ -16,12 +16,12 @@ Response <- function(fit, x, trans, alpha, ...) {
 
   ## Format output
   if (inherits(p, "svystat")) {
-    p <- list(fit=as.numeric(p), se.fit=sqrt(attr(p,"var")))
+    p <- list(fit=as.double(p), se.fit=sqrt(attr(p,"var")))
   } else if (inherits(fit, "rq")) {
-    p <- list(fit=as.numeric(p[,1]), se.fit=as.numeric(p[,3]-p[,2])/(2*qnorm(.975)))
+    p <- list(fit=as.double(p[,1]), se.fit=as.double(p[,3]-p[,2])/(2*qnorm(.975)))
   } else if (inherits(fit, "rms")) {
     p$fit <- p$linear.predictors
-  } else if (is.numeric(p)) {
+  } else if (is.double(p)) {
     p <- list(fit=p, se.fit=NA)
   }
   m <- ifelse(identical(class(fit),"lm"), qt(1-alpha/2,fit$df.residual), qnorm(1-alpha/2))
@@ -36,15 +36,15 @@ Response <- function(fit, x, trans, alpha, ...) {
     val <- list(fit=matrix(trans(p$fit), ncol=ncol(p$fit)), lwr=matrix(trans(lwr), ncol=ncol(p$fit)), upr=matrix(trans(upr), ncol=ncol(p$fit)), r=R)
     val$name <- colnames(val$fit) <- colnames(p$fit)
   } else {
-    if (length(r)==0) r <- as.numeric(rep(NA, nrow(x$D)))
-    val <- list(fit=as.numeric(trans(p$fit)), lwr=as.numeric(trans(lwr)), upr=as.numeric(trans(upr)), r=as.numeric(trans(r)), name=as.character(formula(fit)[2]))
+    if (length(r)==0) r <- rep(NA_real_, nrow(x$D))
+    val <- list(fit=as.double(trans(p$fit)), lwr=as.double(trans(lwr)), upr=as.double(trans(upr)), r=as.double(trans(r)), name=as.character(formula(fit)[2]))
   }
   val$pos <- rr>0
   if (length(val$pos)==0) {
     if (is.matrix(p$fit)) {
       val$pos <- matrix(NA, nrow(x$D), ncol(p$fit))
     } else {
-      val$pos <- as.numeric(rep(NA, nrow(x$D)))
+      val$pos <- rep(NA_real_, nrow(x$D))
     }
   }
   val$n <- if (is.matrix(p$fit)) ncol(p$fit) else 1

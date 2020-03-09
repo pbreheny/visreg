@@ -10,7 +10,7 @@ factorAxis2d <- function(xx, w, nn) {
   K <- length(levels(xx))
   len <- K*(1-w)+(K-1)*w
   m <- ((0:(K-1))/len+(1-w)/(2*len))
-  ind <- numeric(nn)
+  ind <- integer(nn)
   for(k in 1:K) {
     i1 <- ceiling(nn*(k-1)/len)
     i2 <- ceiling(nn*((k-1)/len + (1-w)/len))
@@ -18,5 +18,5 @@ factorAxis2d <- function(xx, w, nn) {
     ind[i1:i2] <- k
     if (k!=K) ind[(i2+1):i3] <- NA
   }
-  list(x=seq(0,1,length=nn),m=m,l=l,ind=ind)
+  list(x=seq(0, 1, length=nn), m=m, l=l, ind=ind)
 }

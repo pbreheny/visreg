@@ -64,7 +64,7 @@ setupF <- function(fit, xvar, call.env, data) {
   if (any(frameClasses=="Surv")) needsUpdate <- TRUE
   if (any(frameClasses=="logical")) {
     needsUpdate <- TRUE
-    for (j in 1:ncol(f)) if (class(f[,j])[1]=="logical") f[,j] <- as.numeric(f[,j])
+    for (j in 1:ncol(f)) if (class(f[,j])[1]=="logical") f[,j] <- as.double(f[,j])
   }
   if (missing(xvar)) {
     all_x <- strsplit(parseFormula(formula(fit)[3]), ' + ', fixed=TRUE)[[1]]

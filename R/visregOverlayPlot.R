@@ -71,13 +71,13 @@ visregOverlayPlot <- function(v, partial, band, rug, ask, whitespace, legend, st
   # Add legend
   if (legend) {
     if (identical(strip.names, FALSE)) {
-      if (is.numeric(lev)) {
+      if (is.double(lev)) {
         lgtext <- round(lev, 3)
       } else {
         lgtext <- lev
       }
     } else if (identical(strip.names, TRUE)) {
-      if (is.numeric(lev)) {
+      if (is.double(lev)) {
         lgtext <- paste(v$meta$by, round(lev, 3), sep=" : ")
       } else {
         lgtext <- paste(v$meta$by, lev, sep=" : ")

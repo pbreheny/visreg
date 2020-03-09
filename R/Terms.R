@@ -43,10 +43,10 @@ Terms <- function(fit, f, x, trans, alpha, ...) {
   lwr <- yy - m*SE
   upr <- yy + m*SE
   if (class(fit)[1]=="mlm") {
-    val <- list(fit=matrix(as.numeric(trans(yy)), ncol=n.y), lwr=matrix(as.numeric(trans(lwr)), ncol=n.y), upr=matrix(as.numeric(trans(upr)), ncol=n.y), r=matrix(as.numeric(trans(r)), ncol=n.y))
+    val <- list(fit=matrix(as.double(trans(yy)), ncol=n.y), lwr=matrix(as.double(trans(lwr)), ncol=n.y), upr=matrix(as.double(trans(upr)), ncol=n.y), r=matrix(as.double(trans(r)), ncol=n.y))
     val$name <- colnames(val$fit) <- colnames(fit$fitted.values)
   } else {
-    val <- list(fit=as.numeric(trans(yy)), lwr=as.numeric(trans(lwr)), upr=as.numeric(trans(upr)), r=as.numeric(trans(r)), name=as.character(formula(fit)[2]))
+    val <- list(fit=as.double(trans(yy)), lwr=as.double(trans(lwr)), upr=as.double(trans(upr)), r=as.double(trans(r)), name=as.character(formula(fit)[2]))
   }
   val$pos <- rr>0
   val$n <- if (class(fit)[1]=="mlm") n.y else 1
