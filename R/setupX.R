@@ -36,7 +36,7 @@ setupX <- function(fit, f, name, nn, cond, ...) {
 
   if (class(fit)[1]=="mlm") {
     ind <- apply(is.finite(b), 1, all)
-    if (!identical(ind, apply(is.finite(b), 1, any))) stop("Inconsistent NA/NaN coefficients across outcomes")
+    if (!identical(ind, apply(is.finite(b), 1, any))) stop("Inconsistent NA/NaN coefficients across outcomes", call.=FALSE)
   } else ind <- is.finite(b)
   if (class(fit)[1]=="gam") {
     form <- parseFormula(formula(fit)[3])

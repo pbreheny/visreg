@@ -13,7 +13,7 @@ setupF <- function(fit, xvar, call.env, data) {
     } else if (!inherits(FRAME, 'try-error')) {
       Data <- FRAME
     } else {
-      stop("visreg cannot find the data set used to fit your model; supply it using the 'data=' option")
+      stop("visreg cannot find the data set used to fit your model; supply it using the 'data=' option", call.=FALSE)
     }
   } else {
     ENV <- environment(fit$terms)
@@ -30,7 +30,7 @@ setupF <- function(fit, xvar, call.env, data) {
       env <- ENV
       Data <- eval(CALL$data, envir=ENV)
     } else {
-      stop("visreg cannot find the data set used to fit your model; supply it using the 'data=' option")
+      stop("visreg cannot find the data set used to fit your model; supply it using the 'data=' option", call.=FALSE)
     }
   }
   form <- formula(fit)
@@ -73,7 +73,7 @@ setupF <- function(fit, xvar, call.env, data) {
     xvar <- names(f)[!const & inModel]
   }
   if (length(xvar)==0) stop("The model has no predictors; visreg has nothing to plot.", call.=FALSE)
-  for (i in 1:length(xvar)){if (!is.element(xvar[i], names(f))) stop(paste(xvar[i], "not in model"))}
+  for (i in 1:length(xvar)){if (!is.element(xvar[i], names(f))) stop(paste(xvar[i], "not in model"), call.=FALSE)}
 
   attr(f, "needsUpdate") <- needsUpdate
   attr(f, "xvar") <- xvar

@@ -8,7 +8,7 @@ collapse.visregList <- function(obj, labels, ...) {
       labels <- l
     }
   }
-  if (length(labels) != length(obj)) stop("labels do not match list")
+  if (length(labels) != length(obj)) stop("labels do not match list", call.=FALSE)
   for (i in 1:length(obj)) {
     fit <- rbind(fit, data.frame(obj[[i]]$fit, visregCollapse=labels[i]))
     res <- rbind(res, data.frame(obj[[i]]$res, visregCollapse=labels[i]))

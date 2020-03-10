@@ -29,7 +29,7 @@ setupV2 <- function(fit, f, xvar, yvar, nn, cond, type, scale, trans) {
     DD <- rbind(f, df)
     if (class(fit)[1]=="mlm") {
       ind <- apply(is.finite(coef(fit)), 1, all)
-      if (!identical(ind, apply(is.finite(coef(fit)), 1, any))) stop("Inconsistent NA/NaN coefficients across outcomes")
+      if (!identical(ind, apply(is.finite(coef(fit)), 1, any))) stop("Inconsistent NA/NaN coefficients across outcomes", call.=FALSE)
     } else ind <- is.finite(coef(fit))
     XX. <- model.matrix(as.formula(paste("~", formula(fit)[3])), DD)[-(1:nrow(f)), ind]
     XX <- t(t(XX.[-1,])-XX.[1,])

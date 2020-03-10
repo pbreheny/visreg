@@ -20,7 +20,7 @@ setupCond <- function(cond, f, by, breaks) {
       n.by <- length(lev)
     } else {
       if (class(breaks)=="factor" || class(breaks)=="character") {
-        if (!all(breaks %in% levels(f[, by]))) stop("'breaks' does not match levels of 'by' variable")
+        if (!all(breaks %in% levels(f[, by]))) stop("'breaks' does not match levels of 'by' variable", call.=FALSE)
         lev <- breaks
       } else {
         lev <- levels(f[, by])

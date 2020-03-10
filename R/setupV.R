@@ -4,7 +4,7 @@
 setupV <- function(fit, f, xvar, nn, cond, type, trans, xtrans, alpha, jitter, by, yName, ...) {
   
   # Initial setup
-  if (length(xvar) > 1 & length(cond) > 1) stop("Cannot specify 'by' and multiple x variables simultaneously")
+  if (length(xvar) > 1 & length(cond) > 1) stop("Cannot specify 'by' and multiple x variables simultaneously", call.=FALSE)
   J <- max(length(xvar), length(cond))
   Attempt <- try(max(attr(terms(as.formula(formula(fit))), "order")) > 1, silent=TRUE)
   hasInteraction <- ifelse(class(Attempt)=='try-error', FALSE, Attempt)
