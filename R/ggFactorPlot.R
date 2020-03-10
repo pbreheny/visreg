@@ -1,13 +1,13 @@
 ggFactorPlot <- function(v, partial, band, rug, w, strip.names, overlay, line.par, fill.par, points.par, ...) {
   if ("by" %in% names(v$meta)) {
-    if (is.factor(v$fit[,v$meta$by])) {
-      lev <- levels(v$fit[,v$meta$by])
+    if (is.factor(v$fit[, v$meta$by])) {
+      lev <- levels(v$fit[, v$meta$by])
       b <- vrb <- factor(lev, levels=lev)
-      z <- vrz <- v$res[,v$meta$by]
+      z <- vrz <- v$res[, v$meta$by]
     } else {
-      lev <- abbrNum(v$fit[,v$meta$by])
+      lev <- abbrNum(v$fit[, v$meta$by])
       b <- factor(lev, levels=lev)
-      vrz <- v$res[,v$meta$by]
+      vrz <- v$res[, v$meta$by]
       vrb <- unique(vrz)
     }
     J <- length(b)
@@ -20,7 +20,7 @@ ggFactorPlot <- function(v, partial, band, rug, w, strip.names, overlay, line.pa
     J <- 1
     facet <- FALSE
   }
-  K <- length(levels(v$fit[,v$meta$x]))
+  K <- length(levels(v$fit[, v$meta$x]))
   len <- K*(1-w)+(K-1)*w
 
   # Initialize gg object and aesthetic defaults
@@ -59,7 +59,7 @@ ggFactorPlot <- function(v, partial, band, rug, w, strip.names, overlay, line.pa
     if (length(points.par)) point.args[names(points.par)] <- points.par
   }
   p <- p + ggplot2::xlab(xlab) + ggplot2::ylab(ylab) +
-    ggplot2::scale_x_continuous(breaks=(0:(K-1))/len+(1-w)/(2*len), labels = levels(v$fit[,v$meta$x]))
+    ggplot2::scale_x_continuous(breaks=(0:(K-1))/len+(1-w)/(2*len), labels = levels(v$fit[, v$meta$x]))
 
   # Bands
   if (band) {
@@ -82,7 +82,7 @@ ggFactorPlot <- function(v, partial, band, rug, w, strip.names, overlay, line.pa
   for(k in 1:K) {
     x1 <- (k-1)/len
     x2 <- (k-1)/len + (1-w)/len
-    xx <- c(x1,x2)
+    xx <- c(x1, x2)
 
     lineData <- data.frame(visregGGX = rep(xx, J),
                            visregGGY = rep(v$fit$visregFit[(1:J-1)*K + k], each=2))
@@ -99,8 +99,8 @@ ggFactorPlot <- function(v, partial, band, rug, w, strip.names, overlay, line.pa
     for (k in 1:K) {
       x1 <- (k-1)/len
       x2 <- (k-1)/len + (1-w)/len
-      xx <- c(x1,x2)
-      x <- v$res[,v$meta$x]
+      xx <- c(x1, x2)
+      x <- v$res[, v$meta$x]
       df <- NULL
       if ("by" %in% names(v$meta)) {
         ind <- (x==levels(x)[k]) & (vrz==vrb[j])

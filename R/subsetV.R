@@ -2,15 +2,15 @@
 ## Should probably be renamed subsetXY
 subsetV <- function(v, f, by, lev, type) {
   ## Calculate distance
-  if (is.numeric(f[,by])) {
+  if (is.numeric(f[, by])) {
     D <- matrix(NA, nrow(f), length(v))
     for (i in 1:length(v)) {
-      D[,i] <- (f[,by]-lev[i])^2
+      D[,i] <- (f[, by]-lev[i])^2
     }
   }
   for (i in 1:length(v)) {
-    if (is.factor(f[,by])) {
-      ind <- as.character(f[,by])==as.character(lev[i])
+    if (is.factor(f[, by])) {
+      ind <- as.character(f[, by])==as.character(lev[i])
     } else {
       ind <- (apply(D, 1, which.min)==i)
     }

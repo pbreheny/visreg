@@ -1,12 +1,12 @@
 visregPlot <- function(v, partial, rug, band, whitespace, line.par, fill.par, points.par, ...) {
   ## Setup
-  x <- v$res[,v$meta$x]
+  x <- v$res[, v$meta$x]
   y <- v$res$visregRes
-  xx <- v$fit[,v$meta$x]
+  xx <- v$fit[, v$meta$x]
   yy <- v$fit$visregFit
   lwr <- v$fit$visregLwr
   upr <- v$fit$visregUpr
-  xlim <- if (is.factor(xx)) c(0,1) else range(xx)
+  xlim <- if (is.factor(xx)) c(0, 1) else range(xx)
   ylab <- if (is.null(v$meta$yName)) paste("f(", v$meta$x, ")", sep="") else v$meta$yName
 
   if (partial && sum(!is.na(y))>0) {
@@ -26,7 +26,7 @@ visregPlot <- function(v, partial, rug, band, whitespace, line.par, fill.par, po
     if (!("xaxt" %in% names(new.args) && new.args$xaxt=="n")) factorAxis(x, whitespace, new.args)
   } else {
     if (band) {
-      fill.args <- list(x=c(xx,rev(xx)), y=c(lwr,rev(upr)), col="gray85", border=F)
+      fill.args <- list(x=c(xx, rev(xx)), y=c(lwr, rev(upr)), col="gray85", border=F)
       if (length(fill.par)) fill.args[names(fill.par)] <- fill.par
       do.call("polygon", fill.args)
     }

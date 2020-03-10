@@ -46,15 +46,15 @@ setupF <- function(fit, xvar, call.env, data) {
 
   if (class(CALL$random)=="call") {
     rf <- as.data.frame(as.list(get_all_vars(CALL$random, Data)))
-    rf <- rf[,setdiff(names(rf), names(f)),drop=FALSE]
+    rf <- rf[, setdiff(names(rf), names(f)), drop=FALSE]
     f <- cbind(f, rf)
   }
   if ("subset" %in% names(CALL) & !('averaging' %in% class(fit))) {
     s <- CALL$subset
     subset <- eval(substitute(s), Data, env)
-    f <- f[which(subset==TRUE),,drop=FALSE]
+    f <- f[which(subset==TRUE), , drop=FALSE]
   }
-  suppressWarnings(f <- f[!apply(is.na(f), 1, any),,drop=FALSE])
+  suppressWarnings(f <- f[!apply(is.na(f), 1, any), , drop=FALSE])
 
   # Handle some variable type issues
   needsUpdate <- FALSE
@@ -73,7 +73,7 @@ setupF <- function(fit, xvar, call.env, data) {
     xvar <- names(f)[!const & inModel]
   }
   if (length(xvar)==0) stop("The model has no predictors; visreg has nothing to plot.", call.=FALSE)
-  for (i in 1:length(xvar)){if (!is.element(xvar[i],names(f))) stop(paste(xvar[i], "not in model"))}
+  for (i in 1:length(xvar)){if (!is.element(xvar[i], names(f))) stop(paste(xvar[i], "not in model"))}
 
   attr(f, "needsUpdate") <- needsUpdate
   attr(f, "xvar") <- xvar

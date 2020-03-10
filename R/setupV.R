@@ -29,8 +29,8 @@ setupV <- function(fit, f, xvar, nn, cond, type, trans, xtrans, alpha, jitter, b
       for (j in 1:length(xy)) {
         fit.j <- data.frame(xy[[j]]$x$DD, visregFit=xy[[j]]$y$fit, visregLwr=xy[[j]]$y$lwr, visregUpr=xy[[j]]$y$upr)
         res.j <- data.frame(xy[[j]]$x$D, visregRes=xy[[j]]$y$r, visregPos=xy[[j]]$y$pos)
-        fit.j[,xvar] <- xy[[j]]$x$xx
-        res.j[,xvar] <- xy[[j]]$x$x
+        fit.j[, xvar] <- xy[[j]]$x$xx
+        res.j[, xvar] <- xy[[j]]$x$x
         v$fit <- rbind(v$fit, fit.j)
         v$res <- rbind(v$res, res.j)
       }
@@ -43,8 +43,8 @@ setupV <- function(fit, f, xvar, nn, cond, type, trans, xtrans, alpha, jitter, b
         v[[j]] <- list(fit=data.frame(xy[[j]]$x$DD, visregFit=xy[[j]]$y$fit, visregLwr=xy[[j]]$y$lwr, visregUpr=xy[[j]]$y$upr),
                        res=data.frame(xy[[j]]$x$D, visregRes=xy[[j]]$y$r, visregPos=xy[[j]]$y$pos),
                        meta=meta.j)
-        v[[j]]$fit[,xvar[j]] <- xy[[j]]$x$xx
-        v[[j]]$res[,xvar[j]] <- xy[[j]]$x$x
+        v[[j]]$fit[, xvar[j]] <- xy[[j]]$x$xx
+        v[[j]]$res[, xvar[j]] <- xy[[j]]$x$x
         class(v[[j]]) <- "visreg"
       }
       if (J==1) {
@@ -65,8 +65,8 @@ setupV <- function(fit, f, xvar, nn, cond, type, trans, xtrans, alpha, jitter, b
         for (j in 1:J) {
           fit.jk <- data.frame(xy[[j]]$x$DD, visregFit=xy[[j]]$y$fit[,k], visregLwr=xy[[j]]$y$lwr[,k], visregUpr=xy[[j]]$y$upr[,k])
           res.jk <- data.frame(xy[[j]]$x$D, visregRes=xy[[j]]$y$r[,k], visregPos=xy[[j]]$y$pos[,k])
-          fit.jk[,xvar] <- xy[[j]]$x$xx
-          res.jk[,xvar] <- xy[[j]]$x$x
+          fit.jk[, xvar] <- xy[[j]]$x$xx
+          res.jk[, xvar] <- xy[[j]]$x$x
           v[[k]]$fit <- rbind(v[[k]]$fit, fit.jk)
           v[[k]]$res <- rbind(v[[k]]$res, res.jk)
         }
@@ -86,8 +86,8 @@ setupV <- function(fit, f, xvar, nn, cond, type, trans, xtrans, alpha, jitter, b
           v[[l]] <- list(fit=data.frame(xy[[j]]$x$DD, visregFit=xy[[j]]$y$fit[,k], visregLwr=xy[[j]]$y$lwr[,k], visregUpr=xy[[j]]$y$upr[,k]),
                          res=data.frame(xy[[j]]$x$D, visregRes=xy[[j]]$y$r[,k], visregPos=xy[[j]]$y$pos[,k]),
                          meta=meta.jk)
-          v[[l]]$fit[,xvar[j]] <- xy[[j]]$x$xx
-          v[[l]]$res[,xvar[j]] <- xy[[j]]$x$x
+          v[[l]]$fit[, xvar[j]] <- xy[[j]]$x$xx
+          v[[l]]$res[, xvar[j]] <- xy[[j]]$x$x
           class(v[[l]]) <- "visreg"
         }
       }

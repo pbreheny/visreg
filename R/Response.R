@@ -24,7 +24,7 @@ Response <- function(fit, x, trans, alpha, ...) {
   } else if (is.double(p)) {
     p <- list(fit=p, se.fit=NA)
   }
-  m <- ifelse(identical(class(fit),"lm"), qt(1-alpha/2,fit$df.residual), qnorm(1-alpha/2))
+  m <- ifelse(identical(class(fit), "lm"), qt(1-alpha/2, fit$df.residual), qnorm(1-alpha/2))
   upr <- p$fit + m*p$se.fit
   lwr <- p$fit - m*p$se.fit
   if (is.matrix(p$fit)) {

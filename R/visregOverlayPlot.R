@@ -1,15 +1,15 @@
 visregOverlayPlot <- function(v, partial, band, rug, ask, whitespace, legend, strip.names, line.par, fill.par, points.par, ...) {
   # Setup
-  x <- v$res[,v$meta$x]
+  x <- v$res[, v$meta$x]
   y <- v$res$visregRes
-  b <- v$res[,v$meta$by]
-  xx <- v$fit[,v$meta$x]
+  b <- v$res[, v$meta$by]
+  xx <- v$fit[, v$meta$x]
   yy <- v$fit$visregFit
-  bb <- v$fit[,v$meta$by]
+  bb <- v$fit[, v$meta$by]
   lev <- unique(bb)
   lwr <- v$fit$visregLwr
   upr <- v$fit$visregUpr
-  xlim <- if (is.factor(xx)) c(0,1) else range(xx)
+  xlim <- if (is.factor(xx)) c(0, 1) else range(xx)
   if (partial) {
     ylim <- range(c(y, lwr, upr), na.rm=TRUE)
   } else {
@@ -34,8 +34,8 @@ visregOverlayPlot <- function(v, partial, band, rug, ask, whitespace, legend, st
   # Add lines
   for (i in 1:length(lev)) {
     current.level <- lev[i]
-    indfit <- v$fit[,v$meta$by]==current.level
-    indres <- v$res[,v$meta$by]==current.level
+    indfit <- v$fit[, v$meta$by] == current.level
+    indres <- v$res[, v$meta$by] == current.level
     fun <- function(x) if (length(x)==length(lev)) x[i] else x
     line.args.i <- lapply(line.args, fun)
     points.args.i <- lapply(points.args, fun)
@@ -48,8 +48,8 @@ visregOverlayPlot <- function(v, partial, band, rug, ask, whitespace, legend, st
       factorPlot(v.i, partial, band, rug, whitespace, line.args.i, fill.args.i, points.args.i)
     } else {
       if (band) {
-        fill.args.i$x <- c(xx[indfit],rev(xx[indfit]))
-        fill.args.i$y <- c(lwr[indfit],rev(upr[indfit]))
+        fill.args.i$x <- c(xx[indfit], rev(xx[indfit]))
+        fill.args.i$y <- c(lwr[indfit], rev(upr[indfit]))
         do.call("polygon", fill.args.i)
       }
       line.args.i$x <- xx[indfit]

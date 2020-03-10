@@ -1,11 +1,11 @@
 visregLatticePlot <- function(v, partial, band, rug, whitespace, strip.names, line.par, fill.par, points.par, ...) {
   ## Setup
-  x <- v$res[,v$meta$x]
+  x <- v$res[, v$meta$x]
   y <- v$res$visregRes
-  b <- v$res[,v$meta$by]
-  xx <- v$fit[,v$meta$x]
+  b <- v$res[, v$meta$by]
+  xx <- v$fit[, v$meta$x]
   yy <- v$fit$visregFit
-  bb <- v$fit[,v$meta$by]
+  bb <- v$fit[, v$meta$by]
   lwr <- v$fit$visregLwr
   upr <- v$fit$visregUpr
 
@@ -14,7 +14,7 @@ visregLatticePlot <- function(v, partial, band, rug, whitespace, strip.names, li
     bb <- droplevels(bb)
   }
 
-  xlim <- if (is.factor(xx)) c(0,1) else range(xx)
+  xlim <- if (is.factor(xx)) c(0, 1) else range(xx)
   if (partial) {
     ylim <- range(c(y, lwr, upr), na.rm=TRUE)
   } else {
@@ -31,7 +31,7 @@ visregLatticePlot <- function(v, partial, band, rug, whitespace, strip.names, li
   if (identical(strip.names, FALSE)) {
     strip <- lattice::strip.custom(strip.names=FALSE, factor.levels=levels(as.factor(bb)), strip.levels=c(TRUE, TRUE), fg=lattice::trellis.par.get("strip.background")$col)
   } else if (identical(strip.names, TRUE)) {
-    if (is.factor(v$fit[,v$meta$by])) {
+    if (is.factor(v$fit[, v$meta$by])) {
       strip <- lattice::strip.custom(strip.names=TRUE, strip.levels=c(TRUE, TRUE), var.name=v$meta$by)
     } else {
       strip <- lattice::strip.custom(strip.names=FALSE, factor.levels=paste(v$meta$by, abbrNum(bb), sep=": "), strip.levels=c(TRUE, TRUE), fg=lattice::trellis.par.get("strip.background")$col)
@@ -57,7 +57,7 @@ visregLatticePlot <- function(v, partial, band, rug, whitespace, strip.names, li
   if (is.factor(x)) {
     K <- length(levels(x))
     len <- K*(1-whitespace)+(K-1)*whitespace
-    scales <- list(x=list(at=((0:(K-1))/len+(1-whitespace)/(2*len)),labels=levels(x)))
+    scales <- list(x=list(at=((0:(K-1))/len+(1-whitespace)/(2*len)), labels=levels(x)))
     if (is.null(plot.args$scales)) {
       plot.args$scales <- scales
     } else if (is.null(plot.args$scales$x)) {

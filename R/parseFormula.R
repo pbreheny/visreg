@@ -1,7 +1,7 @@
 parseFormula <- function(form) {
   form <- gsub("\\|", "\\+", as.character(form))
   form <- gsub("\\*", "\\+", as.character(form))
-  f <- if (grepl("\\+",form)) unlist(strsplit(form, "\\+")) else form
+  f <- if (grepl("\\+", form)) unlist(strsplit(form, "\\+")) else form
   n.f <- length(f)
   for (i in 1:n.f) {
     f[i] <- gsub(" ", "", f[i])
@@ -18,6 +18,6 @@ parseFormula <- function(form) {
   }
   f <- f[f!=""]
   val <- paste(f, collapse=" + ")
-  val <- gsub("()","",val)
+  val <- gsub("()", "", val)
   val
 }

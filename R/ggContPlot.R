@@ -1,25 +1,18 @@
 ggContPlot <- function(v, partial, band, rug, whitespace, strip.names, overlay, line.par, fill.par, points.par, ...) {
 
   # Setup data frames
-  xx <- v$fit[,v$meta$x]
+  xx <- v$fit[, v$meta$x]
   fillData <- data.frame(x = c(xx, rev(xx)),
                          y = c(v$fit$visregLwr, rev(v$fit$visregUpr)))
   lineData <- data.frame(x = xx,
                          y = v$fit$visregFit)
-  pointData <- data.frame(x = v$res[,v$meta$x],
+  pointData <- data.frame(x = v$res[, v$meta$x],
                           y = v$res$visregRes)
   if ("by" %in% names(v$meta)) {
-    # bb <- v$fit[,v$meta$by]
-    # if (is.factor(bb)) {
-    #   fillData$z <- factor(c(bb, rev(bb)), labels=levels(bb))
-    # } else {
-    #   fillData$z <- c(bb, rev(bb))
-    # }
-    # pointData$z <- v$res[,v$meta$by]
-    bb <- factor(v$fit[,v$meta$by])
+    bb <- factor(v$fit[, v$meta$by])
     fillData$z <- factor(c(bb, rev(bb)), labels=levels(bb))
     lineData$z <- bb
-    pointData$z <- factor(v$res[,v$meta$by])
+    pointData$z <- factor(v$res[, v$meta$by])
     names(fillData)[3] <- names(lineData)[3] <- names(pointData)[3] <- v$meta$by
   }
 

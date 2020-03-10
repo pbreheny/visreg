@@ -3,8 +3,8 @@ printCond <- function(v, warn=FALSE) {
   interaction.  This is potentially misleading; you may wish to consider using the 'by'
   argument.", call.=FALSE)
   p <- ncol(v$fit)-4
-  X <- v$fit[,1:p,drop=FALSE]
-  X <- X[,-which(names(X)==v$meta$x),drop=FALSE]
+  X <- v$fit[, 1:p, drop=FALSE]
+  X <- X[,-which(names(X) == v$meta$x), drop=FALSE]
   constant.columns <- which(sapply(X, function(x) all(x==x[1])))
   varying.columns <- setdiff(1:ncol(X), constant.columns)
   for (j in 1:ncol(X)) if (is.factor(X[,j])) X[,j] <- as.character(X[,j])

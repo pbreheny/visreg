@@ -13,5 +13,5 @@ getXY <- function(fit, f, name, nn, cond, type, trans, xtrans, alpha, jitter, ..
     x$xx <- xtrans(x$xx)
     x$x <- xtrans(x$x)
   }
-  list(x=x,y=y)
+  list(x=x, y=y)
 }

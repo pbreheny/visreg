@@ -38,7 +38,7 @@ plot.visreg2d <- function(x, plot.type=c("image","persp","rgl", "gg"), xlab, yla
     yy <- yAxis$x
     my <- yAxis$m
     ly <- yAxis$l
-    zz <- zz[,yAxis$ind]
+    zz <- zz[, yAxis$ind]
   } else {
     yy <- x$y
   }
@@ -48,7 +48,7 @@ plot.visreg2d <- function(x, plot.type=c("image","persp","rgl", "gg"), xlab, yla
   if (plot.type=="image") {
     color.palette=colorRampPalette(color, space="Lab")
     plot.args <- list(x=xx, y=yy, z=zz, xlim=xlim, ylim=ylim, xlab=xlab, ylab=ylab, color.palette=color.palette, main=zlab)
-    plot.args$plot.axes <- quote({axis(1,at=mx,labels=lx);axis(2,at=my,labels=ly)})
+    plot.args$plot.axes <- quote({axis(1, at=mx, labels=lx); axis(2, at=my, labels=ly)})
     new.args <- list(...)
     if (length(new.args)) plot.args[names(new.args)] <- new.args
     do.call("filled.contour", plot.args)

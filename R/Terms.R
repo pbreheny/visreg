@@ -14,7 +14,7 @@ Terms <- function(fit, f, x, trans, alpha, ...) {
     r <- rr <- matrix(NA, nrow=nrow(x$X), ncol=n.y)
     for (i in 1:n.y) {
       V <- summ[[i]]$sigma^2 * summ[[i]]$cov.unscaled
-      SE[,i] <- sqrt(apply(x$XX * (x$XX %*% V),1,sum))
+      SE[,i] <- sqrt(apply(x$XX * (x$XX %*% V), 1, sum))
       ind <- is.finite(b[,i])
       yy[,i] <- x$XX%*%b[ind,i]
       rr[,i] <- visregResid(fit)[,i]
@@ -25,13 +25,13 @@ Terms <- function(fit, f, x, trans, alpha, ...) {
     dg <- if ('package' %in% names(attributes(class(V))) && attr(class(V), 'package')=='Matrix') dg <- Matrix::diag(V) else diag(V)
     if ('polr' %in% class(fit)) {
       remove <- grep("|", colnames(V), fixed=TRUE)
-      V <- V[-remove,-remove,drop=FALSE]
+      V <- V[-remove,-remove, drop=FALSE]
     }
     if (any(is.na(dg))) {
       remove <- which(is.na(dg))
-      V <- V[-remove,-remove,drop=FALSE]
+      V <- V[-remove,-remove, drop=FALSE]
     }
-    SE <- sqrt(apply(x$XX * (x$XX %*% V),1,sum))
+    SE <- sqrt(apply(x$XX * (x$XX %*% V), 1, sum))
     yy <- drop(x$XX%*%b[is.finite(b)])
     rr <- visregResid(fit)
     if (is.null(rr)) rr <- rep(NA, nrow(x$X))
@@ -39,7 +39,7 @@ Terms <- function(fit, f, x, trans, alpha, ...) {
     if (nrow(x$X) != length(rr)) warning("Residuals do not match data; have you changed the original data set?  If so, visreg is probably not displaying the residuals for the data set that was actually used to fit the model.")
   }
   if (!all(is.finite(b))) warning("prediction from a rank-deficient fit may be misleading")
-  m <- ifelse(identical(class(fit),"lm") || identical(class(fit),"mlm"), qt(1-alpha/2,fit$df.residual), qnorm(1-alpha/2))
+  m <- ifelse(identical(class(fit),"lm") || identical(class(fit),"mlm"), qt(1-alpha/2, fit$df.residual), qnorm(1-alpha/2))
   lwr <- yy - m*SE
   upr <- yy + m*SE
   if (class(fit)[1]=="mlm") {
