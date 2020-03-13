@@ -5,13 +5,13 @@ makeYName <- function(fit, scale, trans, type) {
     } else {
       yName <- as.character(formula(fit)[2])
     }
-  } else if ("mlm" %in% class(fit)) {
+  } else if (inherits(fit, "mlm")) {
     if (type=="contrast") {
       yName <- sapply(colnames(fit$residuals), function(y) {as.expression(substitute(list(Delta) * x, list(x=y)))})
     } else {
       yName <- colnames(fit$residuals)
     }
-  } else if ("randomForest" %in% class(fit)) {
+  } else if (inherits(fit, "randomForest")) {
     if (fit$type=="regression") yName <- as.character(formula(fit)[2])
     if (fit$type=="classification") yName <- paste0("Pr(", as.character(formula(fit)[2]), ")")
   } else {

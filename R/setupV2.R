@@ -1,7 +1,7 @@
 # setupV for visreg2d
 # Returns a list of x, y, and z for plotting
 setupV2 <- function(fit, f, xvar, yvar, nn, cond, type, scale, trans) {
-  n.z <- if (class(fit)[1]=="mlm") ncol(coef(fit)) else 1
+  n.z <- if (inherits(fit, "mlm")) ncol(coef(fit)) else 1
   form <- parseFormula(formula(fit)[3])
   x <- f[, xvar]
   y <- f[, yvar]
@@ -15,7 +15,7 @@ setupV2 <- function(fit, f, xvar, yvar, nn, cond, type, scale, trans) {
     DD <- model.frame(as.formula(paste("~", form)), df)
     DD <- cbind(DD, df[, setdiff(names(df), names(DD)), drop=FALSE])
     P <- predict(fit, newdata=DD)
-    if (class(fit)[1]=="mlm") {
+    if (inherits(fit, "mlm")) {
       z <- vector("list", n.z)
       for (i in 1:n.z) z[[i]] <- matrix(trans(P[,i]), nrow=length(xx), ncol=length(yy))
     } else {
@@ -27,20 +27,19 @@ setupV2 <- function(fit, f, xvar, yvar, nn, cond, type, scale, trans) {
     xydf <- rbind(c(xref, yref), xydf)
     df <- fillFrame(f, xydf, cond)
     DD <- rbind(f, df)
-    if (class(fit)[1]=="mlm") {
+    if (inherits(fit, "mlm")) {
       ind <- apply(is.finite(coef(fit)), 1, all)
       if (!identical(ind, apply(is.finite(coef(fit)), 1, any))) stop("Inconsistent NA/NaN coefficients across outcomes", call.=FALSE)
     } else ind <- is.finite(coef(fit))
     XX. <- model.matrix(as.formula(paste("~", formula(fit)[3])), DD)[-(1:nrow(f)), ind]
     XX <- t(t(XX.[-1,])-XX.[1,])
-    if (class(fit)[1]=="mlm") {
+    if (inherits(fit, "mlm")) {
       z <- vector("list", n.z)
       for (i in 1:n.z) z[[i]] <- matrix(trans(XX%*%coef(fit)[ind, i]), nrow=length(xx), ncol=length(yy))
     } else {
       z <- matrix(trans(XX%*%coef(fit)[ind]), nrow=length(xx), ncol=length(yy))
     }
   }
-  #zname <- if (class(fit)[1]=="mlm") colnames(fit$fitted.values) else as.character(formula(fit)[2])
   zname <- makeYName(fit, scale, trans, type)
   D <- model.frame(as.formula(paste("~", form)), df)
   condNames <- setdiff(names(D), c(xvar, yvar))

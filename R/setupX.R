@@ -26,27 +26,27 @@ setupX <- function(fit, f, name, nn, cond, ...) {
   D <- rbind(f[, names(df)], df)
   form <- formula(fit)[3]
 
-  if ("lme" %in% class(fit)) {
+  if (inherits(fit, "lme")) {
     b <- nlme::fixed.effects(fit)
-  } else if (sum(grep("merMod", class(fit)))) {
+  } else if (inherits(fit, "merMod")) {
     b <- fit@beta
   } else {
     b <- coef(fit)
   }
 
-  if (class(fit)[1]=="mlm") {
+  if (inherits(fit, "mlm")) {
     ind <- apply(is.finite(b), 1, all)
     if (!identical(ind, apply(is.finite(b), 1, any))) stop("Inconsistent NA/NaN coefficients across outcomes", call.=FALSE)
   } else ind <- is.finite(b)
-  if (class(fit)[1]=="gam") {
+  if (inherits(fit, "gam")) {
     form <- parseFormula(formula(fit)[3])
     D <- model.frame(as.formula(paste("~", form)), df)
     X. <- predict(fit, newdata=as.list(D), type="lpmatrix")
-  } else if (grepl("merMod", class(fit)[1])) {
+  } else if (inherits(fit, "merMod")) {
     form <- formula(fit, fixed.only = TRUE)
     RHS <- formula(substitute(~R, list(R = form[[length(form)]])))
     X. <- model.matrix(RHS, D)[-(1:nrow(f)), ind]
-  } else if (grepl("glmmadmb", class(fit)[1])) {
+  } else if (inherits(fit, "glmmadmb")) {
     form <- as.formula(paste("~", as.character(fit$fixed[3])))
     X. <- model.matrix(form, D)[-(1:nrow(f)), ind]
   } else {
@@ -65,16 +65,16 @@ setupX <- function(fit, f, name, nn, cond, ...) {
   names(xxdf) <- name
   df <- fillFrame(f, xxdf, cond)
   DD <- rbind(f[, names(df)], df)
-  if (class(fit)[1]=="gam") {
+  if (inherits(fit, "gam")) {
     DD <- model.frame(as.formula(paste("~", form)), df)
     XX. <- predict(fit, newdata=as.list(DD), type="lpmatrix")
-  } else if (grepl("merMod", class(fit)[1])) {
+  } else if (inherits(fit, "merMod")) {
     XX. <- model.matrix(RHS, DD)[-(1:nrow(f)), ind]
   } else XX. <- model.matrix(as.formula(paste("~", form)), DD)[-(1:nrow(f)), ind]
   XX <- t(t(XX.[-1,])-XX.[1,])
 
   ## Remove extraneous columns for coxph
-  if ("coxph" %in% class(fit)) {
+  if (inherits(fit, "coxph")) {
     remove.xx <- c(grep("(Intercept)", colnames(XX), fixed=TRUE),
                    grep("strata(", colnames(XX), fixed=TRUE),
                    grep("cluster(", colnames(XX), fixed=TRUE))
@@ -83,7 +83,7 @@ setupX <- function(fit, f, name, nn, cond, ...) {
                   grep("cluster(", colnames(X), fixed=TRUE))
     XX <- XX[, -remove.xx, drop=FALSE]
     X <- X[, -remove.xx, drop=FALSE]
-  } else if ("polr" %in% class(fit)) {
+  } else if (inherits(fit, "polr")) {
     remove.xx <- grep("(Intercept)", colnames(XX), fixed=TRUE)
     remove.x <- grep("(Intercept)", colnames(X), fixed=TRUE)
     XX <- XX[, -remove.xx, drop=FALSE]

@@ -1,23 +1,23 @@
 visregPred <- function(fit, Data, se.fit=FALSE, ...) {
   predict.args <- list(object=fit, newdata=Data)
-  if ("lme" %in% class(fit)) predict.args$level <- 0
+  if (inherits(fit, "lme")) predict.args$level <- 0
   if (inherits(fit, "merMod")) predict.args$re.form <- NA
-  if ("rq" %in% class(fit)) predict.args$interval <- "confidence"
-  if ("svm" %in% class(fit)) predict.args$probability <- TRUE
-  if ("multinom" %in% class(fit) | "polr" %in% class(fit)) predict.args$type <- "probs"
-  if ("gbm" %in% class(fit)) predict.args$n.trees <- length(fit$trees)
-  if ("betareg" %in% class(fit)) predict.args$type <- "link"
+  if (inherits(fit, "rq")) predict.args$interval <- "confidence"
+  if (inherits(fit, "svm")) predict.args$probability <- TRUE
+  if (inherits(fit, "multinom") | inherits(fit, "polr")) predict.args$type <- "probs"
+  if (inherits(fit, "gbm")) predict.args$n.trees <- length(fit$trees)
+  if (inherits(fit, "betareg")) predict.args$type <- "link"
   dots <- list(...)
   if (length(dots)) predict.args[names(dots)] <- dots
 
   if (se.fit) {
-    if (class(fit)[1]=="mlm") {
+    if (inherits(fit, "mlm")) {
       p <- list(fit = suppressWarnings(do.call("predict", predict.args)), se.fit = se.mlm(fit, newdata=Data))
-    } else if ("randomForest" %in% class(fit) && fit$type=="classification") {
+    } else if (inherits(fit, "randomForest") && fit$type=="classification") {
       predict.args$type <- "prob"
       P <- suppressWarnings(do.call("predict", predict.args))
       p <- list(fit=P[,2], se.fit=NA)
-    } else if (class(fit)[1] %in% c("loess")) {
+    } else if (inherits(fit, "loess")) {
       predict.args$se <- TRUE
       p <- suppressWarnings(do.call("predict", predict.args))
     } else {
@@ -25,14 +25,14 @@ visregPred <- function(fit, Data, se.fit=FALSE, ...) {
       p <- suppressWarnings(do.call("predict", predict.args))
     }
   } else {
-    if ("randomForest" %in% class(fit) && fit$type=="classification") {
+    if (inherits(fit, "randomForest") && fit$type=="classification") {
       p <- predict(fit, type="prob")[,2]
-    } else if ('rq' %in% class(fit)) {
+    } else if (inherits(fit, 'rq')) {
       p <- suppressWarnings(do.call("predict", predict.args))[,1]
     } else {
       p <- suppressWarnings(do.call("predict", predict.args))
     }
   }
-  if ("svm" %in% class(fit) && fit$type < 3) p <- attr(p, "probabilities")
+  if (inherits(fit, "svm") && fit$type < 3) p <- attr(p, "probabilities")
   p
 }

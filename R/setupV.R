@@ -7,7 +7,7 @@ setupV <- function(fit, f, xvar, nn, cond, type, trans, xtrans, alpha, jitter, b
   if (length(xvar) > 1 & length(cond) > 1) stop("Cannot specify 'by' and multiple x variables simultaneously", call.=FALSE)
   J <- max(length(xvar), length(cond))
   Attempt <- try(max(attr(terms(as.formula(formula(fit))), "order")) > 1, silent=TRUE)
-  hasInteraction <- ifelse(class(Attempt)=='try-error', FALSE, Attempt)
+  hasInteraction <- ifelse(inherits(Attempt, 'try-error'), FALSE, Attempt)
   lev <- attr(cond, "lev")
 
   # Get xy list

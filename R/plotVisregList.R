@@ -9,7 +9,7 @@ plot.visregList <- function(x, ask=TRUE, ...) {
 
   for (i in 1:length(x)) {
     p <- plot(x[[i]], ...)
-    if ('gg' %in% class(p)) {
+    if (inherits(p, 'gg')) {
       if (i==1) {
         ggList <- vector('list', length(x))
       }
@@ -18,5 +18,5 @@ plot.visregList <- function(x, ask=TRUE, ...) {
       if (prompt.user) devAskNewPage(TRUE)
     }
   }
-  if ('gg' %in% class(p)) return(ggList)
+  if (inherits(p, 'gg')) return(ggList)
 }

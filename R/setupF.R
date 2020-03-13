@@ -44,12 +44,12 @@ setupF <- function(fit, xvar, call.env, data) {
   }
   f <- as.data.frame(av)
 
-  if (class(CALL$random)=="call") {
+  if (inherits(CALL$random, "call")) {
     rf <- as.data.frame(as.list(get_all_vars(CALL$random, Data)))
     rf <- rf[, setdiff(names(rf), names(f)), drop=FALSE]
     f <- cbind(f, rf)
   }
-  if ("subset" %in% names(CALL) & !('averaging' %in% class(fit))) {
+  if ("subset" %in% names(CALL) & !(inherits(fit, 'averaging'))) {
     s <- CALL$subset
     subset <- eval(substitute(s), Data, env)
     f <- f[which(subset==TRUE), , drop=FALSE]
@@ -64,7 +64,7 @@ setupF <- function(fit, xvar, call.env, data) {
   if (any(frameClasses=="Surv")) needsUpdate <- TRUE
   if (any(frameClasses=="logical")) {
     needsUpdate <- TRUE
-    for (j in 1:ncol(f)) if (class(f[,j])[1]=="logical") f[,j] <- as.double(f[,j])
+    for (j in 1:ncol(f)) if (typeof(f[,j])=="logical") f[,j] <- as.double(f[,j])
   }
   if (missing(xvar)) {
     all_x <- strsplit(parseFormula(formula(fit)[3]), ' + ', fixed=TRUE)[[1]]

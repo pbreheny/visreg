@@ -1,15 +1,13 @@
 visregResid <- function(fit) {
-  if ("randomForest" %in% class(fit)) {
+  if (inherits(fit, "randomForest")) {
     if (fit$type=="regression") rr <- fit$y - fit$predicted
     if (fit$type=="classification") {
       P <- predict(fit, type="prob")
       rr <- (fit$y==colnames(P)[2]) - P[,2]
     }
-#   } else if ("svm" %in% class(fit)) {
-#     rr <- fit$y - fit$fitted
-  } else if ('coxph' %in% class(fit)) {
+  } else if (inherits(fit, 'coxph')) {
     rr <- residuals(fit, type='deviance')
-  } else if ('gamlss' %in% class(fit)) {
+  } else if (inherits(fit, 'gamlss')) {
     rr <- residuals(fit, what='mu')
   } else {
     rr <- residuals(fit)

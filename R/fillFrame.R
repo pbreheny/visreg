@@ -9,7 +9,7 @@ fillFrame <- function(f, x, cond) {
       eval(parse(text=c('cond=c(cond, list(', names(f)[j],'=factor(mode, levels=levels(f[, names(f)[j]]))))')))
     }
   }
-  exclude <- c(names(x), names(cond), names(which(sapply(f, class)=="Surv")))
+  exclude <- c(names(x), names(cond), names(which(sapply(f, function(x) inherits(x, "Surv")))))
   x2 <- lapply(as.data.frame(f[, setdiff(names(f), exclude)]), median)
   names(x2) <- setdiff(names(f), exclude)
   x3 <- cond
