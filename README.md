@@ -44,7 +44,16 @@ The website focuses more on syntax, options, and user interface, while the paper
 
 If you have a question or feature request, please [submit an issue](https://github.com/pbreheny/visreg/issues).
 
-To install:
+## Installation
 
-* the latest released version: `install.packages("visreg")`
-* the latest version (requires `devtools`): `install_github("pbreheny/visreg")`
+To install the latest release version from CRAN:
+
+```r
+install.packages("visreg")
+```
+
+To install the latest development version from GitHub:
+
+```r
+remotes::install_github("pbreheny/visreg")
+```
