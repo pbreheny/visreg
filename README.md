@@ -1,4 +1,4 @@
-[![GitHub version](https://img.shields.io/endpoint?url="https://raw.githubusercontent.com/pbreheny/visreg/master/.version.json")](https://github.com/pbreheny/visreg)
+[![GitHub version](https://img.shields.io/endpoint?url="https://raw.githubusercontent.com/pbreheny/visreg/master/.version.json"&style=flat&logo=github)](https://github.com/pbreheny/visreg)
 [![CRAN version](http://www.r-pkg.org/badges/version/visreg)](https://cran.r-project.org/package=visreg)
 [![downloads](http://cranlogs.r-pkg.org/badges/visreg)](https://cran.r-project.org/package=visreg)
 [![codecov.io](https://codecov.io/github/pbreheny/visreg/coverage.svg?branch=master)](https://codecov.io/github/pbreheny/visreg?branch=master)
