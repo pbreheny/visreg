@@ -130,19 +130,36 @@ ggFactorPlot <- function(v, partial, band, rug, w, strip.names, overlay, line.pa
   }
   
   # Rug
-  if (rug==1) p <- p + ggplot2::geom_rug(data=pointData, mapping=ggplot2::aes_string(color=v$meta$by), sides='b')
-  if (rug==2) {
-    p <- p + ggplot2::geom_rug(data=pointData[pointData$visregGGP,], mapping=ggplot2::aes_string(color=v$meta$by), sides='t')
-    p <- p + ggplot2::geom_rug(data=pointData[!pointData$visregGGP,], mapping=ggplot2::aes_string(color=v$meta$by), sides='b')
+  if (rug==1) {
+    rug.args <- point.args
+    rug.args$sides <- 'b'
+    p <- p + do.call("geom_rug", point.args, envir=asNamespace("ggplot2"))
   }
-  
+  if (rug==2) {
+    top.args <- bot.args <- point.args
+    top.args$sides <- 't'
+    bot.args$sides <- 'b'
+    top.args$data <- pointData[v$res$visregPos,]
+    bot.args$data <- pointData[!v$res$visregPos,]
+    p <- p + do.call("geom_rug", top.args, envir=asNamespace("ggplot2"))
+    p <- p + do.call("geom_rug", bot.args, envir=asNamespace("ggplot2"))
+  }
+
   # Facet
   if (facet) {
     form <- as.formula(paste("~", v$meta$by))
-    if (strip.names==TRUE) {
+    if (identical(strip.names, TRUE)) {
       p <- p + ggplot2::facet_grid(form, labeller=ggplot2::label_both)
-    } else {
+    } else if (identical(strip.names, FALSE)) {
       p <- p + ggplot2::facet_grid(form)
+    } else if (is.character(strip.names) & length(strip.names) == J) {
+      names(strip.names) <- levels(b)
+      args <- list(strip.names)
+      names(args) <- v$meta$by
+      lbl <- do.call(ggplot2::labeller, args)
+      p <- p + ggplot2::facet_grid(form, labeller=lbl)
+    } else {
+      stop('strip.names must either be logical or a character vector with length equal to the number of facets', call.=FALSE)
     }
   }
   p

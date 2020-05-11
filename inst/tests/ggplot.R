@@ -9,8 +9,18 @@ if (require(ggplot2)) {
   visreg(fit, "Heat", gg=TRUE, line.par=list(col="green"))
 
   fit <- lm(Ozone ~ Wind * Heat + Solar.R + Mon, data=airquality)
+  visreg(fit, "Heat", by="Wind", gg=TRUE)
+  visreg(fit, "Heat", by="Wind", gg=TRUE, strip.names=FALSE)
+  visreg(fit, "Heat", by="Wind", gg=TRUE, strip.names=LETTERS[1:3])
+  visreg(fit, "Heat", by="Wind", gg=TRUE, type="contrast")
+  visreg(fit, "Heat", by="Wind", gg=TRUE, partial=FALSE)
+  visreg(fit, "Heat", by="Wind", gg=TRUE, band=FALSE)
+  visreg(fit, "Heat", by="Wind", gg=TRUE, partial=FALSE, band=FALSE)
+
+  fit <- lm(Ozone ~ Wind * Heat + Solar.R + Mon, data=airquality)
   visreg(fit, "Wind", by="Heat", gg=TRUE)
   visreg(fit, "Wind", by="Heat", gg=TRUE, strip.names=TRUE)
+  visreg(fit, "Wind", by="Heat", gg=TRUE, strip.names=LETTERS[1:3])
   visreg(fit, "Wind", by="Heat", gg=TRUE, type="contrast")
   visreg(fit, "Wind", by="Heat", gg=TRUE, partial=FALSE)
   visreg(fit, "Wind", by="Heat", gg=TRUE, band=FALSE)
@@ -43,7 +53,7 @@ if (require(ggplot2)) {
   fit <- lm(log(Ozone) ~ Wind * Heat + Solar.R + Mon, data=airquality)
   visreg(fit,"Wind", by='Solar.R', gg=TRUE, trans=exp, overlay=TRUE)
   
-  ## Numeric variables with few unique values
+  # Numeric variables with few unique values
   airquality$Hotness <- as.numeric(cut(airquality$Temp,2,labels=c("Cold","Hot")))
   fit <- lm(Ozone ~ Solar.R + Wind*Hotness, data=airquality)
   visreg(fit, "Wind", by="Hotness", gg=TRUE)
