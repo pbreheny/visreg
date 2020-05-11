@@ -60,8 +60,11 @@ setupF <- function(fit, xvar, call.env, data) {
   needsUpdate <- FALSE
   f <- droplevels(f)
   frameClasses <- sapply(f, class)
-  if (any(frameClasses=="character")) needsUpdate <- TRUE
   if (any(frameClasses=="Surv")) needsUpdate <- TRUE
+  if (any(frameClasses=="character")) {
+    needsUpdate <- TRUE
+    for (j in 1:ncol(f)) if (typeof(f[,j])=="character") f[,j] <- factor(f[,j])
+  }
   if (any(frameClasses=="logical")) {
     needsUpdate <- TRUE
     for (j in 1:ncol(f)) if (typeof(f[,j])=="logical") f[,j] <- as.double(f[,j])

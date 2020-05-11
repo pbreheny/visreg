@@ -4,7 +4,7 @@ setupD <- function(fit, f, name, nn, cond, whitespace, ...) {
   xdf <- data.frame(x)
   names(xdf) <- name
   df <- fillFrame(f, xdf, cond)
-  
+
   rhs_form <- formula(fit)
   rhs_form[2] <- NULL
   simple_rhs <- paste(all.vars(rhs_form), collapse = ' + ')
@@ -16,8 +16,8 @@ setupD <- function(fit, f, name, nn, cond, whitespace, ...) {
 
   ## Set up nn-row data frame for prediction
   dots <- list(...)
-  xx <- if (is.factor(x)) {
-    factor(levels(x), levels=levels(x))
+  if (is.factor(x)) {
+    xx <- factor(levels(x), levels=levels(x))
   } else {
     xx <- seq(min(x), max(x), length=nn)
   }
