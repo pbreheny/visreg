@@ -1,4 +1,4 @@
-ggContPlot <- function(v, partial, band, rug, whitespace, strip.names, overlay, line.par, fill.par, points.par, ...) {
+ggContPlot <- function(v, partial, band, rug, whitespace, strip.names, overlay, top, line.par, fill.par, points.par, ...) {
 
   # Setup data frames
   xx <- v$fit[, v$meta$x]
@@ -54,10 +54,17 @@ ggContPlot <- function(v, partial, band, rug, whitespace, strip.names, overlay, 
     p <- p + do.call("geom_polygon", fill.args, envir=asNamespace("ggplot2"))
   }
   line.args$data <- lineData
-  p <- p + do.call("geom_line", line.args, envir=asNamespace("ggplot2"))
-  if (partial) {
+  if (!partial) {
+    p <- p + do.call("geom_line", line.args, envir=asNamespace("ggplot2"))
+  } else {
     point.args$data <- pointData
-    p <- p + do.call("geom_point", point.args, envir=asNamespace("ggplot2"))
+    if (top == 'line') {
+      p <- p + do.call("geom_point", point.args, envir=asNamespace("ggplot2"))
+      p <- p + do.call("geom_line", line.args, envir=asNamespace("ggplot2"))
+    } else {
+      p <- p + do.call("geom_line", line.args, envir=asNamespace("ggplot2"))
+      p <- p + do.call("geom_point", point.args, envir=asNamespace("ggplot2"))
+    }
   }
   if (rug==1) {
     rug.args <- point.args

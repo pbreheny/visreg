@@ -13,8 +13,8 @@ accepts a \code{visreg} or \code{visregList} object as calculated by
 \method{plot}{visreg}(x, overlay=FALSE, print.cond=FALSE,
 whitespace=0.2, partial=identical(x$meta$trans, I), band=TRUE,
 rug=ifelse(partial, 0, 2), strip.names=is.numeric(x$fit[,x$meta$by]),
-legend=TRUE, line.par=NULL, fill.par=NULL, points.par=NULL, gg=FALSE,
-...)
+legend=TRUE, top=c('line', 'points'), gg=FALSE, line.par=NULL,
+fill.par=NULL, points.par=NULL, ...)
 }
 \arguments{
 
@@ -81,6 +81,20 @@ legend=TRUE, line.par=NULL, fill.par=NULL, points.par=NULL, gg=FALSE,
     the top margin.
   }
 
+  \item{top}{
+    By default, the model fits \code{'line'} are plotted on top of the
+    partial residuals; usually this is preferable, but it does run the
+    risk of obscuring certain residuals.  To change this behavior and
+    plot the partial residuals on top, specify \code{top='points'}.
+  }
+
+  \item{gg}{
+    By default (\code{gg=FALSE}), \code{visreg} will use the
+    \code{lattice} package to render the plot if multiple panels are
+    required.  If \code{gg=TRUE}, it will use the \code{ggplot2} package
+    instead, provided that it is installed.
+  }
+
   \item{line.par}{
     List of parameters (see \code{\link{par}}) to pass to
     \code{lines(...)} when lines are drawn in the plots.
@@ -95,13 +109,6 @@ legend=TRUE, line.par=NULL, fill.par=NULL, points.par=NULL, gg=FALSE,
   \item{points.par}{
     List of parameters (see \code{\link{par}}) to pass to
     \code{points(...)} when partial residuals are drawn in the plots.
-  }
-
-  \item{gg}{
-    By default (\code{gg=FALSE}), \code{visreg} will use the
-    \code{lattice} package to render the plot if multiple panels are
-    required.  If \code{gg=TRUE}, it will use the \code{ggplot2} package
-    instead, provided that it is installed.
   }
 
   \item{\dots}{

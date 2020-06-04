@@ -1,4 +1,4 @@
-visregPlot <- function(v, partial, rug, band, whitespace, line.par, fill.par, points.par, ...) {
+visregPlot <- function(v, partial, rug, band, whitespace, top, line.par, fill.par, points.par, ...) {
   ## Setup
   x <- v$res[, v$meta$x]
   y <- v$res$visregRes
@@ -22,7 +22,7 @@ visregPlot <- function(v, partial, rug, band, whitespace, line.par, fill.par, po
   do.call("plot", plot.args)
 
   if (is.factor(xx)) {
-    factorPlot(v, partial, band, rug, whitespace, line.par, fill.par, points.par, ...)
+    factorPlot(v, partial, band, rug, whitespace, top, line.par, fill.par, points.par, ...)
     if (!("xaxt" %in% names(new.args) && new.args$xaxt=="n")) factorAxis(x, whitespace, new.args)
   } else {
     if (band) {
@@ -32,13 +32,19 @@ visregPlot <- function(v, partial, rug, band, whitespace, line.par, fill.par, po
     }
     line.args <- list(x=xx, y=yy, lwd=3, lty=1, col="#008DFFFF")
     if (length(line.par)) line.args[names(line.par)] <- line.par
-    do.call("lines", line.args)
-    if (partial) {
+    if (!partial) {
+      do.call("lines", line.args)
+    } else {
       points.args <- list(x=x, y=y, pch=19, cex=0.4, col="gray50")
       if (length(points.par)) points.args[names(points.par)] <- points.par
-      do.call("points", points.args)
+      if (top == 'line') {
+        do.call("points", points.args)
+        do.call("lines", line.args)
+      } else {
+        do.call("lines", line.args)
+        do.call("points", points.args)
+      }
     }
-    do.call("lines", line.args)
     if (rug==1) rug(x, side=1)
     if (rug==2) {
       rug(x[!v$res$visregPos], side=1)

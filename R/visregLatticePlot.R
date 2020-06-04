@@ -1,4 +1,4 @@
-visregLatticePlot <- function(v, partial, band, rug, whitespace, strip.names, line.par, fill.par, points.par, ...) {
+visregLatticePlot <- function(v, partial, band, rug, whitespace, strip.names, top, line.par, fill.par, points.par, ...) {
   ## Setup
   x <- v$res[, v$meta$x]
   y <- v$res$visregRes
@@ -41,7 +41,7 @@ visregLatticePlot <- function(v, partial, band, rug, whitespace, strip.names, li
   }
   lframe <- data.frame(fit=yy, lwr=lwr, upr=upr, xx=xx, by=bb)
   lresids <- data.frame(r=y, x=x, by=b, pos=v$res$visregPos)
-  plot.args <- list(x=formula(lframe$fit~lframe$xx | lframe$by), type="l", ylim=ylim, xlab=v$meta$x, ylab=ylab, lframe=lframe, lresids=lresids, partial=partial, band=band, rug=rug, xlim=xlim, strip=strip, fill.par=fill.par)
+  plot.args <- list(x=formula(lframe$fit~lframe$xx | lframe$by), type="l", ylim=ylim, xlab=v$meta$x, ylab=ylab, lframe=lframe, lresids=lresids, partial=partial, band=band, rug=rug, xlim=xlim, strip=strip, top=top, fill.par=fill.par)
   if (length(new.args)) plot.args[names(new.args)] <- new.args
   if (is.null(dev.list())) trellis.device()
   opar <- lattice::trellis.par.get()
