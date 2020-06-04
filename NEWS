@@ -1,3 +1,11 @@
+2.7.0 (2020-06-04)
+  * Changed: Plots are now constructed in a consistent order across all
+    varieties (lattice, base, gg, overlay, etc.), with lines on top (fixes #50)
+  * New: Option to change the default layering with top="points"
+  * Fixed: Resolved namespace issue with factor plots using lattice
+  * Fixed: Explicitly convert to factor (no longer automatic as of R 4.0)
+  * Fixed: strip.names and rug colors now work correctly for ggplot (fixes #85)
+  
 2.6.1 (2020-03-13)
   * Fixed: Better handling of S4 formulas and data
   * Fixed: xlim no longer used in setting up visreg object; fixes #81
