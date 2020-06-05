@@ -1,0 +1,64 @@
+---
+---
+```{r include=FALSE}
+library(visreg)
+knitr::opts_knit$set(aliases=c(h = 'fig.height', w = 'fig.width'))
+knitr::opts_knit$set(global.par=TRUE)
+knitr::opts_chunk$set(fig.path='img/surface-')
+```
+
+Suppose we have a model with a complicated interaction between two continuous variables:
+
+```{r mod, message=FALSE}
+library(splines)
+fit <- lm(Ozone ~ Solar.R +ns(Wind, df=2)*ns(Temp, df=2), data=airquality)
+```
+
+We might wish to visualize how ozone depends on wind and temperature as a continuous regression surface.  `visreg2d` provides two main options for this, filled contour plots and perspective plots.
+
+# Filled contour plots
+
+The default is to provide a contoured image plot:
+
+```{r fake-1, echo=FALSE, results='hide'}
+par(mar=c(5,5,3,1))
+plot(1:10)
+```
+```{r image, h=4, w=5, cache=TRUE}
+visreg2d(fit, "Wind", "Temp")
+```
+
+Here, wind and temperature are laid out on a two-dimensional grid, and colors are used to represent the level of ozone.  A legend is provided to the left.  R's `filled.contour` function is used to generate the plot, so if you wish to change any options, you will need to look at `?filled.contour` to see the correct syntax.  For example, if we want different colors,
+
+```{r image_col, h=4, w=5, cache=TRUE}
+visreg2d(fit, "Wind", "Temp", color.palette=colorRampPalette(c("black", "white", "purple")))
+```
+
+# Perspective plots
+
+The other option provided by `visreg2d` is to represent the surface as a three-dimensional image.  This can be done in a static manner using `type="persp"`:
+
+```{r fake-2, echo=FALSE, results='hide'}
+par(mar=c(1,1,1,1))
+plot(1:10)
+```
+```{r persp, h=5, w=5, cache=TRUE}
+visreg2d(fit, "Wind", "Temp", plot.type="persp")
+```
+
+Or dynamically using `type="rgl"`:
+
+```{r eval=FALSE}
+visreg2d(fit, "Wind", "Temp", plot.type="rgl")
+```
+
+<div class="container" style="width: 100%">
+  <div class="row-fluid">
+    <iframe class="span12" 
+	    style="border: none; height: 484px; width: 100%"
+	    src="img/rgl.html">
+    </iframe>
+  </div>
+</div>
+
+For the interactive `rgl` option, you will need to install the `rgl` package first.

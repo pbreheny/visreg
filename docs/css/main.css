@@ -1,0 +1,394 @@
+body{
+  margin:0px;
+  padding:0px;
+  background:#fff;
+  color:#333;
+  font-family: 'Source Sans Pro', sans-serif;
+}
+
+header {
+  width: 100%;
+  border-bottom: 1px solid #e8e8e8;
+  height: 60x;
+  position: fixed;
+  display: block;
+  top: 0;
+  background-color: #2fa4e7;
+  color: #fff;
+}
+
+img {
+  max-width: 100%;
+  vertical-align: middle;
+  display: block;
+  margin: auto;
+}
+
+#site-title {
+  font-size: 26px;
+  line-height: 56px;
+  letter-spacing: -1px;
+  margin-bottom: 0;
+  float: left;
+  color: #fff;
+}
+#site-description {
+  float: right;
+  padding-top: 15px;
+}
+#site-wrapper {
+  max-width: 1000px;
+  min-width: 650px;
+  margin-right: auto;
+  margin-left: auto;
+  padding-left: 30px;
+  padding-right: 30px;
+}
+#site-wrapper:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+#wrapper {
+  max-width: 1000px;
+  margin-right: auto;
+  margin-left: auto;
+  margin-top: 60px;
+}
+#wrapper:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+#content{
+  margin-left: 230px;
+  padding-top: 40px;
+}
+
+#sideBar{
+  position: fixed!important;
+  z-index:1;
+  width: 200px;
+  height: 100%;
+  padding-top: 40px;
+  padding-left: 5px;
+}
+#sideBar ul{
+    margin:0px 0px 0px 0px;
+    padding:0px;
+    list-style-type:none;
+    font-size:95%;
+}
+#sideBar li{
+    margin:0px 0px 0px 10px;
+    padding:0px 0px 0px 0px;
+    list-style-type:none;
+    font-size:95%;
+}
+#site-footer {
+  max-width: 1000px;
+  margin-right: auto;
+  margin-left: auto;
+  border-top: 1px solid #e8e8e8;
+  padding: 30px;
+  color: #999;
+}
+#site-footer a {
+  color: #999;
+}
+#last-updated {
+  float: right;
+}
+a{
+  color: #008dff;
+  text-decoration: none;
+}
+a:hover{
+  color: #008dff;
+  color: #00b500;
+  text-decoration: none;
+  transition-property: color;
+  transition-duration: 0.3s;
+}
+:target:before {
+  content: "";
+  display: block;
+  height: 60px;
+  margin: -60px 0 0;
+}
+a.anchor {
+  display: block;
+  position: relative;
+  visibility: hidden;
+}
+h1{
+  line-height: 1.1;
+  font-weight: 300;
+  margin-top: 30px;
+}
+
+h2{
+  color:#0069B3;
+  font-weight:bold;
+  font-family:Verdana,Sans-Serif;
+}
+h3{
+    margin:20px 0px 10px 0px;
+    color:#777777;
+    font-size:105%;
+}
+.icon > svg {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  vertical-align: middle;
+}
+.MathJax {
+  z-index: -1;
+}
+.container, .container tr, .container td{
+  vertical-align: middle;
+  font-size: 100%;
+  padding-left: 10px;
+  padding-right: 10px;
+  margin: auto;
+}
+
+.ctable, .ctable td, .ctable th{
+  font-family:"Trebuchet MS",Trebuchet,Verdana,Sans-Serif;
+  font-size:12px;
+  border-collapse:collapse;
+  border-spacing:0;
+  padding:2px;
+  margin: 20px;
+}
+.ctable{
+    border:1px solid #000000;
+    margin-bottom:20px
+}
+.ctable td{
+    border:1px dotted #E5E5E5;
+}
+.ctable th{
+    background-color:#ddd;
+    padding-left:4px;
+    padding-right:4px;
+}
+
+.print_only, .hidden{
+    display:none;
+}
+
+.highlight table td { padding: 5px; }
+.highlight table pre { margin: 0; }
+.highlight .cm {
+  color: #999988;
+  font-style: italic;
+}
+.highlight .cp {
+  color: #999999;
+  font-weight: bold;
+}
+.highlight .c1 {
+  color: #999988;
+  font-style: italic;
+}
+.highlight .cs {
+  color: #999999;
+  font-weight: bold;
+  font-style: italic;
+}
+.highlight .c, .highlight .cd {
+  color: #999988;
+  font-style: italic;
+}
+.highlight .err {
+  color: #a61717;
+  background-color: #e3d2d2;
+}
+.highlight .gd {
+  color: #000000;
+  background-color: #ffdddd;
+}
+.highlight .ge {
+  color: #000000;
+  font-style: italic;
+}
+.highlight .gr {
+  color: #aa0000;
+}
+.highlight .gh {
+  color: #999999;
+}
+.highlight .gi {
+  color: #000000;
+  background-color: #ddffdd;
+}
+.highlight .go {
+  color: #888888;
+}
+.highlight .gp {
+  color: #555555;
+}
+.highlight .gs {
+  font-weight: bold;
+}
+.highlight .gu {
+  color: #aaaaaa;
+}
+.highlight .gt {
+  color: #aa0000;
+}
+.highlight .kc {
+  color: #000000;
+  font-weight: bold;
+}
+.highlight .kd {
+  color: #000000;
+  font-weight: bold;
+}
+.highlight .kn {
+  color: #000000;
+  font-weight: bold;
+}
+.highlight .kp {
+  color: #000000;
+  font-weight: bold;
+}
+.highlight .kr {
+  color: #000000;
+  font-weight: bold;
+}
+.highlight .kt {
+  color: #445588;
+  font-weight: bold;
+}
+.highlight .k, .highlight .kv {
+  color: #000000;
+  font-weight: bold;
+}
+.highlight .mf {
+  color: #009999;
+}
+.highlight .mh {
+  color: #009999;
+}
+.highlight .il {
+  color: #009999;
+}
+.highlight .mi {
+  color: #009999;
+}
+.highlight .mo {
+  color: #009999;
+}
+.highlight .m, .highlight .mb, .highlight .mx {
+  color: #009999;
+}
+.highlight .sb {
+  color: #d14;
+}
+.highlight .sc {
+  color: #d14;
+}
+.highlight .sd {
+  color: #d14;
+}
+.highlight .s2 {
+  color: #d14;
+}
+.highlight .se {
+  color: #d14;
+}
+.highlight .sh {
+  color: #d14;
+}
+.highlight .si {
+  color: #d14;
+}
+.highlight .sx {
+  color: #d14;
+}
+.highlight .sr {
+  color: #009926;
+}
+.highlight .s1 {
+  color: #d14;
+}
+.highlight .ss {
+  color: #990073;
+}
+.highlight .s {
+  color: #d14;
+}
+.highlight .na {
+  color: #008080;
+}
+.highlight .bp {
+  color: #999999;
+}
+.highlight .nb {
+  color: #0086B3;
+}
+.highlight .nc {
+  color: #445588;
+  font-weight: bold;
+}
+.highlight .no {
+  color: #008080;
+}
+.highlight .nd {
+  color: #3c5d5d;
+  font-weight: bold;
+}
+.highlight .ni {
+  color: #800080;
+}
+.highlight .ne {
+  color: #990000;
+  font-weight: bold;
+}
+.highlight .nf {
+  color: #990000;
+  font-weight: bold;
+}
+.highlight .nl {
+  color: #990000;
+  font-weight: bold;
+}
+.highlight .nn {
+  color: #555555;
+}
+.highlight .nt {
+  color: #000080;
+}
+.highlight .vc {
+  color: #008080;
+}
+.highlight .vg {
+  color: #008080;
+}
+.highlight .vi {
+  color: #008080;
+}
+.highlight .nv {
+  color: #008080;
+}
+.highlight .ow {
+  color: #000000;
+  font-weight: bold;
+}
+.highlight .o {
+  color: #000000;
+  font-weight: bold;
+}
+.highlight .w {
+  color: #bbbbbb;
+}
+.highlight {
+  padding: 10px;
+}
+.highlighter-rouge {
+  background-color: rgba(27,31,35,0.05);
+}
