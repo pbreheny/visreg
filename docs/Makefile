@@ -1,8 +1,18 @@
-all: src/*.Rmd img/rgl.html css/main.css
-	knitall -k --only-newer src/*.Rmd
+SHA := $(shell git rev-parse --short HEAD)
+Version := $(shell Rscript -e "cat(as.character(packageVersion('visreg')))")
+
+all:	
+	rm img/*
+	rm -rf _site
+	rm -rf cache
+	rm *.md
+	knitall -k src/*.Rmd
+	make img/rgl.html
 	sed -i '/chunk fake/d' *.md
+	sed -i "s/version:.*/version: $(Version)/" _config.yml
 	rm -f img/*-fake-*
 	jekyll b
+	echo 'HTML source code for http://pbreheny.github.io/visreg' > _site/README.md
 
 img/rgl.html: src/rgl.R
 	R CMD BATCH --vanilla src/rgl.R
@@ -12,8 +22,9 @@ img/rgl.html: src/rgl.R
 	mv rgl.html img
 	rm rgl.Rout
 
-clean:
-	mv README.md README.bak
-	rm *.md
-	rm img/*
-	mv README.bak README.md
+push:
+	cd _site; \
+	git init; \
+	git add .; \
+	git commit -m "Master build: $(SHA)"; \
+	git push --force --quiet github:pbreheny/visreg.git master:gh-pages

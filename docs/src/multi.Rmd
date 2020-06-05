@@ -32,7 +32,7 @@ visreg(fit, "Ozone", collapse=TRUE, overlay=TRUE, ylab="Probability",
 Another example is quantile regression using the `quantreg` package.  Here, there is only one outcome, but we could be interested in modeling several different quantiles.  The `collapse` option is used similarly here:
 
 ```{r quantreg, message=FALSE, h=5, w=5, cache=TRUE}
-library(quantreg)
+suppressPackageStartupMessages(library(quantreg))
 fit <- rq(Ozone ~ Wind + Temp, tau=c(.25, .5, .75), data=airquality)
 v <- visreg(fit, "Wind", overlay=TRUE, collapse=TRUE)
 ```

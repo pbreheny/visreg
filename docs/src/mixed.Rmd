@@ -17,7 +17,7 @@ plot(1:10)
 As an illustration, consider the following random-intercept, random-slope model from a study involving the protein content of cows' milk in the weeks following calving:
 
 ```{r mod, message=FALSE}
-library(lme4)
+suppressPackageStartupMessages(library(lme4))
 data(Milk, package="nlme")
 fit <- lmer(protein ~ Diet + Time + (Time|Cow), Milk)
 ```
