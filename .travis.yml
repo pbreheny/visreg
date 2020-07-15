@@ -7,6 +7,7 @@ r_packages:
   - gamlss
   - gamm4
   - gbm
+  - gridExtra
   - lme4
   - locfit
   - mgcv
@@ -17,3 +18,4 @@ r_packages:
 script:
   - R CMD build .
   - R CMD check *.tar.gz
+cache: packages
