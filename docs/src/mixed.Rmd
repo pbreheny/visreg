@@ -17,9 +17,10 @@ plot(1:10)
 As an illustration, consider the following random-intercept, random-slope model from a study involving the protein content of cows' milk in the weeks following calving:
 
 ```{r mod, message=FALSE}
-suppressPackageStartupMessages(library(lme4))
+library(lme4, quietly=TRUE)
 data(Milk, package="nlme")
-fit <- lmer(protein ~ Diet + Time + (Time|Cow), Milk)
+ctrl <- lmerControl(optCtrl=list(xtol_rel=1e-6)) # Warning otherwise
+fit <- lmer(protein ~ Diet + Time + (Time|Cow), Milk, control=ctrl)
 ```
 
 # Plotting fixed effects

@@ -21,7 +21,7 @@ aq <- na.omit(airquality)
 # Random forests
 
 ```{r rf, message=FALSE, h=5, w=5, cache=TRUE}
-library(randomForest)
+library(randomForest, quietly=TRUE)
 fit <- randomForest(Ozone ~ Solar.R + Wind + Temp, data=aq)
 visreg(fit, "Temp", ylab="Ozone")
 ```

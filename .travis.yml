@@ -15,4 +15,3 @@ r_packages:
   - randomForest
   - rgl
 cache: packages
-r_check_args: --test-dir=tests/run
