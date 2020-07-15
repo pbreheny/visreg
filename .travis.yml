@@ -14,4 +14,6 @@ r_packages:
   - quantreg
   - randomForest
   - rgl
-cache: packages
+script:
+  - R CMD build .
+  - R CMD check *.tar.gz
