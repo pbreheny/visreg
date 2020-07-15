@@ -1,7 +1,6 @@
-library(gbm)
+suppressPackageStartupMessages(library(gbm))
 
 # Continuous outcome
-require(gbm)
 Data <- airquality[complete.cases(airquality),]
 fit <- gbm(Ozone ~ ., data=Data)
 visreg(fit, 'Wind')
