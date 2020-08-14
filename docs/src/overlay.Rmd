@@ -51,3 +51,12 @@ visreg(fit, "Wind", by="Heat", overlay=TRUE,
 ```
 
 Note that you can still pass parameters as single elements (`cex=1`); these will apply to all levels of `by`.
+
+For `gg` plots, the mechanism is different -- the returned plot can be modified with calls to `scale_xxx_manual()`:
+
+```{r gg_colors, h=5, w=5, cache=TRUE, message=FALSE, warning=FALSE}
+library(ggplot2)
+visreg(fit, "Wind", by="Heat", overlay=TRUE, gg=TRUE) +
+  scale_color_manual(values=c("#00C1C9", "#D63EFF", "#FF4E37")) +
+  scale_fill_manual(values=c("#00C1C980", "#D63EFF80", "#FF4E3780"))
+```

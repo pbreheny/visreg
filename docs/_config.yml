@@ -1,6 +1,6 @@
 # Site settings
 title: visreg
-version: 2.7.0
+version: 2.7.0.1
 email: patrick-breheny@uiowa.edu
 description: "visreg: An R package for the visualization of regression models"
 github_username: pbreheny

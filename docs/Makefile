@@ -2,11 +2,11 @@ SHA := $(shell git rev-parse --short HEAD)
 Version := $(shell Rscript -e "cat(as.character(packageVersion('visreg')))")
 
 all:	
-	rm img/*
+	rm -f img/*
 	rm -rf _site
 	rm -rf cache
-	rm *.md
-	knitall -k src/*.Rmd
+	rm -f *.md
+	knitall src/*.Rmd
 	make img/rgl.html
 	sed -i '/chunk fake/d' *.md
 	sed -i "s/version:.*/version: $(Version)/" _config.yml
