@@ -49,6 +49,9 @@ setupX <- function(fit, f, name, nn, cond, ...) {
   } else if (inherits(fit, "glmmadmb")) {
     form <- as.formula(paste("~", as.character(fit$fixed[3])))
     X. <- model.matrix(form, D)[-(1:nrow(f)), ind]
+  } else if (inherits(fit, "betareg")) {
+    ind <- ind[-length(ind)]
+    X. <- model.matrix(as.formula(paste("~", form)), D)[-(1:nrow(f)), ind]
   } else {
     X. <- model.matrix(as.formula(paste("~", form)), D)[-(1:nrow(f)), ind]
   }

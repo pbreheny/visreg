@@ -2,7 +2,7 @@ setupF <- function(fit, xvar, call.env, data) {
   CALL <- if (isS4(fit)) fit@call else fit$call
   if (!is.null(data)) {
     Data <- data
-  } else if (!is.null(CALL) && ('data' %in% names(CALL)) && exists(as.character(CALL$data), call.env)) {
+  } else if (!is.null(CALL) && ('data' %in% names(CALL)) && exists(tail(as.character(CALL$data), 1), call.env)) {
     env <- call.env
     Data <- eval(CALL$data, envir=env)
   } else if (isS4(fit)) {
