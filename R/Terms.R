@@ -3,6 +3,9 @@ Terms <- function(fit, f, x, trans, alpha, ...) {
     b <- nlme::fixed.effects(fit)
   } else if (inherits(fit, "merMod")) {
     b <- fit@beta
+  } else if (inherits(fit, 'betareg')) {
+    b <- coef(fit)
+    b <- b[-length(b)]
   } else {
     b <- coef(fit)
   }
@@ -26,6 +29,8 @@ Terms <- function(fit, f, x, trans, alpha, ...) {
     if (inherits(fit, 'polr')) {
       remove <- grep("|", colnames(V), fixed=TRUE)
       V <- V[-remove,-remove, drop=FALSE]
+    } else if (inherits(fit, 'betareg')) {
+      V <- V[-nrow(V),-ncol(V), drop=FALSE]
     }
     if (any(is.na(dg))) {
       remove <- which(is.na(dg))
