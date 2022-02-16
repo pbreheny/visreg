@@ -4,9 +4,25 @@
 [![Travis build status](https://api.travis-ci.org/pbreheny/visreg.svg?branch=master)](https://travis-ci.org/pbreheny/visreg)
 [![codecov.io](https://codecov.io/github/pbreheny/visreg/coverage.svg?branch=master)](https://codecov.io/github/pbreheny/visreg?branch=master)
 
-# Visualization of Regression Models
+# visreg: Visualization of Regression Models
 
-`visreg` provides a number of plotting functions for visualizing fitted regression models: regression functions, confidence bands, partial residuals, interactions, and more.  `visreg` is compatible with virtually all formula-based models in R that provide a `predict` method: `lm`, `glm`, `gam`, `rlm`, `nlme`, `lmer`, `coxph`, `svm`, `randomForest` and many more.
+**visreg** is an R package for displaying the results of a fitted model in terms of how a predictor variable `x` affects an outcome `y`.  The implementation of **visreg** takes advantage of object-oriented programming in R, meaning that it works with virtually any type of formula-based model in R provided that the model class provides a `predict()` method:  `lm`, `glm`, `gam`, `rlm`, `nlme`, `lmer`, `coxph`, `svm`, `randomForest` and many more.
+
+## Installation
+
+To install the latest release version from CRAN:
+
+```r
+install.packages("visreg")
+```
+
+To install the latest development version from GitHub:
+
+```r
+remotes::install_github("pbreheny/visreg")
+```
+
+## Usage
 
 The basic usage is that you fit a model, for example:
 
@@ -24,7 +40,7 @@ visreg(fit, "Wind")
 <img alt="img" src="http://pbreheny.github.io/visreg/img/index-wind-1.png">
 </p>
 
-A more complex example, using the `mgcv` package:
+A more complex example, which uses the `gam()` function from **mgcv**:
 
 ```r
 airquality$Heat <- cut(airquality$Temp, 3, labels=c("Cool", "Mild", "Hot"))
@@ -36,25 +52,9 @@ visreg(fit, "Wind", "Heat", gg=TRUE, ylab="Ozone")
 <img alt="img" src="http://pbreheny.github.io/visreg/img/index-mgcv-1.png" style="margin:auto;">
 </p>
 
-For details on `visreg` syntax and how to use it, see:
+## More information
+
+For more information on **visreg** syntax and how to use it, see:
 
 * The online documentation at <http://pbreheny.github.io/visreg> contains many examples of visreg plots and the code to create them.
 * [Breheny P and Burchett W (2017).  Visualization of Regression Models Using visreg. *The R Journal*, 9: 56-71.](https://journal.r-project.org/archive/2017/RJ-2017-046/index.html)
-
-The website focuses more on syntax, options, and user interface, while the paper goes into more depth regarding the statistical details.
-
-If you have a question or feature request, please [submit an issue](https://github.com/pbreheny/visreg/issues).
-
-## Installation
-
-To install the latest release version from CRAN:
-
-```r
-install.packages("visreg")
-```
-
-To install the latest development version from GitHub:
-
-```r
-remotes::install_github("pbreheny/visreg")
-```
