@@ -1,0 +1,19 @@
+#!/usr/bin/env Rscript
+
+# Create rgl
+library(visreg)
+library(splines)
+require(rgl)
+fit <- lm(Ozone ~ Solar.R +ns(Wind, df=2)*ns(Temp, df=2), data=airquality)
+visreg2d(fit, 'Wind', 'Temp', plot.type='rgl')
+htmlwidgets::saveWidget(rglwidget(
+  elementId='rgl77053',
+  height=480, width=480,
+  sizingPolicy = htmlwidgets::sizingPolicy(browser.padding = 0)
+  ), '../vignettes/web/rgl.html')
+
+# Add to README
+index <- readLines('../README.md')
+extra <- readLines('extra.md')
+index <- c(index[1:(which(index == '## More information')-1)], extra)
+writeLines(index, 'index.md')

@@ -1,0 +1,19 @@
+img {
+  margin: auto;
+  display: block;
+}
+img.orcid {
+  display: inline-block;
+}
+.navbar-nav>.nav-item>.nav-link {
+  background: transparent;
+}
+.navbar-nav>.active.nav-item>.nav-link {
+  background: transparent;
+}
+.nav-text.text-muted {
+  color: #fff !important;
+}
+.navbar-dark input[type="search"] {
+  background: #555;
+}

@@ -1,0 +1,35 @@
+figures:
+  dev: grDevices::png
+  dpi: 96
+  dev.args: []
+  fig.ext: png
+  fig.width: 5
+  fig.height: 5
+  fig.retina: 2
+
+navbar:
+  left:
+    - icon: fa-home fa-lg
+      href: index.html
+      style: "background: transparent"
+    - text: Getting started
+      href: articles/web/getting-started.html
+    - text: Basic framework
+      menu:
+      - text: a
+        href: b
+    - text: Models with interactions
+    - text: Special topics
+    - text: Functions
+      href: reference/index.html
+    - text: News
+      href: news/index.html
+  right:
+    github:
+      icon: fa-github fa-lg
+      href: https://github.com/pbreheny/visreg
+
+template:
+  bootstrap: 5
+  params:
+    bootswatch: cerulean
