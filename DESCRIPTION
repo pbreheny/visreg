@@ -2,13 +2,22 @@ Package: visreg
 Title: Visualization of Regression Models
 Version: 2.7.0.2
 Date: 2021-08-20
-Author: Patrick Breheny, Woodrow Burchett
+Authors@R: c(
+  person("Patrick", "Breheny", role=c("aut","cre"),
+         email="patrick-breheny@uiowa.edu",
+         comment=c(ORCID="0000-0002-0650-1119")),
+  person("Woodrow", "Burchett", role=c("ctb")))
+Description: Provides a convenient interface for constructing plots to
+    visualize the fit of regression models arising from a wide variety
+    of models in R ('lm', 'glm', 'coxph', 'rlm', 'gam', 'locfit', 'lmer',
+    'randomForest', etc.)
 Maintainer: Patrick Breheny <patrick-breheny@uiowa.edu>
 Imports: lattice
 Suggests: ggplot2, knitr, MASS, Matrix, rgl, rmarkdown, survival, tinytest
 Enhances: nlme
+BugReports: https://github.com/pbreheny/visreg/issues
 VignetteBuilder: knitr
-Description: Provides a convenient interface for constructing plots to visualize the fit of regression models arising from a wide variety of models in R ('lm', 'glm', 'coxph', 'rlm', 'gam', 'locfit', 'lmer', 'randomForest', etc.)
 License: GPL-3
-URL: http://pbreheny.github.io/visreg
+URL: http://pbreheny.github.io/visreg, https://github.com/pbreheny/visreg
 Encoding: UTF-8
+RoxygenNote: 7.1.1

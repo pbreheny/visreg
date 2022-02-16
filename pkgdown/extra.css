@@ -2,6 +2,9 @@ img {
   margin: auto;
   display: block;
 }
+li>a>img {
+  display: inline-block;
+}
 img.orcid {
   display: inline-block;
 }
