@@ -1,3 +1,7 @@
+authors:
+  Patrick Breheny:
+    href: https://myweb.uiowa.edu/pbreheny/
+
 figures:
   dev: grDevices::png
   dpi: 96
@@ -11,19 +15,42 @@ navbar:
   left:
     - icon: fa-home fa-lg
       href: index.html
-      style: "background: transparent"
-    - text: Getting started
-      href: articles/web/getting-started.html
     - text: Basic framework
       menu:
-      - text: a
-        href: b
+      - text: Getting started
+        href: articles/web/basic.html
+      - text: Contrast vs. conditional plots
+        href: articles/web/basic.html
+      - text: Transformations
+        href: articles/web/basic.html
+      - text: Conditioning
+        href: articles/web/basic.html
+      - text: Graphical options
+        href: articles/web/basic.html
+      - text: Visreg and ggplot2
+        href: articles/web/basic.html
     - text: Models with interactions
+      menu:
+      - text: Cross-sectional plots
+        href: articles/web/basic.html
+      - text: Overlay plots
+        href: articles/web/basic.html
+      - text: Surface plots
+        href: articles/web/basic.html
     - text: Special topics
+      menu:
+      - text: GLMs
+        href: articles/web/basic.html
+      - text: Forests, SVMs, etc.
+        href: articles/web/basic.html
+      - text: Mixed models
+        href: articles/web/basic.html
+      - text: Multiple outcomes
+        href: articles/web/basic.html
+      - text: FAQ
+        href: articles/web/basic.html
     - text: Functions
       href: reference/index.html
-    - text: News
-      href: news/index.html
   right:
     github:
       icon: fa-github fa-lg
@@ -33,3 +60,17 @@ template:
   bootstrap: 5
   params:
     bootswatch: cerulean
+
+home:
+  links:
+  - text: News
+    href: news/index.html
+  sidebar:
+    structure: [links, citation, authors, dev]
+
+footer:
+  structure: 
+    left: developed_by
+    right: updated
+  components:
+    updated: Last updated 17 Feb 2022

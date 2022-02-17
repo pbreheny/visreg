@@ -4,7 +4,7 @@ output:
   rmarkdown::html_vignette:
     css: vignette.css
 vignette: >
-  %\VignetteIndexEntry{Quick start guide}
+  %\VignetteIndexEntry{Quick start guide for visreg}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---

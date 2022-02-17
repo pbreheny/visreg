@@ -1,2 +1,4 @@
 vignettes/*.html
+vignettes/*/*.html
+docs
 .Rproj.user
