@@ -1,9 +1,6 @@
 ---
+title: Frequently asked questions
 ---
-
-* TOC
-{:toc}
-
 
 ```{r include=FALSE}
 library(visreg)

@@ -1,4 +1,5 @@
 ---
+title: Surface plots
 ---
 ```{r include=FALSE}
 library(visreg)

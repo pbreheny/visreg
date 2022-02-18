@@ -1,4 +1,5 @@
 ---
+title: Multiple outcomes
 ---
 
 ```{r include=FALSE}

@@ -1,4 +1,5 @@
 ---
+title: Mixed models
 ---
 
 ```{r include=FALSE}

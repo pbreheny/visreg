@@ -1,6 +1,0 @@
-library(visreg)
-library(splines)
-require(rgl)
-fit <- lm(Ozone ~ Solar.R +ns(Wind, df=2)*ns(Temp, df=2), data=airquality)
-visreg2d(fit, "Wind", "Temp", plot.type="rgl")
-htmlwidgets::saveWidget(rglwidget(elementId="rgl77053", height=480, width=480), "rgl.html")

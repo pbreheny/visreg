@@ -1,4 +1,5 @@
 ---
+title: Generalized linear models
 ---
 
 ```{r include=FALSE}
