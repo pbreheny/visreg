@@ -5,12 +5,10 @@ title: Contrast vs. conditional plots
 ```{r include=FALSE}
 library(visreg)
 knitr::opts_knit$set(aliases=c(h = 'fig.height', w = 'fig.width'))
-knitr::opts_knit$set(global.par=TRUE)
-knitr::opts_chunk$set(fig.path='img/contrast-')
-```
-```{r fake, echo=FALSE, results='hide'}
-par(mar=c(5,5,0.5,0.5))
-plot(1:10)
+knitr::opts_chunk$set(comment='#', collapse=TRUE, cache=FALSE, tidy=FALSE)
+knitr::knit_hooks$set(small.mar = function(before, options, envir) {
+  if (before) par(mar = c(4, 4, .1, .1))
+})
 ```
 
 Conditional plots were discussed in [getting started](basic.html).  The downside of a conditional plot is that all of the terms in the model must be specified -- i.e., to plot the relationship between wind and ozone, we also need to specify a value for temperature (or use the median as a default).  Specifically, letting $x$ denote the predictor of interest, $y$ the outcome, and $\xj$ the other predictors in the model, a conditional plot represents the relationship $f(x) = \Ex(Y\|x, \xj)$.
@@ -21,7 +19,7 @@ To summarize, the primary advantage of a contrast plot is that we don't have to 
 
 To see how contrast plots compare to conditional plots, let's fit the same model as in [getting started](basic.html), but display contrast plots and conditional plots side-by-side:
 
-```{r contrast_vs_conditional, h=4, w=8, cache=TRUE}
+```{r, h=4, w=8}
 airquality$Heat <- cut(airquality$Temp, 3, labels=c("Cool", "Mild", "Hot"))
 fit <- lm(Ozone ~ Solar.R + Wind + Heat, data=airquality)
 par(mfrow=c(1,2))

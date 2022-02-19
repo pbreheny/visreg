@@ -6,12 +6,10 @@ title: Frequently asked questions
 library(visreg)
 library(ggplot2)
 knitr::opts_knit$set(aliases=c(h = 'fig.height', w = 'fig.width'))
-knitr::opts_knit$set(global.par=TRUE)
-knitr::opts_chunk$set(fig.path='img/glm-')
-```
-```{r fake, echo=FALSE, results='hide'}
-par(mar=c(5,5,1.5,0.5))
-plot(1:10)
+knitr::opts_chunk$set(comment='#', collapse=TRUE, cache=FALSE, tidy=FALSE)
+knitr::knit_hooks$set(small.mar = function(before, options, envir) {
+  if (before) par(mar = c(4, 4, .1, .1))
+})
 ```
 
 This page contains miscellaneous questions that I have been asked about visreg, with answers posted here so that others can read them too.
@@ -20,7 +18,7 @@ This page contains miscellaneous questions that I have been asked about visreg, 
 
 Yes; it's probably easiest to do this using `ggplot2` to render the surface:
 
-```{r faq_visreg2d_points_gg, h=6, w=7, cache=TRUE}
+```{r, h=6, w=7}
 fit <- lm(Ozone ~ Solar.R + Wind + Temp + I(Wind^2) + I(Temp^2) + I(Wind*Temp)+I(Wind*Temp^2) + 
           I(Temp*Wind^2) + I(Temp^2*Wind^2), data=airquality)
 visreg2d(fit, x="Wind", y="Temp", plot.type="gg") +
@@ -29,7 +27,7 @@ visreg2d(fit, x="Wind", y="Temp", plot.type="gg") +
 
 You can do it with base R graphics too, but it's kind of complicated because of how `filled.contour()` works and the way in which it actually creates two plots, one main plot and one plot for the legend:
 
-```{r faq_visreg2d_points, h=6, w=9, cache=TRUE}
+```{r, h=6, w=9}
 p <- quote({
   axis(1, at = mx, labels = lx)
   axis(2, at = my, labels = ly)
@@ -60,14 +58,14 @@ fit <- gamm(y~s(x), data=Data, dist='binomial', random=list(ID=~1))
 
 Now, `fit$gam` does not include the call (i.e., `fit$gam$call` is `NULL`), which means `visreg` won't be able to find the data:
 
-```{r}
+```{r, error=TRUE}
 visreg(fit$gam, 'x')
 ```
 
 So you have to include it manually:
 
 
-```{r faq_gamm1, h=5, w=5, cache=TRUE}
+```{r, h=5, w=5}
 fit$gam$data <- Data
 visreg(fit$gam, 'x')
 ```
@@ -76,13 +74,13 @@ visreg(fit$gam, 'x')
 
 When you specify `scale='response'`, you're telling `visreg` to automatically find the transformation mapping the linear predictor to the scale of the response.  It can only do that if the fitted model object provides that transformation through the `family()` method.  Many R models (e.g., `glm`) do this, but some (e.g., the `glmmADMB` package, `gamm` from the `mgcv` package) don't.  If you're working with one of these models, you'll have to supply that transformation yourself.  For example, with the model from the previous question, this code fails:
 
-```{r}
+```{r, error=TRUE}
 visreg(fit$gam, 'x', scale='response')
 ```
 
 Since this is a binomial model with a logistic link, `binomial()$linkinv` provides the inverse transformation:
 
-```{r faq_gamm2, h=5, w=5, cache=TRUE}
+```{r, h=5, w=5}
 visreg(fit$gam, 'x', trans=binomial()$linkinv, ylab="Probability")
 ```
 
@@ -90,7 +88,7 @@ visreg(fit$gam, 'x', trans=binomial()$linkinv, ylab="Probability")
 
 You can achieve this via `ggplot2::coord_flip`:
 
-```{r faq_coord_flip, h=5, w=5, cache=TRUE}
+```{r, h=5, w=5}
 fit <- lm(Ozone ~ Solar.R + Wind + Temp, data=airquality)
 visreg(fit, "Wind", gg=TRUE) + coord_flip()
 ```

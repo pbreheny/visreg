@@ -5,17 +5,15 @@ title: Generalized linear models
 ```{r include=FALSE}
 library(visreg)
 knitr::opts_knit$set(aliases=c(h = 'fig.height', w = 'fig.width'))
-knitr::opts_knit$set(global.par=TRUE)
-knitr::opts_chunk$set(fig.path='img/glm-')
-```
-```{r fake, echo=FALSE, results='hide'}
-par(mar=c(5,5,0.5,0.5))
-plot(1:10)
+knitr::opts_chunk$set(comment='#', collapse=TRUE, cache=FALSE, tidy=FALSE)
+knitr::knit_hooks$set(small.mar = function(before, options, envir) {
+  if (before) par(mar = c(4, 4, .1, .1))
+})
 ```
 
 Generally speaking, visreg works the same way for GLMs as with any other model:
 
-```{r birthwt, h=5, w=5, cache=TRUE}
+```{r, h=5, w=5}
 data("birthwt", package="MASS")
 fit <- glm(low ~ age + race + smoke + lwt, data=birthwt, family="binomial")
 visreg(fit, "lwt", xlab="Mother's weight", ylab="Log odds (low birthweight)")
@@ -29,7 +27,7 @@ The unique aspect of GLMs is the link function joining the linear predictors to 
 
 For communicating modeling results, however, it is often useful to transform the above outcome to the probability scale.  This can be done by manually specifying `trans` as described in [transformations](trans.html), although for GLMs the shortcut `scale="response"` is provided:
 
-```{r birthwt_p, h=5, w=5, dependson="birthwt", cache=TRUE}
+```{r, h=5, w=5, dependson="birthwt"}
 visreg(fit, "lwt", scale="response", rug=2, xlab="Mother's weight", ylab="P(low birthweight)")
 ```
 
@@ -39,7 +37,7 @@ Note that by default, `visreg` switches to a rug display rather than show residu
 
 To illustrate, suppose we generate some data from a Poisson distribution using a log link:
 
-```{r pois_gen_1}
+```{r}
 n <- 50
 x <- seq(-5, 5, len=n)
 y <- rpois(n, lambda = exp(x))
@@ -47,19 +45,19 @@ y <- rpois(n, lambda = exp(x))
 
 create an artificial outlier:
 
-```{r pois_gen_2}
+```{r}
 y[which.max(x)] <- 0
 ```
 
 then fit a Poisson regression model:
 
-```{r pois_mod}
+```{r}
 fit <- glm(y ~ x, family=poisson)
 ```
 
 and visualize with `visreg`:
 
-```{r pois_plots, h=3, w=9, fig.retina=2, out.width='100%', cache=TRUE}
+```{r, h=3, w=9, fig.retina=2, out.width='100%'}
 par(mfrow=c(1,3))
 visreg(fit, "x")
 visreg(fit, "x", scale="response")

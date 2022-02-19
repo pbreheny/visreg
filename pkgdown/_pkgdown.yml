@@ -20,35 +20,35 @@ navbar:
       - text: Getting started
         href: articles/web/basic.html
       - text: Contrast vs. conditional plots
-        href: articles/web/basic.html
+        href: articles/web/contrast.html
       - text: Transformations
-        href: articles/web/basic.html
+        href: articles/web/trans.html
       - text: Conditioning
-        href: articles/web/basic.html
+        href: articles/web/cond.html
       - text: Graphical options
-        href: articles/web/basic.html
+        href: articles/web/options.html
       - text: Visreg and ggplot2
-        href: articles/web/basic.html
+        href: articles/web/gg.html
     - text: Models with interactions
       menu:
       - text: Cross-sectional plots
-        href: articles/web/basic.html
+        href: articles/web/cross.html
       - text: Overlay plots
-        href: articles/web/basic.html
+        href: articles/web/overlay.html
       - text: Surface plots
-        href: articles/web/basic.html
+        href: articles/web/surface.html
     - text: Special topics
       menu:
       - text: GLMs
-        href: articles/web/basic.html
+        href: articles/web/glm.html
       - text: Forests, SVMs, etc.
-        href: articles/web/basic.html
+        href: articles/web/blackbox.html
       - text: Mixed models
-        href: articles/web/basic.html
+        href: articles/web/mixed.html
       - text: Multiple outcomes
-        href: articles/web/basic.html
+        href: articles/web/multi.html
       - text: FAQ
-        href: articles/web/basic.html
+        href: articles/web/faq.html
     - text: Functions
       href: reference/index.html
   right:

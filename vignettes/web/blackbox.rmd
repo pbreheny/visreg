@@ -5,23 +5,21 @@ title: Forests, SVMs, etc.
 ```{r include=FALSE}
 library(visreg)
 knitr::opts_knit$set(aliases=c(h = 'fig.height', w = 'fig.width'))
-knitr::opts_knit$set(global.par=TRUE)
-knitr::opts_chunk$set(fig.path='img/blackbox-')
-```
-```{r fake, echo=FALSE, results='hide'}
-par(mar=c(5,5,0.5,0.5))
-plot(1:10)
+knitr::opts_chunk$set(comment='#', collapse=TRUE, cache=FALSE, tidy=FALSE)
+knitr::knit_hooks$set(small.mar = function(before, options, envir) {
+  if (before) par(mar = c(4, 4, .1, .1))
+})
 ```
 
 As the name implies, `visreg` is primarily designed to visualize regression models.  However, it is also compatible with any formula-based model class that supplies a `predict` method, which includes models such as random forests and support vector machines.  Such methods are often thought of as ``black boxes'', but `visreg` offers a convenient way to visualize the resulting fit and possibly gain some insight into the model.  Some of these packages do not automatically handle missing data, so we first create a complete-case data set:
 
-```{r aq}
+```{r}
 aq <- na.omit(airquality)
 ```
 
 # Random forests
 
-```{r rf, message=FALSE, h=5, w=5, cache=TRUE}
+```{r, message=FALSE, h=5, w=5}
 library(randomForest, quietly=TRUE)
 fit <- randomForest(Ozone ~ Solar.R + Wind + Temp, data=aq)
 visreg(fit, "Temp", ylab="Ozone")
@@ -29,7 +27,7 @@ visreg(fit, "Temp", ylab="Ozone")
 
 # Support vector machines
 
-```{r svm, message=FALSE, h=5, w=5, cache=TRUE}
+```{r, message=FALSE, h=5, w=5}
 library(e1071)
 fit <- svm(Ozone ~ Solar.R + Wind + Temp, data=aq)
 visreg(fit, "Temp", ylab="Ozone")
@@ -41,7 +39,7 @@ Note that neither random forests nor support vector machines are able to provide
 
 The implementation of gradient boosted trees in the `gbm` package does not offer a `residuals` method.  This would normally cause `visreg` to omit plotting the partial residuals.  However, we can supply our own user-defined `residuals` method:
 
-```{r gbm_resid}
+```{r}
 residuals.gbm <- function(fit) {fit$data$y - fit$fit}
 ```
 
@@ -49,7 +47,7 @@ This is useful to be aware of in general: if you are ever working with a model c
 
 Once defined, we
 
-```{r gbm_bad, message=FALSE, h=5, w=5, cache=TRUE}
+```{r, message=FALSE, h=5, w=5}
 library(gbm)
 fit <- gbm(Ozone ~ Solar.R + Wind + Temp, data=aq, distribution="gaussian")
 visreg(fit, "Temp", ylab="Ozone")
@@ -57,7 +55,7 @@ visreg(fit, "Temp", ylab="Ozone")
 
 Note that the default settings for `gbm` do not produce a very good fit here.  In particular, the default number of trees (100) is too low to capture the relationship between temperature and ozone.  By increasing the number of trees, we obtain a much more reasonable fit:
 
-```{r gbm_good, message=FALSE, h=5, w=5, cache=TRUE}
+```{r, message=FALSE, h=5, w=5}
 fit <- gbm(Ozone ~ Solar.R + Wind + Temp, data=aq, distribution="gaussian", n.trees=5000)
 visreg(fit, "Temp", ylab="Ozone")
 ```

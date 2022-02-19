@@ -5,17 +5,15 @@ title: Graphical options
 ```{r include=FALSE}
 library(visreg)
 knitr::opts_knit$set(aliases=c(h = 'fig.height', w = 'fig.width'))
-knitr::opts_knit$set(global.par=TRUE)
-knitr::opts_chunk$set(fig.path='img/options-')
-```
-```{r fake, echo=FALSE, results='hide'}
-par(mar=c(5,5,0.75,0.5))
-plot(1:10)
+knitr::opts_chunk$set(comment='#', collapse=TRUE, cache=FALSE, tidy=FALSE)
+knitr::knit_hooks$set(small.mar = function(before, options, envir) {
+  if (before) par(mar = c(4, 4, .1, .1))
+})
 ```
 
 `visreg` tries to set up pleasant-looking default options, but everything can be tailored to user specifications.  For the plots below, we work from this general model:
 
-```{r mod, h=5, w=5, cache=TRUE}
+```{r, h=5, w=5}
 airquality$Heat <- cut(airquality$Temp, 3, labels=c("Cool", "Mild", "Hot"))
 fit <- lm(Ozone ~ Solar.R + Wind + Heat, data=airquality)
 ```
@@ -24,23 +22,23 @@ fit <- lm(Ozone ~ Solar.R + Wind + Heat, data=airquality)
 
 By default, `visreg` includes the fitted line, confidence bands, and partial residuals, but the residuals and the bands can be turned off:
 
-```{r noband, h=5, w=5, cache=TRUE}
+```{r, h=5, w=5}
 visreg(fit, "Wind", band=FALSE)
 ```
 
-```{r nopartial, h=5, w=5, cache=TRUE}
+```{r, h=5, w=5}
 visreg(fit, "Wind", partial=FALSE)
 ```
 
 Note that by default, when you turn off partial residuals, visreg tries to display a rug so you can at least see where the observations are.  You can turn this off too:
 
-```{r nopartial_norug, h=5, w=5, cache=TRUE}
+```{r, h=5, w=5}
 visreg(fit, "Wind", partial=FALSE, rug=FALSE)
 ```
 
 Finally, there is an option for displaying separate rugs for positive and negative residuals on the top and bottom axes, respectively, with `rug=2` (this is particularly useful for [logistic regression](glm.html)):
 
-```{r rug2, h=5, w=5, cache=TRUE}
+```{r, h=5, w=5}
 visreg(fit, "Wind", rug=2, partial=FALSE)
 ```
 
@@ -48,12 +46,12 @@ visreg(fit, "Wind", rug=2, partial=FALSE)
 
 If there are many ties in a numeric variable `x`, jittering can be helpful way to avoid overplotting:
 
-```{r nojit, h=5, w=5, cache=TRUE}
+```{r, h=5, w=5}
 fit <- lm(Ozone ~ Solar.R + Wind + poly(Month, 2), data=airquality)
 visreg(fit, "Month")
 ```
 
-```{r jit, h=5, w=5, dependson="nojit", cache=TRUE}
+```{r, h=5, w=5, dependson="nojit"}
 visreg(fit, "Month", jitter=TRUE)
 ```
 
@@ -67,7 +65,7 @@ Specifying `col='red'` won't work, because `visreg` can't know whether you're tr
 
 Each of these can be abbreviated, as in the example below:
 
-```{r aes, h=5, w=5, cache=TRUE}
+```{r, h=5, w=5}
 visreg(fit, "Wind", line=list(col="red"),
                     fill=list(col="green"),
                     points=list(cex=1.5, pch=1))
@@ -77,7 +75,7 @@ visreg(fit, "Wind", line=list(col="red"),
 
 Other options get passed along to `plot`, so any option that you could normally pass to `plot`, like `main`, will work fine.  Here's an example that includes a bunch of options like this:
 
-```{r generic, h=5, w=5, cache=TRUE}
+```{r, h=5, w=5}
 fit <- lm(log(Ozone) ~ Solar.R + Wind + Temp, data=airquality)
 visreg(fit, "Wind", yaxt="n", main="Ozone is bad for you", bty="n", ylab="Ozone")
 at <- seq(1.5, 5, 0.5)
@@ -89,7 +87,7 @@ axis(2, at=at, lab=lab, las=1)
 
 When `x` is a factor, the `whitespace` option controls the amount of whitespace in between the categories:
 
-```{r whitespace, h=4, w=8, cache=TRUE}
+```{r, h=4, w=8}
 fit <- lm(Ozone ~ Solar.R + Wind + Heat, data=airquality)
 par(mfrow=c(1,2))
 visreg(fit, "Heat", whitespace=.1)
@@ -100,13 +98,13 @@ visreg(fit, "Heat", whitespace=.5)
 
 Occasionally, you might want to plot only a subset of the levels or observations; you can use `subset` to accomplish this:
 
-```{r subset_1, h=4, w=7, cache=TRUE}
+```{r, h=4, w=7}
 v <- visreg(fit, "Wind", by="Heat", plot=FALSE)
 v1 <- subset(v, Heat %in% c("Cool", "Hot"))
 plot(v1)
 ```
 
-```{r subset_2, h=3, w=8}
+```{r, h=3, w=8}
 v2 <- subset(v, Wind < 15)
 plot(v2, layout=c(3,1))
 ```

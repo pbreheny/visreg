@@ -5,19 +5,17 @@ title: Conditioning
 ```{r include=FALSE}
 library(visreg)
 knitr::opts_knit$set(aliases=c(h = 'fig.height', w = 'fig.width'))
-knitr::opts_knit$set(global.par=TRUE)
-knitr::opts_chunk$set(fig.path='img/cond-')
-```
-```{r fake, echo=FALSE, results='hide'}
-par(mar=c(5,5,0.5,0.5))
-plot(1:10)
+knitr::opts_chunk$set(comment='#', collapse=TRUE, cache=FALSE, tidy=FALSE)
+knitr::knit_hooks$set(small.mar = function(before, options, envir) {
+  if (before) par(mar = c(4, 4, .1, .1))
+})
 ```
 
 As noted in [getting started](basic.html), the default behavior of `visreg` when constructing a conditional plot is to fill in the other variables with either the median (for continuous variables) or the most common category (for categorical variables).  This can be modified using the `cond` argument, which offers more explicit control over what to condition on.  Note that this has no bearing on contrast plots (at least, in the absence of interactions), which do not depend on the other terms in the model.
 
 The `cond` argument must be provided as a named list.  Each element of that list specifies the value for one of the terms in the model; any elements left unspecified are filled in with the median/most common category.  For example, let's construct the a plot of wind vs. ozone, but condition on three different values for temperature: (1) a cold temperature of 50 degrees (2) the default median temperature of `r median(airquality$Tem)` degrees and (3) a hot temperature of 100 degrees.
 
-```{r wind_temp, h=3, w=9, fig.retina=2, out.width='100%', cache=TRUE}
+```{r, h=3, w=9, fig.retina=2, out.width='100%'}
 fit <- lm(Ozone ~ Solar.R + Wind + Temp, data=airquality)
 par(mfrow=c(1,3))
 visreg(fit, "Wind", cond=list(Temp=50))
