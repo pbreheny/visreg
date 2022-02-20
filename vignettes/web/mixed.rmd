@@ -44,7 +44,7 @@ The `visreg` package can also be used to plot random effects, although again, th
 * According to the object-oriented design of `visreg`, the `predict` method supplied by `lme4` is used.  It has its own option, `re.form`, to control how random effects are used in the prediction, and this must be passed through `visreg` accordingly.
 * For the sake of space, I'm going to subset the plot to ten cows rather than all 79.  This can be accomplished by returning, then subsetting, the raw `visreg` object prior to plotting.
 
-```{r, h=4, w=9}
+```{r, h=4, w=9, out.width='100%'}
 v <- visreg(fit, "Time", by="Cow", re.form=~(Time|Cow), plot=FALSE)
 subCow <- sample(levels(Milk$Cow), 10)
 vv <- subset(v, Cow %in% subCow)
