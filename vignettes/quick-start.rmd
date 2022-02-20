@@ -18,7 +18,7 @@ This guide is intended to briefly demonstrate the basic usage of `visreg`.
 
 For details on `visreg` syntax and how to use it, see:
 
-* The online documentation at <http://pbreheny.github.io/visreg> contains many examples of visreg plots and the code to create them.
+* The online documentation at <https://pbreheny.github.io/visreg> contains many examples of visreg plots and the code to create them.
 * [Breheny P and Burchett W (2017).  Visualization of Regression Models Using visreg. *The R Journal*, 9: 56-71.](https://journal.r-project.org/archive/2017/RJ-2017-046/index.html)
 * The R help files `?visreg`, `?plot.visreg`, and `?visreg2d`
 
@@ -64,4 +64,4 @@ fit <- lm(Ozone ~ poly(Wind, 2)*poly(Temp, 2), data=airquality)
 visreg2d(fit, "Wind", "Temp")
 ```
 
-`visreg` is not limited to linear regression models.  It can be used with virtually any type of model in `R` that provides generic functions for `model.frame` and `predict`, such as `glm`, `coxph`, `rlm`, `gam`, `locfit`, `quantreg`, `gbm`, `randomForest`, etc.  See the [homepage](http://pbreheny.github.io/visreg) for additional examples with other types of models.  If there is a model that you think should work with `visreg` but doesn't, please [open an issue](https://github.com/pbreheny/visreg/issues).
+`visreg` is not limited to linear regression models.  It can be used with virtually any type of model in `R` that provides generic functions for `model.frame` and `predict`, such as `glm`, `coxph`, `rlm`, `gam`, `locfit`, `quantreg`, `gbm`, `randomForest`, etc.  See the [homepage](https://pbreheny.github.io/visreg) for additional examples with other types of models.  If there is a model that you think should work with `visreg` but doesn't, please [open an issue](https://github.com/pbreheny/visreg/issues).

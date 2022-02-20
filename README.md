@@ -37,7 +37,7 @@ visreg(fit, "Wind")
 ```
 
 <p align="center">
-<img alt="img" src="http://pbreheny.github.io/visreg/img/index-wind-1.png">
+<img alt="img" src="https://pbreheny.github.io/visreg/img/index-wind-1.png">
 </p>
 
 A more complex example, which uses the `gam()` function from **mgcv**:
@@ -49,14 +49,14 @@ visreg(fit, "Wind", "Heat", gg=TRUE, ylab="Ozone")
 ```
 
 <p align="center">
-<img alt="img" src="http://pbreheny.github.io/visreg/img/index-mgcv-1.png" style="margin:auto;">
+<img alt="img" src="https://pbreheny.github.io/visreg/img/index-mgcv-1.png" style="margin:auto;">
 </p>
 
 ## More information
 
 For more information on **visreg** syntax and how to use it, see:
 
-* The online documentation at <http://pbreheny.github.io/visreg> contains many examples of visreg plots and the code to create them.
+* The online documentation at <https://pbreheny.github.io/visreg> contains many examples of visreg plots and the code to create them.
 * [Breheny P and Burchett W (2017).  Visualization of Regression Models Using visreg. *The R Journal*, 9: 56-71.](https://journal.r-project.org/archive/2017/RJ-2017-046/index.html)
 
 The website focuses more on syntax, options, and user interface, while the paper goes into more depth regarding the statistical details.

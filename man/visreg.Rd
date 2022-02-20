@@ -153,7 +153,7 @@ nn=101, cond=list(), jitter=FALSE, collapse=FALSE, plot=TRUE, ...)
 }
 \references{
   \itemize{
-    \item \url{http://pbreheny.github.io/visreg}
+    \item \url{https://pbreheny.github.io/visreg}
     \item Breheny, P. and Burchett, W. (2017), Visualizing regression
     models using visreg.
     \url{https://journal.r-project.org/archive/2017/RJ-2017-046/index.html}
@@ -163,7 +163,7 @@ nn=101, cond=list(), jitter=FALSE, collapse=FALSE, plot=TRUE, ...)
   Patrick Breheny and Woodrow Burchett
 }
 \seealso{
-  \url{http://pbreheny.github.io/visreg}
+  \url{https://pbreheny.github.io/visreg}
   \code{\link{plot.visreg}}
   \code{\link{visreg2d}}
   \code{\link{visreg-faq}}

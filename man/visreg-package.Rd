@@ -19,7 +19,7 @@ question or feature request, please e-mail me at
 Maintainer: Patrick Breheny <patrick-breheny@uiowa.edu>}
 \references{
   \itemize{
-    \item \url{http://pbreheny.github.io/visreg}
+    \item \url{https://pbreheny.github.io/visreg}
     \item Breheny, P. and Burchett, W. (2017), Visualizing regression
     models using visreg.
     \url{https://journal.r-project.org/archive/2017/RJ-2017-046/index.html}

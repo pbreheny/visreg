@@ -52,7 +52,7 @@ xlab, ylab, zlab, color, print.cond=FALSE, whitespace=0.2, ...)
 }
 \references{
   \itemize{
-    \item \url{http://pbreheny.github.io/visreg}
+    \item \url{https://pbreheny.github.io/visreg}
     \item Breheny, P. and Burchett, W. (2017), Visualizing regression
     models using visreg.
     \url{https://journal.r-project.org/archive/2017/RJ-2017-046/index.html}
@@ -62,7 +62,7 @@ xlab, ylab, zlab, color, print.cond=FALSE, whitespace=0.2, ...)
   Patrick Breheny and Woodrow Burchett
 }
 \seealso{
-  \url{http://pbreheny.github.io/visreg/surface.html}
+  \url{https://pbreheny.github.io/visreg/surface.html}
   \code{\link{visreg}}
 }
 \examples{

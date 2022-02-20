@@ -86,7 +86,7 @@ trans=I, scale=c("linear", "response"), nn=99, cond=list(), plot=TRUE,
 }
 \references{
   \itemize{
-    \item \url{http://pbreheny.github.io/visreg}
+    \item \url{https://pbreheny.github.io/visreg}
     \item Breheny, P. and Burchett, W. (2017), Visualizing regression
     models using visreg.
     \url{https://journal.r-project.org/archive/2017/RJ-2017-046/index.html}
@@ -96,7 +96,7 @@ trans=I, scale=c("linear", "response"), nn=99, cond=list(), plot=TRUE,
   Patrick Breheny and Woodrow Burchett
 }
 \seealso{
-  \url{http://pbreheny.github.io/visreg/surface.html}
+  \url{https://pbreheny.github.io/visreg/surface.html}
   \code{\link{visreg}}
 }
 \examples{

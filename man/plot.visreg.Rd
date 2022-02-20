@@ -119,7 +119,7 @@ fill.par=NULL, points.par=NULL, ...)
 }
 \references{
   \itemize{
-    \item \url{http://pbreheny.github.io/visreg}
+    \item \url{https://pbreheny.github.io/visreg}
     \item Breheny, P. and Burchett, W. (2017), Visualizing regression
     models using visreg.
     \url{https://journal.r-project.org/archive/2017/RJ-2017-046/index.html}
@@ -129,7 +129,7 @@ fill.par=NULL, points.par=NULL, ...)
   Patrick Breheny and Woodrow Burchett
 }
 \seealso{
-  \url{http://pbreheny.github.io/visreg/options.html}
+  \url{https://pbreheny.github.io/visreg/options.html}
   \code{\link{visreg}}
   \code{\link{visreg2d}}
   \code{\link{visreg-faq}}
@@ -141,5 +141,5 @@ visreg(fit, "Wind", line=list(col="red"), points=list(cex=1, pch=1))
 ## Changing appearance
 visreg(fit, "Wind", line=list(col="red"), points=list(cex=1, pch=1))
 
-## See ?visreg and http://pbreheny.github.io/visreg for more examples
+## See ?visreg and https://pbreheny.github.io/visreg for more examples
 }
