@@ -49,7 +49,7 @@ visreg(fit, "Wind", "Heat", gg=TRUE, ylab="Ozone")
 ```
 
 <p align="center">
-<img alt="img" src="https://pbreheny.github.io/visreg/articles/web/index_files/figure-html/unnamed-chunk-3-1.png" style="margin:auto;">
+<img alt="img" src="https://pbreheny.github.io/visreg/articles/web/index_files/figure-html/unnamed-chunk-4-1.png" style="margin:auto;">
 </p>
 
 ## More information
