@@ -37,7 +37,7 @@ visreg(fit, "Wind")
 ```
 
 <p align="center">
-<img alt="img" src="https://pbreheny.github.io/visreg/articles/web/index_files/figure-html/unnamed-chunk-3-1.png" style="background-color: #eee;">
+<img alt="img" src="https://pbreheny.github.io/visreg/articles/web/index_files/figure-html/unnamed-chunk-3-1.png" style="width: 50%; background-color: #eee;">
 </p>
 
 A more complex example, which uses the `gam()` function from **mgcv**:
