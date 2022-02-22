@@ -6,6 +6,7 @@ figures:
   dev: grDevices::png
   dpi: 96
   dev.args: []
+  bg: white
   fig.ext: png
   fig.width: 5
   fig.height: 5
@@ -73,6 +74,6 @@ footer:
     left: developed_by
     right: updated
   components:
-    updated: Last updated 2022-02-20
+    updated: Last updated 2022-02-22
 
 

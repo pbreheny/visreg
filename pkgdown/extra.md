@@ -18,6 +18,8 @@ visreg2d(fit, "Wind", "Temp", plot.type="rgl")
 </div>
 ```
 
+If your browser supports it, you should be able to interact with above figure (click and drag to rotate).
+
 If you have a question or feature request, please [submit an issue](https://github.com/pbreheny/visreg/issues).
 
 ## More information
