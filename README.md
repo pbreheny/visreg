@@ -1,8 +1,10 @@
+<!-- badges: start -->
 [![GitHub version](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/pbreheny/visreg/master/.version.json&style=flat&logo=github)](https://github.com/pbreheny/visreg)
 [![CRAN version](https://img.shields.io/cran/v/visreg?logo=R)](https://cran.r-project.org/package=visreg)
 [![downloads](http://cranlogs.r-pkg.org/badges/visreg)](https://cran.r-project.org/package=visreg)
-[![Travis build status](https://api.travis-ci.org/pbreheny/visreg.svg?branch=master)](https://travis-ci.org/pbreheny/visreg)
 [![codecov.io](https://codecov.io/github/pbreheny/visreg/coverage.svg?branch=master)](https://codecov.io/github/pbreheny/visreg?branch=master)
+[![R-CMD-check](https://github.com/pbreheny/visreg/workflows/R-CMD-check/badge.svg)](https://github.com/pbreheny/visreg/actions)
+<!-- badges: end -->
 
 # visreg: Visualization of Regression Models
 
