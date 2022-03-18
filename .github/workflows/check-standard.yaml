@@ -41,6 +41,22 @@ jobs:
 
       - uses: r-lib/actions/setup-r-dependencies@v1
         with:
-          extra-packages: rcmdcheck
+          extra-packages:
+            - rcmdcheck
+            - betareg
+            - e1071
+            - gamlss
+            - gamm4
+            - gbm
+            - gridExtra
+            - lme4
+            - locfit
+            - mgcv
+            - nnet
+            - quantreg
+            - randomForest
+            - rgl
 
       - uses: r-lib/actions/check-r-package@v1
+        with:
+          extra-packages:
