@@ -22,20 +22,21 @@ jobs:
       - uses: r-lib/actions/setup-r-dependencies@v2
         with:
           extra-packages: |
-            covr
-            betareg
-            e1071
-            gamlss
-            gamm4
-            gbm
-            gridExtra
-            lme4
-            locfit
-            mgcv
-            nnet
-            quantreg
-            randomForest
-            rgl
+            any::covr
+            any::betareg
+            any::e1071
+            any::gamlss
+            any::gamm4
+            any::gbm
+            any::gridExtra
+            any::lme4
+            any::locfit
+            any::mgcv
+            any::nnet
+            any::quantreg
+            any::randomForest
+            any::rgl
+          needs: coverage
 
       - name: Test coverage
         run: covr::codecov()
