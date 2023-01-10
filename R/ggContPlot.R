@@ -36,7 +36,12 @@ ggContPlot <- function(v, partial, band, rug, whitespace, strip.names, overlay, 
     if (length(fill.par)) fill.args[names(fill.par)] <- fill.par
     if (length(line.par)) line.args[names(line.par)] <- line.par
     if (length(points.par)) point.args[names(points.par)] <- points.par
-    p <- p + ggplot2::scale_fill_manual(values=acol) + ggplot2::scale_color_manual(values=col)
+    if (is.character(strip.names) & length(strip.names) == length(levels(bb))) {
+      p <- p + ggplot2::scale_fill_manual(values=acol, labels=strip.names) + 
+        ggplot2::scale_color_manual(values=col, labels=strip.names)
+    } else {
+      p <- p + ggplot2::scale_fill_manual(values=acol) + ggplot2::scale_color_manual(values=col)
+    }
   } else {
     p <- ggplot2::ggplot(pointData, ggplot2::aes_string('x', 'y'))
     fill.args <- list(fill="gray85")
