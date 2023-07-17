@@ -1,5 +1,4 @@
-library(nlme)
-library(lattice)
+suppressPackageStartupMessages(library(nlme))
 
 # Make up some data
 n <- 10
@@ -15,5 +14,7 @@ fit <- lme(y ~ x, random = ~1|ID, data=df)
 visreg(fit, "x")
 visreg(fit, "x", type="contrast")
 visreg(fit, "x", by="ID")
-xyplot(y~x|ID, data=df, pch=19) ## Note: Not the same as the above!  Random effects have been eliminated in visreg
-visreg(fit, "x", by="ID", level=1) ## Adds the random effects back in
+lattice::xyplot(y~x|ID, data=df, pch=19) # Note: Not the same as the above!
+                                         # Random effects eliminated in visreg
+visreg(fit, "x", by="ID", level=1)       # Add the random effects back in
+

@@ -12,9 +12,11 @@ plot.visreg <- function(
   if (print.cond) printCond(x, warn)
 
   if (all(is.na(x$res$visregRes))) {
-    partial <- FALSE
-    rug <- FALSE
-    warning(paste0("The generic function residuals() is not set up for this type of model object.  To plot partial residuals, you will need to define your own residuals.", x$meta$class[1], "() function."))
+    if (partial | rug) {
+      partial <- FALSE
+      rug <- FALSE
+      warning(paste0("The generic function residuals() is not set up for this type of model object.  To plot partial residuals, you will need to define your own residuals.", x$meta$class[1], "() function."))
+    }
   }
 
   if (gg) {

@@ -3,7 +3,6 @@ if (interactive()) {library(tinytest); devtools::load_all(quiet=TRUE)}
 
 
 ozone <- airquality
-
 fit <- lm(Ozone ~ Solar.R, data=ozone)
 visreg(fit, "Solar.R") |> expect_silent()
 
@@ -40,15 +39,16 @@ a <- rep(LETTERS[1:4],25)
 b <- rep(c(TRUE, FALSE), 50)
 df <- data.frame(c=rnorm(100), d=factor(rep(1:10,10)), y=rnorm(100))
 fit <- lm(y~a+b+c+d, df)
-par(mfrow=c(2,2))
+op <- par(mfrow=c(2,2))
 visreg(fit)
+par(op)
 
 # Data not in global scope
 myFun <- function(form) {
   Data <- data.frame(x=rnorm(100), y=rnorm(100), z=rnorm(100))
   fit <- lm(form, data=Data)
-  print(environment())
-  print(environment(fit$terms))
+  if (interactive()) print(environment())
+  if (interactive()) print(environment(fit$terms))
   visreg(fit)
   visreg2d(fit,"x","y")
 }
@@ -56,8 +56,7 @@ myFun(z~x+y)
 
 # Data in a package namespace
 fit <- lm(accel ~ times, data = MASS::mcycle)
-visreg(model, "times") # fails with "Error in exists(as.character(CALL$data), call.env) : first argument has length > 1"
-
+visreg(fit, "times")
 
 # Missing factor levels
 x <- factor(rep(LETTERS[1:5],rep(5,5)))

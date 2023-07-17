@@ -1,4 +1,5 @@
-library(quantreg)
+suppressPackageStartupMessages(library(quantreg))
+
 # Basic usage
 fit <- rq(Ozone ~ ., data=airquality)
 visreg(fit, 'Wind')
