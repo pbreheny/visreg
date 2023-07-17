@@ -1,26 +1,29 @@
 # Tests missing / subsetted data in various / mixed locations
+if (interactive()) {library(tinytest); devtools::load_all(quiet=TRUE)}
+
+
 ozone <- airquality
 
-fit <- lm(Ozone ~ Solar.R,data=ozone)
-visreg(fit,"Solar.R")
+fit <- lm(Ozone ~ Solar.R, data=ozone)
+visreg(fit, "Solar.R") |> expect_silent()
 
 x <- rnorm(nrow(ozone))
 x[sample(1:nrow(ozone),20)] <- NA
-fit <- lm(Ozone ~ Solar.R+x,data=ozone)
-visreg(fit,"Solar.R")
-visreg(fit,"x")
+fit <- lm(Ozone ~ Solar.R + x, data=ozone)
+visreg(fit, "Solar.R")
+visreg(fit, "x")
 
-fit <- lm(Ozone ~ I(Solar.R^2)+Wind,data=ozone)
+fit <- lm(Ozone ~ I(Solar.R^2) + Wind, data=ozone)
 visreg(fit,"Solar.R")
 
-fit <- lm(log(Ozone) ~ Solar.R + Wind + I(Temp^2),data=ozone)
-visreg(fit,"Wind",trans=exp)
+fit <- lm(log(Ozone) ~ Solar.R + Wind + I(Temp^2), data=ozone)
+visreg(fit,"Wind", trans=exp)
 
 y <- rnorm(100)
 x <- rnorm(100)
 x[c(10,20)] <- NA
-fit <- lm(y~x)
-visreg(fit,"x")
+fit <- lm(y ~ x)
+visreg(fit, "x")
 
 # Subset
 fit <- lm(Ozone ~ Wind, data=airquality)
@@ -50,6 +53,11 @@ myFun <- function(form) {
   visreg2d(fit,"x","y")
 }
 myFun(z~x+y)
+
+# Data in a package namespace
+fit <- lm(accel ~ times, data = MASS::mcycle)
+visreg(model, "times") # fails with "Error in exists(as.character(CALL$data), call.env) : first argument has length > 1"
+
 
 # Missing factor levels
 x <- factor(rep(LETTERS[1:5],rep(5,5)))

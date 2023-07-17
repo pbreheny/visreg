@@ -23,6 +23,10 @@ setupF <- function(fit, xvar, call.env, data) {
     } else if (is.null(CALL$data)) {
       env <- NULL
       Data <- NULL
+    } else if (as.character(CALL$data)[1] == '::') {
+      dat_vec <- as.character(CALL$data)
+      data(list=dat_vec[3], package=dat_vec[2])
+      Data <- get(dat_vec[3])
     } else if (exists(as.character(CALL$data), call.env)) {
       env <- call.env
       Data <- eval(CALL$data, envir=env)
