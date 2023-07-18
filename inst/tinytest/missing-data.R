@@ -1,7 +1,6 @@
 # Tests missing / subsetted data in various / mixed locations
 if (interactive()) {library(tinytest); devtools::load_all(quiet=TRUE)}
 
-
 ozone <- airquality
 fit <- lm(Ozone ~ Solar.R, data=ozone)
 visreg(fit, "Solar.R") |> expect_silent()
@@ -50,26 +49,28 @@ myFun <- function(form) {
   if (interactive()) print(environment())
   if (interactive()) print(environment(fit$terms))
   visreg(fit)
-  visreg2d(fit,"x","y")
+  visreg2d(fit, "x", "y")
 }
-myFun(z~x+y)
+myFun(z ~ x + y)
 
 # Data in a package namespace
 fit <- lm(accel ~ times, data = MASS::mcycle)
 visreg(fit, "times")
 
 # Missing factor levels
-x <- factor(rep(LETTERS[1:5],rep(5,5)))
+x <- factor(rep(LETTERS[1:5], rep(5, 5)))
 y <- rnorm(length(x))
 y[11:15] <- NA
-fit <- lm(y~x)
+fit <- lm(y ~ x)
 visreg(fit)
 visreg(fit, type='contrast')
 
-# data option
+# data options
 data("birthwt", package="MASS")
 TMP <- birthwt
 fit <- lm(bwt ~ age + race, TMP)
 rm(TMP)
 visreg(fit, 'age', data=birthwt)
 visreg2d(fit, 'age', 'race', data=birthwt)
+fit$data <- birthwt
+visreg(fit, 'age')
