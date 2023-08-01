@@ -9,6 +9,8 @@ visregResid <- function(fit) {
     rr <- residuals(fit, type='deviance')
   } else if (inherits(fit, 'gamlss')) {
     rr <- residuals(fit, what='mu')
+  } else if (inherits(fit, 'glmmTMB')) {
+    rr <- residuals(fit, type='pearson')
   } else {
     rr <- residuals(fit)
   }
