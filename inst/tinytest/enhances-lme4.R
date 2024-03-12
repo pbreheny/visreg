@@ -12,7 +12,7 @@ df <- data.frame(y=y, x=x, ID=factor(ID))
 fit <- lmer(y ~ x + (1|ID), data=df)
 visreg(fit, "x")
 visreg(fit, "x", by="ID")
-visreg(fit, "x", by="ID", re.form = ~1|ID) ## Adds random effects back in
+visreg(fit, "x", by="ID", re.form = ~(1|ID))  # Adds random effects back in
 
 visreg(fit, "x", by="ID", overlay=TRUE, strip.names=TRUE)
 v <- visreg(fit, "x", by="ID", re.form = ~1|ID)
