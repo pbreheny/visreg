@@ -1,3 +1,4 @@
+#' @export
 plot.visreg2d <- function(x, plot.type=c("image","persp","rgl", "gg"), xlab, ylab, zlab, color, print.cond=FALSE, whitespace=0.2, ...) {
   plot.type <- match.arg(plot.type)
   if (missing(xlab)) xlab <- x$meta$x

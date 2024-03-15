@@ -19,7 +19,13 @@ setupD <- function(fit, f, name, nn, cond, whitespace, ...) {
   if (is.factor(x)) {
     xx <- factor(levels(x), levels=levels(x))
   } else {
-    xx <- seq(min(x), max(x), length=nn)
+    if ('xtrans' %in% names(dots)) {
+      xx <- c(seq(min(x), max(x), length=nn))
+      fi <- approxfun(dots$xtrans(x), x)
+      xx <- seq(dots$xtrans(min(x)), dots$xtrans(max(x)), len=nn) |> fi()
+    } else {
+      xx <- c(seq(min(x), max(x), length=nn))
+    }
   }
   xxdf <- data.frame(xx)
   names(xxdf) <- name
