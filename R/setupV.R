@@ -15,7 +15,7 @@ setupV <- function(fit, f, xvar, nn, cond, type, trans, xtrans, alpha, jitter, b
   for (j in 1:J) {
     cond.j <- if (length(cond) > 1) cond[[j]] else cond[[1]]
     name <- if (length(xvar) > 1) xvar[j] else xvar
-    xy[[j]] <- getXY(fit, f, name, nn, cond.j, type, trans, xtrans, alpha, jitter, ...)
+    xy[[j]] <- getXY(fit, f, name, nn, cond.j, type, trans, alpha, jitter, ...)
   }
   if (!missing(by)) xy <- subsetV(xy, f, by, lev, type)
 
