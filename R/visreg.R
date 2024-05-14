@@ -1,5 +1,5 @@
 visreg <- function(fit, xvar, by, breaks=3, type=c("conditional", "contrast"), data=NULL, trans=I,
-                   scale=c("linear","response"), xtrans, alpha=.05, nn=101, cond=list(), jitter=FALSE, collapse=FALSE,
+                   scale=c("linear","response"), alpha=.05, nn=101, cond=list(), jitter=FALSE, collapse=FALSE,
                    plot=TRUE, ...) {
   # Setup
   if (type[1]=="effect") {
@@ -32,7 +32,7 @@ visreg <- function(fit, xvar, by, breaks=3, type=c("conditional", "contrast"), d
 
   # Calculate v
   yName <- makeYName(fit, scale, trans, type)
-  v <- setupV(fit, Data, xvar, nn, cond, type, trans, xtrans, alpha, jitter, by, yName, ...)
+  v <- setupV(fit, Data, xvar, nn, cond, type, trans, alpha, jitter, by, yName, ...)
   if (collapse) v <- collapse.visregList(v)
 
   # Plot/return
