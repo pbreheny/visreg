@@ -2,9 +2,8 @@
 y <- rnorm(100)
 x <- rnorm(100) |> exp()
 
-v <- fit <- lm(y ~ splines::ns(x))
-visreg(fit, 'x', xtrans=log)
-visreg(fit, 'x')
+fit <- lm(y ~ splines::ns(x))
+v <- visreg(fit, 'x', xtrans=log)
 
 head(v$fit)
 tail(v$fit)
