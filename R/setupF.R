@@ -47,7 +47,7 @@ setupF <- function(fit, xvar, call.env, data) {
   if (inherits(CALL$random, "call")) {
     rf <- as.data.frame(as.list(get_all_vars(CALL$random, Data)))
     rf <- rf[, setdiff(names(rf), names(f)), drop=FALSE]
-    f <- cbind(f, rf)
+    if (nrow(rf) > 0) f <- cbind(f, rf)
   }
   if ("subset" %in% names(CALL) & !(inherits(fit, 'averaging'))) {
     s <- CALL$subset

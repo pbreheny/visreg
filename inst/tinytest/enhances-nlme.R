@@ -18,3 +18,7 @@ lattice::xyplot(y~x|ID, data=df, pch=19) # Note: Not the same as the above!
                                          # Random effects eliminated in visreg
 visreg(fit, "x", by="ID", level=1)       # Add the random effects back in
 
+# Works with random intercept
+vf1 <- varIdent(c(Female = 0.5), form = ~ 1 | Sex)
+fit <- lme(distance ~ age + Sex, data = Orthodont, random = ~1, weights=vf1)
+visreg(fit, 'age')
