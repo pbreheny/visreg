@@ -1,6 +1,6 @@
 Package: visreg
 Title: Visualization of Regression Models
-Version: 2.7.0.12
+Version: 2.7.0.13
 Date: 2024-05-14
 Authors@R: c(
   person("Patrick", "Breheny", role=c("aut","cre"),
