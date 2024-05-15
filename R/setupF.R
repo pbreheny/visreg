@@ -39,6 +39,11 @@ setupF <- function(fit, xvar, call.env, data) {
     ff <- form
     ff[[2]] <- NULL
     av <- get_all_vars(ff, Data)      # If mlm with matrix as Y, outside of data frame framework
+  } else if (inherits(fit, 'glmmTMB')) {
+    av <- NULL
+    for (form in fit$modelInfo$allForm) {
+      av <- cbind(av, get_all_vars(form, Data))
+    }
   } else {
     av <- get_all_vars(form, Data)    # https://bugs.r-project.org/bugzilla3/show_bug.cgi?id=14905
   }
