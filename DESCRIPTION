@@ -1,7 +1,7 @@
 Package: visreg
 Title: Visualization of Regression Models
-Version: 2.7.0.14
-Date: 2024-05-16
+Version: 2.7.0.15
+Date: 2024-05-17
 Authors@R: c(
   person("Patrick", "Breheny", role=c("aut","cre"),
          email="patrick-breheny@uiowa.edu",
