@@ -1,5 +1,5 @@
 setupX <- function(fit, f, name, nn, cond, ...) {
-  ## Set up n x p matrix for (conditional) partial residuals
+  # Set up n x p matrix for (conditional) partial residuals
   x <- f[, name]
   if (is.factor(x)) {
     xref <- 1
@@ -24,20 +24,14 @@ setupX <- function(fit, f, name, nn, cond, ...) {
   names(xdf) <- name
   df <- fillFrame(f, xdf, cond)
   D <- rbind(f[, names(df)], df)
-  form <- formula(fit)[3]
-
-  if (inherits(fit, "lme")) {
-    b <- nlme::fixed.effects(fit)
-  } else if (inherits(fit, "merMod")) {
-    b <- fit@beta
-  } else {
-    b <- coef(fit)
-  }
+  b <- visreg_coef(fit)
 
   if (inherits(fit, "mlm")) {
     ind <- apply(is.finite(b), 1, all)
     if (!identical(ind, apply(is.finite(b), 1, any))) stop("Inconsistent NA/NaN coefficients across outcomes", call.=FALSE)
-  } else ind <- is.finite(b)
+  } else {
+    ind <- is.finite(b)
+  }
   if (inherits(fit, "gam")) {
     form <- parseFormula(formula(fit)[3])
     D <- model.frame(as.formula(paste("~", form)), df)
@@ -50,12 +44,17 @@ setupX <- function(fit, f, name, nn, cond, ...) {
     form <- as.formula(paste("~", as.character(fit$fixed[3])))
     X. <- model.matrix(form, D)[-(1:nrow(f)), ind]
   } else if (inherits(fit, "betareg")) {
+    form <- formula(fit)[3]
     ind <- ind[-length(ind)]
     X. <- model.matrix(as.formula(paste("~", form)), D)[-(1:nrow(f)), ind]
+  } else if (inherits(fit, 'glmmTMB')) {
+    form <- lme4::nobars(formula(fit))[3]
+    X. <- model.matrix(as.formula(paste("~", form)), D)[-(1:nrow(f)), ind]
   } else {
+    form <- formula(fit)[3]
     X. <- model.matrix(as.formula(paste("~", form)), D)[-(1:nrow(f)), ind]
   }
-  X <- t(t(X.[-1,])-X.[1,])
+  X <- t(t(X.[-1,]) - X.[1,])
 
   ## Set up data frame with nn rows for prediction
   dots <- list(...)

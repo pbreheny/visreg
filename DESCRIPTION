@@ -13,7 +13,7 @@ Description: Provides a convenient interface for constructing plots to
     'randomForest', etc.)
 Maintainer: Patrick Breheny <patrick-breheny@uiowa.edu>
 Imports: lattice
-Suggests: ggplot2, knitr, MASS, Matrix, rgl, rmarkdown, survival, tinytest
+Suggests: ggplot2, glmmTMB, knitr, lme4, MASS, Matrix, rgl, rmarkdown, survival, tinytest
 Enhances: nlme
 BugReports: https://github.com/pbreheny/visreg/issues
 VignetteBuilder: knitr

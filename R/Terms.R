@@ -1,14 +1,5 @@
 Terms <- function(fit, f, x, trans, alpha, ...) {
-  if (inherits(fit, "lme")) {
-    b <- nlme::fixed.effects(fit)
-  } else if (inherits(fit, "merMod")) {
-    b <- fit@beta
-  } else if (inherits(fit, 'betareg')) {
-    b <- coef(fit)
-    b <- b[-length(b)]
-  } else {
-    b <- coef(fit)
-  }
+  b <- visreg_coef(fit)
 
   if (inherits(fit, "mlm")) {
     summ <- summary(fit)
@@ -24,7 +15,11 @@ Terms <- function(fit, f, x, trans, alpha, ...) {
       r[,i] <- x$X%*%b[ind,i] + rr[,i]
     }
   } else {
-    V <- vcov(fit)
+    if (inherits(fit, 'glmmTMB')) {
+      V <- vcov(fit)$cond
+    } else {
+      V <- vcov(fit)
+    }
     dg <- if (inherits(V, 'Matrix')) Matrix::diag(V) else diag(V)
     if (inherits(fit, 'polr')) {
       remove <- grep("|", colnames(V), fixed=TRUE)
