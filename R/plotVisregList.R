@@ -1,3 +1,4 @@
+#' @export
 plot.visregList <- function(x, ask=TRUE, ...) {
   n <- length(x)
   prompt.user <- FALSE

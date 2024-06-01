@@ -1,4 +1,62 @@
+#' Visualization of regression functions for two variables
+#' 
+#' Plot method for visualizing how two variables interact to affect the
+#' response in regression models.
+#' 
+#' @param x A [visreg2d()] object.
+#' @param plot.type The style of plot to be produced. The following options are
+#' supported:
+#' * `image`: a filled contour
+#' * `gg`: a filled contour plot using ggplot2
+#' * `persp`: a 3 dimensional perspective plot
+#' * `rgl`: a version of the perspective plot that can be rotated (requires the rgl package to be installed)
+#' @param xlab Axis label for x variable
+#' @param ylab Axis label for y variable
+#' @param zlab Axis label for outcome
+#' @param color For `plot.type='persp'` or `plot.type='rgl'`, the color of the
+#' surface. For `plot.type='image'` or `plot.type='gg'`, a vector of colors used
+#' to establish a color palette.
+#' @param print.cond If `print.cond==TRUE`, the explanatory variable values
+#' conditioned on in a conditional plot are printed to the console
+#' (default: \code{FALSE}). If `print.cond==TRUE` and `type=="contrast"`, the
+#' conditions will still be printed, but they have no bearing on the plot unless
+#' interactions are present.
+#' @param whitespace When `xvar` or `yvar` is a factor, `whitespace`
+#' determines the amount of space in between the factors. Default is 0.2,
+#' meaning that 20 percent of the axis is whitespace.
+#' @param ... Graphical parameters can be passed to the function to customize
+#' the plots.
+#' 
+#' @author Patrick Breheny and Woodrow Burchett
+#' 
+#' @seealso https://pbreheny.github.io/visreg/surface.html, [visreg()]
+#' 
+#' @references
+#' Breheny P and Burchett W. (2017) Visualization of regression models using
+#' visreg. *R Journal*, **9**: 56-71.
+#' \doi{10.32614/RJ-2017-046}
+#' 
+#' @examples
+#' fit <- lm(Ozone ~ Solar.R + Wind + Temp + I(Wind^2) + I(Temp^2) +
+#' I(Wind*Temp)+I(Wind*Temp^2) + I(Temp*Wind^2) + I(Temp^2*Wind^2),
+#' data=airquality)
+#' 
+#' visreg2d(fit, x="Wind", y="Temp", plot.type="image")
+#' visreg2d(fit, x="Wind", y="Temp", plot.type="image",
+#'          color=c("purple", "green", "red"))
+#' visreg2d(fit, x="Wind", y="Temp", plot.type="persp")
+#' 
+#' ## Requires the rgl package
+#' \donttest{
+#' visreg2d(fit,x="Wind",y="Temp",plot.type="rgl")
+#' }
+#' 
+#' ## Requires the ggplot2 package
+#' \donttest{
+#' visreg2d(fit, x="Wind", y="Temp", plot.type="gg")
+#' }
 #' @export
+
 plot.visreg2d <- function(x, plot.type=c("image","persp","rgl", "gg"), xlab, ylab, zlab, color, print.cond=FALSE, whitespace=0.2, ...) {
   plot.type <- match.arg(plot.type)
   if (missing(xlab)) xlab <- x$meta$x
