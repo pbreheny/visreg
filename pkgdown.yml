@@ -1,22 +1,21 @@
-pandoc: 2.14.0.1
-pkgdown: 2.0.3
+pandoc: 3.1.11
+pkgdown: 2.1.1
 pkgdown_sha: ~
 articles:
+  web/basic: web/basic.html
+  web/blackbox: web/blackbox.html
+  web/cond: web/cond.html
+  web/contrast: web/contrast.html
+  web/cross: web/cross.html
+  web/faq: web/faq.html
+  web/gg: web/gg.html
+  web/glm: web/glm.html
+  web/index: web/index.html
+  web/mixed: web/mixed.html
+  web/multi: web/multi.html
+  web/options: web/options.html
+  web/overlay: web/overlay.html
   quick-start: quick-start.html
-  basic: web/basic.html
-  blackbox: web/blackbox.html
-  cond: web/cond.html
-  contrast: web/contrast.html
-  cross: web/cross.html
-  faq: web/faq.html
-  gg: web/gg.html
-  glm: web/glm.html
-  index: web/index.html
-  mixed: web/mixed.html
-  multi: web/multi.html
-  options: web/options.html
-  overlay: web/overlay.html
-  surface: web/surface.html
-  trans: web/trans.html
-last_built: 2022-05-11T14:02Z
-
+  web/surface: web/surface.html
+  web/trans: web/trans.html
+last_built: 2025-02-28T15:07Z

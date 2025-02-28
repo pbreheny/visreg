@@ -5,91 +5,69 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<meta name="description" content="visreg">
 <title>Generalized linear models • visreg</title>
 <script src="../../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link href="../../deps/bootstrap-5.1.0/bootstrap.min.css" rel="stylesheet">
-<script src="../../deps/bootstrap-5.1.0/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
-<!-- bootstrap-toc --><script src="https://cdn.rawgit.com/afeld/bootstrap-toc/v1.0.1/dist/bootstrap-toc.min.js"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../../pkgdown.js"></script><link href="../../extra.css" rel="stylesheet">
+<link href="../../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
+<script src="../../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
+<link href="../../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
+<script src="../../deps/headroom-0.11.0/headroom.min.js"></script><script src="../../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../../deps/search-1.0.0/fuse.min.js"></script><script src="../../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../../pkgdown.js"></script><link href="../../extra.css" rel="stylesheet">
 <script src="../../extra.js"></script><meta property="og:title" content="Generalized linear models">
-<meta property="og:description" content="visreg">
-<!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
-<script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-<![endif]-->
 </head>
 <body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
-    
 
-    <nav class="navbar fixed-top navbar-dark navbar-expand-lg bg-primary"><div class="container">
-    
+
+    <nav class="navbar navbar-expand-lg fixed-top bg-primary" data-bs-theme="dark" aria-label="Site navigation"><div class="container">
+
     <a class="navbar-brand me-2" href="../../index.html">visreg</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.7.0.3</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.7.0.15</small>
 
-    
+
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
 
     <div id="navbar" class="collapse navbar-collapse ms-3">
       <ul class="navbar-nav me-auto">
-<li class="nav-item">
-  <a class="nav-link" href="../../index.html">
-    <span class="fa fa-home fa-lg"></span>
-     
-  </a>
+<li class="nav-item"><a class="nav-link" href="../../index.html"><span class="fa fa-home fa-lg"></span></a></li>
+<li class="nav-item dropdown">
+  <button class="nav-link dropdown-toggle" type="button" id="dropdown-basic-framework" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Basic framework</button>
+  <ul class="dropdown-menu" aria-labelledby="dropdown-basic-framework">
+<li><a class="dropdown-item" href="../../articles/web/basic.html">Getting started</a></li>
+    <li><a class="dropdown-item" href="../../articles/web/contrast.html">Contrast vs. conditional plots</a></li>
+    <li><a class="dropdown-item" href="../../articles/web/trans.html">Transformations</a></li>
+    <li><a class="dropdown-item" href="../../articles/web/cond.html">Conditioning</a></li>
+    <li><a class="dropdown-item" href="../../articles/web/options.html">Graphical options</a></li>
+    <li><a class="dropdown-item" href="../../articles/web/gg.html">Visreg and ggplot2</a></li>
+  </ul>
 </li>
 <li class="nav-item dropdown">
-  <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-basic-framework">Basic framework</a>
-  <div class="dropdown-menu" aria-labelledby="dropdown-basic-framework">
-    <a class="dropdown-item" href="../../articles/web/basic.html">Getting started</a>
-    <a class="dropdown-item" href="../../articles/web/contrast.html">Contrast vs. conditional plots</a>
-    <a class="dropdown-item" href="../../articles/web/trans.html">Transformations</a>
-    <a class="dropdown-item" href="../../articles/web/cond.html">Conditioning</a>
-    <a class="dropdown-item" href="../../articles/web/options.html">Graphical options</a>
-    <a class="dropdown-item" href="../../articles/web/gg.html">Visreg and ggplot2</a>
-  </div>
-</li>
-<li class="nav-item dropdown">
-  <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-models-with-interactions">Models with interactions</a>
-  <div class="dropdown-menu" aria-labelledby="dropdown-models-with-interactions">
-    <a class="dropdown-item" href="../../articles/web/cross.html">Cross-sectional plots</a>
-    <a class="dropdown-item" href="../../articles/web/overlay.html">Overlay plots</a>
-    <a class="dropdown-item" href="../../articles/web/surface.html">Surface plots</a>
-  </div>
+  <button class="nav-link dropdown-toggle" type="button" id="dropdown-models-with-interactions" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Models with interactions</button>
+  <ul class="dropdown-menu" aria-labelledby="dropdown-models-with-interactions">
+<li><a class="dropdown-item" href="../../articles/web/cross.html">Cross-sectional plots</a></li>
+    <li><a class="dropdown-item" href="../../articles/web/overlay.html">Overlay plots</a></li>
+    <li><a class="dropdown-item" href="../../articles/web/surface.html">Surface plots</a></li>
+  </ul>
 </li>
 <li class="active nav-item dropdown">
-  <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-special-topics">Special topics</a>
-  <div class="dropdown-menu" aria-labelledby="dropdown-special-topics">
-    <a class="dropdown-item" href="../../articles/web/glm.html">GLMs</a>
-    <a class="dropdown-item" href="../../articles/web/blackbox.html">Forests, SVMs, etc.</a>
-    <a class="dropdown-item" href="../../articles/web/mixed.html">Mixed models</a>
-    <a class="dropdown-item" href="../../articles/web/multi.html">Multiple outcomes</a>
-    <a class="dropdown-item" href="../../articles/web/faq.html">FAQ</a>
-  </div>
+  <button class="nav-link dropdown-toggle" type="button" id="dropdown-special-topics" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Special topics</button>
+  <ul class="dropdown-menu" aria-labelledby="dropdown-special-topics">
+<li><a class="dropdown-item" href="../../articles/web/glm.html">GLMs</a></li>
+    <li><a class="dropdown-item" href="../../articles/web/blackbox.html">Forests, SVMs, etc.</a></li>
+    <li><a class="dropdown-item" href="../../articles/web/mixed.html">Mixed models</a></li>
+    <li><a class="dropdown-item" href="../../articles/web/multi.html">Multiple outcomes</a></li>
+    <li><a class="dropdown-item" href="../../articles/web/faq.html">FAQ</a></li>
+  </ul>
 </li>
-<li class="nav-item">
-  <a class="nav-link" href="../../reference/index.html">Functions</a>
-</li>
+<li class="nav-item"><a class="nav-link" href="../../reference/index.html">Functions</a></li>
       </ul>
-<form class="form-inline my-2 my-lg-0" role="search">
-        <input type="search" class="form-control me-sm-2" aria-label="Toggle navigation" name="search-input" data-search-index="../../search.json" id="search-input" placeholder="Search for" autocomplete="off">
-</form>
-
-      <ul class="navbar-nav">
-<li class="nav-item">
-  <a class="external-link nav-link" href="https://github.com/pbreheny/visreg">
-    <span class="fa fa-github fa-lg"></span>
-     
-  </a>
-</li>
+<ul class="navbar-nav">
+<li class="nav-item"><a class="external-link nav-link" href="https://github.com/pbreheny/visreg"><span class="fa fa-github fa-lg"></span></a></li>
       </ul>
 </div>
 
-    
+
   </div>
 </nav><div class="container template-article">
 
@@ -97,79 +75,103 @@
 
 
 <div class="row">
-  <main id="main"><div class="page-header">
-      <img src="" class="logo" alt=""><h1>Generalized linear models</h1>
+  <main id="main" class="col-md-9"><div class="page-header">
+
+      <h1>Generalized linear models</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/pbreheny/visreg/blob/HEAD/vignettes/web/glm.rmd" class="external-link"><code>vignettes/web/glm.rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/pbreheny/visreg/blob/master/vignettes/web/glm.rmd" class="external-link"><code>vignettes/web/glm.rmd</code></a></small>
       <div class="d-none name"><code>glm.rmd</code></div>
     </div>
 
     
     
-<p>Generally speaking, visreg works the same way for GLMs as with any other model:</p>
+<p>Generally speaking, visreg works the same way for GLMs as with any
+other model:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"birthwt"</span>, package<span class="op">=</span><span class="st">"MASS"</span><span class="op">)</span>
-<span class="va">fit</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/glm.html" class="external-link">glm</a></span><span class="op">(</span><span class="va">low</span> <span class="op">~</span> <span class="va">age</span> <span class="op">+</span> <span class="va">race</span> <span class="op">+</span> <span class="va">smoke</span> <span class="op">+</span> <span class="va">lwt</span>, data<span class="op">=</span><span class="va">birthwt</span>, family<span class="op">=</span><span class="st">"binomial"</span><span class="op">)</span>
-<span class="fu"><a href="../../reference/visreg.html">visreg</a></span><span class="op">(</span><span class="va">fit</span>, <span class="st">"lwt"</span>, xlab<span class="op">=</span><span class="st">"Mother's weight"</span>, ylab<span class="op">=</span><span class="st">"Log odds (low birthweight)"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"birthwt"</span>, package<span class="op">=</span><span class="st">"MASS"</span><span class="op">)</span></span>
+<span><span class="va">fit</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/glm.html" class="external-link">glm</a></span><span class="op">(</span><span class="va">low</span> <span class="op">~</span> <span class="va">age</span> <span class="op">+</span> <span class="va">race</span> <span class="op">+</span> <span class="va">smoke</span> <span class="op">+</span> <span class="va">lwt</span>, data<span class="op">=</span><span class="va">birthwt</span>, family<span class="op">=</span><span class="st">"binomial"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="../../reference/visreg.html">visreg</a></span><span class="op">(</span><span class="va">fit</span>, <span class="st">"lwt"</span>, xlab<span class="op">=</span><span class="st">"Mother's weight"</span>, ylab<span class="op">=</span><span class="st">"Log odds (low birthweight)"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="glm_files/figure-html/unnamed-chunk-2-1.png" width="480"></p>
 <p><a class="anchor" id="scale"></a></p>
 <div class="section level2">
 <h2 id="scale">Scale<a class="anchor" aria-label="anchor" href="#scale"></a>
 </h2>
-<p>The unique aspect of GLMs is the link function joining the linear predictors to the response – note that the vertical axis in the above plot is the log-odds of the outcome, not low birthweight itself. This is the best scale on which to examine residuals and modeling assumption, because, in a sense, it is the scale on which the modeling actually takes place (Mother’s weight is assumed to have a linear form in the model, and the above plot is linear).</p>
-<p>For communicating modeling results, however, it is often useful to transform the above outcome to the probability scale. This can be done by manually specifying <code>trans</code> as described in <a href="trans.html">transformations</a>, although for GLMs the shortcut <code>scale="response"</code> is provided:</p>
+<p>The unique aspect of GLMs is the link function joining the linear
+predictors to the response – note that the vertical axis in the above
+plot is the log-odds of the outcome, not low birthweight itself. This is
+the best scale on which to examine residuals and modeling assumption,
+because, in a sense, it is the scale on which the modeling actually
+takes place (Mother’s weight is assumed to have a linear form in the
+model, and the above plot is linear).</p>
+<p>For communicating modeling results, however, it is often useful to
+transform the above outcome to the probability scale. This can be done
+by manually specifying <code>trans</code> as described in <a href="trans.html">transformations</a>, although for GLMs the shortcut
+<code>scale="response"</code> is provided:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../../reference/visreg.html">visreg</a></span><span class="op">(</span><span class="va">fit</span>, <span class="st">"lwt"</span>, scale<span class="op">=</span><span class="st">"response"</span>, rug<span class="op">=</span><span class="fl">2</span>, xlab<span class="op">=</span><span class="st">"Mother's weight"</span>, ylab<span class="op">=</span><span class="st">"P(low birthweight)"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../../reference/visreg.html">visreg</a></span><span class="op">(</span><span class="va">fit</span>, <span class="st">"lwt"</span>, scale<span class="op">=</span><span class="st">"response"</span>, rug<span class="op">=</span><span class="fl">2</span>, xlab<span class="op">=</span><span class="st">"Mother's weight"</span>, ylab<span class="op">=</span><span class="st">"P(low birthweight)"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="glm_files/figure-html/unnamed-chunk-3-1.png" width="480"></p>
 </div>
 <div class="section level2">
 <h2 id="partial-residuals">Partial residuals<a class="anchor" aria-label="anchor" href="#partial-residuals"></a>
 </h2>
-<p>Note that by default, <code>visreg</code> switches to a rug display rather than show residuals when a transformation has been applied to the vertical axis. The reason for this is that residuals are useful to examine on the linear predictor scale, but can be misleading when transformed – a moderate residual can appear huge after a transformation, and vice versa.</p>
-<p>To illustrate, suppose we generate some data from a Poisson distribution using a log link:</p>
+<p>Note that by default, <code>visreg</code> switches to a rug display
+rather than show residuals when a transformation has been applied to the
+vertical axis. The reason for this is that residuals are useful to
+examine on the linear predictor scale, but can be misleading when
+transformed – a moderate residual can appear huge after a
+transformation, and vice versa.</p>
+<p>To illustrate, suppose we generate some data from a Poisson
+distribution using a log link:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">n</span> <span class="op">&lt;-</span> <span class="fl">50</span>
-<span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="op">-</span><span class="fl">5</span>, <span class="fl">5</span>, len<span class="op">=</span><span class="va">n</span><span class="op">)</span>
-<span class="va">y</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Poisson.html" class="external-link">rpois</a></span><span class="op">(</span><span class="va">n</span>, lambda <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">exp</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">n</span> <span class="op">&lt;-</span> <span class="fl">50</span></span>
+<span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="op">-</span><span class="fl">5</span>, <span class="fl">5</span>, len<span class="op">=</span><span class="va">n</span><span class="op">)</span></span>
+<span><span class="va">y</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Poisson.html" class="external-link">rpois</a></span><span class="op">(</span><span class="va">n</span>, lambda <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">exp</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p>create an artificial outlier:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">y</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/which.min.html" class="external-link">which.max</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fl">0</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">y</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/which.min.html" class="external-link">which.max</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fl">0</span></span></code></pre></div>
 <p>then fit a Poisson regression model:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">fit</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/glm.html" class="external-link">glm</a></span><span class="op">(</span><span class="va">y</span> <span class="op">~</span> <span class="va">x</span>, family<span class="op">=</span><span class="va">poisson</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">fit</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/glm.html" class="external-link">glm</a></span><span class="op">(</span><span class="va">y</span> <span class="op">~</span> <span class="va">x</span>, family<span class="op">=</span><span class="va">poisson</span><span class="op">)</span></span></code></pre></div>
 <p>and visualize with <code>visreg</code>:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></span><span class="op">(</span>mfrow<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">3</span><span class="op">)</span><span class="op">)</span>
-<span class="fu"><a href="../../reference/visreg.html">visreg</a></span><span class="op">(</span><span class="va">fit</span>, <span class="st">"x"</span><span class="op">)</span>
-<span class="fu"><a href="../../reference/visreg.html">visreg</a></span><span class="op">(</span><span class="va">fit</span>, <span class="st">"x"</span>, scale<span class="op">=</span><span class="st">"response"</span><span class="op">)</span>
-<span class="fu"><a href="../../reference/visreg.html">visreg</a></span><span class="op">(</span><span class="va">fit</span>, <span class="st">"x"</span>, scale<span class="op">=</span><span class="st">"response"</span>, partial<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></span><span class="op">(</span>mfrow<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">3</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="../../reference/visreg.html">visreg</a></span><span class="op">(</span><span class="va">fit</span>, <span class="st">"x"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="../../reference/visreg.html">visreg</a></span><span class="op">(</span><span class="va">fit</span>, <span class="st">"x"</span>, scale<span class="op">=</span><span class="st">"response"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="../../reference/visreg.html">visreg</a></span><span class="op">(</span><span class="va">fit</span>, <span class="st">"x"</span>, scale<span class="op">=</span><span class="st">"response"</span>, partial<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 <p><img src="glm_files/figure-html/unnamed-chunk-7-1.png" width="100%"></p>
-<p>The default <code>visreg</code> plot (left) clearly illustrates that 49 of the observations fit the model well, but the 50th is a big outlier. By transforming to the response scale, we can see the exponential relationship between <code>x</code> and <code>y</code>. The third plot, however, is misleading – not only does it indicate that there are several large positive outliers, but it obscures the one actual outlier.</p>
-<p>It is worth mentioning that <code>visreg</code> uses deviance residuals for GLMs and Cox proportional hazards models; these are the most symmetric residuals, and thus, most useful for visually assessing problems with fit.</p>
+<p>The default <code>visreg</code> plot (left) clearly illustrates that
+49 of the observations fit the model well, but the 50th is a big
+outlier. By transforming to the response scale, we can see the
+exponential relationship between <code>x</code> and <code>y</code>. The
+third plot, however, is misleading – not only does it indicate that
+there are several large positive outliers, but it obscures the one
+actual outlier.</p>
+<p>It is worth mentioning that <code>visreg</code> uses deviance
+residuals for GLMs and Cox proportional hazards models; these are the
+most symmetric residuals, and thus, most useful for visually assessing
+problems with fit.</p>
 </div>
-  </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
+  </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside>
 </div>
 
 
 
     <footer><div class="pkgdown-footer-left">
-  <p></p>
-<p>Developed by <a href="https://myweb.uiowa.edu/pbreheny/" class="external-link">Patrick Breheny</a>.</p>
+  <p>Developed by <a href="https://myweb.uiowa.edu/pbreheny/" class="external-link">Patrick Breheny</a>.</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p></p>
-<p>Last updated 2022-05-11</p>
+  <p>Last updated 2025-02-27</p>
 </div>
 
     </footer>
 </div>
 
-  
 
-  
+
+
 
   </body>
 </html>
