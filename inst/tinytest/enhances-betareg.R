@@ -6,30 +6,3 @@ visreg(fit, 'temp', type='contrast')
 
 fit <- betareg(yield ~ gravity + temp, data = GasolineYield, link='logit')
 visreg(fit, 'temp')
-
-# fish stuff
-library(betareg)
-library(glmmTMB)
-VILLAGE <- c("AUPALUK", "TASIUJAQ", "INUKJUAK", "SALLUIT")
-pS <- c(0.479, 0.508, 0.182, 0.776)
-VPOP <- c(209, 369, 1757, 1483)
-DIST <- c(1.6, 1.3, 18.5, 73.7)
-SURVCHARR <- data.frame(VILLAGE, pS, VPOP, DIST)
-fit_b <- betareg(pS ~ VPOP + DIST, data = SURVCHARR)
-fit_g <- glmmTMB(pS ~ VPOP + DIST, family = beta_family, data = SURVCHARR)
-
-residuals(fit_b, "sweighted2")
-residuals(fit_b, "deviance")
-residuals(fit_b, "pearson")
-residuals(fit_b, "response")
-residuals(fit_b, "weighted")
-residuals(fit_b, "sweighted")
-
-residuals(fit_g, 'response')
-residuals(fit_g, 'pearson')
-residuals(fit_g, 'working')
-residuals(fit_g, 'deviance')
-
-visreg(fit_b, 'VPOP')
-residuals <- function(object, ...) betareg:::residuals.betareg(object, type='sweighted')
-visreg(fit_b, 'VPOP')

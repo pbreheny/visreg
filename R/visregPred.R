@@ -9,7 +9,10 @@ visregPred <- function(fit, Data, se.fit=FALSE, ...) {
   if (inherits(fit, "svm")) predict.args$probability <- TRUE
   if (inherits(fit, "multinom") | inherits(fit, "polr")) predict.args$type <- "probs"
   if (inherits(fit, "gbm")) predict.args$n.trees <- length(fit$trees)
-  if (inherits(fit, "betareg")) predict.args$type <- "link"
+  if (inherits(fit, "betareg")) {
+    predict.args$type <- c("link", "variance")
+    se.fit <- FALSE
+  }
   dots <- list(...)
   if (length(dots)) predict.args[names(dots)] <- dots
 
