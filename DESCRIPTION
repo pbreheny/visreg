@@ -20,4 +20,4 @@ VignetteBuilder: knitr
 License: GPL-3
 URL: https://pbreheny.github.io/visreg, https://github.com/pbreheny/visreg
 Encoding: UTF-8
-RoxygenNote: 7.3.1
+RoxygenNote: 7.3.2

@@ -7,3 +7,9 @@
 #' @examples
 #' \donttest{vignette("quick-start", package="visreg")}
 "_PACKAGE"
+
+#' @import graphics
+#' @import grDevices
+#' @import stats
+#' @import utils
+NULL
