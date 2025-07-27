@@ -11,6 +11,9 @@ knitr::knit_hooks$set(small.mar = function(before, options, envir) {
 })
 ```
 
+```{r, child='_commands.tex', results='asis'}
+```
+
 Conditional plots were discussed in [getting started](basic.html).  The downside of a conditional plot is that all of the terms in the model must be specified -- i.e., to plot the relationship between wind and ozone, we also need to specify a value for temperature (or use the median as a default).  Specifically, letting $x$ denote the predictor of interest, $y$ the outcome, and $\Xj$ the other predictors in the model, a conditional plot represents the relationship $f(x) = \Ex(Y | x, \Xj)$.
 
 As an alternative, we could consider relative changes, or as they are called in statistics, *contrasts*.  To be specific, let $x_0$ denote a reference value for, e.g., wind, and consider plotting $f(x) = \Ex(Y | x) - \Ex(Y | x_0)$.  Readers who have taken a course in regression will recognize that this is one of the defining characteristics of a *regression* model: a one-unit change in $x$ has the same effect on $\Ex(Y)$ regardless of what the other terms in the model are.  Models outside the regression framework, such as [random forests and support vector machines](blackbox.html), do not have this property, and therefore, may only be visualized with conditional plots.

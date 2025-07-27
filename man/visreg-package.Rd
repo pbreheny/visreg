@@ -12,7 +12,7 @@ Provides a convenient interface for constructing plots to visualize the fit of r
 }
 \references{
 Breheny P and Burchett W. (2017) Visualization of regression models using
-visreg. *R Journal*, **9**: 56-71.
+visreg. \emph{R Journal}, \strong{9}: 56-71.
 \doi{10.32614/RJ-2017-046}
 }
 \seealso{

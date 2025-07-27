@@ -17,14 +17,16 @@
 )
 }
 \arguments{
-\item{x}{A [visreg2d()] object.}
+\item{x}{A \code{\link[=visreg2d]{visreg2d()}} object.}
 
 \item{plot.type}{The style of plot to be produced. The following options are
 supported:
-* `image`: a filled contour
-* `gg`: a filled contour plot using ggplot2
-* `persp`: a 3 dimensional perspective plot
-* `rgl`: a version of the perspective plot that can be rotated (requires the rgl package to be installed)}
+\itemize{
+\item \code{image}: a filled contour
+\item \code{gg}: a filled contour plot using ggplot2
+\item \code{persp}: a 3 dimensional perspective plot
+\item \code{rgl}: a version of the perspective plot that can be rotated (requires the rgl package to be installed)
+}}
 
 \item{xlab}{Axis label for x variable}
 
@@ -32,17 +34,17 @@ supported:
 
 \item{zlab}{Axis label for outcome}
 
-\item{color}{For `plot.type='persp'` or `plot.type='rgl'`, the color of the
-surface. For `plot.type='image'` or `plot.type='gg'`, a vector of colors used
+\item{color}{For \code{plot.type='persp'} or \code{plot.type='rgl'}, the color of the
+surface. For \code{plot.type='image'} or \code{plot.type='gg'}, a vector of colors used
 to establish a color palette.}
 
-\item{print.cond}{If `print.cond==TRUE`, the explanatory variable values
+\item{print.cond}{If \code{print.cond==TRUE}, the explanatory variable values
 conditioned on in a conditional plot are printed to the console
-(default: \code{FALSE}). If `print.cond==TRUE` and `type=="contrast"`, the
+(default: \code{FALSE}). If \code{print.cond==TRUE} and \code{type=="contrast"}, the
 conditions will still be printed, but they have no bearing on the plot unless
 interactions are present.}
 
-\item{whitespace}{When `xvar` or `yvar` is a factor, `whitespace`
+\item{whitespace}{When \code{xvar} or \code{yvar} is a factor, \code{whitespace}
 determines the amount of space in between the factors. Default is 0.2,
 meaning that 20 percent of the axis is whitespace.}
 
@@ -75,11 +77,11 @@ visreg2d(fit, x="Wind", y="Temp", plot.type="gg")
 }
 \references{
 Breheny P and Burchett W. (2017) Visualization of regression models using
-visreg. *R Journal*, **9**: 56-71.
+visreg. \emph{R Journal}, \strong{9}: 56-71.
 \doi{10.32614/RJ-2017-046}
 }
 \seealso{
-https://pbreheny.github.io/visreg/surface.html, [visreg()]
+https://pbreheny.github.io/visreg/surface.html, \code{\link[=visreg]{visreg()}}
 }
 \author{
 Patrick Breheny and Woodrow Burchett

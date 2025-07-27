@@ -7,25 +7,25 @@
 visregList(..., labels, collapse = FALSE)
 }
 \arguments{
-\item{...}{`visreg` objects, as produced by calls to [visreg()].}
+\item{...}{\code{visreg} objects, as produced by calls to \code{\link[=visreg]{visreg()}}.}
 
 \item{labels}{A character vector with length corresponding to the number of
-`visreg` objects passed to the function that provides labels for the
-different objects in subsequent plots. Only has an effect if `collapse=TRUE`.}
+\code{visreg} objects passed to the function that provides labels for the
+different objects in subsequent plots. Only has an effect if \code{collapse=TRUE}.}
 
-\item{collapse}{If `TRUE`, the resulting object will be collapsed down into a
-single `visreg` object.  If `FALSE`, the resulting object will be a
-`visregList`.}
+\item{collapse}{If \code{TRUE}, the resulting object will be collapsed down into a
+single \code{visreg} object.  If \code{FALSE}, the resulting object will be a
+\code{visregList}.}
 }
 \value{
-A `visreg` or `visregList` object, depending on the value of
-`collapse`.
+A \code{visreg} or \code{visregList} object, depending on the value of
+\code{collapse}.
 }
 \description{
 This function takes multiple visreg objects, from separate calls to
-[visreg()], and joins them together in a single object.  The single object
-will be of type `visregList` unless `collapse=TRUE` is specified, in which
-case the list will be collapsed back down into a single `visreg` object.
+\code{\link[=visreg]{visreg()}}, and joins them together in a single object.  The single object
+will be of type \code{visregList} unless \code{collapse=TRUE} is specified, in which
+case the list will be collapsed back down into a single \code{visreg} object.
 }
 \examples{
 fit <- lm(Ozone ~ Solar.R + Wind + Temp, data=airquality)
@@ -41,7 +41,7 @@ plot(vv2)
 
 }
 \seealso{
-[visreg()], [plot.visreg()]
+\code{\link[=visreg]{visreg()}}, \code{\link[=plot.visreg]{plot.visreg()}}
 }
 \author{
 Patrick Breheny

@@ -1,5 +1,5 @@
 vignettes/*.html
 vignettes/*/*.html
-vignettes/web/rgl_files
+vignettes/articles/rgl_files
 docs
 .Rproj.user

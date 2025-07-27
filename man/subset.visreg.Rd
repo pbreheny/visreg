@@ -7,9 +7,9 @@
 \method{subset}{visreg}(x, sub, ...)
 }
 \arguments{
-\item{x}{A `visreg` object.}
+\item{x}{A \code{visreg} object.}
 
-\item{sub}{Logical expression indicating elements to keep, as in [subset()]}
+\item{sub}{Logical expression indicating elements to keep, as in \code{\link[=subset]{subset()}}}
 
 \item{...}{Not used.}
 }

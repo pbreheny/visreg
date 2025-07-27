@@ -57,7 +57,7 @@
 #'
 #' @author Patrick Breheny and Woodrow Burchett
 #'
-#' @seealso https://pbreheny.github.io/visreg/options.html, [visreg()],
+#' @seealso <https://pbreheny.github.io/visreg/options.html>, [visreg()],
 #' [visreg2d()]
 #'
 #' @references
