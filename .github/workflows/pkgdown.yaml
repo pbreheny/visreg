@@ -33,6 +33,7 @@ jobs:
           extra-packages: |
             any::pkgdown
             any::randomForest
+            any::e1071
             any::ggplot2
             local::.
           needs: website
