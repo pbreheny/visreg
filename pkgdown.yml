@@ -1,21 +1,24 @@
 pandoc: 3.1.11
-pkgdown: 2.1.1
+pkgdown: 2.1.3
 pkgdown_sha: ~
 articles:
-  web/basic: web/basic.html
-  web/blackbox: web/blackbox.html
-  web/cond: web/cond.html
-  web/contrast: web/contrast.html
-  web/cross: web/cross.html
-  web/faq: web/faq.html
-  web/gg: web/gg.html
-  web/glm: web/glm.html
-  web/index: web/index.html
-  web/mixed: web/mixed.html
-  web/multi: web/multi.html
-  web/options: web/options.html
-  web/overlay: web/overlay.html
+  articles/basic: basic.html
+  articles/blackbox: blackbox.html
+  articles/cond: cond.html
+  articles/contrast: contrast.html
+  articles/cross: cross.html
+  articles/faq: faq.html
+  articles/gg: gg.html
+  articles/glm: glm.html
+  articles/index: index.html
+  articles/mixed: mixed.html
+  articles/multi: multi.html
+  articles/options: options.html
+  articles/overlay: overlay.html
   quick-start: quick-start.html
-  web/surface: web/surface.html
-  web/trans: web/trans.html
-last_built: 2025-02-28T15:07Z
+  articles/surface: surface.html
+  articles/trans: trans.html
+last_built: 2025-07-27T14:48Z
+urls:
+  reference: https://pbreheny.github.io/visreg/reference
+  article: https://pbreheny.github.io/visreg/articles

@@ -12,7 +12,7 @@ visreg2d(fit, "Wind", "Temp", plot.type="rgl")
   <div class="row-fluid">
     <iframe class="span12" 
 	    style="border: none; height: 484px; width: 100%"
-	    src="articles/web/rgl.html">
+	    src="articles/rgl.html">
     </iframe>
   </div>
 </div>
