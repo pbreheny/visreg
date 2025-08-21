@@ -5,14 +5,14 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title> • visreg</title>
+<title>Quick start guide for visreg • visreg</title>
 <!-- katex math --><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" integrity="sha384-nB0miv6/jRmo5UMMR1wu3Gz6NLsoTkbqJghGIsx//Rlm+ZU03BU6SQNC66uf4l5+" crossorigin="anonymous">
 <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js" integrity="sha384-7zkQWkzuo3B5mTepMUcHkMB5jZaolc2xDwL6VFqjFALcbeS9Ggm/Yr2r3Dy4lfFg" crossorigin="anonymous"></script><script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js" integrity="sha384-43gviWU0YVjaDtb/GhzOouOXtZMP/7XUzwPTstBeZFe/+rCMvRwr4yROQP43s0Xk" crossorigin="anonymous" onload="renderMathInElement(document.body);"></script><script src="../katex-auto.js"></script><script src="../lightswitch.js"></script><script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
 <script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
 <script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><link href="../extra.css" rel="stylesheet">
-<meta property="og:title" content="">
+<meta property="og:title" content="Quick start guide for visreg">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" integrity="sha384-nB0miv6/jRmo5UMMR1wu3Gz6NLsoTkbqJghGIsx//Rlm+ZU03BU6SQNC66uf4l5+" crossorigin="anonymous">
 <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js" integrity="sha384-7zkQWkzuo3B5mTepMUcHkMB5jZaolc2xDwL6VFqjFALcbeS9Ggm/Yr2r3Dy4lfFg" crossorigin="anonymous"></script><script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js" integrity="sha384-43gviWU0YVjaDtb/GhzOouOXtZMP/7XUzwPTstBeZFe/+rCMvRwr4yROQP43s0Xk" crossorigin="anonymous" onload="renderMathInElement(document.body);"></script>
 </head>
@@ -90,32 +90,73 @@
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
 
-      <h1></h1>
+      <h1>Quick start guide for visreg</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/pbreheny/visreg/blob/master/vignettes/articles/index.rmd" class="external-link"><code>vignettes/articles/index.rmd</code></a></small>
-      <div class="d-none name"><code>index.rmd</code></div>
+      <small class="dont-index">Source: <a href="https://github.com/pbreheny/visreg/blob/master/vignettes/visreg.rmd" class="external-link"><code>vignettes/visreg.rmd</code></a></small>
+      <div class="d-none name"><code>visreg.rmd</code></div>
     </div>
 
     
     
+<p>This guide is intended to briefly demonstrate the basic usage of
+<code>visreg</code>.</p>
+<p>For details on <code>visreg</code> syntax and how to use it, see:</p>
+<ul>
+<li>The online documentation at <a href="https://pbreheny.github.io/visreg/" class="uri">https://pbreheny.github.io/visreg/</a> contains many
+examples of visreg plots and the code to create them.</li>
+<li><a href="https://journal.r-project.org/archive/2017/RJ-2017-046/index.html" class="external-link">Breheny
+P and Burchett W (2017). Visualization of Regression Models Using
+visreg. <em>The R Journal</em>, 9: 56-71.</a></li>
+<li>The R help files <code><a href="../reference/visreg.html">?visreg</a></code>, <code><a href="../reference/plot.visreg.html">?plot.visreg</a></code>,
+and <code><a href="../reference/visreg2d.html">?visreg2d</a></code>
+</li>
+</ul>
+<p>The website focuses more on syntax, options, and user interface,
+while the paper goes into more depth regarding the statistical
+details.</p>
+<p>The basic idea of visreg is that you fit some sort of regression
+model and visreg provides a convenient interface for visualizing it.
+Let’s fit the following model:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">fit</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">Ozone</span> <span class="op">~</span> <span class="va">Solar.R</span> <span class="op">+</span> <span class="va">Wind</span> <span class="op">+</span> <span class="va">Temp</span>, data<span class="op">=</span><span class="va">airquality</span><span class="op">)</span></span></code></pre></div>
-<p>and then you pass it to <code>visreg</code>:</p>
+<p>We can then visualize what the model says about the relationship
+between the outcome and, say, wind, with:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/visreg.html">visreg</a></span><span class="op">(</span><span class="va">fit</span>, <span class="st">"Wind"</span><span class="op">)</span></span></code></pre></div>
-<p><img src="index_files/figure-html/unnamed-chunk-3-1.png" width="480"></p>
-<p>A more complex example, which uses the <code><a href="https://rdrr.io/pkg/mgcv/man/gam.html" class="external-link">gam()</a></code> function
-from <strong>mgcv</strong>:</p>
+<p><img src="visreg_files/figure-html/unnamed-chunk-3-1.png" width="480"></p>
+<p>The plot displays (a) the model’s estimated relationship between wind
+and ozone, (b) a confidence band about that estimate, and (c) the
+partial residuals, so that one can assess model fit.</p>
+<p><code>visreg</code> correctly displays factors, transformations,
+etc., and has many options to produce many types of plots. As another
+example, suppose the model contains an interaction:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">mgcv</span><span class="op">)</span></span>
-<span><span class="co"># Loading required package: nlme</span></span>
-<span><span class="co"># This is mgcv 1.9-3. For overview type 'help("mgcv-package")'.</span></span>
-<span><span class="va">airquality</span><span class="op">$</span><span class="va">Heat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cut.html" class="external-link">cut</a></span><span class="op">(</span><span class="va">airquality</span><span class="op">$</span><span class="va">Temp</span>, <span class="fl">3</span>, labels<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Cool"</span>, <span class="st">"Mild"</span>, <span class="st">"Hot"</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="va">fit</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/mgcv/man/gam.html" class="external-link">gam</a></span><span class="op">(</span><span class="va">Ozone</span> <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/pkg/mgcv/man/s.html" class="external-link">s</a></span><span class="op">(</span><span class="va">Wind</span>, by<span class="op">=</span><span class="va">Heat</span>, sp<span class="op">=</span><span class="fl">0.1</span><span class="op">)</span>, data<span class="op">=</span><span class="va">airquality</span><span class="op">)</span></span>
-<span><span class="fu"><a href="../reference/visreg.html">visreg</a></span><span class="op">(</span><span class="va">fit</span>, <span class="st">"Wind"</span>, <span class="st">"Heat"</span>, gg<span class="op">=</span><span class="cn">TRUE</span>, ylab<span class="op">=</span><span class="st">"Ozone"</span><span class="op">)</span></span>
-<span><span class="co"># Loading required namespace: ggplot2</span></span></code></pre></div>
-<p><img src="index_files/figure-html/unnamed-chunk-4-1.png" width="100%"></p>
+<code class="sourceCode R"><span><span class="va">airquality</span><span class="op">$</span><span class="va">Heat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cut.html" class="external-link">cut</a></span><span class="op">(</span><span class="va">airquality</span><span class="op">$</span><span class="va">Temp</span>, <span class="fl">3</span>, labels<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Cool"</span>,<span class="st">"Mild"</span>,<span class="st">"Hot"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">fit</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">Ozone</span> <span class="op">~</span> <span class="va">Solar.R</span> <span class="op">+</span> <span class="va">Wind</span><span class="op">*</span><span class="va">Heat</span>, data<span class="op">=</span><span class="va">airquality</span><span class="op">)</span></span></code></pre></div>
+<p>Visreg can plot cross-sections of this fit, either in separate
+panels:</p>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/visreg.html">visreg</a></span><span class="op">(</span><span class="va">fit</span>, <span class="st">"Wind"</span>, by<span class="op">=</span><span class="st">"Heat"</span><span class="op">)</span></span></code></pre></div>
+<p><img src="visreg_files/figure-html/unnamed-chunk-5-1.png" width="100%"></p>
+<p>Or overlaid on top of one another:</p>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/visreg.html">visreg</a></span><span class="op">(</span><span class="va">fit</span>, <span class="st">"Wind"</span>, by<span class="op">=</span><span class="st">"Heat"</span>, overlay<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+<p><img src="visreg_files/figure-html/unnamed-chunk-6-1.png" width="480"></p>
+<p>Or as a two-dimensional filled contour plot (level plot):</p>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">fit</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">Ozone</span> <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/stats/poly.html" class="external-link">poly</a></span><span class="op">(</span><span class="va">Wind</span>, <span class="fl">2</span><span class="op">)</span><span class="op">*</span><span class="fu"><a href="https://rdrr.io/r/stats/poly.html" class="external-link">poly</a></span><span class="op">(</span><span class="va">Temp</span>, <span class="fl">2</span><span class="op">)</span>, data<span class="op">=</span><span class="va">airquality</span><span class="op">)</span></span>
+<span><span class="fu"><a href="../reference/visreg2d.html">visreg2d</a></span><span class="op">(</span><span class="va">fit</span>, <span class="st">"Wind"</span>, <span class="st">"Temp"</span><span class="op">)</span></span></code></pre></div>
+<p><img src="visreg_files/figure-html/unnamed-chunk-7-1.png" width="480"></p>
+<p><code>visreg</code> is not limited to linear regression models. It
+can be used with virtually any type of model in <code>R</code> that
+provides generic functions for <code>model.frame</code> and
+<code>predict</code>, such as <code>glm</code>, <code>coxph</code>,
+<code>rlm</code>, <code>gam</code>, <code>locfit</code>,
+<code>quantreg</code>, <code>gbm</code>, <code>randomForest</code>, etc.
+See the <a href="https://pbreheny.github.io/visreg/">homepage</a> for
+additional examples with other types of models. If there is a model that
+you think should work with <code>visreg</code> but doesn’t, please <a href="https://github.com/pbreheny/visreg/issues" class="external-link">open an issue</a>.</p>
   </main>
 </div>
 

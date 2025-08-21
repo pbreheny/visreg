@@ -15,10 +15,10 @@ articles:
   articles/multi: multi.html
   articles/options: options.html
   articles/overlay: overlay.html
-  quick-start: quick-start.html
   articles/surface: surface.html
   articles/trans: trans.html
-last_built: 2025-07-27T14:48Z
+  visreg: visreg.html
+last_built: 2025-08-21T13:35Z
 urls:
   reference: https://pbreheny.github.io/visreg/reference
   article: https://pbreheny.github.io/visreg/articles

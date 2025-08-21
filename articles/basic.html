@@ -24,7 +24,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">visreg</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.7.0.16</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.8.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -53,8 +53,8 @@
   </ul>
 </li>
 <li class="nav-item dropdown">
-  <button class="nav-link dropdown-toggle" type="button" id="dropdown-models-with-interactions" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Models with interactions</button>
-  <ul class="dropdown-menu" aria-labelledby="dropdown-models-with-interactions">
+  <button class="nav-link dropdown-toggle" type="button" id="dropdown-additional-topics" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Additional topics</button>
+  <ul class="dropdown-menu" aria-labelledby="dropdown-additional-topics">
 <li><a class="dropdown-item" href="../articles/glm.html">GLMs</a></li>
     <li><a class="dropdown-item" href="../articles/blackbox.html">Forests, SVMs, etc.</a></li>
     <li><a class="dropdown-item" href="../articles/mixed.html">Mixed models</a></li>
@@ -114,25 +114,17 @@ subtle effect: somewhat positive but could be due to random chance.
 Visual summaries are often more informative and clear than numerical
 summaries. Let’s see what <code>visreg</code> provides:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></span><span class="op">(</span>mfrow<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">3</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="fu"><a href="../reference/visreg.html">visreg</a></span><span class="op">(</span><span class="va">fit</span><span class="op">)</span></span></code></pre></div>
-<p><img src="basic_files/figure-html/unnamed-chunk-3-1.png" width="100%"></p>
-<p>If you’re looking at the plots interactively in something like
-RStudio, you can click through the plots one by one. You can also
-recreate these figures individually with</p>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/visreg.html">visreg</a></span><span class="op">(</span><span class="va">fit</span>, <span class="st">"Wind"</span><span class="op">)</span></span></code></pre></div>
+<p><img src="basic_files/figure-html/unnamed-chunk-3-1.png" width="480"></p>
+<p>The visual summaries reinforce the numeric one: wind has a clear
+negative association with ozone. The numeric summary indicates that
+solar radiation is just barely significant, which we can see visually
+with visreg (adding a horizontal line here that represents the
+null):</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/visreg.html">visreg</a></span><span class="op">(</span><span class="va">fit</span>, <span class="st">"Solar.R"</span><span class="op">)</span></span>
-<span><span class="fu"><a href="../reference/visreg.html">visreg</a></span><span class="op">(</span><span class="va">fit</span>, <span class="st">"Wind"</span><span class="op">)</span></span>
-<span><span class="fu"><a href="../reference/visreg.html">visreg</a></span><span class="op">(</span><span class="va">fit</span>, <span class="st">"Temp"</span><span class="op">)</span></span></code></pre></div>
-<p>The visual summaries reinforce the numeric ones: Temperature has an
-undeniable positive association with ozone, wind a clear negative
-association, and the effect of solar radiation is just barely
-significant. For example, if we add a horizontal like to the solar
-radiation plot:</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/visreg.html">visreg</a></span><span class="op">(</span><span class="va">fit</span>, <span class="st">"Solar.R"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/abline.html" class="external-link">abline</a></span><span class="op">(</span>h<span class="op">=</span><span class="fl">44.5</span>, lty<span class="op">=</span><span class="fl">2</span><span class="op">)</span></span></code></pre></div>
-<p><img src="basic_files/figure-html/unnamed-chunk-5-1.png" width="480"></p>
+<p><img src="basic_files/figure-html/unnamed-chunk-4-1.png" width="480"></p>
 <p>we can see that the gray band just barely excludes a flat line.</p>
 <p>All aspects of the above plot (the blue line, the partial residuals,
 the band) depend on the specification of not only <code>Solar.R</code>
@@ -148,11 +140,11 @@ also allows the easy visualization of differences between the levels of
 categorical variables. The following block of code creates a factor
 called <code>Heat</code> by discretizing <code>Temp</code>, and then
 visualizes its relationship with <code>Ozone</code>:</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">airquality</span><span class="op">$</span><span class="va">Heat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cut.html" class="external-link">cut</a></span><span class="op">(</span><span class="va">airquality</span><span class="op">$</span><span class="va">Temp</span>, <span class="fl">3</span>, labels<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Cool"</span>, <span class="st">"Mild"</span>, <span class="st">"Hot"</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">fit</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">Ozone</span> <span class="op">~</span> <span class="va">Solar.R</span> <span class="op">+</span> <span class="va">Wind</span> <span class="op">+</span> <span class="va">Heat</span>, data<span class="op">=</span><span class="va">airquality</span><span class="op">)</span></span>
 <span><span class="fu"><a href="../reference/visreg.html">visreg</a></span><span class="op">(</span><span class="va">fit</span>, <span class="st">"Heat"</span><span class="op">)</span></span></code></pre></div>
-<p><img src="basic_files/figure-html/unnamed-chunk-6-1.png" width="480"></p>
+<p><img src="basic_files/figure-html/unnamed-chunk-5-1.png" width="480"></p>
   </main>
 </div>
 
@@ -163,7 +155,7 @@ visualizes its relationship with <code>Ozone</code>:</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Last updated: July 27, 2025</p>
+  <p>Last updated: August 21, 2025</p>
 </div>
 
     </footer>

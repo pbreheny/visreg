@@ -9,7 +9,7 @@ response in regression models."><link rel="stylesheet" href="https://cdn.jsdeliv
 
     <a class="navbar-brand me-2" href="../index.html">visreg</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.7.0.16</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.8.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -33,8 +33,8 @@ response in regression models."><link rel="stylesheet" href="https://cdn.jsdeliv
     <li><a class="dropdown-item" href="../articles/surface.html">Surface plots</a></li>
   </ul></li>
 <li class="nav-item dropdown">
-  <button class="nav-link dropdown-toggle" type="button" id="dropdown-models-with-interactions" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Models with interactions</button>
-  <ul class="dropdown-menu" aria-labelledby="dropdown-models-with-interactions"><li><a class="dropdown-item" href="../articles/glm.html">GLMs</a></li>
+  <button class="nav-link dropdown-toggle" type="button" id="dropdown-additional-topics" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Additional topics</button>
+  <ul class="dropdown-menu" aria-labelledby="dropdown-additional-topics"><li><a class="dropdown-item" href="../articles/glm.html">GLMs</a></li>
     <li><a class="dropdown-item" href="../articles/blackbox.html">Forests, SVMs, etc.</a></li>
     <li><a class="dropdown-item" href="../articles/mixed.html">Mixed models</a></li>
     <li><a class="dropdown-item" href="../articles/multi.html">Multiple outcomes</a></li>
@@ -152,7 +152,7 @@ by specifying their values using <code>cond</code> (see examples).</p></dd>
 
 
 <dt id="arg-plot">plot<a class="anchor" aria-label="anchor" href="#arg-plot"></a></dt>
-<dd><p>Send the calculations to <code><a href="plot.visreg2d.html">plot.visreg2d</a></code>, producing
+<dd><p>Send the calculations to <code>[plot.visreg2d()]</code>, producing
 a plot?  Default is TRUE.</p></dd>
 
 
@@ -165,30 +165,29 @@ function to customize the plots.</p></dd>
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
     <p>A <code>visreg2d</code> object consisting of:</p>
 <dl><dt>x</dt>
-<dd><p>Values of
-<code>xvar</code> to be plotted</p></dd>
- <dt>y</dt>
+<dd><p>Values of <code>xvar</code> to be plotted</p></dd>
+
+<dt>y</dt>
 <dd><p>Values of <code>yvar</code> to be plotted</p></dd>
 
 <dt>z</dt>
 <dd><p>Values of outcome to be plotted</p></dd>
- <dt>meta</dt>
-<dd><p>Meta-information
-needed to construct plots, such as the name of the x and y variables.</p></dd>
+
+<dt>meta</dt>
+<dd><p>Meta-information needed to construct plots, such as the name of the x
+and y variables.</p></dd>
 
 </dl></div>
     <div class="section level2">
     <h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a></h2>
 
-<ul><li><p><a href="https://pbreheny.github.io/visreg">https://pbreheny.github.io/visreg</a></p></li>
-<li><p>Breheny, P. and Burchett, W. (2017), Visualizing regression models using
-visreg.
+<ul><li><p><a href="https://pbreheny.github.io/visreg/">https://pbreheny.github.io/visreg/</a></p></li>
+<li><p>Breheny, P. and Burchett, W. (2017), Visualizing regression models using visreg.
 <a href="https://journal.r-project.org/archive/2017/RJ-2017-046/index.html" class="external-link">https://journal.r-project.org/archive/2017/RJ-2017-046/index.html</a></p></li>
 </ul></div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
-    <div class="dont-index"><p><a href="https://pbreheny.github.io/visreg/surface.html">https://pbreheny.github.io/visreg/surface.html</a>
-<code><a href="visreg.html">visreg</a></code></p></div>
+    <div class="dont-index"><p><a href="https://pbreheny.github.io/visreg/articles/surface.html">https://pbreheny.github.io/visreg/articles/surface.html</a> <code>[visreg()]</code></p></div>
     </div>
     <div class="section level2">
     <h2 id="author">Author<a class="anchor" aria-label="anchor" href="#author"></a></h2>
@@ -197,8 +196,7 @@ visreg.
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="va">fit</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">Ozone</span> <span class="op">~</span> <span class="va">Solar.R</span> <span class="op">+</span> <span class="va">Wind</span> <span class="op">+</span> <span class="va">Temp</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/AsIs.html" class="external-link">I</a></span><span class="op">(</span><span class="va">Wind</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/AsIs.html" class="external-link">I</a></span><span class="op">(</span><span class="va">Temp</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span> <span class="op">+</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">fit</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">Ozone</span> <span class="op">~</span> <span class="va">Solar.R</span> <span class="op">+</span> <span class="va">Wind</span> <span class="op">+</span> <span class="va">Temp</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/AsIs.html" class="external-link">I</a></span><span class="op">(</span><span class="va">Wind</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/AsIs.html" class="external-link">I</a></span><span class="op">(</span><span class="va">Temp</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span> <span class="op">+</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/AsIs.html" class="external-link">I</a></span><span class="op">(</span><span class="va">Wind</span><span class="op">*</span><span class="va">Temp</span><span class="op">)</span><span class="op">+</span><span class="fu"><a href="https://rdrr.io/r/base/AsIs.html" class="external-link">I</a></span><span class="op">(</span><span class="va">Wind</span><span class="op">*</span><span class="va">Temp</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/AsIs.html" class="external-link">I</a></span><span class="op">(</span><span class="va">Temp</span><span class="op">*</span><span class="va">Wind</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/AsIs.html" class="external-link">I</a></span><span class="op">(</span><span class="va">Temp</span><span class="op">^</span><span class="fl">2</span><span class="op">*</span><span class="va">Wind</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>data<span class="op">=</span><span class="va">airquality</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
@@ -216,8 +214,6 @@ visreg.
 <span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span> <span class="co"># \dontrun{</span></span></span>
 <span class="r-in"><span><span class="fu">visreg2d</span><span class="op">(</span><span class="va">fit</span>, x<span class="op">=</span><span class="st">"Wind"</span>, y<span class="op">=</span><span class="st">"Temp"</span>, plot.type<span class="op">=</span><span class="st">"gg"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span> <span class="co"># }</span></span></span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
@@ -229,7 +225,7 @@ visreg.
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Last updated: July 27, 2025</p>
+  <p>Last updated: August 21, 2025</p>
 </div>
 
     </footer></div>
