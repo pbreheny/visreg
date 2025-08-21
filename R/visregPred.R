@@ -1,9 +1,12 @@
-visregPred <- function(fit, Data, se.fit=FALSE, ...) {
-  predict.args <- list(object=fit, newdata=Data)
+visregPred <- function(fit, Data, se.fit = FALSE, ...) {
+  predict.args <- list(object = fit, newdata = Data)
   if (inherits(fit, "lme")) predict.args$level <- 0
   if (inherits(fit, "merMod")) {
-    predict.args$re.form <- NA
-    se.fit <- FALSE
+    if ("re.form" %in% names(list(...))) {
+      se.fit <- FALSE
+    } else {
+      predict.args$re.form <- NA
+    }
   }
   if (inherits(fit, "rq")) predict.args$interval <- "confidence"
   if (inherits(fit, "svm")) predict.args$probability <- TRUE

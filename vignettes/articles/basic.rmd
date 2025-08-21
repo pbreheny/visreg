@@ -20,20 +20,11 @@ summary(fit)$coef
 
 As the summary indicates, temperature has a clear positive effect on ozone, wind has a clear negative effect, and solar radiation has a more subtle effect: somewhat positive but could be due to random chance.  Visual summaries are often more informative and clear than numerical summaries.  Let's see what `visreg` provides:
 
-```{r, h=3, w=9, fig.retina=2, out.width='100%'}
-par(mfrow=c(1,3))
-visreg(fit)
-```
-
-If you're looking at the plots interactively in something like RStudio, you can click through the plots one by one.  You can also recreate these figures individually with
-
-```{r echo=TRUE, eval=FALSE}
-visreg(fit, "Solar.R")
+```{r, h=4, w=4}
 visreg(fit, "Wind")
-visreg(fit, "Temp")
 ```
 
-The visual summaries reinforce the numeric ones: Temperature has an undeniable positive association with ozone, wind a clear negative association, and the effect of solar radiation is just barely significant.  For example, if we add a horizontal like to the solar radiation plot:
+The visual summaries reinforce the numeric one: wind has a clear negative association with ozone. The numeric summary indicates that solar radiation is just barely significant, which we can see visually with visreg (adding a horizontal line here that represents the null):
 
 ```{r, h=5, w=5}
 visreg(fit, "Solar.R")

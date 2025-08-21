@@ -1,3 +1,17 @@
+# visreg 2.8.0
+  * New: cond argument now accepts variables that aren't in the model; fixes #67
+  * Change: xtrans now uses more sensible spacing; fixes #118
+  * Change: se.fit no longer turned off for lme4 merMod objects
+  * Fixed: collapseVisregList bug #86
+  * Fixed: Bug if function call applied to data
+  * Fixed: contrast plots work for betareg
+  * Fixed: strip.names now passed to overlay when gg=TRUE; fixes #104
+  * Fixed: Now finds data in package namespace; #112
+  * Fixed: Several compatibility issues with glmmTMB models resolved
+  * Fixed: betareg issue
+  * Fixed: mixed models no longer crash when used with random intercept only
+  * Internal: Now uses Roxygen
+
 # visreg 2.7.0 (2020-06-04)
   * Changed: Plots are now constructed in a consistent order across all
     varieties (lattice, base, gg, overlay, etc.), with lines on top (fixes #50)

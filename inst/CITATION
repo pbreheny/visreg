@@ -1,13 +1,15 @@
-citHeader("To cite visreg in publications use:")
-
-citEntry(
-  entry="Article",
-  author = personList(as.person("Patrick Breheny"),as.person("Woodrow Burchett")),
+bibentry(
+  bibtype="Article",
+  author = c(
+    person(given="Patrick", family="Breheny"),
+    person(given="Woodrow", family="Burchett")
+  ),
   title = "Visualization of Regression Models Using visreg",
   journal = "The R Journal",
   year = "2017",
   volume = "9",
   pages = "56--71",
   number = "2",
-  textVersion = "Breheny P and Burchett W (2017). Visualization of Regression Models Using visreg. The R Journal, 9: 56-71."
+  doi = "10.32614/RJ-2017-046",
+  url = "https://doi.org/10.32614/RJ-2017-046"
 )

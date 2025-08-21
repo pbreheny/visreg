@@ -83,21 +83,18 @@
 #' needed to construct plots, such as the name of the x and y variables,
 #' whether there were any \code{by} variables, etc.}
 #' @author Patrick Breheny and Woodrow Burchett
-#' @seealso \url{https://pbreheny.github.io/visreg} \code{\link{plot.visreg}}
-#' \code{\link{visreg2d}}
-#' @references \itemize{ \item \url{https://pbreheny.github.io/visreg} \item
-#' Breheny, P. and Burchett, W. (2017), Visualizing regression models using
-#' visreg.
-#' \url{https://journal.r-project.org/archive/2017/RJ-2017-046/index.html} }
+#' @seealso \url{https://pbreheny.github.io/visreg/} `[plot.visreg()]` `[visreg2d)]`
+#' @references \itemize{
+#'   \item \url{https://pbreheny.github.io/visreg/}
+#'   \item Breheny, P. and Burchett, W. (2017), Visualizing regression models using visreg.
+#'     \url{https://journal.r-project.org/archive/2017/RJ-2017-046/index.html}
+#' }
 #' @examples
 #' 
-#' ###################
-#' ## Linear models ##
-#' ###################
+#' # --- Linear models ----------------------------------------
 #' 
 #' ## Basic
 #' fit <- lm(Ozone ~ Solar.R + Wind + Temp, data=airquality)
-#' visreg(fit)
 #' visreg(fit, "Wind", type="contrast")
 #' visreg(fit, "Wind", type="conditional")
 #' 
@@ -131,9 +128,8 @@
 #' ## Overlay
 #' visreg(fit.in1, "Wind", by="Heat", overlay=TRUE)
 #' 
-#' ######################
-#' ## Nonlinear models ##
-#' ######################
+#' 
+#' # --- Nonlinear models -------------------------------------
 #' 
 #' ## Logistic regression
 #' data("birthwt", package="MASS")
@@ -165,6 +161,7 @@
 #' v <- visreg(fit, "Wind", cond=list(Heat="Mild"))
 #' 
 #' @export visreg
+
 visreg <- function(fit, xvar, by, breaks=3, type=c("conditional", "contrast"), data=NULL, trans=I,
                    scale=c("linear","response"), xtrans, alpha=.05, nn=101, cond=list(), jitter=FALSE, collapse=FALSE,
                    plot=TRUE, ...) {

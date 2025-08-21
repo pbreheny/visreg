@@ -1,6 +1,6 @@
 Package: visreg
 Title: Visualization of Regression Models
-Version: 2.7.0.16
+Version: 2.8.0
 Authors@R: c(
   person("Patrick", "Breheny", role=c("aut","cre"),
          email="patrick-breheny@uiowa.edu",
@@ -11,7 +11,7 @@ Description: Provides a convenient interface for constructing plots to
     of models in R ('lm', 'glm', 'coxph', 'rlm', 'gam', 'locfit', 'lmer',
     'randomForest', etc.)
 License: GPL-3
-URL: https://pbreheny.github.io/visreg, https://github.com/pbreheny/visreg
+URL: https://pbreheny.github.io/visreg/, https://github.com/pbreheny/visreg
 BugReports: https://github.com/pbreheny/visreg/issues
 Depends: R (>= 4.1)
 Imports:

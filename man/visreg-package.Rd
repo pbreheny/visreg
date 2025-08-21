@@ -18,7 +18,7 @@ visreg. \emph{R Journal}, \strong{9}: 56-71.
 \seealso{
 Useful links:
 \itemize{
-  \item \url{https://pbreheny.github.io/visreg}
+  \item \url{https://pbreheny.github.io/visreg/}
   \item \url{https://github.com/pbreheny/visreg}
   \item Report bugs at \url{https://github.com/pbreheny/visreg/issues}
 }

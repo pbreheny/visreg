@@ -37,23 +37,27 @@
 #' filling in other explanatory variables with the median (for numeric
 #' variables) or most common category (for factors), but this can be overridden
 #' by specifying their values using \code{cond} (see examples).
-#' @param plot Send the calculations to \code{\link{plot.visreg2d}}, producing
+#' @param plot Send the calculations to `[plot.visreg2d()]`, producing
 #' a plot?  Default is TRUE.
-#' @param \dots Graphical parameters (e.g., \code{ylab}) can be passed to the
+#' @param \dots Graphical parameters (e.g., `ylab`) can be passed to the
 #' function to customize the plots.
-#' @return A \code{visreg2d} object consisting of: \item{x}{Values of
-#' \code{xvar} to be plotted} \item{y}{Values of \code{yvar} to be plotted}
-#' \item{z}{Values of outcome to be plotted} \item{meta}{Meta-information
-#' needed to construct plots, such as the name of the x and y variables.}
-#' @author Patrick Breheny and Woodrow Burchett
-#' @seealso \url{https://pbreheny.github.io/visreg/surface.html}
-#' \code{\link{visreg}}
-#' @references \itemize{ \item \url{https://pbreheny.github.io/visreg} \item
-#' Breheny, P. and Burchett, W. (2017), Visualizing regression models using
-#' visreg.
-#' \url{https://journal.r-project.org/archive/2017/RJ-2017-046/index.html} }
-#' @examples
 #' 
+#' @returns A `visreg2d` object consisting of:
+#' \item{x}{Values of `xvar` to be plotted}
+#' \item{y}{Values of \code{yvar} to be plotted}
+#' \item{z}{Values of outcome to be plotted}
+#' \item{meta}{Meta-information needed to construct plots, such as the name of the x
+#'   and y variables.}
+#' 
+#' @author Patrick Breheny and Woodrow Burchett
+#' @seealso \url{https://pbreheny.github.io/visreg/articles/surface.html} `[visreg()]`
+#' @references \itemize{
+#'   \item \url{https://pbreheny.github.io/visreg/}
+#'   \item Breheny, P. and Burchett, W. (2017), Visualizing regression models using visreg.
+#'     \url{https://journal.r-project.org/archive/2017/RJ-2017-046/index.html}
+#' }
+#' 
+#' @examples
 #' fit <- lm(Ozone ~ Solar.R + Wind + Temp + I(Wind^2) + I(Temp^2) +
 #' I(Wind*Temp)+I(Wind*Temp^2) + I(Temp*Wind^2) + I(Temp^2*Wind^2),
 #' data=airquality)
@@ -70,9 +74,8 @@
 #' \dontrun{
 #' visreg2d(fit, x="Wind", y="Temp", plot.type="gg")
 #' }
-#' 
-#' 
 #' @export visreg2d
+
 visreg2d <- function(fit, xvar, yvar, type=c("conditional", "contrast"), data=NULL, trans=I, scale=c("linear","response"), nn=99, cond=list(), plot=TRUE, ...) {
   # Setup
   if (type[1]=="effect") {

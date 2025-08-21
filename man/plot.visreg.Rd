@@ -108,7 +108,7 @@ visreg. \emph{R Journal}, \strong{9}: 56-71.
 \doi{10.32614/RJ-2017-046}
 }
 \seealso{
-\url{https://pbreheny.github.io/visreg/options.html}, \code{\link[=visreg]{visreg()}},
+\url{https://pbreheny.github.io/visreg/articles/options.html}, \code{\link[=visreg]{visreg()}},
 \code{\link[=visreg2d]{visreg2d()}}
 }
 \author{

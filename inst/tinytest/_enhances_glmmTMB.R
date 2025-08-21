@@ -1,14 +1,16 @@
 library(glmmTMB)
 Owls <- transform(
   Owls,
-  Nest=reorder(Nest,NegPerChick),
-  NCalls=SiblingNegotiation,
-  FT=FoodTreatment)
+  Nest = reorder(Nest, NegPerChick),
+  NCalls = SiblingNegotiation,
+  FT = FoodTreatment,
+  AnyCalls = NCalls > 0
+)
 
 # A regular model
 fit <- glmmTMB(
   NCalls ~ FT + ArrivalTime + offset(log(BroodSize)) + (1|Nest),
-  data=Owls, family=poisson)
+  data = Owls, family = poisson)
 visreg(fit, 'FT')
 visreg(fit, 'FT', type='contrast')
 visreg(fit, 'ArrivalTime')
@@ -17,7 +19,7 @@ visreg(fit, 'ArrivalTime', type='contrast')
 # Now with zero inflation
 fit <- glmmTMB(
   NCalls ~ FT + ArrivalTime + offset(log(BroodSize)) + (1|Nest),
-  data=Owls, ziformula=~SexParent, family=poisson)
+  data = Owls, ziformula = ~SexParent, family = poisson)
 visreg(fit, 'FT')
 visreg(fit, 'FT', type='contrast')
 visreg(fit, 'ArrivalTime')

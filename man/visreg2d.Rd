@@ -61,24 +61,25 @@ filling in other explanatory variables with the median (for numeric
 variables) or most common category (for factors), but this can be overridden
 by specifying their values using \code{cond} (see examples).}
 
-\item{plot}{Send the calculations to \code{\link{plot.visreg2d}}, producing
+\item{plot}{Send the calculations to \verb{[plot.visreg2d()]}, producing
 a plot?  Default is TRUE.}
 
 \item{\dots}{Graphical parameters (e.g., \code{ylab}) can be passed to the
 function to customize the plots.}
 }
 \value{
-A \code{visreg2d} object consisting of: \item{x}{Values of
-\code{xvar} to be plotted} \item{y}{Values of \code{yvar} to be plotted}
-\item{z}{Values of outcome to be plotted} \item{meta}{Meta-information
-needed to construct plots, such as the name of the x and y variables.}
+A \code{visreg2d} object consisting of:
+\item{x}{Values of \code{xvar} to be plotted}
+\item{y}{Values of \code{yvar} to be plotted}
+\item{z}{Values of outcome to be plotted}
+\item{meta}{Meta-information needed to construct plots, such as the name of the x
+and y variables.}
 }
 \description{
 A function used to visualize how two variables interact to affect the
 response in regression models.
 }
 \examples{
-
 fit <- lm(Ozone ~ Solar.R + Wind + Temp + I(Wind^2) + I(Temp^2) +
 I(Wind*Temp)+I(Wind*Temp^2) + I(Temp*Wind^2) + I(Temp^2*Wind^2),
 data=airquality)
@@ -95,18 +96,16 @@ visreg2d(fit, x="Wind", y="Temp", plot.type="rgl")
 \dontrun{
 visreg2d(fit, x="Wind", y="Temp", plot.type="gg")
 }
-
-
 }
 \references{
-\itemize{ \item \url{https://pbreheny.github.io/visreg} \item
-Breheny, P. and Burchett, W. (2017), Visualizing regression models using
-visreg.
-\url{https://journal.r-project.org/archive/2017/RJ-2017-046/index.html} }
+\itemize{
+\item \url{https://pbreheny.github.io/visreg/}
+\item Breheny, P. and Burchett, W. (2017), Visualizing regression models using visreg.
+\url{https://journal.r-project.org/archive/2017/RJ-2017-046/index.html}
+}
 }
 \seealso{
-\url{https://pbreheny.github.io/visreg/surface.html}
-\code{\link{visreg}}
+\url{https://pbreheny.github.io/visreg/articles/surface.html} \verb{[visreg()]}
 }
 \author{
 Patrick Breheny and Woodrow Burchett

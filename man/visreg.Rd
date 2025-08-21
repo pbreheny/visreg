@@ -128,13 +128,10 @@ appearance of points, lines, confidence bands, etc.
 }
 \examples{
 
-###################
-## Linear models ##
-###################
+# --- Linear models ----------------------------------------
 
 ## Basic
 fit <- lm(Ozone ~ Solar.R + Wind + Temp, data=airquality)
-visreg(fit)
 visreg(fit, "Wind", type="contrast")
 visreg(fit, "Wind", type="conditional")
 
@@ -168,9 +165,8 @@ visreg(fit.in1, "Heat", by="Wind", breaks=c(0,10,20))
 ## Overlay
 visreg(fit.in1, "Wind", by="Heat", overlay=TRUE)
 
-######################
-## Nonlinear models ##
-######################
+
+# --- Nonlinear models -------------------------------------
 
 ## Logistic regression
 data("birthwt", package="MASS")
@@ -203,14 +199,16 @@ v <- visreg(fit, "Wind", cond=list(Heat="Mild"))
 
 }
 \references{
-\itemize{ \item \url{https://pbreheny.github.io/visreg} \item
-Breheny, P. and Burchett, W. (2017), Visualizing regression models using
-visreg.
-\url{https://journal.r-project.org/archive/2017/RJ-2017-046/index.html} }
+\itemize{
+\item \url{https://pbreheny.github.io/visreg/}
+\item Breheny, P. and Burchett, W. (2017), Visualizing regression models using visreg.
+\url{https://journal.r-project.org/archive/2017/RJ-2017-046/index.html}
+}
 }
 \seealso{
-\url{https://pbreheny.github.io/visreg} \code{\link{plot.visreg}}
-\code{\link{visreg2d}}
+\url{https://pbreheny.github.io/visreg/} \verb{[plot.visreg()]} \verb{[visreg2d)]}
+
+[visreg2d)]: R:visreg2d)
 }
 \author{
 Patrick Breheny and Woodrow Burchett
