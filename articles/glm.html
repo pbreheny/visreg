@@ -93,7 +93,7 @@
       <h1>Generalized linear models</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/pbreheny/visreg/blob/master/vignettes/articles/glm.rmd" class="external-link"><code>vignettes/articles/glm.rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/pbreheny/visreg/blob/main/vignettes/articles/glm.rmd" class="external-link"><code>vignettes/articles/glm.rmd</code></a></small>
       <div class="d-none name"><code>glm.rmd</code></div>
     </div>
 
@@ -105,7 +105,7 @@ other model:</p>
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"birthwt"</span>, package<span class="op">=</span><span class="st">"MASS"</span><span class="op">)</span></span>
 <span><span class="va">fit</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/glm.html" class="external-link">glm</a></span><span class="op">(</span><span class="va">low</span> <span class="op">~</span> <span class="va">age</span> <span class="op">+</span> <span class="va">race</span> <span class="op">+</span> <span class="va">smoke</span> <span class="op">+</span> <span class="va">lwt</span>, data<span class="op">=</span><span class="va">birthwt</span>, family<span class="op">=</span><span class="st">"binomial"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="../reference/visreg.html">visreg</a></span><span class="op">(</span><span class="va">fit</span>, <span class="st">"lwt"</span>, xlab<span class="op">=</span><span class="st">"Mother's weight"</span>, ylab<span class="op">=</span><span class="st">"Log odds (low birthweight)"</span><span class="op">)</span></span></code></pre></div>
-<p><img src="glm_files/figure-html/unnamed-chunk-2-1.png" width="480"></p>
+<p><img src="glm_files/figure-html/unnamed-chunk-2-1.png" class="r-plt" width="480"></p>
 <p><a class="anchor" id="scale"></a></p>
 <div class="section level2">
 <h2 id="scale">Scale<a class="anchor" aria-label="anchor" href="#scale"></a>
@@ -123,7 +123,7 @@ by manually specifying <code>trans</code> as described in <a href="trans.html">t
 <code>scale="response"</code> is provided:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/visreg.html">visreg</a></span><span class="op">(</span><span class="va">fit</span>, <span class="st">"lwt"</span>, scale<span class="op">=</span><span class="st">"response"</span>, rug<span class="op">=</span><span class="fl">2</span>, xlab<span class="op">=</span><span class="st">"Mother's weight"</span>, ylab<span class="op">=</span><span class="st">"P(low birthweight)"</span><span class="op">)</span></span></code></pre></div>
-<p><img src="glm_files/figure-html/unnamed-chunk-3-1.png" width="480"></p>
+<p><img src="glm_files/figure-html/unnamed-chunk-3-1.png" class="r-plt" width="480"></p>
 </div>
 <div class="section level2">
 <h2 id="partial-residuals">Partial residuals<a class="anchor" aria-label="anchor" href="#partial-residuals"></a>
@@ -152,7 +152,7 @@ distribution using a log link:</p>
 <span><span class="fu"><a href="../reference/visreg.html">visreg</a></span><span class="op">(</span><span class="va">fit</span>, <span class="st">"x"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="../reference/visreg.html">visreg</a></span><span class="op">(</span><span class="va">fit</span>, <span class="st">"x"</span>, scale<span class="op">=</span><span class="st">"response"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="../reference/visreg.html">visreg</a></span><span class="op">(</span><span class="va">fit</span>, <span class="st">"x"</span>, scale<span class="op">=</span><span class="st">"response"</span>, partial<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
-<p><img src="glm_files/figure-html/unnamed-chunk-7-1.png" width="100%"></p>
+<p><img src="glm_files/figure-html/unnamed-chunk-7-1.png" class="r-plt" width="100%"></p>
 <p>The default <code>visreg</code> plot (left) clearly illustrates that
 49 of the observations fit the model well, but the 50th is a big
 outlier. By transforming to the response scale, we can see the
@@ -176,7 +176,7 @@ problems with fit.</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Last updated: August 21, 2025</p>
+  <p>Last updated: December 11, 2025</p>
 </div>
 
     </footer>

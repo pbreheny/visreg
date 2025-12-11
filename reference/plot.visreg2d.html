@@ -59,7 +59,7 @@ response in regression models."><link rel="stylesheet" href="https://cdn.jsdeliv
   <main id="main" class="col-md-9"><div class="page-header">
 
       <h1>Visualization of regression functions for two variables</h1>
-      <small class="dont-index">Source: <a href="https://github.com/pbreheny/visreg/blob/master/R/plotVisreg2d.R" class="external-link"><code>R/plotVisreg2d.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/pbreheny/visreg/blob/main/R/plotVisreg2d.R" class="external-link"><code>R/plotVisreg2d.R</code></a></small>
       <div class="d-none name"><code>plot.visreg2d.Rd</code></div>
     </div>
 
@@ -179,6 +179,11 @@ visreg. <em>R Journal</em>, <strong>9</strong>: 56-71.
 <span class="r-in"><span><span class="co">## Requires the ggplot2 package</span></span></span>
 <span class="r-in"><span><span class="co"># \donttest{</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="visreg2d.html">visreg2d</a></span><span class="op">(</span><span class="va">fit</span>, x<span class="op">=</span><span class="st">"Wind"</span>, y<span class="op">=</span><span class="st">"Temp"</span>, plot.type<span class="op">=</span><span class="st">"gg"</span><span class="op">)</span></span></span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>`aes_string()` was deprecated in ggplot2 3.0.0.</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Please use tidy evaluation idioms with `aes()`.</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> See also `vignette("ggplot2-in-packages")` for more information.</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> The deprecated feature was likely used in the <span style="color: #0000BB;">visreg</span> package.</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span>   Please report the issue at <span style="color: #0000BB; font-style: italic;">&lt;https://github.com/pbreheny/visreg/issues&gt;</span>.</span>
 <span class="r-plt img"><img src="plot.visreg2d-4.png" alt="" width="480" height="480"></span>
 <span class="r-in"><span><span class="co"># }</span></span></span>
 </code></pre></div>
@@ -192,7 +197,7 @@ visreg. <em>R Journal</em>, <strong>9</strong>: 56-71.
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Last updated: August 21, 2025</p>
+  <p>Last updated: December 11, 2025</p>
 </div>
 
     </footer></div>

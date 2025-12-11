@@ -93,7 +93,7 @@
       <h1>Quick start guide for visreg</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/pbreheny/visreg/blob/master/vignettes/visreg.rmd" class="external-link"><code>vignettes/visreg.rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/pbreheny/visreg/blob/main/vignettes/visreg.rmd" class="external-link"><code>vignettes/visreg.rmd</code></a></small>
       <div class="d-none name"><code>visreg.rmd</code></div>
     </div>
 
@@ -124,7 +124,7 @@ Let’s fit the following model:</p>
 between the outcome and, say, wind, with:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/visreg.html">visreg</a></span><span class="op">(</span><span class="va">fit</span>, <span class="st">"Wind"</span><span class="op">)</span></span></code></pre></div>
-<p><img src="visreg_files/figure-html/unnamed-chunk-3-1.png" width="480"></p>
+<p><img src="visreg_files/figure-html/unnamed-chunk-3-1.png" class="r-plt" width="480"></p>
 <p>The plot displays (a) the model’s estimated relationship between wind
 and ozone, (b) a confidence band about that estimate, and (c) the
 partial residuals, so that one can assess model fit.</p>
@@ -138,16 +138,16 @@ example, suppose the model contains an interaction:</p>
 panels:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/visreg.html">visreg</a></span><span class="op">(</span><span class="va">fit</span>, <span class="st">"Wind"</span>, by<span class="op">=</span><span class="st">"Heat"</span><span class="op">)</span></span></code></pre></div>
-<p><img src="visreg_files/figure-html/unnamed-chunk-5-1.png" width="100%"></p>
+<p><img src="visreg_files/figure-html/unnamed-chunk-5-1.png" class="r-plt" width="100%"></p>
 <p>Or overlaid on top of one another:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/visreg.html">visreg</a></span><span class="op">(</span><span class="va">fit</span>, <span class="st">"Wind"</span>, by<span class="op">=</span><span class="st">"Heat"</span>, overlay<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
-<p><img src="visreg_files/figure-html/unnamed-chunk-6-1.png" width="480"></p>
+<p><img src="visreg_files/figure-html/unnamed-chunk-6-1.png" class="r-plt" width="480"></p>
 <p>Or as a two-dimensional filled contour plot (level plot):</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">fit</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">Ozone</span> <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/stats/poly.html" class="external-link">poly</a></span><span class="op">(</span><span class="va">Wind</span>, <span class="fl">2</span><span class="op">)</span><span class="op">*</span><span class="fu"><a href="https://rdrr.io/r/stats/poly.html" class="external-link">poly</a></span><span class="op">(</span><span class="va">Temp</span>, <span class="fl">2</span><span class="op">)</span>, data<span class="op">=</span><span class="va">airquality</span><span class="op">)</span></span>
 <span><span class="fu"><a href="../reference/visreg2d.html">visreg2d</a></span><span class="op">(</span><span class="va">fit</span>, <span class="st">"Wind"</span>, <span class="st">"Temp"</span><span class="op">)</span></span></code></pre></div>
-<p><img src="visreg_files/figure-html/unnamed-chunk-7-1.png" width="480"></p>
+<p><img src="visreg_files/figure-html/unnamed-chunk-7-1.png" class="r-plt" width="480"></p>
 <p><code>visreg</code> is not limited to linear regression models. It
 can be used with virtually any type of model in <code>R</code> that
 provides generic functions for <code>model.frame</code> and
@@ -167,7 +167,7 @@ you think should work with <code>visreg</code> but doesn’t, please <a href="ht
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Last updated: August 21, 2025</p>
+  <p>Last updated: December 11, 2025</p>
 </div>
 
     </footer>

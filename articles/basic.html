@@ -93,7 +93,7 @@
       <h1>Getting started</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/pbreheny/visreg/blob/master/vignettes/articles/basic.rmd" class="external-link"><code>vignettes/articles/basic.rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/pbreheny/visreg/blob/main/vignettes/articles/basic.rmd" class="external-link"><code>vignettes/articles/basic.rmd</code></a></small>
       <div class="d-none name"><code>basic.rmd</code></div>
     </div>
 
@@ -115,7 +115,7 @@ Visual summaries are often more informative and clear than numerical
 summaries. Let’s see what <code>visreg</code> provides:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/visreg.html">visreg</a></span><span class="op">(</span><span class="va">fit</span>, <span class="st">"Wind"</span><span class="op">)</span></span></code></pre></div>
-<p><img src="basic_files/figure-html/unnamed-chunk-3-1.png" width="480"></p>
+<p><img src="basic_files/figure-html/unnamed-chunk-3-1.png" class="r-plt" width="480"></p>
 <p>The visual summaries reinforce the numeric one: wind has a clear
 negative association with ozone. The numeric summary indicates that
 solar radiation is just barely significant, which we can see visually
@@ -124,7 +124,7 @@ null):</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/visreg.html">visreg</a></span><span class="op">(</span><span class="va">fit</span>, <span class="st">"Solar.R"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/abline.html" class="external-link">abline</a></span><span class="op">(</span>h<span class="op">=</span><span class="fl">44.5</span>, lty<span class="op">=</span><span class="fl">2</span><span class="op">)</span></span></code></pre></div>
-<p><img src="basic_files/figure-html/unnamed-chunk-4-1.png" width="480"></p>
+<p><img src="basic_files/figure-html/unnamed-chunk-4-1.png" class="r-plt" width="480"></p>
 <p>we can see that the gray band just barely excludes a flat line.</p>
 <p>All aspects of the above plot (the blue line, the partial residuals,
 the band) depend on the specification of not only <code>Solar.R</code>
@@ -144,7 +144,7 @@ visualizes its relationship with <code>Ozone</code>:</p>
 <code class="sourceCode R"><span><span class="va">airquality</span><span class="op">$</span><span class="va">Heat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cut.html" class="external-link">cut</a></span><span class="op">(</span><span class="va">airquality</span><span class="op">$</span><span class="va">Temp</span>, <span class="fl">3</span>, labels<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Cool"</span>, <span class="st">"Mild"</span>, <span class="st">"Hot"</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">fit</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">Ozone</span> <span class="op">~</span> <span class="va">Solar.R</span> <span class="op">+</span> <span class="va">Wind</span> <span class="op">+</span> <span class="va">Heat</span>, data<span class="op">=</span><span class="va">airquality</span><span class="op">)</span></span>
 <span><span class="fu"><a href="../reference/visreg.html">visreg</a></span><span class="op">(</span><span class="va">fit</span>, <span class="st">"Heat"</span><span class="op">)</span></span></code></pre></div>
-<p><img src="basic_files/figure-html/unnamed-chunk-5-1.png" width="480"></p>
+<p><img src="basic_files/figure-html/unnamed-chunk-5-1.png" class="r-plt" width="480"></p>
   </main>
 </div>
 
@@ -155,7 +155,7 @@ visualizes its relationship with <code>Ozone</code>:</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Last updated: August 21, 2025</p>
+  <p>Last updated: December 11, 2025</p>
 </div>
 
     </footer>

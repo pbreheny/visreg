@@ -93,7 +93,7 @@
       <h1>Cross-sectional plots</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/pbreheny/visreg/blob/master/vignettes/articles/cross.rmd" class="external-link"><code>vignettes/articles/cross.rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/pbreheny/visreg/blob/main/vignettes/articles/cross.rmd" class="external-link"><code>vignettes/articles/cross.rmd</code></a></small>
       <div class="d-none name"><code>cross.rmd</code></div>
     </div>
 
@@ -123,12 +123,12 @@ term and a categorical term:</p>
 ozone differs depending on the temperature:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/visreg.html">visreg</a></span><span class="op">(</span><span class="va">fit</span>, <span class="st">"Wind"</span>, by<span class="op">=</span><span class="st">"Heat"</span>, layout<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">3</span>,<span class="fl">1</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<p><img src="cross_files/figure-html/unnamed-chunk-3-1.png" width="100%"></p>
+<p><img src="cross_files/figure-html/unnamed-chunk-3-1.png" class="r-plt" width="100%"></p>
 <p>Or alternatively, see how the effect of temperature depends on the
 wind level:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/visreg.html">visreg</a></span><span class="op">(</span><span class="va">fit</span>, <span class="st">"Heat"</span>, by<span class="op">=</span><span class="st">"Wind"</span>, layout<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">3</span>,<span class="fl">1</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<p><img src="cross_files/figure-html/unnamed-chunk-4-1.png" width="100%"></p>
+<p><img src="cross_files/figure-html/unnamed-chunk-4-1.png" class="r-plt" width="100%"></p>
 <p>Note that, since <code>Wind</code> is a continuous variable, the
 panels above are somewhat arbitrary. By default, <code>visreg</code>
 sets up three panels using the 10th, 50th, and 90th percentiles, but <a href="#opt">the user can change both the number and the location of
@@ -140,11 +140,26 @@ documentation for the relevant options, such as <code>layout</code> in
 the above examples. Alternatively, you can use <a href="gg.html"><code>ggplot2</code></a> as the graphics engine by
 specifying <code>gg=TRUE</code>:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/visreg.html">visreg</a></span><span class="op">(</span><span class="va">fit</span>, <span class="st">"Wind"</span>, by<span class="op">=</span><span class="st">"Heat"</span>, gg<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
-<p><img src="cross_files/figure-html/unnamed-chunk-5-1.png" width="100%"></p>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/visreg.html">visreg</a></span><span class="op">(</span><span class="va">fit</span>, <span class="st">"Wind"</span>, by<span class="op">=</span><span class="st">"Heat"</span>, gg<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="co"># Warning: `aes_string()` was deprecated in ggplot2 3.0.0.</span></span>
+<span><span class="co"># <span style="color: #00BBBB;">ℹ</span> Please use tidy evaluation idioms with `aes()`.</span></span>
+<span><span class="co"># <span style="color: #00BBBB;">ℹ</span> See also `vignette("ggplot2-in-packages")` for more information.</span></span>
+<span><span class="co"># <span style="color: #00BBBB;">ℹ</span> The deprecated feature was likely used in the <span style="color: #0000BB;">visreg</span> package.</span></span>
+<span><span class="co">#   Please report the issue at <span style="color: #0000BB; font-style: italic;">&lt;https://github.com/pbreheny/visreg/issues&gt;</span>.</span></span>
+<span><span class="co"># This warning is displayed once every 8 hours.</span></span>
+<span><span class="co"># Call `lifecycle::last_lifecycle_warnings()` to see where this warning was</span></span>
+<span><span class="co"># generated.</span></span>
+<span><span class="co"># Warning: Using `size` aesthetic for lines was deprecated in ggplot2 3.4.0.</span></span>
+<span><span class="co"># <span style="color: #00BBBB;">ℹ</span> Please use `linewidth` instead.</span></span>
+<span><span class="co"># <span style="color: #00BBBB;">ℹ</span> The deprecated feature was likely used in the <span style="color: #0000BB;">ggplot2</span> package.</span></span>
+<span><span class="co">#   Please report the issue at <span style="color: #0000BB; font-style: italic;">&lt;https://github.com/tidyverse/ggplot2/issues&gt;</span>.</span></span>
+<span><span class="co"># This warning is displayed once every 8 hours.</span></span>
+<span><span class="co"># Call `lifecycle::last_lifecycle_warnings()` to see where this warning was</span></span>
+<span><span class="co"># generated.</span></span></code></pre></div>
+<p><img src="cross_files/figure-html/unnamed-chunk-5-1.png" class="r-plt" width="100%"></p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/visreg.html">visreg</a></span><span class="op">(</span><span class="va">fit</span>, <span class="st">"Heat"</span>, by<span class="op">=</span><span class="st">"Wind"</span>, gg<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
-<p><img src="cross_files/figure-html/unnamed-chunk-6-1.png" width="100%"></p>
+<p><img src="cross_files/figure-html/unnamed-chunk-6-1.png" class="r-plt" width="100%"></p>
 <p>In all of these plots, note that each partial residuals appears
 exactly once in the plot, in the panel it is closest to.</p>
 <p><a class="anchor" id="opt"></a></p>
@@ -157,12 +172,12 @@ default, cross-sections are taken at three quantiles (10th, 50th, and
 90th), but a larger number can be specified:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/visreg.html">visreg</a></span><span class="op">(</span><span class="va">fit</span>, <span class="st">"Heat"</span>, by<span class="op">=</span><span class="st">"Wind"</span>, breaks<span class="op">=</span><span class="fl">4</span>, layout<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">4</span>,<span class="fl">1</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<p><img src="cross_files/figure-html/unnamed-chunk-7-1.png" width="100%"></p>
+<p><img src="cross_files/figure-html/unnamed-chunk-7-1.png" class="r-plt" width="100%"></p>
 <p>If <code>breaks</code> is a vector of numbers, it specifies the
 values at which the cross-sections are to be taken:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/visreg.html">visreg</a></span><span class="op">(</span><span class="va">fit</span>, <span class="st">"Heat"</span>, by<span class="op">=</span><span class="st">"Wind"</span>, breaks<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">5</span>, <span class="fl">15</span>, <span class="fl">5</span><span class="op">)</span><span class="op">)</span>, layout<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">3</span>,<span class="fl">1</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<p><img src="cross_files/figure-html/unnamed-chunk-8-1.png" width="100%"></p>
+<p><img src="cross_files/figure-html/unnamed-chunk-8-1.png" class="r-plt" width="100%"></p>
 </div>
 <div class="section level2">
 <h2 id="graphical-options-lattice">Graphical options: <code>lattice</code><a class="anchor" aria-label="anchor" href="#graphical-options-lattice"></a>
@@ -175,7 +190,7 @@ and bands, which are specified <a href="options.html">just as they are
 in base plots</a>:</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/visreg.html">visreg</a></span><span class="op">(</span><span class="va">fit</span>, <span class="st">"Wind"</span>, by<span class="op">=</span><span class="st">"Heat"</span>, layout<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">3</span>,<span class="fl">1</span><span class="op">)</span>, fill.par<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>col<span class="op">=</span><span class="st">"#008DFF33"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<p><img src="cross_files/figure-html/unnamed-chunk-9-1.png" width="100%"></p>
+<p><img src="cross_files/figure-html/unnamed-chunk-9-1.png" class="r-plt" width="100%"></p>
 <p>Another exception is the <code>strip</code> option;
 <code>visreg</code> sets up the strip internally, which interferes with
 the user passing the <code>strip</code> option along to
@@ -183,18 +198,18 @@ the user passing the <code>strip</code> option along to
 provide the <code>strip.names</code> option:</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/visreg.html">visreg</a></span><span class="op">(</span><span class="va">fit</span>, <span class="st">"Wind"</span>, by<span class="op">=</span><span class="st">"Heat"</span>, layout<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">3</span>,<span class="fl">1</span><span class="op">)</span>, strip.names<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
-<p><img src="cross_files/figure-html/unnamed-chunk-10-1.png" width="100%"></p>
+<p><img src="cross_files/figure-html/unnamed-chunk-10-1.png" class="r-plt" width="100%"></p>
 <p>You can also explicitly specify the labels for each strip:</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/visreg.html">visreg</a></span><span class="op">(</span><span class="va">fit</span>, <span class="st">"Wind"</span>, by<span class="op">=</span><span class="st">"Heat"</span>, layout<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">3</span>,<span class="fl">1</span><span class="op">)</span>, strip.names<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Cold days"</span>, <span class="st">"Mild days"</span>, <span class="st">"Hot days"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<p><img src="cross_files/figure-html/unnamed-chunk-11-1.png" width="100%"></p>
+<p><img src="cross_files/figure-html/unnamed-chunk-11-1.png" class="r-plt" width="100%"></p>
 <p>Other aspects of the strip’s appearance, such as the background
 color, can be set with calls to the <code>lattice</code> package’s
 <code>trellis.par.set</code>:</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">lattice</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/lattice/man/trellis.par.get.html" class="external-link">trellis.par.set</a></span><span class="op">(</span>strip.background<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>col<span class="op">=</span><span class="st">"gray90"</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="fu"><a href="../reference/visreg.html">visreg</a></span><span class="op">(</span><span class="va">fit</span>, <span class="st">"Wind"</span>, by<span class="op">=</span><span class="st">"Heat"</span>, layout<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">3</span>,<span class="fl">1</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<p><img src="cross_files/figure-html/unnamed-chunk-12-1.png" width="100%"></p>
+<p><img src="cross_files/figure-html/unnamed-chunk-12-1.png" class="r-plt" width="100%"></p>
 </div>
 <div class="section level2">
 <h2 id="graphical-options-ggplot2">Graphical options: <code>ggplot2</code><a class="anchor" aria-label="anchor" href="#graphical-options-ggplot2"></a>
@@ -204,12 +219,12 @@ most <code>ggplot2</code> options are specified via additional
 components to the plot, such as:</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/visreg.html">visreg</a></span><span class="op">(</span><span class="va">fit</span>, <span class="st">"Wind"</span>, by<span class="op">=</span><span class="st">"Heat"</span>, gg<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span> <span class="op">+</span> <span class="fu">theme_bw</span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p><img src="cross_files/figure-html/unnamed-chunk-13-1.png" width="100%"></p>
+<p><img src="cross_files/figure-html/unnamed-chunk-13-1.png" class="r-plt" width="100%"></p>
 <p>The exception, again, is the appearance of points/lines/bands, which
 are specified with the usual <code>visreg</code> arguments:</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/visreg.html">visreg</a></span><span class="op">(</span><span class="va">fit</span>, <span class="st">"Wind"</span>, by<span class="op">=</span><span class="st">"Heat"</span>, gg<span class="op">=</span><span class="cn">TRUE</span>, fill.par<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>fill<span class="op">=</span><span class="st">"#008DFF33"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<p><img src="cross_files/figure-html/unnamed-chunk-14-1.png" width="100%"></p>
+<p><img src="cross_files/figure-html/unnamed-chunk-14-1.png" class="r-plt" width="100%"></p>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside>
@@ -222,7 +237,7 @@ are specified with the usual <code>visreg</code> arguments:</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Last updated: August 21, 2025</p>
+  <p>Last updated: December 11, 2025</p>
 </div>
 
     </footer>

@@ -93,7 +93,7 @@
       <h1>Surface plots</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/pbreheny/visreg/blob/master/vignettes/articles/surface.rmd" class="external-link"><code>vignettes/articles/surface.rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/pbreheny/visreg/blob/main/vignettes/articles/surface.rmd" class="external-link"><code>vignettes/articles/surface.rmd</code></a></small>
       <div class="d-none name"><code>surface.rmd</code></div>
     </div>
 
@@ -113,7 +113,7 @@ main options for this, filled contour plots and perspective plots.</p>
 <p>The default is to provide a contoured image plot:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/visreg2d.html">visreg2d</a></span><span class="op">(</span><span class="va">fit</span>, <span class="st">"Wind"</span>, <span class="st">"Temp"</span><span class="op">)</span></span></code></pre></div>
-<p><img src="surface_files/figure-html/unnamed-chunk-3-1.png" width="480"></p>
+<p><img src="surface_files/figure-html/unnamed-chunk-3-1.png" class="r-plt" width="480"></p>
 <p>Here, wind and temperature are laid out on a two-dimensional grid,
 and colors are used to represent the level of ozone. A legend is
 provided to the left. R’s <code>filled.contour</code> function is used
@@ -122,7 +122,7 @@ need to look at <code><a href="https://rdrr.io/r/graphics/filled.contour.html" c
 For example, if we want different colors,</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/visreg2d.html">visreg2d</a></span><span class="op">(</span><span class="va">fit</span>, <span class="st">"Wind"</span>, <span class="st">"Temp"</span>, color.palette<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/grDevices/colorRamp.html" class="external-link">colorRampPalette</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"black"</span>, <span class="st">"white"</span>, <span class="st">"purple"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<p><img src="surface_files/figure-html/unnamed-chunk-4-1.png" width="480"></p>
+<p><img src="surface_files/figure-html/unnamed-chunk-4-1.png" class="r-plt" width="480"></p>
 </div>
 <div class="section level2">
 <h2 id="perspective-plots">Perspective plots<a class="anchor" aria-label="anchor" href="#perspective-plots"></a>
@@ -132,7 +132,7 @@ the surface as a three-dimensional image. This can be done in a static
 manner using <code>type="persp"</code>:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/visreg2d.html">visreg2d</a></span><span class="op">(</span><span class="va">fit</span>, <span class="st">"Wind"</span>, <span class="st">"Temp"</span>, plot.type<span class="op">=</span><span class="st">"persp"</span><span class="op">)</span></span></code></pre></div>
-<p><img src="surface_files/figure-html/unnamed-chunk-5-1.png" width="480"></p>
+<p><img src="surface_files/figure-html/unnamed-chunk-5-1.png" class="r-plt" width="480"></p>
 <p>Or dynamically using <code>type="rgl"</code>:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/visreg2d.html">visreg2d</a></span><span class="op">(</span><span class="va">fit</span>, <span class="st">"Wind"</span>, <span class="st">"Temp"</span>, plot.type<span class="op">=</span><span class="st">"rgl"</span><span class="op">)</span></span></code></pre></div>
@@ -156,7 +156,7 @@ the <code>rgl</code> package first.</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Last updated: August 21, 2025</p>
+  <p>Last updated: December 11, 2025</p>
 </div>
 
     </footer>

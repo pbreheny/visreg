@@ -93,7 +93,7 @@
       <h1>Mixed models</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/pbreheny/visreg/blob/master/vignettes/articles/mixed.rmd" class="external-link"><code>vignettes/articles/mixed.rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/pbreheny/visreg/blob/main/vignettes/articles/mixed.rmd" class="external-link"><code>vignettes/articles/mixed.rmd</code></a></small>
       <div class="d-none name"><code>mixed.rmd</code></div>
     </div>
 
@@ -123,13 +123,13 @@ milk in the weeks following calving:</p>
 smaller and partially transparent):</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/visreg.html">visreg</a></span><span class="op">(</span><span class="va">fit</span>, <span class="st">"Diet"</span>, ylab<span class="op">=</span><span class="st">"Protein"</span>, points<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>col<span class="op">=</span><span class="st">"#55555540"</span>, cex<span class="op">=</span><span class="fl">0.25</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<p><img src="mixed_files/figure-html/unnamed-chunk-3-1.png" width="480"></p>
+<p><img src="mixed_files/figure-html/unnamed-chunk-3-1.png" class="r-plt" width="480"></p>
 <p>But, because the random effect terms drop out of a contrast plot, we
 do have bands here:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/visreg.html">visreg</a></span><span class="op">(</span><span class="va">fit</span>, <span class="st">"Diet"</span>, type<span class="op">=</span><span class="st">"contrast"</span>, ylab<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/expression.html" class="external-link">expression</a></span><span class="op">(</span><span class="va">Delta</span><span class="op">*</span><span class="st">'Protein'</span><span class="op">)</span>, </span>
 <span>       points<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>col<span class="op">=</span><span class="st">"#55555540"</span>, cex<span class="op">=</span><span class="fl">0.25</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<p><img src="mixed_files/figure-html/unnamed-chunk-4-1.png" width="480"></p>
+<p><img src="mixed_files/figure-html/unnamed-chunk-4-1.png" class="r-plt" width="480"></p>
 </div>
 <div class="section level2">
 <h2 id="plotting-random-effects">Plotting random effects<a class="anchor" aria-label="anchor" href="#plotting-random-effects"></a>
@@ -153,7 +153,7 @@ subsetting, the raw <code>visreg</code> object prior to plotting.</li>
 <span><span class="va">subCow</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/levels.html" class="external-link">levels</a></span><span class="op">(</span><span class="va">Milk</span><span class="op">$</span><span class="va">Cow</span><span class="op">)</span>, <span class="fl">10</span><span class="op">)</span></span>
 <span><span class="va">vv</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/subset.html" class="external-link">subset</a></span><span class="op">(</span><span class="va">v</span>, <span class="va">Cow</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="va">subCow</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">vv</span>, ylab<span class="op">=</span><span class="st">"Protein"</span>, layout<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">5</span>,<span class="fl">2</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<p><img src="mixed_files/figure-html/unnamed-chunk-5-1.png" width="100%"></p>
+<p><img src="mixed_files/figure-html/unnamed-chunk-5-1.png" class="r-plt" width="100%"></p>
 <p>Returning the data frames, estimates, confidence intervals, and
 residuals used in the construction of its plots like this allows users
 to write their own extensions and modifications of <code>visreg</code>
@@ -170,7 +170,7 @@ plots.</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Last updated: August 21, 2025</p>
+  <p>Last updated: December 11, 2025</p>
 </div>
 
     </footer>

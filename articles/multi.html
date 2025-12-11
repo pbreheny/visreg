@@ -93,7 +93,7 @@
       <h1>Multiple outcomes</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/pbreheny/visreg/blob/master/vignettes/articles/multi.rmd" class="external-link"><code>vignettes/articles/multi.rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/pbreheny/visreg/blob/main/vignettes/articles/multi.rmd" class="external-link"><code>vignettes/articles/multi.rmd</code></a></small>
       <div class="d-none name"><code>multi.rmd</code></div>
     </div>
 
@@ -118,7 +118,7 @@ single <code>visreg</code> object which can be plotted using the <a href="cross.
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/visreg.html">visreg</a></span><span class="op">(</span><span class="va">fit</span>, <span class="st">"Ozone"</span>, collapse<span class="op">=</span><span class="cn">TRUE</span>, overlay<span class="op">=</span><span class="cn">TRUE</span>, ylab<span class="op">=</span><span class="st">"Probability"</span>,</span>
 <span>       ylim<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">1</span><span class="op">)</span>, partial<span class="op">=</span><span class="cn">FALSE</span>, rug<span class="op">=</span><span class="fl">2</span><span class="op">)</span></span></code></pre></div>
-<p><img src="multi_files/figure-html/unnamed-chunk-3-1.png" width="480"></p>
+<p><img src="multi_files/figure-html/unnamed-chunk-3-1.png" class="r-plt" width="480"></p>
 <p>Another example is quantile regression using the
 <code>quantreg</code> package. Here, there is only one outcome, but we
 could be interested in modeling several different quantiles. The
@@ -127,7 +127,7 @@ could be interested in modeling several different quantiles. The
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://www.r-project.org" class="external-link">quantreg</a></span><span class="op">)</span></span>
 <span><span class="va">fit</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/quantreg/man/rq.html" class="external-link">rq</a></span><span class="op">(</span><span class="va">Ozone</span> <span class="op">~</span> <span class="va">Wind</span> <span class="op">+</span> <span class="va">Temp</span>, tau<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">.25</span>, <span class="fl">.5</span>, <span class="fl">.75</span><span class="op">)</span>, data<span class="op">=</span><span class="va">airquality</span><span class="op">)</span></span>
 <span><span class="va">v</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/visreg.html">visreg</a></span><span class="op">(</span><span class="va">fit</span>, <span class="st">"Wind"</span>, overlay<span class="op">=</span><span class="cn">TRUE</span>, collapse<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
-<p><img src="multi_files/figure-html/unnamed-chunk-4-1.png" width="480"></p>
+<p><img src="multi_files/figure-html/unnamed-chunk-4-1.png" class="r-plt" width="480"></p>
 <p>NOTE: <code>quantreg</code> does not return standand errors if you
 specify multiple quantiles of interest. To obtain them, you must
 construct the <code>visregList</code> manually:</p>
@@ -140,8 +140,23 @@ construct the <code>visregList</code> manually:</p>
 <span>                <span class="fu"><a href="../reference/visreg.html">visreg</a></span><span class="op">(</span><span class="va">fit3</span>, <span class="st">"Wind"</span>, plot<span class="op">=</span><span class="cn">FALSE</span><span class="op">)</span>,</span>
 <span>                labels<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"25%"</span>, <span class="st">"50%"</span>, <span class="st">"75%"</span><span class="op">)</span>, collapse<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">v</span>, ylab<span class="op">=</span><span class="st">"Ozone"</span>, gg<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span>
-<span><span class="co"># Loading required namespace: ggplot2</span></span></code></pre></div>
-<p><img src="multi_files/figure-html/unnamed-chunk-5-1.png" width="100%"></p>
+<span><span class="co"># Loading required namespace: ggplot2</span></span>
+<span><span class="co"># Warning: `aes_string()` was deprecated in ggplot2 3.0.0.</span></span>
+<span><span class="co"># <span style="color: #00BBBB;">ℹ</span> Please use tidy evaluation idioms with `aes()`.</span></span>
+<span><span class="co"># <span style="color: #00BBBB;">ℹ</span> See also `vignette("ggplot2-in-packages")` for more information.</span></span>
+<span><span class="co"># <span style="color: #00BBBB;">ℹ</span> The deprecated feature was likely used in the <span style="color: #0000BB;">visreg</span> package.</span></span>
+<span><span class="co">#   Please report the issue at <span style="color: #0000BB; font-style: italic;">&lt;https://github.com/pbreheny/visreg/issues&gt;</span>.</span></span>
+<span><span class="co"># This warning is displayed once every 8 hours.</span></span>
+<span><span class="co"># Call `lifecycle::last_lifecycle_warnings()` to see where this warning was</span></span>
+<span><span class="co"># generated.</span></span>
+<span><span class="co"># Warning: Using `size` aesthetic for lines was deprecated in ggplot2 3.4.0.</span></span>
+<span><span class="co"># <span style="color: #00BBBB;">ℹ</span> Please use `linewidth` instead.</span></span>
+<span><span class="co"># <span style="color: #00BBBB;">ℹ</span> The deprecated feature was likely used in the <span style="color: #0000BB;">ggplot2</span> package.</span></span>
+<span><span class="co">#   Please report the issue at <span style="color: #0000BB; font-style: italic;">&lt;https://github.com/tidyverse/ggplot2/issues&gt;</span>.</span></span>
+<span><span class="co"># This warning is displayed once every 8 hours.</span></span>
+<span><span class="co"># Call `lifecycle::last_lifecycle_warnings()` to see where this warning was</span></span>
+<span><span class="co"># generated.</span></span></code></pre></div>
+<p><img src="multi_files/figure-html/unnamed-chunk-5-1.png" class="r-plt" width="100%"></p>
 <p>Notice the use of the <code>labels</code> argument to label the
 elements of the list.</p>
   </main>
@@ -154,7 +169,7 @@ elements of the list.</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Last updated: August 21, 2025</p>
+  <p>Last updated: December 11, 2025</p>
 </div>
 
     </footer>
