@@ -30,7 +30,9 @@ jobs:
 
       - uses: r-lib/actions/setup-r-dependencies@v2
         with:
+          cache: true
           extra-packages: |
+            any::gbm
             any::pkgdown
             any::randomForest
             any::e1071
