@@ -12,4 +12,5 @@
 #' @import grDevices
 #' @import stats
 #' @import utils
+#' @importFrom rlang .data
 NULL

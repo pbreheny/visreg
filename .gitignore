@@ -3,3 +3,4 @@ vignettes/*/*.html
 vignettes/articles/rgl_files
 docs
 .Rproj.user
+.positai

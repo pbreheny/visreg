@@ -6,3 +6,5 @@
 ^\.Rproj\.user$
 ^\.github$
 .project.url
+^\.positai$
+^\.claude$

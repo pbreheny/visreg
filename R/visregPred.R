@@ -2,9 +2,7 @@ visregPred <- function(fit, Data, se.fit = FALSE, ...) {
   predict.args <- list(object = fit, newdata = Data)
   if (inherits(fit, "lme")) predict.args$level <- 0
   if (inherits(fit, "merMod")) {
-    if ("re.form" %in% names(list(...))) {
-      se.fit <- FALSE
-    } else {
+    if (!("re.form" %in% names(list(...)))) {
       predict.args$re.form <- NA
     }
   }

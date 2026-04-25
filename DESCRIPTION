@@ -1,6 +1,6 @@
 Package: visreg
 Title: Visualization of Regression Models
-Version: 2.8.0
+Version: 2.8.0.1
 Authors@R: c(
   person("Patrick", "Breheny", role=c("aut","cre"),
          email="patrick-breheny@uiowa.edu",
@@ -15,9 +15,10 @@ URL: https://pbreheny.github.io/visreg/, https://github.com/pbreheny/visreg
 BugReports: https://github.com/pbreheny/visreg/issues
 Depends: R (>= 4.1)
 Imports:
-  lattice
+  lattice,
+  rlang,
+  ggplot2
 Suggests:
-  ggplot2,
   glmmTMB,
   knitr,
   lme4,
