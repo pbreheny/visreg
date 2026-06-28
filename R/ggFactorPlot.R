@@ -46,7 +46,11 @@ ggFactorPlot <- function(
   if ("ylab" %in% names(dots)) {
     ylab <- dots$ylab
   } else {
-    ylab <- if (is.null(v$meta$yName)) paste("f(", v$meta$x, ")", sep = "") else v$meta$yName
+    ylab <- if (is.null(v$meta$yName)) {
+      paste("f(", v$meta$x, ")", sep = "")
+    } else {
+      v$meta$yName
+    }
   }
   if ("by" %in% names(v$meta) & overlay) {
     p <- ggplot2::ggplot(
@@ -54,28 +58,43 @@ ggFactorPlot <- function(
       ggplot2::aes(.data$visregGGX, .data$visregGGY, group = .data[[v$meta$by]])
     )
     fill.args <- list(mapping = ggplot2::aes(fill = .data[[v$meta$by]]))
-    line.args <- list(mapping = ggplot2::aes(color = .data[[v$meta$by]]), linewidth = 1)
-    point.args <- list(mapping = ggplot2::aes(color = .data[[v$meta$by]]), size = 0.8)
+    line.args <- list(
+      mapping = ggplot2::aes(color = .data[[v$meta$by]]),
+      linewidth = 1
+    )
+    point.args <- list(
+      mapping = ggplot2::aes(color = .data[[v$meta$by]]),
+      size = 0.8
+    )
     col <- pal(length(lev))
     acol <- pal(length(lev), alpha = 0.3)
     aacol <- pal(length(lev), alpha = 0.3 / K)
-    if (length(fill.par)) fill.args[names(fill.par)] <- fill.par
-    if (length(line.par)) line.args[names(line.par)] <- line.par
-    if (length(points.par)) point.args[names(points.par)] <- points.par
+    if (length(fill.par)) {
+      fill.args[names(fill.par)] <- fill.par
+    }
+    if (length(line.par)) {
+      line.args[names(line.par)] <- line.par
+    }
+    if (length(points.par)) {
+      point.args[names(points.par)] <- points.par
+    }
     p <- p +
       ggplot2::scale_fill_manual(values = acol) +
       ggplot2::scale_color_manual(values = col) +
-      ggplot2::guides(fill = ggplot2::guide_legend(override.aes = list(fill = aacol)))
+      ggplot2::guides(
+        fill = ggplot2::guide_legend(override.aes = list(fill = aacol))
+      )
   } else {
-    p <- ggplot2::ggplot(
-      pointData,
-      ggplot2::aes(.data$visregGGX, .data$visregGGY)
-    )
+    p <- ggplot2::ggplot(mapping = ggplot2::aes(.data$visregGGX, .data$visregGGY))
     fill.args <- list(fill = "gray85")
     line.args <- list(linewidth = 1, col = "#008DFFFF")
     point.args <- list(size = 0.8, col = "gray50")
-    if (length(fill.par)) fill.args[names(fill.par)] <- fill.par
-    if (length(line.par)) line.args[names(line.par)] <- line.par
+    if (length(fill.par)) {
+      fill.args[names(fill.par)] <- fill.par
+    }
+    if (length(line.par)) {
+      line.args[names(line.par)] <- line.par
+    }
     if (length(points.par)) point.args[names(points.par)] <- points.par
   }
   p <- p +
@@ -105,7 +124,8 @@ ggFactorPlot <- function(
         names(fillData)[3] <- v$meta$by
       }
       fill.args$data <- fillData
-      p <- p + do.call("geom_polygon", fill.args, envir = asNamespace("ggplot2"))
+      p <- p +
+        do.call("geom_polygon", fill.args, envir = asNamespace("ggplot2"))
     }
   }
 
@@ -142,7 +162,9 @@ ggFactorPlot <- function(
       pointData <- rbind(pointData, df)
     }
   }
-  if ("by" %in% names(v$meta)) names(pointData)[3] <- v$meta$by
+  if ("by" %in% names(v$meta)) {
+    names(pointData)[3] <- v$meta$by
+  }
   if (!partial) {
     p <- ggfp_lines(p, K, len, w, xx, J, v, b, line.args)
   } else {
@@ -161,21 +183,23 @@ ggFactorPlot <- function(
     p <- p + ggplot2::geom_rug(data = pointData, col = "gray50", sides = "b")
   }
   if (rug == 2) {
-    p <- p + ggplot2::geom_rug(
-      mapping = ggplot2::aes(
-        x = pointData[v$res$visregPos, "visregGGX"],
-        y = v$fit$visregFit[1]
-      ),
-      col = "gray50",
-      sides = "t"
-    ) + ggplot2::geom_rug(
-      mapping = ggplot2::aes(
-        x = pointData[v$res$visregPos, "visregGGX"],
-        y = v$fit$visregFit[1]
-      ),
-      col = "gray50",
-      sides = "b"
-    )
+    p <- p +
+      ggplot2::geom_rug(
+        mapping = ggplot2::aes(
+          x = pointData[v$res$visregPos, "visregGGX"],
+          y = v$fit$visregFit[1]
+        ),
+        col = "gray50",
+        sides = "t"
+      ) +
+      ggplot2::geom_rug(
+        mapping = ggplot2::aes(
+          x = pointData[v$res$visregPos, "visregGGX"],
+          y = v$fit$visregFit[1]
+        ),
+        col = "gray50",
+        sides = "b"
+      )
   }
 
   # Facet

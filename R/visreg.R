@@ -223,8 +223,24 @@ visreg <- function(
 
   # Calculate v
   yName <- makeYName(fit, scale, trans, type)
-  v <- setupV(fit, Data, xvar, nn, cond, type, trans, xtrans, alpha, jitter, by, yName, ...)
-  if (collapse) v <- collapse.visregList(v)
+  v <- setupV(
+    fit,
+    Data,
+    xvar,
+    nn,
+    cond,
+    type,
+    trans,
+    xtrans,
+    alpha,
+    jitter,
+    by,
+    yName,
+    ...
+  )
+  if (collapse) {
+    v <- collapse.visregList(v)
+  }
 
   # Plot/return
   if (plot) {

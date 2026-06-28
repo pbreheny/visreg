@@ -40,7 +40,11 @@ ggContPlot <- function(
   if ("ylab" %in% names(dots)) {
     ylab <- dots$ylab
   } else {
-    ylab <- if (is.null(v$meta$yName)) paste("f(", v$meta$x, ")", sep = "") else v$meta$yName
+    ylab <- if (is.null(v$meta$yName)) {
+      paste("f(", v$meta$x, ")", sep = "")
+    } else {
+      v$meta$yName
+    }
   }
 
   # Base gg object and aesthetic defaults
@@ -50,19 +54,33 @@ ggContPlot <- function(
       ggplot2::aes(.data$x, .data$y, group = .data[[v$meta$by]])
     )
     fill.args <- list(mapping = ggplot2::aes(fill = .data[[v$meta$by]]))
-    line.args <- list(mapping = ggplot2::aes(color = .data[[v$meta$by]]), linewidth = 1)
-    point.args <- list(mapping = ggplot2::aes(color = .data[[v$meta$by]]), size = 0.8)
+    line.args <- list(
+      mapping = ggplot2::aes(color = .data[[v$meta$by]]),
+      linewidth = 1
+    )
+    point.args <- list(
+      mapping = ggplot2::aes(color = .data[[v$meta$by]]),
+      size = 0.8
+    )
     acol <- pal(length(levels(bb)), alpha = 0.3)
     col <- pal(length(levels(bb)))
-    if (length(fill.par)) fill.args[names(fill.par)] <- fill.par
-    if (length(line.par)) line.args[names(line.par)] <- line.par
-    if (length(points.par)) point.args[names(points.par)] <- points.par
+    if (length(fill.par)) {
+      fill.args[names(fill.par)] <- fill.par
+    }
+    if (length(line.par)) {
+      line.args[names(line.par)] <- line.par
+    }
+    if (length(points.par)) {
+      point.args[names(points.par)] <- points.par
+    }
     if (is.character(strip.names) & length(strip.names) == length(levels(bb))) {
       p <- p +
         ggplot2::scale_fill_manual(values = acol, labels = strip.names) +
         ggplot2::scale_color_manual(values = col, labels = strip.names)
     } else {
-      p <- p + ggplot2::scale_fill_manual(values = acol) + ggplot2::scale_color_manual(values = col)
+      p <- p +
+        ggplot2::scale_fill_manual(values = acol) +
+        ggplot2::scale_color_manual(values = col)
     }
   } else {
     p <- ggplot2::ggplot(
@@ -72,8 +90,12 @@ ggContPlot <- function(
     fill.args <- list(fill = "gray85")
     line.args <- list(linewidth = 1, col = "#008DFFFF")
     point.args <- list(size = 0.8, col = "gray50")
-    if (length(fill.par)) fill.args[names(fill.par)] <- fill.par
-    if (length(line.par)) line.args[names(line.par)] <- line.par
+    if (length(fill.par)) {
+      fill.args[names(fill.par)] <- fill.par
+    }
+    if (length(line.par)) {
+      line.args[names(line.par)] <- line.par
+    }
     if (length(points.par)) point.args[names(points.par)] <- points.par
   }
   p <- p + ggplot2::xlab(xlab) + ggplot2::ylab(ylab)
@@ -99,7 +121,7 @@ ggContPlot <- function(
   if (rug == 1) {
     rug.args <- point.args
     rug.args$sides <- "b"
-    p <- p + do.call("geom_rug", point.args, envir = asNamespace("ggplot2"))
+    p <- p + do.call("geom_rug", rug.args, envir = asNamespace("ggplot2"))
   }
   if (rug == 2) {
     top.args <- bot.args <- point.args
