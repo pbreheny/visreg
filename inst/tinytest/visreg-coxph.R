@@ -4,36 +4,36 @@ library(splines)
 ovarian$rx <- factor(ovarian$rx)
 
 # Basic
-fit <- coxph(Surv(futime,fustat) ~ age + rx, data=ovarian)
+fit <- coxph(Surv(futime, fustat) ~ age + rx, data = ovarian)
 visreg(fit, "age")
-visreg(fit, "age", type="contrast")
+visreg(fit, "age", type = "contrast")
 visreg(fit, "rx")
-visreg(fit, "age", trans=exp)
-visreg(fit, "age", trans=exp, ylim=c(0,20))
+visreg(fit, "age", trans = exp)
+visreg(fit, "age", trans = exp, ylim = c(0, 20))
 
 # Interaction
-fit <- coxph(Surv(futime,fustat)~age*rx,data=ovarian)
-par(mfrow=c(1,2))
-visreg(fit, "age", cond=list(rx="1"), print.cond=interactive())
-visreg(fit, "age", cond=list(rx="2"), print.cond=interactive())
-visreg(fit,"age",by="rx")
-visreg2d(fit, x="age", y="rx")
+fit <- coxph(Surv(futime, fustat) ~ age * rx, data = ovarian)
+par(mfrow = c(1, 2))
+visreg(fit, "age", cond = list(rx = "1"), print.cond = interactive())
+visreg(fit, "age", cond = list(rx = "2"), print.cond = interactive())
+visreg(fit, "age", by = "rx")
+visreg2d(fit, x = "age", y = "rx")
 
 # Splines
-fit <- coxph(Surv(futime, fustat) ~ ns(age, 4) + rx, data=ovarian)
-par(mfrow=c(1,1))
+fit <- coxph(Surv(futime, fustat) ~ ns(age, 4) + rx, data = ovarian)
+par(mfrow = c(1, 1))
 visreg(fit, "age")
 visreg(fit, "rx")
-visreg(fit, "age", type="contrast")
-visreg(fit, "rx", type="contrast")
+visreg(fit, "age", type = "contrast")
+visreg(fit, "rx", type = "contrast")
 
 # Strata
 ovarian$Group <- factor(ovarian$rx)
-fit <- coxph(Surv(futime,fustat) ~ age+strata(Group), data=ovarian)
+fit <- coxph(Surv(futime, fustat) ~ age + strata(Group), data = ovarian)
 visreg(fit, "age")
-visreg(fit, "age", type='contrast')
+visreg(fit, "age", type = 'contrast')
 
 # Logical
 ovarian$rx <- ovarian$rx == 2
-fit <- coxph(Surv(futime,fustat) ~ age + rx, data=ovarian)
+fit <- coxph(Surv(futime, fustat) ~ age + rx, data = ovarian)
 visreg(fit, "age")

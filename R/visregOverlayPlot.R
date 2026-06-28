@@ -1,4 +1,17 @@
-visregOverlayPlot <- function(v, partial, band, rug, ask, whitespace, legend, strip.names, line.par, fill.par, points.par, ...) {
+visregOverlayPlot <- function(
+  v,
+  partial,
+  band,
+  rug,
+  ask,
+  whitespace,
+  legend,
+  strip.names,
+  line.par,
+  fill.par,
+  points.par,
+  ...
+) {
   # Setup
   x <- v$res[, v$meta$x]
   y <- v$res$visregRes
@@ -11,27 +24,51 @@ visregOverlayPlot <- function(v, partial, band, rug, ask, whitespace, legend, st
   upr <- v$fit$visregUpr
   xlim <- if (is.factor(xx)) c(0, 1) else range(xx)
   if (partial) {
-    ylim <- range(c(y, lwr, upr), na.rm=TRUE)
+    ylim <- range(c(y, lwr, upr), na.rm = TRUE)
   } else {
-    ylim <- range(c(yy, lwr, upr), na.rm=TRUE)
+    ylim <- range(c(yy, lwr, upr), na.rm = TRUE)
   }
-  ylab <- if (is.null(v$meta$yName)) paste("f(", v$meta$x, ")", sep="") else v$meta$yName
+  ylab <- if (is.null(v$meta$yName)) {
+    paste("f(", v$meta$x, ")", sep = "")
+  } else {
+    v$meta$yName
+  }
 
   # Empty plot
-  plot.args <- list(x=1, y=1, ylim=ylim, xlab=v$meta$x, ylab=ylab, type="n", xlim=xlim, xaxt=ifelse(is.factor(xx),'n','s'), las=1)
+  plot.args <- list(
+    x = 1,
+    y = 1,
+    ylim = ylim,
+    xlab = v$meta$x,
+    ylab = ylab,
+    type = "n",
+    xlim = xlim,
+    xaxt = ifelse(is.factor(xx), 'n', 's'),
+    las = 1
+  )
   new.args <- list(...)
-  if (length(new.args)) plot.args[names(new.args)] <- new.args
+  if (length(new.args)) {
+    plot.args[names(new.args)] <- new.args
+  }
   do.call("plot", plot.args)
   col <- pal(length(lev))
-  acol <- pal(length(lev), alpha=0.5)
-  line.args <- list(lwd=3, col=col, lty=1)
-  if (length(line.par)) line.args[names(line.par)] <- line.par
-  points.args <- list(pch=19, cex=0.4, col=col)
-  if (length(points.par)) points.args[names(points.par)] <- points.par
-  fill.args <- list(col=acol, border=F)
-  if (length(fill.par)) fill.args[names(fill.par)] <- fill.par
-  fun <- function(x, i) if (length(x)==length(lev)) x[i] else x
-  if (is.factor(x) && !("xaxt" %in% names(new.args) && new.args$xaxt=="n")) factorAxis(x, whitespace, new.args)
+  acol <- pal(length(lev), alpha = 0.5)
+  line.args <- list(lwd = 3, col = col, lty = 1)
+  if (length(line.par)) {
+    line.args[names(line.par)] <- line.par
+  }
+  points.args <- list(pch = 19, cex = 0.4, col = col)
+  if (length(points.par)) {
+    points.args[names(points.par)] <- points.par
+  }
+  fill.args <- list(col = acol, border = F)
+  if (length(fill.par)) {
+    fill.args[names(fill.par)] <- fill.par
+  }
+  fun <- function(x, i) if (length(x) == length(lev)) x[i] else x
+  if (is.factor(x) && !("xaxt" %in% names(new.args) && new.args$xaxt == "n")) {
+    factorAxis(x, whitespace, new.args)
+  }
 
   # Add bands
   if (band) {
@@ -49,7 +86,7 @@ visregOverlayPlot <- function(v, partial, band, rug, ask, whitespace, legend, st
       }
     }
   }
-  
+
   # Add points
   if (partial) {
     for (i in 1:length(lev)) {
@@ -82,10 +119,16 @@ visregOverlayPlot <- function(v, partial, band, rug, ask, whitespace, legend, st
       line.args.i$x <- xx[indfit]
       line.args.i$y <- yy[indfit]
       do.call("lines", line.args.i)
-      if (rug==1) rug(x[indres], side=1, col=line.args.i$col)
-      if (rug==2) {
-        rug(x[indres][!v$res$visregPos[indres]], side=1, col=line.args.i$col)
-        rug(x[indres][v$res$visregPos[indres]], side=3, col=line.args.i$col)
+      if (rug == 1) {
+        rug(x[indres], side = 1, col = line.args.i$col)
+      }
+      if (rug == 2) {
+        rug(
+          x[indres][!v$res$visregPos[indres]],
+          side = 1,
+          col = line.args.i$col
+        )
+        rug(x[indres][v$res$visregPos[indres]], side = 3, col = line.args.i$col)
       }
     }
   }
@@ -100,13 +143,19 @@ visregOverlayPlot <- function(v, partial, band, rug, ask, whitespace, legend, st
       }
     } else if (identical(strip.names, TRUE)) {
       if (is.double(lev)) {
-        lgtext <- paste(v$meta$by, round(lev, 3), sep=" : ")
+        lgtext <- paste(v$meta$by, round(lev, 3), sep = " : ")
       } else {
-        lgtext <- paste(v$meta$by, lev, sep=" : ")
+        lgtext <- paste(v$meta$by, lev, sep = " : ")
       }
     } else {
       lgtext <- strip.names
     }
-    toplegend(lgtext, col=line.args$col, lwd=line.args$lwd, lty=line.args$lty, ncol=min(length(lev), 5))
+    toplegend(
+      lgtext,
+      col = line.args$col,
+      lwd = line.args$lwd,
+      lty = line.args$lty,
+      ncol = min(length(lev), 5)
+    )
   }
 }

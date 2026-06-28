@@ -1,4 +1,4 @@
-#' @keywords internal 
+#' @keywords internal
 #' @aliases visreg-package NULL
 #' @references
 #' Breheny P and Burchett W. (2017) Visualization of regression models using

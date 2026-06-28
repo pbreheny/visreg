@@ -7,13 +7,16 @@ se.mlm <- function(object, newdata) {
   ynames <- colnames(coef)
   if (is.null(ynames)) {
     lhs <- object$terms[[2L]]
-    if (mode(lhs) == "call" && lhs[[1L]] == "cbind")
+    if (mode(lhs) == "call" && lhs[[1L]] == "cbind") {
       ynames <- as.character(lhs)[-1L]
-    else ynames <- paste0("Y", seq_len(ny))
+    } else {
+      ynames <- paste0("Y", seq_len(ny))
+    }
   }
   ind <- ynames == ""
-  if (any(ind))
+  if (any(ind)) {
     ynames[ind] <- paste0("Y", seq_len(ny))[ind]
+  }
   value <- NULL
   cl <- oldClass(object)
   class(object) <- cl[match("mlm", cl):length(cl)][-1L]
@@ -25,7 +28,10 @@ se.mlm <- function(object, newdata) {
     object$fitted.values <- fitted[, i]
     object$effects <- effects[, i]
     object$call$formula[[2L]] <- object$terms[[2L]] <- as.name(ynames[i])
-    value <- cbind(value, predict(object, newdata=newdata, se.fit=TRUE)$se.fit)
+    value <- cbind(
+      value,
+      predict(object, newdata = newdata, se.fit = TRUE)$se.fit
+    )
   }
   colnames(value) <- ynames
   value

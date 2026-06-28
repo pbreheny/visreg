@@ -1,5 +1,5 @@
 #' @export
-plot.visregList <- function(x, ask=TRUE, ...) {
+plot.visregList <- function(x, ask = TRUE, ...) {
   n <- length(x)
   prompt.user <- FALSE
   if (ask & (prod(par("mfcol")) < n) && dev.interactive()) {
@@ -11,7 +11,7 @@ plot.visregList <- function(x, ask=TRUE, ...) {
   for (i in 1:length(x)) {
     p <- plot(x[[i]], ...)
     if (inherits(p, 'gg')) {
-      if (i==1) {
+      if (i == 1) {
         ggList <- vector('list', length(x))
       }
       ggList[[i]] <- p
