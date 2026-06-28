@@ -32,11 +32,12 @@ jobs:
         with:
           cache: true
           extra-packages: |
-            any::gbm
-            any::pkgdown
-            any::randomForest
             any::e1071
+            any::gbm
             any::ggplot2
+            any::pkgdown
+            any::quantreg
+            any::randomForest
             local::.
           needs: website
 
