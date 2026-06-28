@@ -10,12 +10,14 @@ model. Some of these packages do not automatically handle missing data,
 so we first create a complete-case data set:
 
 ``` r
+
 aq <- na.omit(airquality)
 ```
 
 ## Random forests
 
 ``` r
+
 library(randomForest, quietly=TRUE)
 fit <- randomForest(Ozone ~ Solar.R + Wind + Temp, data=aq)
 visreg(fit, "Temp", ylab="Ozone")
@@ -26,6 +28,7 @@ visreg(fit, "Temp", ylab="Ozone")
 ## Support vector machines
 
 ``` r
+
 library(e1071)
 fit <- svm(Ozone ~ Solar.R + Wind + Temp, data=aq)
 visreg(fit, "Temp", ylab="Ozone")
@@ -44,6 +47,7 @@ omit plotting the partial residuals. However, we can supply our own
 user-defined `residuals` method:
 
 ``` r
+
 residuals.gbm <- function(fit) {fit$data$y - fit$fit}
 ```
 
@@ -54,6 +58,7 @@ method, you can always write your own.
 Once defined, we
 
 ``` r
+
 library(gbm)
 fit <- gbm(Ozone ~ Solar.R + Wind + Temp, data=aq, distribution="gaussian")
 visreg(fit, "Temp", ylab="Ozone")
@@ -67,6 +72,7 @@ capture the relationship between temperature and ozone. By increasing
 the number of trees, we obtain a much more reasonable fit:
 
 ``` r
+
 fit <- gbm(Ozone ~ Solar.R + Wind + Temp, data=aq, distribution="gaussian", n.trees=5000)
 visreg(fit, "Temp", ylab="Ozone")
 ```

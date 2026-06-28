@@ -14,12 +14,14 @@ more.
 To install the latest release version from CRAN:
 
 ``` r
+
 install.packages("visreg")
 ```
 
 To install the latest development version from GitHub:
 
 ``` r
+
 remotes::install_github("pbreheny/visreg")
 ```
 
@@ -28,12 +30,14 @@ remotes::install_github("pbreheny/visreg")
 The basic usage is that you fit a model, for example:
 
 ``` r
+
 fit <- lm(Ozone ~ Solar.R + Wind + Temp, data=airquality)
 ```
 
 and then you pass it to `visreg`:
 
 ``` r
+
 visreg(fit, "Wind")
 ```
 
@@ -42,6 +46,7 @@ visreg(fit, "Wind")
 A more complex example, which uses the `gam()` function from **mgcv**:
 
 ``` r
+
 airquality$Heat <- cut(airquality$Temp, 3, labels=c("Cool", "Mild", "Hot"))
 fit <- gam(Ozone ~ s(Wind, by=Heat, sp=0.1), data=airquality)
 visreg(fit, "Wind", "Heat", gg=TRUE, ylab="Ozone")

@@ -4,6 +4,7 @@ Suppose we have a model with a complicated interaction between two
 continuous variables:
 
 ``` r
+
 library(splines)
 fit <- lm(Ozone ~ Solar.R +ns(Wind, df=2)*ns(Temp, df=2), data=airquality)
 ```
@@ -17,6 +18,7 @@ for this, filled contour plots and perspective plots.
 The default is to provide a contoured image plot:
 
 ``` r
+
 visreg2d(fit, "Wind", "Temp")
 ```
 
@@ -30,6 +32,7 @@ if you wish to change any options, you will need to look at
 see the correct syntax. For example, if we want different colors,
 
 ``` r
+
 visreg2d(fit, "Wind", "Temp", color.palette=colorRampPalette(c("black", "white", "purple")))
 ```
 
@@ -42,6 +45,7 @@ three-dimensional image. This can be done in a static manner using
 `type="persp"`:
 
 ``` r
+
 visreg2d(fit, "Wind", "Temp", plot.type="persp")
 ```
 
@@ -50,6 +54,7 @@ visreg2d(fit, "Wind", "Temp", plot.type="persp")
 Or dynamically using `type="rgl"`:
 
 ``` r
+
 visreg2d(fit, "Wind", "Temp", plot.type="rgl")
 ```
 

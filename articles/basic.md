@@ -3,6 +3,7 @@
 Let’s begin with a simple, additive, linear model:
 
 ``` r
+
 fit <- lm(Ozone ~ Solar.R + Wind + Temp, data=airquality)
 summary(fit)$coef
 #                 Estimate  Std. Error   t value     Pr(>|t|)
@@ -19,6 +20,7 @@ Visual summaries are often more informative and clear than numerical
 summaries. Let’s see what `visreg` provides:
 
 ``` r
+
 visreg(fit, "Wind")
 ```
 
@@ -30,6 +32,7 @@ solar radiation is just barely significant, which we can see visually
 with visreg (adding a horizontal line here that represents the null):
 
 ``` r
+
 visreg(fit, "Solar.R")
 abline(h=44.5, lty=2)
 ```
@@ -54,6 +57,7 @@ variables. The following block of code creates a factor called `Heat` by
 discretizing `Temp`, and then visualizes its relationship with `Ozone`:
 
 ``` r
+
 airquality$Heat <- cut(airquality$Temp, 3, labels=c("Cool", "Mild", "Hot"))
 fit <- lm(Ozone ~ Solar.R + Wind + Heat, data=airquality)
 visreg(fit, "Heat")

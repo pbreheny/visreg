@@ -197,6 +197,7 @@ Patrick Breheny and Woodrow Burchett
 ## Examples
 
 ``` r
+
 # --- Linear models ----------------------------------------
 
 ## Basic

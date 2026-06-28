@@ -120,11 +120,6 @@ visreg2d(fit,x="Wind",y="Temp",plot.type="rgl")
 ## Requires the ggplot2 package
 # \donttest{
 visreg2d(fit, x="Wind", y="Temp", plot.type="gg")
-#> Warning: `aes_string()` was deprecated in ggplot2 3.0.0.
-#> ℹ Please use tidy evaluation idioms with `aes()`.
-#> ℹ See also `vignette("ggplot2-in-packages")` for more information.
-#> ℹ The deprecated feature was likely used in the visreg package.
-#>   Please report the issue at <https://github.com/pbreheny/visreg/issues>.
 
 # }
 ```

@@ -4,6 +4,7 @@ Generally speaking, visreg works the same way for GLMs as with any other
 model:
 
 ``` r
+
 data("birthwt", package="MASS")
 fit <- glm(low ~ age + race + smoke + lwt, data=birthwt, family="binomial")
 visreg(fit, "lwt", xlab="Mother's weight", ylab="Log odds (low birthweight)")
@@ -28,6 +29,7 @@ by manually specifying `trans` as described in
 although for GLMs the shortcut `scale="response"` is provided:
 
 ``` r
+
 visreg(fit, "lwt", scale="response", rug=2, xlab="Mother's weight", ylab="P(low birthweight)")
 ```
 
@@ -46,6 +48,7 @@ To illustrate, suppose we generate some data from a Poisson distribution
 using a log link:
 
 ``` r
+
 n <- 50
 x <- seq(-5, 5, len=n)
 y <- rpois(n, lambda = exp(x))
@@ -54,18 +57,21 @@ y <- rpois(n, lambda = exp(x))
 create an artificial outlier:
 
 ``` r
+
 y[which.max(x)] <- 0
 ```
 
 then fit a Poisson regression model:
 
 ``` r
+
 fit <- glm(y ~ x, family=poisson)
 ```
 
 and visualize with `visreg`:
 
 ``` r
+
 par(mfrow=c(1,3))
 visreg(fit, "x")
 visreg(fit, "x", scale="response")

@@ -24,6 +24,7 @@ and visreg provides a convenient interface for visualizing it. Let’s fit
 the following model:
 
 ``` r
+
 fit <- lm(Ozone ~ Solar.R + Wind + Temp, data=airquality)
 ```
 
@@ -31,6 +32,7 @@ We can then visualize what the model says about the relationship between
 the outcome and, say, wind, with:
 
 ``` r
+
 visreg(fit, "Wind")
 ```
 
@@ -45,6 +47,7 @@ options to produce many types of plots. As another example, suppose the
 model contains an interaction:
 
 ``` r
+
 airquality$Heat <- cut(airquality$Temp, 3, labels=c("Cool","Mild","Hot"))
 fit <- lm(Ozone ~ Solar.R + Wind*Heat, data=airquality)
 ```
@@ -52,6 +55,7 @@ fit <- lm(Ozone ~ Solar.R + Wind*Heat, data=airquality)
 Visreg can plot cross-sections of this fit, either in separate panels:
 
 ``` r
+
 visreg(fit, "Wind", by="Heat")
 ```
 
@@ -60,6 +64,7 @@ visreg(fit, "Wind", by="Heat")
 Or overlaid on top of one another:
 
 ``` r
+
 visreg(fit, "Wind", by="Heat", overlay=TRUE)
 ```
 
@@ -68,6 +73,7 @@ visreg(fit, "Wind", by="Heat", overlay=TRUE)
 Or as a two-dimensional filled contour plot (level plot):
 
 ``` r
+
 fit <- lm(Ozone ~ poly(Wind, 2)*poly(Temp, 2), data=airquality)
 visreg2d(fit, "Wind", "Temp")
 ```

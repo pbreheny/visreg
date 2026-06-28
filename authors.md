@@ -14,7 +14,7 @@ Source:
 
 Breheny P, Burchett W (2017). “Visualization of Regression Models Using
 visreg.” *The R Journal*, **9**(2), 56–71.
-[doi:10.32614/RJ-2017-046](https://doi.org/10.32614/RJ-2017-046),
+[doi:10.32614/RJ-2017-046](https://doi.org/10.32614/RJ-2017-046).
 <https://doi.org/10.32614/RJ-2017-046>.
 
     @Article{,

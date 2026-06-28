@@ -9,18 +9,11 @@ Yes; it’s probably easiest to do this using `ggplot2` to render the
 surface:
 
 ``` r
+
 fit <- lm(Ozone ~ Solar.R + Wind + Temp + I(Wind^2) + I(Temp^2) + I(Wind*Temp)+I(Wind*Temp^2) + 
           I(Temp*Wind^2) + I(Temp^2*Wind^2), data=airquality)
 visreg2d(fit, x="Wind", y="Temp", plot.type="gg") +
   geom_point(aes(Wind, Temp), data=subset(airquality, !is.na(Ozone)), col='gray50')
-# Warning: `aes_string()` was deprecated in ggplot2 3.0.0.
-# ℹ Please use tidy evaluation idioms with `aes()`.
-# ℹ See also `vignette("ggplot2-in-packages")` for more information.
-# ℹ The deprecated feature was likely used in the visreg package.
-#   Please report the issue at <https://github.com/pbreheny/visreg/issues>.
-# This warning is displayed once every 8 hours.
-# Call `lifecycle::last_lifecycle_warnings()` to see where this warning was
-# generated.
 ```
 
 ![](faq_files/figure-html/unnamed-chunk-2-1.png)
@@ -32,6 +25,7 @@ works and the way in which it actually creates two plots, one main plot
 and one plot for the legend:
 
 ``` r
+
 p <- quote({
   axis(1, at = mx, labels = lx)
   axis(2, at = my, labels = ly)
@@ -53,6 +47,7 @@ just using a `tibble` here for convenience, it isn’t relevant to the
 question):
 
 ``` r
+
 library(mgcv)
 library(tibble)
 n <- 20
@@ -70,13 +65,16 @@ Now, `fit$gam` does not include the call (i.e., `fit$gam$call` is
 `NULL`), which means `visreg` won’t be able to find the data:
 
 ``` r
+
 visreg(fit$gam, 'x')
-# Error in FUN(X[[i]], ...): object 'y' not found
+# Error in `FUN()`:
+# ! object 'y' not found
 ```
 
 So you have to include it manually:
 
 ``` r
+
 fit$gam$data <- Data
 visreg(fit$gam, 'x')
 ```
@@ -96,14 +94,17 @@ models, you’ll have to supply that transformation yourself. For example,
 with the model from the previous question, this code fails:
 
 ``` r
+
 visreg(fit$gam, 'x', scale='response')
-# Error in UseMethod("family"): no applicable method for 'family' applied to an object of class "gam"
+# Error in `UseMethod()`:
+# ! no applicable method for 'family' applied to an object of class "gam"
 ```
 
 Since this is a binomial model with a logistic link,
 `binomial()$linkinv` provides the inverse transformation:
 
 ``` r
+
 visreg(fit$gam, 'x', trans=binomial()$linkinv, ylab="Probability")
 ```
 
@@ -115,15 +116,9 @@ You can achieve this via
 [`ggplot2::coord_flip`](https://ggplot2.tidyverse.org/reference/coord_flip.html):
 
 ``` r
+
 fit <- lm(Ozone ~ Solar.R + Wind + Temp, data=airquality)
 visreg(fit, "Wind", gg=TRUE) + coord_flip()
-# Warning: Using `size` aesthetic for lines was deprecated in ggplot2 3.4.0.
-# ℹ Please use `linewidth` instead.
-# ℹ The deprecated feature was likely used in the ggplot2 package.
-#   Please report the issue at <https://github.com/tidyverse/ggplot2/issues>.
-# This warning is displayed once every 8 hours.
-# Call `lifecycle::last_lifecycle_warnings()` to see where this warning was
-# generated.
 ```
 
 ![](faq_files/figure-html/unnamed-chunk-9-1.png)

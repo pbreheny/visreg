@@ -12,6 +12,7 @@ For example, suppose we allow the effect of wind on ozone to be
 nonlinear by introducing a quadratic term into the model:
 
 ``` r
+
 fit <- lm(Ozone ~ Solar.R + Wind + I(Wind^2) + Temp, data=airquality)
 visreg(fit, "Wind")
 ```
@@ -23,6 +24,7 @@ represents this correctly in the plot. This should work for any
 transformation you can think of; here are some examples:
 
 ``` r
+
 fit <- lm(Ozone ~ Solar.R + Wind + Wind*I(Wind > 10) + Temp, data=airquality)
 visreg(fit, "Wind", print.cond=FALSE)
 ```
@@ -30,6 +32,7 @@ visreg(fit, "Wind", print.cond=FALSE)
 ![](trans_files/figure-html/unnamed-chunk-3-1.png)
 
 ``` r
+
 fit <- lm(Ozone ~ Solar.R + poly(Wind, 3) + Temp, data=airquality)
 visreg(fit, "Wind")
 ```
@@ -37,6 +40,7 @@ visreg(fit, "Wind")
 ![](trans_files/figure-html/unnamed-chunk-4-1.png)
 
 ``` r
+
 library(splines)
 fit <- lm(Ozone ~ Solar.R + ns(Wind, df=3) + Temp, data=airquality)
 visreg(fit, "Wind")
@@ -60,6 +64,7 @@ that fall below 0. One way of remedying this is to model the log of
 ozone concentrations instead of the ozone concentrations directly:
 
 ``` r
+
 fit <- lm(log(Ozone) ~ Solar.R + Wind + Temp, data=airquality)
 visreg(fit, "Wind", trans=exp, ylab="Ozone", partial=TRUE)
 ```
@@ -86,6 +91,7 @@ As one would hope, nonlinear terms and outcome transformations can be
 combined and visualized in a straightforward manner:
 
 ``` r
+
 fit <- lm(log(Ozone) ~ Solar.R + Wind + I(Wind^2) + Temp, data=airquality)
 visreg(fit, "Wind", trans=exp, ylab="Ozone", partial=TRUE)
 ```

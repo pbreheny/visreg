@@ -10,6 +10,7 @@ For example, suppose we fit a multinomial regression model using the
 `nnet` package:
 
 ``` r
+
 library(nnet)
 airquality$Heat <- cut(airquality$Temp,3,labels=c("Cool","Mild","Hot"))
 fit <- multinom(Heat ~ Wind + Ozone, airquality)
@@ -25,6 +26,7 @@ which can be plotted using the
 example:
 
 ``` r
+
 visreg(fit, "Ozone", collapse=TRUE, overlay=TRUE, ylab="Probability",
        ylim=c(0,1), partial=FALSE, rug=2)
 ```
@@ -37,6 +39,7 @@ several different quantiles. The `collapse` option is used similarly
 here:
 
 ``` r
+
 library(quantreg)
 fit <- rq(Ozone ~ Wind + Temp, tau=c(.25, .5, .75), data=airquality)
 v <- visreg(fit, "Wind", overlay=TRUE, collapse=TRUE)
@@ -49,6 +52,7 @@ quantiles of interest. To obtain them, you must construct the
 `visregList` manually:
 
 ``` r
+
 fit1 <- rq(Ozone ~ Wind + Temp, tau=.25, data=airquality)
 fit2 <- rq(Ozone ~ Wind + Temp, tau=.5, data=airquality)
 fit3 <- rq(Ozone ~ Wind + Temp, tau=.75, data=airquality)
@@ -58,21 +62,6 @@ v <- visregList(visreg(fit1, "Wind", plot=FALSE),
                 labels=c("25%", "50%", "75%"), collapse=TRUE)
 plot(v, ylab="Ozone", gg=TRUE)
 # Loading required namespace: ggplot2
-# Warning: `aes_string()` was deprecated in ggplot2 3.0.0.
-# ℹ Please use tidy evaluation idioms with `aes()`.
-# ℹ See also `vignette("ggplot2-in-packages")` for more information.
-# ℹ The deprecated feature was likely used in the visreg package.
-#   Please report the issue at <https://github.com/pbreheny/visreg/issues>.
-# This warning is displayed once every 8 hours.
-# Call `lifecycle::last_lifecycle_warnings()` to see where this warning was
-# generated.
-# Warning: Using `size` aesthetic for lines was deprecated in ggplot2 3.4.0.
-# ℹ Please use `linewidth` instead.
-# ℹ The deprecated feature was likely used in the ggplot2 package.
-#   Please report the issue at <https://github.com/tidyverse/ggplot2/issues>.
-# This warning is displayed once every 8 hours.
-# Call `lifecycle::last_lifecycle_warnings()` to see where this warning was
-# generated.
 ```
 
 ![](multi_files/figure-html/unnamed-chunk-5-1.png)

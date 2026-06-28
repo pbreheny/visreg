@@ -8,6 +8,7 @@ how they compare. Using the same model as
 [before](https://pbreheny.github.io/visreg/articles/cross.md):
 
 ``` r
+
 airquality$Heat <- cut(airquality$Temp, 3, labels=c("Cool", "Mild", "Hot"))
 fit <- lm(Ozone ~ Solar.R + Wind * Heat, data=airquality)
 ```
@@ -16,12 +17,14 @@ We can specify `overlay=TRUE` to obtain a version of the plot in which
 all the images are overlaid:
 
 ``` r
+
 visreg(fit, "Wind", by="Heat", overlay=TRUE)
 ```
 
 ![](overlay_files/figure-html/unnamed-chunk-3-1.png)
 
 ``` r
+
 visreg(fit, "Heat", by="Wind", overlay=TRUE)
 ```
 
@@ -32,6 +35,7 @@ plots](https://pbreheny.github.io/visreg/articles/cross.md) work in the
 same way here. For example,
 
 ``` r
+
 visreg(fit, "Heat", by="Wind", overlay=TRUE, breaks=c(6, 12))
 ```
 
@@ -41,6 +45,7 @@ In particular, the option `strip.names` is used in the same way for
 consistency, even though there are no actual strips in an overlay plot:
 
 ``` r
+
 visreg(fit, "Wind", by="Heat", overlay=TRUE, strip.names=c("Cold", "Not so hot", "Really hot"))
 ```
 
@@ -54,6 +59,7 @@ plots](https://pbreheny.github.io/visreg/articles/options.md), although
 the colors of lines, points, and bands:
 
 ``` r
+
 visreg(fit, "Wind", by="Heat", overlay=TRUE,
        line=list(col=c("#00C1C9", "#D63EFF", "#FF4E37"), lwd=1),
        fill=list(col=c("#00C1C980", "#D63EFF80", "#FF4E3780")),
@@ -69,6 +75,7 @@ For `gg` plots, the mechanism is different – the returned plot can be
 modified with calls to `scale_xxx_manual()`:
 
 ``` r
+
 library(ggplot2)
 visreg(fit, "Wind", by="Heat", overlay=TRUE, gg=TRUE) +
   scale_color_manual(values=c("#00C1C9", "#D63EFF", "#FF4E37")) +

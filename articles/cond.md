@@ -19,6 +19,7 @@ temperature of 50 degrees (2) the default median temperature of 79
 degrees and (3) a hot temperature of 100 degrees.
 
 ``` r
+
 fit <- lm(Ozone ~ Solar.R + Wind + Temp, data=airquality)
 par(mfrow=c(1,3))
 visreg(fit, "Wind", cond=list(Temp=50))

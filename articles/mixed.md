@@ -14,6 +14,7 @@ random-slope model from a study involving the protein content of cows’
 milk in the weeks following calving:
 
 ``` r
+
 library(lme4, quietly=TRUE)
 data(Milk, package="nlme")
 ctrl <- lmerControl(optCtrl=list(xtol_rel=1e-6)) # Warning otherwise
@@ -27,6 +28,7 @@ to the large number of points, we’re making the partial residuals
 smaller and partially transparent):
 
 ``` r
+
 visreg(fit, "Diet", ylab="Protein", points=list(col="#55555540", cex=0.25))
 ```
 
@@ -36,6 +38,7 @@ But, because the random effect terms drop out of a contrast plot, we do
 have bands here:
 
 ``` r
+
 visreg(fit, "Diet", type="contrast", ylab=expression(Delta*'Protein'), 
        points=list(col="#55555540", cex=0.25))
 ```
@@ -58,6 +61,7 @@ of the code are worth pointing out:
   the raw `visreg` object prior to plotting.
 
 ``` r
+
 v <- visreg(fit, "Time", by="Cow", re.form=~(Time|Cow), plot=FALSE)
 subCow <- sample(levels(Milk$Cow), 10)
 vv <- subset(v, Cow %in% subCow)

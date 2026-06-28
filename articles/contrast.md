@@ -35,6 +35,7 @@ started](https://pbreheny.github.io/visreg/articles/basic.md), but
 display contrast plots and conditional plots side-by-side:
 
 ``` r
+
 airquality$Heat <- cut(airquality$Temp, 3, labels=c("Cool", "Mild", "Hot"))
 fit <- lm(Ozone ~ Solar.R + Wind + Heat, data=airquality)
 par(mfrow=c(1,2))
@@ -45,6 +46,7 @@ visreg(fit, "Wind", type="contrast")
 ![](contrast_files/figure-html/unnamed-chunk-3-1.png)
 
 ``` r
+
 visreg(fit, "Heat", type="conditional")
 visreg(fit, "Heat", type="contrast")
 ```
