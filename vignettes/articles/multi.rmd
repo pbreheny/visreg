@@ -46,7 +46,7 @@ v <- visregList(visreg(fit1, "Wind", plot=FALSE),
                 visreg(fit2, "Wind", plot=FALSE),
                 visreg(fit3, "Wind", plot=FALSE),
                 labels=c("25%", "50%", "75%"), collapse=TRUE)
-plot(v, ylab="Ozone", gg=TRUE)
+plot(v, ylab="Ozone")
 ```
 
 Notice the use of the `labels` argument to label the elements of the list.

@@ -1,10 +1,12 @@
 ^pkgdown$
 ^docs$
 ^vignettes/articles$
-.version.json
+
+^.air.toml$
+^.version.json$
 ^.*\.Rproj$
 ^\.Rproj\.user$
 ^\.github$
-.project.url
+^.project.url$
 ^\.positai$
 ^\.claude$

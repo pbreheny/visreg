@@ -18,8 +18,8 @@
 #' @param by (Optional) A variable allowing you to divide your plot into
 #' cross-sections based on levels of the \code{by} variable; particularly
 #' useful for visualizing models with interactions.  Supplied as a character
-#' string.  Uses the lattice package.  Both continuous variables and factors
-#' are supported.
+#' string.  Cross-sections are displayed as facets of a ggplot2 plot.  Both
+#' continuous variables and factors are supported.
 #' @param breaks If a continuous variable is used for the \code{by} option, the
 #' \code{breaks} argument controls the values at which the cross-sections are
 #' taken. By default, cross-sections are taken at the 10th, 50th, and 90th
@@ -68,8 +68,8 @@
 #' @param plot Send the calculations to \code{\link{plot.visreg}}?  Default is
 #' TRUE.
 #' @param \dots Graphical parameters (e.g., \code{ylab}) can be passed to the
-#' function to customize the plots.  If \code{by=TRUE}, lattice parameters can
-#' be passed, such as layout (see examples below).
+#' function to customize the plots.  If \code{by=TRUE}, ggplot2 faceting
+#' parameters can be passed, such as \code{strip.names} (see examples below).
 #' @return A \code{visreg} or \code{visregList} object (which is simply a list
 #' of \code{visreg} objects).  A \code{visreg} object has three components:
 #' \item{fit}{A data frame with \code{nn} rows containing the fit of the model

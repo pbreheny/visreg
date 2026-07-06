@@ -1,37 +1,14 @@
-ggContPlot <- function(
-  v,
-  partial,
-  band,
-  rug,
-  whitespace,
-  strip.names,
-  overlay,
-  top,
-  line.par,
-  fill.par,
-  points.par,
-  ...
-) {
+ggContPlot <- function(v, partial, band, rug, strip.names, overlay, top, line, fill, points, ...) {
   # Setup data frames
   xx <- v$fit[, v$meta$x]
-  fillData <- data.frame(
-    x = c(xx, rev(xx)),
-    y = c(v$fit$visregLwr, rev(v$fit$visregUpr))
-  )
-  lineData <- data.frame(
-    x = xx,
-    y = v$fit$visregFit
-  )
-  pointData <- data.frame(
-    x = v$res[, v$meta$x],
-    y = v$res$visregRes
-  )
+  fillData <- data.frame(x = xx, ymin = v$fit$visregLwr, ymax = v$fit$visregUpr)
+  lineData <- data.frame(x = xx, y = v$fit$visregFit)
+  pointData <- data.frame(x = v$res[, v$meta$x], y = v$res$visregRes)
   if ("by" %in% names(v$meta)) {
     bb <- factor(v$fit[, v$meta$by])
-    fillData$z <- factor(c(bb, rev(bb)), labels = levels(bb))
-    lineData$z <- bb
-    pointData$z <- factor(v$res[, v$meta$by])
-    names(fillData)[3] <- names(lineData)[3] <- names(pointData)[3] <- v$meta$by
+    fillData[[v$meta$by]] <- bb
+    lineData[[v$meta$by]] <- bb
+    pointData[[v$meta$by]] <- factor(v$res[, v$meta$by])
   }
 
   # Plotting defaults
@@ -47,69 +24,82 @@ ggContPlot <- function(
     }
   }
 
-  # Base gg object and aesthetic defaults
+  p <- ggplot2::ggplot() + ggplot2::xlab(xlab) + ggplot2::ylab(ylab)
+
+  # Aesthetic defaults; each layer carries its own data + mapping, so none
+  # of them rely on inheriting aesthetics from a base plot/data
   if ("by" %in% names(v$meta) & overlay) {
-    p <- ggplot2::ggplot(
-      pointData,
-      ggplot2::aes(.data$x, .data$y, group = .data[[v$meta$by]])
+    fill.args <- list(
+      mapping = ggplot2::aes(
+        x = .data$x,
+        ymin = .data$ymin,
+        ymax = .data$ymax,
+        fill = .data[[v$meta$by]]
+      ),
+      data = fillData
     )
-    fill.args <- list(mapping = ggplot2::aes(fill = .data[[v$meta$by]]))
     line.args <- list(
-      mapping = ggplot2::aes(color = .data[[v$meta$by]]),
+      mapping = ggplot2::aes(x = .data$x, y = .data$y, color = .data[[v$meta$by]]),
+      data = lineData,
       linewidth = 1
     )
     point.args <- list(
-      mapping = ggplot2::aes(color = .data[[v$meta$by]]),
+      mapping = ggplot2::aes(x = .data$x, y = .data$y, color = .data[[v$meta$by]]),
+      data = pointData,
       size = 0.8
     )
     acol <- pal(length(levels(bb)), alpha = 0.3)
     col <- pal(length(levels(bb)))
-    if (length(fill.par)) {
-      fill.args[names(fill.par)] <- fill.par
+    if (length(fill)) {
+      fill.args[names(fill)] <- fill
     }
-    if (length(line.par)) {
-      line.args[names(line.par)] <- line.par
+    if (length(line)) {
+      line.args[names(line)] <- line
     }
-    if (length(points.par)) {
-      point.args[names(points.par)] <- points.par
+    if (length(points)) {
+      point.args[names(points)] <- points
     }
     if (is.character(strip.names) & length(strip.names) == length(levels(bb))) {
       p <- p +
         ggplot2::scale_fill_manual(values = acol, labels = strip.names) +
         ggplot2::scale_color_manual(values = col, labels = strip.names)
     } else {
-      p <- p +
-        ggplot2::scale_fill_manual(values = acol) +
-        ggplot2::scale_color_manual(values = col)
+      p <- p + ggplot2::scale_fill_manual(values = acol) + ggplot2::scale_color_manual(values = col)
     }
   } else {
-    p <- ggplot2::ggplot(
-      pointData,
-      ggplot2::aes(.data$x, .data$y)
+    fill.args <- list(
+      mapping = ggplot2::aes(x = .data$x, ymin = .data$ymin, ymax = .data$ymax),
+      data = fillData,
+      fill = "gray85"
     )
-    fill.args <- list(fill = "gray85")
-    line.args <- list(linewidth = 1, col = "#008DFFFF")
-    point.args <- list(size = 0.8, col = "gray50")
-    if (length(fill.par)) {
-      fill.args[names(fill.par)] <- fill.par
+    line.args <- list(
+      mapping = ggplot2::aes(x = .data$x, y = .data$y),
+      data = lineData,
+      linewidth = 1,
+      color = "#008DFFFF"
+    )
+    point.args <- list(
+      mapping = ggplot2::aes(x = .data$x, y = .data$y),
+      data = pointData,
+      size = 0.8,
+      color = "gray50"
+    )
+    if (length(fill)) {
+      fill.args[names(fill)] <- fill
     }
-    if (length(line.par)) {
-      line.args[names(line.par)] <- line.par
+    if (length(line)) {
+      line.args[names(line)] <- line
     }
-    if (length(points.par)) point.args[names(points.par)] <- points.par
+    if (length(points)) point.args[names(points)] <- points
   }
-  p <- p + ggplot2::xlab(xlab) + ggplot2::ylab(ylab)
 
   # Add geoms
   if (band) {
-    fill.args$data <- fillData
-    p <- p + do.call("geom_polygon", fill.args, envir = asNamespace("ggplot2"))
+    p <- p + do.call("geom_ribbon", fill.args, envir = asNamespace("ggplot2"))
   }
-  line.args$data <- lineData
   if (!partial) {
     p <- p + do.call("geom_line", line.args, envir = asNamespace("ggplot2"))
   } else {
-    point.args$data <- pointData
     if (top == "line") {
       p <- p + do.call("geom_point", point.args, envir = asNamespace("ggplot2"))
       p <- p + do.call("geom_line", line.args, envir = asNamespace("ggplot2"))

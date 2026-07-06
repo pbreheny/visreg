@@ -90,5 +90,5 @@ You can achieve this via `ggplot2::coord_flip`:
 
 ```{r, h=5, w=5}
 fit <- lm(Ozone ~ Solar.R + Wind + Temp, data=airquality)
-visreg(fit, "Wind", gg=TRUE) + coord_flip()
+visreg(fit, "Wind") + coord_flip()
 ```

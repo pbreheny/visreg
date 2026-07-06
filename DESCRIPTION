@@ -15,12 +15,12 @@ URL: https://pbreheny.github.io/visreg/, https://github.com/pbreheny/visreg
 BugReports: https://github.com/pbreheny/visreg/issues
 Depends: R (>= 4.1)
 Imports:
-  lattice,
   rlang,
   ggplot2
 Suggests:
   glmmTMB,
   knitr,
+  lattice,
   lme4,
   MASS,
   Matrix,
@@ -32,4 +32,4 @@ Enhances: nlme
 VignetteBuilder: knitr
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.3.2
+Config/roxygen2/version: 8.0.0

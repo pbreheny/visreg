@@ -8,17 +8,14 @@
   x,
   overlay = FALSE,
   print.cond = FALSE,
-  whitespace = 0.2,
   partial = identical(x$meta$trans, I),
   band = TRUE,
   rug = ifelse(partial, 0, 2),
   strip.names = is.numeric(x$fit[, x$meta$by]),
-  legend = TRUE,
   top = c("line", "points"),
-  gg = FALSE,
-  line.par = NULL,
-  fill.par = NULL,
-  points.par = NULL,
+  line = NULL,
+  fill = NULL,
+  points = NULL,
   ...
 )
 }
@@ -35,10 +32,6 @@ conditioned on in a conditional plot are printed to the console
 conditions will still be printed, but they have no bearing on the plot
 unless interactions are present.}
 
-\item{whitespace}{When \code{xvar} is a factor, \code{whitespace} determines the
-amount of space in between factors on the x-axis.  Default is 0.2, meaning
-that 20 percent of the horizontal axis is whitespace.}
-
 \item{partial}{If \code{partial=TRUE} (the default), partial residuals are
 shown on the plot.}
 
@@ -46,7 +39,7 @@ shown on the plot.}
 the plot.}
 
 \item{rug}{By default, partial residuals are plotted. Alternatively, a
-\code{\link[=rug]{rug()}} may be plotted along the horizontal axis instead.  Setting \code{rug=TRUE}
+rug may be plotted along the horizontal axis instead.  Setting \code{rug=TRUE}
 turns off partial residuals by default; if one wants both to be plotted, both
 \code{rug=TRUE} and \code{partial=TRUE} need to be specified. Two types of rug plots
 are available. If \code{rug=1} or \code{rug=TRUE}, then a basic rug is drawn on the
@@ -61,30 +54,25 @@ name of the \code{by} variable to the strip at the top of each panel. Default is
 also be a character vector, in which case it replaces the strip names
 altogether with values chosen by the user.}
 
-\item{legend}{For overlay plots, (\code{overlay=TRUE}), should visreg create a
-legend? If \code{legend=TRUE} (the default), a legend is placed in the top margin.}
-
 \item{top}{By default, the fitted line is plotted on top of the partial
 residuals; usually this is preferable, but it does run the risk of obscuring
 certain residuals. To change this behavior and plot the partial residuals on
 top, specify \code{top='points'}.}
 
-\item{gg}{By default (\code{gg=FALSE}), \code{visreg} will use the \strong{lattice} package
-to render the plot if multiple panels are required. If \code{gg=TRUE}, it will
-use the \strong{ggplot2} package instead, provided that it is installed.}
+\item{line}{List of parameters to pass to \code{\link[ggplot2:geom_line]{ggplot2::geom_line()}} (continuous
+\code{xvar}) or \code{\link[ggplot2:geom_crossbar]{ggplot2::geom_crossbar()}} (factor \code{xvar}) when the fitted line
+is plotted.}
 
-\item{line.par}{List of parameters (see \code{\link[=par]{par()}}) to pass to \code{lines(...)} or
-\code{\link[ggplot2:geom_path]{ggplot2::geom_line()}} when lines are plotted.}
+\item{fill}{List of parameters to pass to \code{\link[ggplot2:geom_ribbon]{ggplot2::geom_ribbon()}}
+(continuous \code{xvar}) or \code{\link[ggplot2:geom_crossbar]{ggplot2::geom_crossbar()}} (factor \code{xvar}) when
+shaded confidence regions are plotted.}
 
-\item{fill.par}{List of parameters (see \code{\link[=par]{par()}}) to pass to \code{polygon(...)} or
-\code{\link[ggplot2:geom_polygon]{ggplot2::geom_polygon()}} when shaded confidence regions are plotted.}
+\item{points}{List of parameters to pass to \code{\link[ggplot2:geom_point]{ggplot2::geom_point()}}
+(continuous \code{xvar}) or \code{\link[ggplot2:geom_jitter]{ggplot2::geom_jitter()}} (factor \code{xvar}) when
+partial residuals are plotted.}
 
-\item{points.par}{List of parameters (\code{\link[=par]{par()}}) to pass to \code{points(...)} or
-\code{\link[ggplot2:geom_point]{ggplot2::geom_point()}} when partial residuals are plotted.}
-
-\item{...}{Graphical parameters can be passed to the function to customize
-the plots. If \code{by=TRUE}, lattice parameters can be passed, such as \code{layout}
-(see examples below).}
+\item{...}{Additional arguments passed on to the plot, such as \code{xlab},
+\code{ylab}.}
 }
 \description{
 A function for visualizing regression models quickly and easily. Default
@@ -95,10 +83,10 @@ or \code{visregList} object as calculated by \code{\link[=visreg]{visreg()}} and
 }
 \examples{
 fit <- lm(Ozone ~ Solar.R + Wind + Temp,data=airquality)
-visreg(fit, "Wind", line=list(col="red"), points=list(cex=1, pch=1))
+visreg(fit, "Wind", line=list(color="red"), points=list(size=1, shape=1))
 
 ## Changing appearance
-visreg(fit, "Wind", line=list(col="red"), points=list(cex=1, pch=1))
+visreg(fit, "Wind", line=list(color="red"), points=list(size=1, shape=1))
 
 ## See ?visreg and https://pbreheny.github.io/visreg for more examples
 }

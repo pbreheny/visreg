@@ -3,49 +3,47 @@ suppressPackageStartupMessages(library(ggplot2))
 airquality$Heat <- cut(airquality$Temp, 3, labels = c("Cool", "Mild", "Hot"))
 airquality$Mon <- factor(month.abb[airquality$Month], levels = month.abb[5:9])
 fit <- lm(Ozone ~ Wind + Heat + Solar.R + Mon, data = airquality)
-visreg(fit, "Wind", gg = TRUE)
-visreg(fit, "Wind", gg = TRUE) + geom_smooth(col = 'red', method = 'loess')
-visreg(fit, "Wind", gg = TRUE, line.par = list(col = 'green'))
-visreg(fit, "Heat", gg = TRUE)
-visreg(fit, "Heat", gg = TRUE, line.par = list(col = "green"))
+visreg(fit, "Wind")
+visreg(fit, "Wind") + geom_smooth(col = 'red', method = 'loess')
+visreg(fit, "Wind", line = list(color = 'green'))
+visreg(fit, "Heat")
+visreg(fit, "Heat", line = list(color = "green"))
 
 fit <- lm(Ozone ~ Wind * Heat + Solar.R + Mon, data = airquality)
-visreg(fit, "Heat", by = "Wind", gg = TRUE)
-visreg(fit, "Heat", by = "Wind", gg = TRUE, strip.names = FALSE)
-visreg(fit, "Heat", by = "Wind", gg = TRUE, strip.names = LETTERS[1:3])
-visreg(fit, "Heat", by = "Wind", gg = TRUE, type = "contrast")
-visreg(fit, "Heat", by = "Wind", gg = TRUE, partial = FALSE)
-visreg(fit, "Heat", by = "Wind", gg = TRUE, band = FALSE)
-visreg(fit, "Heat", by = "Wind", gg = TRUE, partial = FALSE, band = FALSE)
+visreg(fit, "Heat", by = "Wind")
+visreg(fit, "Heat", by = "Wind", strip.names = FALSE)
+visreg(fit, "Heat", by = "Wind", strip.names = LETTERS[1:3])
+visreg(fit, "Heat", by = "Wind", type = "contrast")
+visreg(fit, "Heat", by = "Wind", partial = FALSE)
+visreg(fit, "Heat", by = "Wind", band = FALSE)
+visreg(fit, "Heat", by = "Wind", partial = FALSE, band = FALSE)
 
 fit <- lm(Ozone ~ Wind * Heat + Solar.R + Mon, data = airquality)
-visreg(fit, "Wind", by = "Heat", gg = TRUE)
-visreg(fit, "Wind", by = "Heat", gg = TRUE, strip.names = TRUE)
-visreg(fit, "Wind", by = "Heat", gg = TRUE, strip.names = LETTERS[1:3])
-visreg(fit, "Wind", by = "Heat", gg = TRUE, type = "contrast")
-visreg(fit, "Wind", by = "Heat", gg = TRUE, partial = FALSE)
-visreg(fit, "Wind", by = "Heat", gg = TRUE, band = FALSE)
-visreg(fit, "Wind", by = "Heat", gg = TRUE, partial = FALSE, band = FALSE)
+visreg(fit, "Wind", by = "Heat")
+visreg(fit, "Wind", by = "Heat", strip.names = TRUE)
+visreg(fit, "Wind", by = "Heat", strip.names = LETTERS[1:3])
+visreg(fit, "Wind", by = "Heat", type = "contrast")
+visreg(fit, "Wind", by = "Heat", partial = FALSE)
+visreg(fit, "Wind", by = "Heat", band = FALSE)
+visreg(fit, "Wind", by = "Heat", partial = FALSE, band = FALSE)
 
 # Overlays
-visreg(fit, "Wind", by = "Heat", gg = TRUE, overlay = TRUE)
-visreg(fit, "Wind", by = "Heat", gg = TRUE, type = "contrast", overlay = TRUE)
+visreg(fit, "Wind", by = "Heat", overlay = TRUE)
+visreg(fit, "Wind", by = "Heat", type = "contrast", overlay = TRUE)
 visreg(
   fit,
   "Wind",
   by = "Heat",
-  gg = TRUE,
   type = "contrast",
   overlay = TRUE,
   partial = FALSE,
   band = FALSE
 )
-visreg(fit, "Heat", by = "Wind", gg = TRUE, overlay = TRUE)
+visreg(fit, "Heat", by = "Wind", overlay = TRUE)
 visreg(
   fit,
   "Heat",
   by = "Wind",
-  gg = TRUE,
   overlay = TRUE,
   breaks = c(0, 10, 20)
 )
@@ -53,46 +51,43 @@ visreg(
   fit,
   "Heat",
   by = "Wind",
-  gg = TRUE,
   overlay = TRUE,
   partial = FALSE,
   band = FALSE
 )
-visreg(fit, "Wind", by = "Solar.R", gg = TRUE, overlay = TRUE, breaks = 9)
-visreg(fit, "Wind", by = "Heat", gg = TRUE, rug = 2, overlay = TRUE)
-visreg(fit, "Heat", by = "Wind", gg = TRUE, rug = 2, overlay = TRUE)
+visreg(fit, "Wind", by = "Solar.R", overlay = TRUE, breaks = 9)
+visreg(fit, "Wind", by = "Heat", rug = 2, overlay = TRUE)
+visreg(fit, "Heat", by = "Wind", rug = 2, overlay = TRUE)
 
 # Breaks
-visreg(fit, "Heat", by = "Wind", gg = TRUE, breaks = 4)
-visreg(fit, "Heat", by = "Mon", gg = TRUE)
-visreg(fit, "Wind", by = "Solar.R", gg = TRUE)
-visreg(fit, "Wind", by = "Solar.R", gg = TRUE, breaks = 4)
+visreg(fit, "Heat", by = "Wind", breaks = 4)
+visreg(fit, "Heat", by = "Mon")
+visreg(fit, "Wind", by = "Solar.R")
+visreg(fit, "Wind", by = "Solar.R", breaks = 4)
 
 # Aesthetic options
-visreg(fit, "Wind", by = "Heat", gg = TRUE, xlab = "XXX", ylab = "YYY")
+visreg(fit, "Wind", by = "Heat", xlab = "XXX", ylab = "YYY")
 visreg(
   fit,
   "Wind",
   by = "Heat",
-  gg = TRUE,
-  line = list(col = "blue", size = 5),
-  points = list(col = "red", size = 3),
-  fill = list(fill = "yellow", col = "green")
+  line = list(color = "blue", linewidth = 5),
+  points = list(color = "red", size = 3),
+  fill = list(fill = "yellow", color = "green")
 )
-visreg(fit, "Heat", by = "Wind", gg = TRUE, xlab = "XXX", ylab = "YYY")
+visreg(fit, "Heat", by = "Wind", xlab = "XXX", ylab = "YYY")
 visreg(
   fit,
   "Heat",
   by = "Wind",
-  gg = TRUE,
-  line = list(col = "blue", size = 5),
-  points = list(col = "red", size = 3),
-  fill = list(fill = "yellow", col = "green")
+  line = list(color = "blue", linewidth = 5),
+  points = list(color = "red", size = 3),
+  fill = list(fill = "yellow", color = "green")
 )
 
 # A transformation
 fit <- lm(log(Ozone) ~ Wind * Heat + Solar.R + Mon, data = airquality)
-visreg(fit, "Wind", by = 'Solar.R', gg = TRUE, trans = exp, overlay = TRUE)
+visreg(fit, "Wind", by = 'Solar.R', trans = exp, overlay = TRUE)
 
 # Numeric variables with few unique values
 airquality$Hotness <- as.numeric(cut(
@@ -101,5 +96,5 @@ airquality$Hotness <- as.numeric(cut(
   labels = c("Cold", "Hot")
 ))
 fit <- lm(Ozone ~ Solar.R + Wind * Hotness, data = airquality)
-visreg(fit, "Wind", by = "Hotness", gg = TRUE)
-visreg(fit, "Wind", by = "Hotness", gg = TRUE, overlay = TRUE)
+visreg(fit, "Wind", by = "Hotness")
+visreg(fit, "Wind", by = "Hotness", overlay = TRUE)

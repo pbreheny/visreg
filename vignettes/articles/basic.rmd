@@ -4,6 +4,7 @@ title: Getting started
 
 ```{r include=FALSE}
 library(visreg)
+ggplot2::theme_set(ggplot2::theme_minimal())
 knitr::opts_knit$set(aliases=c(h = 'fig.height', w = 'fig.width'))
 knitr::opts_chunk$set(comment='#', collapse=TRUE, cache=FALSE, tidy=FALSE)
 knitr::knit_hooks$set(small.mar = function(before, options, envir) {
@@ -27,8 +28,8 @@ visreg(fit, "Wind")
 The visual summaries reinforce the numeric one: wind has a clear negative association with ozone. The numeric summary indicates that solar radiation is just barely significant, which we can see visually with visreg (adding a horizontal line here that represents the null):
 
 ```{r, h=5, w=5}
-visreg(fit, "Solar.R")
-abline(h=44.5, lty=2)
+visreg(fit, "Solar.R") +
+  ggplot2::geom_hline(yintercept = 44.5, linetype = 2)
 ```
 
 we can see that the gray band just barely excludes a flat line.

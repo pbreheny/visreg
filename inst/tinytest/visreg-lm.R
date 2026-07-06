@@ -44,9 +44,9 @@ airquality$Heat <- factor(airquality$Heat, levels = c("Hot", "Mild", "Cool"))
 fit <- lm(Ozone ~ Solar.R + Wind + Heat, data = airquality)
 visreg(fit, "Heat")
 
-# Whitespace option tests
-visreg(fit, "Heat", whitespace = .1)
-visreg(fit, "Heat", whitespace = .5)
+# Band width option tests
+visreg(fit, "Heat", fill = list(width = .1))
+visreg(fit, "Heat", fill = list(width = .9))
 
 # Plotting options
 airquality$Heat <- cut(airquality$Temp, 3, labels = c("Cool", "Mild", "Hot"))
@@ -54,60 +54,63 @@ fit <- lm(Ozone ~ Solar.R + Wind * Heat, data = airquality)
 visreg(
   fit,
   "Heat",
-  whitespace = .1,
   xlab = "Heat Category",
-  line = list(col = "blue", lwd = 10),
-  points = list(col = "red", cex = 2),
+  line = list(color = "blue", linewidth = 10),
+  points = list(color = "red", size = 2),
   alpha = .001,
-  fill = list(col = "yellow", border = "green"),
+  fill = list(fill = "yellow", color = "green"),
   print.cond = interactive()
 )
 visreg(
   fit,
   "Wind",
-  line = list(col = "blue", lwd = 10),
-  points = list(col = "red", cex = 2),
-  fill = list(col = "yellow", border = "green"),
+  line = list(color = "blue", linewidth = 10),
+  points = list(color = "red", size = 2),
+  fill = list(fill = "yellow", color = "green"),
   print.cond = interactive()
 )
 visreg(
   fit,
   "Wind",
   by = "Heat",
-  line = list(col = "blue", lwd = 10),
-  points = list(col = "red", cex = 2),
+  line = list(color = "blue", linewidth = 10),
+  points = list(color = "red", size = 2),
   alpha = .001,
-  fill = list(col = "yellow", border = "green")
+  fill = list(fill = "yellow", color = "green")
 )
 visreg(
   fit,
   "Heat",
   by = "Wind",
-  line = list(col = "blue", lwd = 10),
-  points = list(col = "red", cex = 2),
+  line = list(color = "blue", linewidth = 10),
+  points = list(color = "red", size = 2),
   alpha = .001,
-  fill = list(col = "yellow", border = "green")
+  fill = list(fill = "yellow", color = "green")
 )
-col <- c("purple", "orange", "yellow")
+color <- c("purple", "orange", "yellow")
 visreg(
   fit,
   "Wind",
   by = "Heat",
-  line = list(col = col, lwd = 10),
-  points = list(col = col, cex = 2),
-  fill = list(col = rgb(.1, .1, .1, .3), border = "green"),
+  line = list(linewidth = 10),
+  points = list(size = 2),
+  fill = list(fill = rgb(.1, .1, .1, .3)),
   overlay = TRUE
-)
-col <- c("purple", "orange", "yellow", "red")
+) +
+  ggplot2::scale_color_manual(values = color) +
+  ggplot2::scale_fill_manual(values = color)
+color <- c("purple", "orange", "yellow", "red")
 visreg(
   fit,
   "Heat",
   by = "Wind",
-  line = list(col = col, lwd = 10),
-  points = list(col = col, cex = 2),
-  fill = list(col = rgb(.1, .1, .1, .3), border = "green"),
+  line = list(linewidth = 10),
+  points = list(size = 2),
+  fill = list(fill = rgb(.1, .1, .1, .3)),
   overlay = TRUE
-)
+) +
+  ggplot2::scale_color_manual(values = color) +
+  ggplot2::scale_fill_manual(values = color)
 
 # Axis label size
 fit <- lm(Ozone ~ Solar.R + Wind + Heat, data = airquality)

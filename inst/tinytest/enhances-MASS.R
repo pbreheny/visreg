@@ -6,8 +6,7 @@ visreg(fit, 'Wind')
 
 # polr
 fit <- polr(Sat ~ Infl + Type + Cont, weights = Freq, data = housing)
-visreg(fit, 'Infl', partial = FALSE, rug = FALSE, collapse = TRUE)
-visreg(fit, 'Infl', partial = FALSE, rug = FALSE, collapse = TRUE, gg = TRUE) |>
+visreg(fit, 'Infl', partial = FALSE, rug = FALSE, collapse = TRUE) |>
   suppressMessages()
 visreg(
   fit,

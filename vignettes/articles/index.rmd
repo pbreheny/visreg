@@ -28,5 +28,5 @@ A more complex example, which uses the `gam()` function from **mgcv**:
 library(mgcv)
 airquality$Heat <- cut(airquality$Temp, 3, labels=c("Cool", "Mild", "Hot"))
 fit <- gam(Ozone ~ s(Wind, by=Heat, sp=0.1), data=airquality)
-visreg(fit, "Wind", "Heat", gg=TRUE, ylab="Ozone")
+visreg(fit, "Wind", "Heat", ylab="Ozone")
 ```

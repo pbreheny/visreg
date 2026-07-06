@@ -34,8 +34,8 @@ of your plot.  Both continuous variables and factors are supported.}
 \item{by}{(Optional) A variable allowing you to divide your plot into
 cross-sections based on levels of the \code{by} variable; particularly
 useful for visualizing models with interactions.  Supplied as a character
-string.  Uses the lattice package.  Both continuous variables and factors
-are supported.}
+string.  Cross-sections are displayed as facets of a ggplot2 plot.  Both
+continuous variables and factors are supported.}
 
 \item{breaks}{If a continuous variable is used for the \code{by} option, the
 \code{breaks} argument controls the values at which the cross-sections are
@@ -97,8 +97,8 @@ object (\code{collapse=TRUE}).}
 TRUE.}
 
 \item{\dots}{Graphical parameters (e.g., \code{ylab}) can be passed to the
-function to customize the plots.  If \code{by=TRUE}, lattice parameters can
-be passed, such as layout (see examples below).}
+function to customize the plots.  If \code{by=TRUE}, ggplot2 faceting
+parameters can be passed, such as \code{strip.names} (see examples below).}
 }
 \value{
 A \code{visreg} or \code{visregList} object (which is simply a list
@@ -131,71 +131,76 @@ appearance of points, lines, confidence bands, etc.
 # --- Linear models ----------------------------------------
 
 ## Basic
-fit <- lm(Ozone ~ Solar.R + Wind + Temp, data=airquality)
-visreg(fit, "Wind", type="contrast")
-visreg(fit, "Wind", type="conditional")
+fit <- lm(Ozone ~ Solar.R + Wind + Temp, data = airquality)
+visreg(fit, "Wind", type = "contrast")
+visreg(fit, "Wind", type = "conditional")
 
 ## Factors
-airquality$Heat <- cut(airquality$Temp, 3, labels=c("Cool","Mild","Hot"))
-fit.heat <- lm(Ozone ~ Solar.R + Wind + Heat, data=airquality)
-visreg(fit.heat, "Heat", type="contrast")
-visreg(fit.heat, "Heat", type="conditional")
+airquality$Heat <- cut(airquality$Temp, 3, labels = c("Cool", "Mild", "Hot"))
+fit.heat <- lm(Ozone ~ Solar.R + Wind + Heat, data = airquality)
+visreg(fit.heat, "Heat", type = "contrast")
+visreg(fit.heat, "Heat", type = "conditional")
 
 ## Transformations
-fit1 <- lm(Ozone ~ Solar.R + Wind + Temp + I(Wind^2), data=airquality)
-fit2 <- lm(log(Ozone) ~ Solar.R + Wind + Temp, data=airquality)
-fit3 <- lm(log(Ozone) ~ Solar.R + Wind + Temp + I(Wind^2), data=airquality)
+fit1 <- lm(Ozone ~ Solar.R + Wind + Temp + I(Wind^2), data = airquality)
+fit2 <- lm(log(Ozone) ~ Solar.R + Wind + Temp, data = airquality)
+fit3 <- lm(log(Ozone) ~ Solar.R + Wind + Temp + I(Wind^2), data = airquality)
 visreg(fit1, "Wind")
-visreg(fit2, "Wind", trans=exp, ylab="Ozone")
-visreg(fit3, "Wind", trans=exp, ylab="Ozone")
+visreg(fit2, "Wind", trans = exp, ylab = "Ozone")
+visreg(fit3, "Wind", trans = exp, ylab = "Ozone")
 
 ## Conditioning
-visreg(fit, "Wind", cond=list(Temp=50))
-visreg(fit, "Wind", print.cond=TRUE)
-visreg(fit, "Wind", cond=list(Temp=100))
+visreg(fit, "Wind", cond = list(Temp = 50))
+visreg(fit, "Wind", print.cond = TRUE)
+visreg(fit, "Wind", cond = list(Temp = 100))
 
 ## Interactions
-fit.in1 <- lm(Ozone~ Solar.R + Wind*Heat, data=airquality)
-visreg(fit.in1, "Wind", by="Heat")
-visreg(fit.in1, "Heat", by="Wind")
-visreg(fit.in1, "Wind", by="Heat", type="contrast")
-visreg(fit.in1, "Heat", by="Wind", breaks=6)
-visreg(fit.in1, "Heat", by="Wind", breaks=c(0,10,20))
+fit.in1 <- lm(Ozone ~ Solar.R + Wind * Heat, data = airquality)
+visreg(fit.in1, "Wind", by = "Heat")
+visreg(fit.in1, "Heat", by = "Wind")
+visreg(fit.in1, "Wind", by = "Heat", type = "contrast")
+visreg(fit.in1, "Heat", by = "Wind", breaks = 6)
+visreg(fit.in1, "Heat", by = "Wind", breaks = c(0, 10, 20))
 
 ## Overlay
-visreg(fit.in1, "Wind", by="Heat", overlay=TRUE)
+visreg(fit.in1, "Wind", by = "Heat", overlay = TRUE)
 
 
 # --- Nonlinear models -------------------------------------
 
 ## Logistic regression
-data("birthwt", package="MASS")
-birthwt$race <- factor(birthwt$race, labels=c("White","Black","Other"))
-birthwt$smoke <- factor(birthwt$smoke, labels=c("Nonsmoker","Smoker"))
-fit <- glm(low~age+race+smoke+lwt, data=birthwt, family="binomial")
+data("birthwt", package = "MASS")
+birthwt$race <- factor(birthwt$race, labels = c("White", "Black", "Other"))
+birthwt$smoke <- factor(birthwt$smoke, labels = c("Nonsmoker", "Smoker"))
+fit <- glm(low ~ age + race + smoke + lwt, data = birthwt, family = "binomial")
 visreg(fit, "lwt",
-       xlab="Mother's Weight", ylab="Log odds (low birthweight)")
-visreg(fit, "lwt", scale="response", partial=FALSE,
-       xlab="Mother's Weight", ylab="P(low birthweight)")
-visreg(fit, "lwt", scale="response", partial=FALSE,
-       xlab="Mother's Weight", ylab="P(low birthweight)", rug=2)
+  xlab = "Mother's Weight", ylab = "Log odds (low birthweight)"
+)
+visreg(fit, "lwt",
+  scale = "response", partial = FALSE,
+  xlab = "Mother's Weight", ylab = "P(low birthweight)"
+)
+visreg(fit, "lwt",
+  scale = "response", partial = FALSE,
+  xlab = "Mother's Weight", ylab = "P(low birthweight)", rug = 2
+)
 
 ## Proportional hazards
 require(survival)
 data(ovarian)
 ovarian$rx <- factor(ovarian$rx)
-fit <- coxph(Surv(futime, fustat) ~ age + rx, data=ovarian)
-visreg(fit, "age", ylab="log(Hazard ratio)")
+fit <- coxph(Surv(futime, fustat) ~ age + rx, data = ovarian)
+visreg(fit, "age", ylab = "log(Hazard ratio)")
 
 ## Robust regression
 require(MASS)
-fit <- rlm(Ozone ~ Solar.R + Wind*Heat, data=airquality)
-visreg(fit, "Wind", cond=list(Heat="Mild"))
+fit <- rlm(Ozone ~ Solar.R + Wind * Heat, data = airquality)
+visreg(fit, "Wind", cond = list(Heat = "Mild"))
 
 ## And more...; anything with a 'predict' method should work
 
 ## Return raw components of plot
-v <- visreg(fit, "Wind", cond=list(Heat="Mild"))
+v <- visreg(fit, "Wind", cond = list(Heat = "Mild"))
 
 }
 \references{
