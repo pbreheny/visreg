@@ -15,14 +15,14 @@ plot(v, overlay = TRUE)
 fit1 <- rq(Ozone ~ Wind + Temp, tau = .25, data = airquality)
 fit2 <- rq(Ozone ~ Wind + Temp, tau = .5, data = airquality)
 fit3 <- rq(Ozone ~ Wind + Temp, tau = .75, data = airquality)
-v <- visregList(
+v <- visreg_list(
   visreg(fit1, "Wind", plot = FALSE),
   visreg(fit2, "Wind", plot = FALSE),
   visreg(fit3, "Wind", plot = FALSE),
   collapse = TRUE
 )
 plot(v)
-v <- visregList(
+v <- visreg_list(
   visreg(fit1, "Wind", plot = FALSE),
   visreg(fit2, "Wind", plot = FALSE),
   visreg(fit3, "Wind", plot = FALSE),

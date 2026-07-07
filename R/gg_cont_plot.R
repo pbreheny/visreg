@@ -1,9 +1,21 @@
-ggContPlot <- function(v, partial, band, rug, strip.names, overlay, top, line, fill, points, ...) {
+gg_cont_plot <- function(
+  v,
+  partial,
+  band,
+  rug,
+  strip_names,
+  overlay,
+  top,
+  line,
+  fill,
+  points,
+  ...
+) {
   # Setup data frames
   xx <- v$fit[, v$meta$x]
-  fillData <- data.frame(x = xx, ymin = v$fit$visregLwr, ymax = v$fit$visregUpr)
-  lineData <- data.frame(x = xx, y = v$fit$visregFit)
-  pointData <- data.frame(x = v$res[, v$meta$x], y = v$res$visregRes)
+  fillData <- data.frame(x = xx, ymin = v$fit$visreg_lwr, ymax = v$fit$visreg_upr)
+  lineData <- data.frame(x = xx, y = v$fit$visreg_fit)
+  pointData <- data.frame(x = v$res[, v$meta$x], y = v$res$visreg_res)
   if ("by" %in% names(v$meta)) {
     bb <- factor(v$fit[, v$meta$by])
     fillData[[v$meta$by]] <- bb
@@ -59,10 +71,10 @@ ggContPlot <- function(v, partial, band, rug, strip.names, overlay, top, line, f
     if (length(points)) {
       point.args[names(points)] <- points
     }
-    if (is.character(strip.names) & length(strip.names) == length(levels(bb))) {
+    if (is.character(strip_names) & length(strip_names) == length(levels(bb))) {
       p <- p +
-        ggplot2::scale_fill_manual(values = acol, labels = strip.names) +
-        ggplot2::scale_color_manual(values = col, labels = strip.names)
+        ggplot2::scale_fill_manual(values = acol, labels = strip_names) +
+        ggplot2::scale_color_manual(values = col, labels = strip_names)
     } else {
       p <- p + ggplot2::scale_fill_manual(values = acol) + ggplot2::scale_color_manual(values = col)
     }
@@ -117,8 +129,8 @@ ggContPlot <- function(v, partial, band, rug, strip.names, overlay, top, line, f
     top.args <- bot.args <- point.args
     top.args$sides <- "t"
     bot.args$sides <- "b"
-    top.args$data <- pointData[v$res$visregPos, ]
-    bot.args$data <- pointData[!v$res$visregPos, ]
+    top.args$data <- pointData[v$res$visreg_pos, ]
+    bot.args$data <- pointData[!v$res$visreg_pos, ]
     p <- p + do.call("geom_rug", top.args, envir = asNamespace("ggplot2"))
     p <- p + do.call("geom_rug", bot.args, envir = asNamespace("ggplot2"))
   }
@@ -127,19 +139,19 @@ ggContPlot <- function(v, partial, band, rug, strip.names, overlay, top, line, f
   if ("by" %in% names(v$meta) & !overlay) {
     form <- as.formula(paste("~", v$meta$by))
     K <- length(levels(bb))
-    if (identical(strip.names, TRUE)) {
+    if (identical(strip_names, TRUE)) {
       p <- p + ggplot2::facet_grid(form, labeller = ggplot2::label_both)
-    } else if (identical(strip.names, FALSE)) {
+    } else if (identical(strip_names, FALSE)) {
       p <- p + ggplot2::facet_grid(form)
-    } else if (is.character(strip.names) & length(strip.names) == K) {
-      names(strip.names) <- levels(bb)
-      args <- list(strip.names)
+    } else if (is.character(strip_names) & length(strip_names) == K) {
+      names(strip_names) <- levels(bb)
+      args <- list(strip_names)
       names(args) <- v$meta$by
       lbl <- do.call(ggplot2::labeller, args)
       p <- p + ggplot2::facet_grid(form, labeller = lbl)
     } else {
       stop(
-        "strip.names must either be logical or a character vector with length equal to the number of facets",
+        "strip_names must either be logical or a character vector with length equal to the number of facets",
         call. = FALSE
       )
     }

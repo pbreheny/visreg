@@ -59,7 +59,7 @@ visreg(
   points = list(color = "red", size = 2),
   alpha = .001,
   fill = list(fill = "yellow", color = "green"),
-  print.cond = interactive()
+  print_cond = interactive()
 )
 visreg(
   fit,
@@ -67,7 +67,7 @@ visreg(
   line = list(color = "blue", linewidth = 10),
   points = list(color = "red", size = 2),
   fill = list(fill = "yellow", color = "green"),
-  print.cond = interactive()
+  print_cond = interactive()
 )
 visreg(
   fit,

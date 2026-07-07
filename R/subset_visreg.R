@@ -1,6 +1,6 @@
 ## Subsets xy so that residuals appear only once
 ## Should probably be renamed subsetXY
-subsetV <- function(v, f, by, lev, type) {
+subset_visreg <- function(v, f, by, lev, type) {
   ## Calculate distance
   if (is.numeric(f[, by])) {
     D <- matrix(NA, nrow(f), length(v))

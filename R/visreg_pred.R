@@ -1,4 +1,4 @@
-visregPred <- function(fit, Data, se.fit = FALSE, ...) {
+visreg_pred <- function(fit, Data, se.fit = FALSE, ...) {
   predict.args <- list(object = fit, newdata = Data)
   if (inherits(fit, "lme")) {
     predict.args$level <- 0
@@ -49,7 +49,7 @@ visregPred <- function(fit, Data, se.fit = FALSE, ...) {
   } else {
     if (inherits(fit, "randomForest") && fit$type == "classification") {
       p <- predict(fit, type = "prob")[, 2]
-    } else if (inherits(fit, 'rq')) {
+    } else if (inherits(fit, "rq")) {
       p <- suppressWarnings(do.call("predict", predict.args))[, 1]
     } else {
       p <- suppressWarnings(do.call("predict", predict.args))

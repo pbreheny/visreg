@@ -19,94 +19,92 @@ visreg2d(
 )
 }
 \arguments{
-\item{fit}{The fitted model object you wish to visualize.  Any object with
-'predict' and 'model.frame' methods are supported, including lm, glm, gam,
-rlm, coxph, and many more.}
+\item{fit}{The fitted model object you wish to visualize. Any object with 'predict' and
+'model.frame' methods are supported, including lm, glm, gam, rlm, coxph, and many more.}
 
-\item{xvar}{Character string specifying the variable to be put on the x-axis
-of your plot.  Both continuous variables and factors are supported.}
+\item{xvar}{Character string specifying the variable to be put on the x-axis of your plot. Both
+continuous variables and factors are supported.}
 
-\item{yvar}{Character string specifying the variable to be put on the y-axis
-of your plot.  Both continuous variables and factors are supported.}
+\item{yvar}{Character string specifying the variable to be put on the y-axis of your plot. Both
+continuous variables and factors are supported.}
 
 \item{type}{The type of plot to be produced.  The following options are
-supported: \itemize{ \item If 'conditional' is selected, the plot returned
-shows the value of the variable on the x-axis and the change in response on
-the y-axis, holding all other variables constant (by default, median for
-numeric variables and most common category for factors).  \item If
-'contrast' is selected, the plot returned shows the effect on the expected
-value of the response by moving the x variable away from a reference point
-on the x-axis (for numeric variables, this is taken to be the mean).  } For
-more details, see references.}
+supported:
+\itemize{
+\item If \code{"conditional"} is selected, the plot returned shows the value of the variable on the x-axis
+and the change in response on the y-axis, holding all other variables constant (by default,
+median for numeric variables and most common category for factors).
+\item If \code{"contrast"} is selected, the plot returned shows the effect on the expected value of the
+response by moving the x variable away from a reference point on the x-axis (for numeric
+variables, this is taken to be the mean).
+For more details, see references.
+}}
 
-\item{data}{The data frame used to fit the model.  Typically, visreg() can
-figure out where the data is, so it is not necessary to provide this.  In
-some cases, however, the data set cannot be located and must be supplied
-explicitly.}
+\item{data}{The data frame used to fit the model. Typically, visreg() can figure out where the
+data is, so it is not necessary to provide this. In some cases, however, the data set cannot be
+located and must be supplied explicitly.}
 
-\item{trans}{(Optional) A function specifying a transformation for the
-vertical axis.}
+\item{trans}{(Optional) A function specifying a transformation for the vertical axis.}
 
-\item{scale}{By default, the model is plotted on the scale of the linear
-predictor.  If \code{scale='response'} for a glm, the inverse link function
-will be applied so that the model is plotted on the scale of the original
-response.}
+\item{scale}{By default, the model is plotted on the scale of the linear predictor. If
+\code{scale='response'} for a glm, the inverse link function will be applied so that the model is
+plotted on the scale of the original response.}
 
-\item{nn}{Resolution of the three dimensional plot.  Higher values will
-results in a smoother looking plot.}
+\item{nn}{Resolution of the three dimensional plot. Higher values will results in a smoother
+looking plot.}
 
-\item{cond}{Named list specifying conditional values of other explanatory
-variables. By default, conditional plots in visreg are constructed by
-filling in other explanatory variables with the median (for numeric
-variables) or most common category (for factors), but this can be overridden
-by specifying their values using \code{cond} (see examples).}
+\item{cond}{Named list specifying conditional values of other explanatory variables. By default,
+conditional plots in visreg are constructed by filling in other explanatory variables with the
+median (for numeric variables) or most common category (for factors), but this can be
+overridden by specifying their values using \code{cond} (see examples).}
 
-\item{plot}{Send the calculations to \verb{[plot.visreg2d()]}, producing
-a plot?  Default is TRUE.}
+\item{plot}{Send the calculations to \verb{[plot.visreg2d()]}, producing a plot? Default is TRUE.}
 
-\item{\dots}{Graphical parameters (e.g., \code{ylab}) can be passed to the
-function to customize the plots.}
+\item{\dots}{Graphical parameters (e.g., \code{ylab}) can be passed to the function to customize the
+plots.}
 }
 \value{
 A \code{visreg2d} object consisting of:
+
+\describe{
 \item{x}{Values of \code{xvar} to be plotted}
 \item{y}{Values of \code{yvar} to be plotted}
 \item{z}{Values of outcome to be plotted}
-\item{meta}{Meta-information needed to construct plots, such as the name of the x
-and y variables.}
+\item{meta}{
+Meta-information needed to construct plots, such as the name of the x and y variables.
+}
+}
 }
 \description{
-A function used to visualize how two variables interact to affect the
-response in regression models.
+A function used to visualize how two variables interact to affect the response in regression
+models.
 }
 \examples{
-fit <- lm(Ozone ~ Solar.R + Wind + Temp + I(Wind^2) + I(Temp^2) +
-I(Wind*Temp)+I(Wind*Temp^2) + I(Temp*Wind^2) + I(Temp^2*Wind^2),
-data=airquality)
+fit <- lm(
+  Ozone ~ Solar.R + Wind + Temp + I(Wind^2) + I(Temp^2) +
+    I(Wind * Temp) + I(Wind * Temp^2) + I(Temp * Wind^2) + I(Temp^2 * Wind^2),
+  data = airquality
+)
 
-visreg2d(fit, x="Wind", y="Temp", plot.type="image")
-visreg2d(fit, x="Wind", y="Temp", plot.type="persp")
+visreg2d(fit, x = "Wind", y = "Temp", plot.type = "image")
+visreg2d(fit, x = "Wind", y = "Temp", plot.type = "persp")
 
 ## Requires the rgl package
 \dontrun{
-visreg2d(fit, x="Wind", y="Temp", plot.type="rgl")
+visreg2d(fit, x = "Wind", y = "Temp", plot.type = "rgl")
 }
 
-## Requires the ggplot2 package
-\dontrun{
-visreg2d(fit, x="Wind", y="Temp", plot.type="gg")
-}
+visreg2d(fit, x = "Wind", y = "Temp")
+
 }
 \references{
 \itemize{
 \item \url{https://pbreheny.github.io/visreg/}
 \item Breheny, P. and Burchett, W. (2017), Visualizing regression models using visreg.
 \url{https://journal.r-project.org/archive/2017/RJ-2017-046/index.html}
+\doi{10.32614/RJ-2017-046}
 }
 }
 \seealso{
 \url{https://pbreheny.github.io/visreg/articles/surface.html} \verb{[visreg()]}
-}
-\author{
-Patrick Breheny and Woodrow Burchett
 }

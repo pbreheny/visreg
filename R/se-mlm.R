@@ -28,10 +28,7 @@ se.mlm <- function(object, newdata) {
     object$fitted.values <- fitted[, i]
     object$effects <- effects[, i]
     object$call$formula[[2L]] <- object$terms[[2L]] <- as.name(ynames[i])
-    value <- cbind(
-      value,
-      predict(object, newdata = newdata, se.fit = TRUE)$se.fit
-    )
+    value <- cbind(value, predict(object, newdata = newdata, se.fit = TRUE)$se.fit)
   }
   colnames(value) <- ynames
   value

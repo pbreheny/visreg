@@ -1,4 +1,4 @@
-setupX <- function(fit, f, name, nn, cond, ...) {
+setup_contrast_data <- function(fit, f, name, nn, cond, ...) {
   # Set up n x p matrix for (conditional) partial residuals
   x <- f[, name]
   if (is.factor(x)) {
@@ -30,7 +30,7 @@ setupX <- function(fit, f, name, nn, cond, ...) {
   }
   xdf <- data.frame(x)
   names(xdf) <- name
-  df <- fillFrame(f, xdf, cond)
+  df <- fill_frame(f, xdf, cond)
   D <- rbind(f[, names(df)], df)
   b <- visreg_coef(fit)
 
@@ -43,7 +43,7 @@ setupX <- function(fit, f, name, nn, cond, ...) {
     ind <- is.finite(b)
   }
   if (inherits(fit, "gam")) {
-    form <- parseFormula(formula(fit)[3])
+    form <- parse_formula(formula(fit)[3])
     D <- model.frame(as.formula(paste("~", form)), df)
     X. <- predict(fit, newdata = as.list(D), type = "lpmatrix")
   } else if (inherits(fit, "merMod")) {
@@ -57,7 +57,7 @@ setupX <- function(fit, f, name, nn, cond, ...) {
     form <- formula(fit)[3]
     ind <- ind[-length(ind)]
     X. <- model.matrix(as.formula(paste("~", form)), D)[-(1:nrow(f)), ind]
-  } else if (inherits(fit, 'glmmTMB')) {
+  } else if (inherits(fit, "glmmTMB")) {
     form <- lme4::nobars(formula(fit))[3]
     X. <- model.matrix(as.formula(paste("~", form)), D)[-(1:nrow(f)), ind]
   } else {
@@ -71,7 +71,7 @@ setupX <- function(fit, f, name, nn, cond, ...) {
   if (is.factor(x)) {
     xx <- factor(c(xref, 1:length(levels(x))), labels = levels(x))
   } else {
-    if ('xtrans' %in% names(dots)) {
+    if ("xtrans" %in% names(dots)) {
       xx <- c(xref, seq(min(x), max(x), length = nn))
       fi <- approxfun(dots$xtrans(x), x)
       xx <- seq(dots$xtrans(min(x)), dots$xtrans(max(x)), len = nn) |> fi()
@@ -81,7 +81,7 @@ setupX <- function(fit, f, name, nn, cond, ...) {
   }
   xxdf <- data.frame(xx)
   names(xxdf) <- name
-  df <- fillFrame(f, xxdf, cond)
+  df <- fill_frame(f, xxdf, cond)
   DD <- rbind(f[, names(df)], df)
   if (inherits(fit, "gam")) {
     DD <- model.frame(as.formula(paste("~", form)), df)
@@ -113,10 +113,7 @@ setupX <- function(fit, f, name, nn, cond, ...) {
     XX <- XX[, -remove.xx, drop = FALSE]
     X <- X[, -remove.xx, drop = FALSE]
   }
-  condNames <- names(model.frame(
-    as.formula(paste("~", parseFormula(formula(fit)[3]))),
-    df
-  ))
+  condNames <- names(model.frame(as.formula(paste("~", parse_formula(formula(fit)[3]))), df))
   condNames <- setdiff(condNames, name)
   condNames <- intersect(condNames, names(df))
   return(list(

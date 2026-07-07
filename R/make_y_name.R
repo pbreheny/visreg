@@ -1,13 +1,7 @@
-makeYName <- function(fit, scale, trans, type) {
-  if (
-    scale == "response" |
-      (class(fit)[1] %in% c("lm", "aov") & identical(trans, I))
-  ) {
+make_y_name <- function(fit, scale, trans, type) {
+  if (scale == "response" | (class(fit)[1] %in% c("lm", "aov") & identical(trans, I))) {
     if (type == "contrast") {
-      yName <- as.expression(substitute(
-        list(Delta) * x,
-        list(x = as.character(formula(fit)[2]))
-      ))
+      yName <- as.expression(substitute(list(Delta) * x, list(x = as.character(formula(fit)[2]))))
     } else {
       yName <- as.character(formula(fit)[2])
     }

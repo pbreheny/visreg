@@ -26,7 +26,7 @@ Note that `visreg` automatically detects the nonlinear relationship and represen
 
 ```{r, h=5, w=5}
 fit <- lm(Ozone ~ Solar.R + Wind + Wind*I(Wind > 10) + Temp, data=airquality)
-visreg(fit, "Wind", print.cond=FALSE)
+visreg(fit, "Wind", print_cond=FALSE)
 ```
 
 ```{r, h=5, w=5}

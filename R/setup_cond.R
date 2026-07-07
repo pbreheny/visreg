@@ -1,4 +1,4 @@
-setupCond <- function(cond, f, by, breaks) {
+setup_cond <- function(cond, f, by, breaks) {
   for (i in seq_along(cond)) {
     if (i %in% names(f)) {
       if (!is.character(cond[[i]]) & is.factor(f[, names(cond)[i]])) {
@@ -18,11 +18,7 @@ setupCond <- function(cond, f, by, breaks) {
           lev <- sort(unique.by)
         } else {
           a <- 1 / 5 / 2^(breaks - 2)
-          lev <- as.double(quantile(
-            f[, by],
-            seq(a, 1 - a, length = breaks),
-            type = 1
-          ))
+          lev <- as.double(quantile(f[, by], seq(a, 1 - a, length = breaks), type = 1))
         }
       } else {
         lev <- breaks

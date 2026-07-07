@@ -5,7 +5,7 @@ visreg_coef <- function(fit) {
     fit@beta
   } else if (inherits(fit, "glmmTMB")) {
     glmmTMB::fixef(fit)$cond
-  } else if (inherits(fit, 'betareg')) {
+  } else if (inherits(fit, "betareg")) {
     b <- coef(fit)
     b[-length(b)]
   } else {

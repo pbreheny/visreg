@@ -1,36 +1,33 @@
 #' Visualization of regression functions for two variables
 #'
-#' Plot method for visualizing how two variables interact to affect the
-#' response in regression models.
+#' Plot method for visualizing how two variables interact to affect the response in regression
+#' models.
 #'
 #' @param x A [visreg2d()] object.
 #' @param plot.type The style of plot to be produced. The following options are
 #' supported:
-#' * `image`: a filled contour
-#' * `gg`: a filled contour plot using ggplot2
-#' * `persp`: a 3 dimensional perspective plot
-#' * `rgl`: a version of the perspective plot that can be rotated (requires the rgl package to be installed)
+#' - `image`: a filled contour
+#' - `gg`: a filled contour plot using ggplot2
+#' - `persp`: a 3 dimensional perspective plot
+#' - `rgl`: a version of the perspective plot that can be rotated (requires the rgl package to be
+#'   installed)
 #' @param xlab Axis label for x variable
 #' @param ylab Axis label for y variable
 #' @param zlab Axis label for outcome
-#' @param color For `plot.type='persp'` or `plot.type='rgl'`, the color of the
-#' surface. For `plot.type='image'` or `plot.type='gg'`, a vector of colors used
-#' to establish a color palette.
-#' @param print.cond If `print.cond==TRUE`, the explanatory variable values
-#' conditioned on in a conditional plot are printed to the console
-#' (default: \code{FALSE}). If `print.cond==TRUE` and `type=="contrast"`, the
-#' conditions will still be printed, but they have no bearing on the plot unless
-#' interactions are present.
-#' @param whitespace When `xvar` or `yvar` is a factor, `whitespace`
-#' determines the amount of space in between the factors. Default is 0.2,
-#' meaning that 20 percent of the axis is whitespace.
-#' @param ... Graphical parameters can be passed to the function to customize
-#' the plots.
+#' @param color For `plot.type='persp'` or `plot.type='rgl'`, the color of the surface. For
+#'   `plot.type='image'` or `plot.type='gg'`, a vector of colors used to establish a color palette.
+#' @param print_cond If `print_cond==TRUE`, the explanatory variable values conditioned on in a
+#'   conditional plot are printed to the console (default: `FALSE`). If `print_cond==TRUE` and
+#'   `type=="contrast"`, the conditions will still be printed, but they have no bearing on the plot
+#'   unless interactions are present.
+#' @param whitespace When `xvar` or `yvar` is a factor, `whitespace` determines the amount of space
+#'   in between the factors. Default is 0.2, meaning that 20 percent of the axis is whitespace.
+#' @param ... Graphical parameters can be passed to the function to customize the plots.
 #'
-#' @author Patrick Breheny and Woodrow Burchett
-#'
-#' @seealso https://pbreheny.github.io/visreg/surface.html, [visreg()]
-#'
+#' @seealso
+#' [visreg2d()] for creating two-dimensional `visreg` objects, and the
+#' [surface plots vignette](https://pbreheny.github.io/visreg/surface.html) for examples and
+#' details.
 #' @references
 #' Breheny P and Burchett W. (2017) Visualization of regression models using
 #' visreg. *R Journal*, **9**: 56-71.
@@ -59,8 +56,8 @@
 #' \donttest{
 #' visreg2d(fit, x = "Wind", y = "Temp", plot.type = "gg")
 #' }
+#'
 #' @export
-
 plot.visreg2d <- function(
   x,
   plot.type = c("image", "persp", "rgl", "gg"),
@@ -68,7 +65,7 @@ plot.visreg2d <- function(
   ylab,
   zlab,
   color,
-  print.cond = FALSE,
+  print_cond = FALSE,
   whitespace = 0.2,
   ...
 ) {
@@ -175,20 +172,9 @@ plot.visreg2d <- function(
     return(p)
   } else if (plot.type == "rgl") {
     if (!requireNamespace("rgl")) {
-      stop(
-        "You must first install the rgl package: install.packages('rgl')",
-        call. = FALSE
-      )
+      stop("You must first install the rgl package: install.packages('rgl')", call. = FALSE)
     }
-    plot.args <- list(
-      x = xx,
-      y = yy,
-      z = zz,
-      xlab = xlab,
-      ylab = ylab,
-      zlab = zlab,
-      color = color
-    )
+    plot.args <- list(x = xx, y = yy, z = zz, xlab = xlab, ylab = ylab, zlab = zlab, color = color)
     new.args <- list(...)
     if (length(new.args)) {
       plot.args[names(new.args)] <- new.args
@@ -197,10 +183,7 @@ plot.visreg2d <- function(
     do.call(rgl::persp3d, plot.args)
   } else if (plot.type == "gg") {
     if (!requireNamespace("ggplot2")) {
-      stop(
-        "You must first install the ggplot2 package: install.packages('ggplot2')",
-        call. = FALSE
-      )
+      stop("You must first install the ggplot2 package: install.packages('ggplot2')", call. = FALSE)
     }
     df <- data.frame(x = xx[row(zz)], y = yy[col(zz)], z = c(zz))
     p <- ggplot2::ggplot(df, ggplot2::aes(.data$x, .data$y)) +

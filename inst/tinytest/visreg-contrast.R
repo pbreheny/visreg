@@ -13,14 +13,14 @@ visreg(
   "Wind",
   type = "contrast",
   cond = list(Heat = "Cool"),
-  print.cond = FALSE
+  print_cond = FALSE
 )
 visreg(
   fit,
   "Wind",
   type = "contrast",
   cond = list(Heat = "Hot"),
-  print.cond = FALSE
+  print_cond = FALSE
 )
 fit <- lm(Ozone ~ Wind + Heat, data = ozone)
 visreg(fit, "Wind", type = "contrast", cond = list(Heat = "Cool"))
@@ -42,14 +42,14 @@ x2 <- factor(rep(c("A", "B"), rep(10, 2)))
 y <- x1 * rep(c(1, -1), rep(10, 2)) + rnorm(20, sd = 0.5)
 fit <- lm(y ~ x1 * x2)
 visreg(fit, "x1", by = "x2")
-visreg(fit, "x1", cond = list(x2 = "B"), print.cond = interactive())
+visreg(fit, "x1", cond = list(x2 = "B"), print_cond = interactive())
 visreg(fit, "x1", by = "x2", type = "contrast")
 visreg(
   fit,
   "x1",
   cond = list(x2 = "B"),
   type = "contrast",
-  print.cond = interactive()
+  print_cond = interactive()
 )
 
 x2 <- relevel(x2, "B")

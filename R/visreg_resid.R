@@ -1,4 +1,4 @@
-visregResid <- function(fit) {
+visreg_resid <- function(fit) {
   if (inherits(fit, "randomForest")) {
     if (fit$type == "regression") {
       rr <- fit$y - fit$predicted
@@ -7,14 +7,14 @@ visregResid <- function(fit) {
       P <- predict(fit, type = "prob")
       rr <- (fit$y == colnames(P)[2]) - P[, 2]
     }
-  } else if (inherits(fit, 'coxph')) {
-    rr <- residuals(fit, type = 'deviance')
-  } else if (inherits(fit, 'gamlss')) {
-    rr <- residuals(fit, what = 'mu')
-  } else if (inherits(fit, 'glmmTMB')) {
-    rr <- residuals(fit, type = 'pearson')
-  } else if (inherits(fit, 'betareg')) {
-    rr <- residuals(fit, type = 'deviance')
+  } else if (inherits(fit, "coxph")) {
+    rr <- residuals(fit, type = "deviance")
+  } else if (inherits(fit, "gamlss")) {
+    rr <- residuals(fit, what = "mu")
+  } else if (inherits(fit, "glmmTMB")) {
+    rr <- residuals(fit, type = "pearson")
+  } else if (inherits(fit, "betareg")) {
+    rr <- residuals(fit, type = "deviance")
   } else {
     rr <- residuals(fit)
   }

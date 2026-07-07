@@ -1,13 +1,13 @@
-setupD <- function(fit, f, name, nn, cond, whitespace, ...) {
+setup_data <- function(fit, f, name, nn, cond, whitespace, ...) {
   ## Set up n-row data frame for residuals
   x <- f[, name]
   xdf <- data.frame(x)
   names(xdf) <- name
-  df <- fillFrame(f, xdf, cond)
+  df <- fill_frame(f, xdf, cond)
 
   rhs_form <- formula(fit)
   rhs_form[2] <- NULL
-  simple_rhs <- paste(all.vars(rhs_form), collapse = ' + ')
+  simple_rhs <- paste(all.vars(rhs_form), collapse = " + ")
   simple_form <- as.formula(paste("~", simple_rhs))
   D <- model.frame(simple_form, df)
   condNames <- setdiff(names(D), name)
@@ -19,7 +19,7 @@ setupD <- function(fit, f, name, nn, cond, whitespace, ...) {
   if (is.factor(x)) {
     xx <- factor(levels(x), levels = levels(x))
   } else {
-    if ('xtrans' %in% names(dots)) {
+    if ("xtrans" %in% names(dots)) {
       xx <- c(seq(min(x), max(x), length = nn))
       fi <- approxfun(dots$xtrans(x), x)
       xx <- seq(dots$xtrans(min(x)), dots$xtrans(max(x)), len = nn) |> fi()
@@ -29,7 +29,7 @@ setupD <- function(fit, f, name, nn, cond, whitespace, ...) {
   }
   xxdf <- data.frame(xx)
   names(xxdf) <- name
-  df <- fillFrame(f, xxdf, cond)
+  df <- fill_frame(f, xxdf, cond)
   DD <- model.frame(simple_form, df)
   DD <- cbind(DD, df[, setdiff(names(df), names(DD)), drop = FALSE])
 

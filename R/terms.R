@@ -1,4 +1,4 @@
-Terms <- function(fit, f, x, trans, alpha, ...) {
+compute_terms <- function(fit, f, x, trans, alpha, ...) {
   b <- visreg_coef(fit)
 
   if (inherits(fit, "mlm")) {
@@ -11,20 +11,20 @@ Terms <- function(fit, f, x, trans, alpha, ...) {
       SE[, i] <- sqrt(apply(x$XX * (x$XX %*% V), 1, sum))
       ind <- is.finite(b[, i])
       yy[, i] <- x$XX %*% b[ind, i]
-      rr[, i] <- visregResid(fit)[, i]
+      rr[, i] <- visreg_resid(fit)[, i]
       r[, i] <- x$X %*% b[ind, i] + rr[, i]
     }
   } else {
-    if (inherits(fit, 'glmmTMB')) {
+    if (inherits(fit, "glmmTMB")) {
       V <- vcov(fit)$cond
     } else {
       V <- vcov(fit)
     }
-    dg <- if (inherits(V, 'Matrix')) Matrix::diag(V) else diag(V)
-    if (inherits(fit, 'polr')) {
+    dg <- if (inherits(V, "Matrix")) Matrix::diag(V) else diag(V)
+    if (inherits(fit, "polr")) {
       remove <- grep("|", colnames(V), fixed = TRUE)
       V <- V[-remove, -remove, drop = FALSE]
-    } else if (inherits(fit, 'betareg')) {
+    } else if (inherits(fit, "betareg")) {
       V <- V[-nrow(V), -ncol(V), drop = FALSE]
     }
     if (any(is.na(dg))) {
@@ -33,7 +33,7 @@ Terms <- function(fit, f, x, trans, alpha, ...) {
     }
     SE <- sqrt(apply(x$XX * (x$XX %*% V), 1, sum))
     yy <- drop(x$XX %*% b[is.finite(b)])
-    rr <- visregResid(fit)
+    rr <- visreg_resid(fit)
     if (is.null(rr)) {
       rr <- rep(NA, nrow(x$X))
     }

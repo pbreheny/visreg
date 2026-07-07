@@ -7,7 +7,7 @@ airquality$Heat <- cut(airquality$Temp, 3, labels = c("Cool", "Mild", "Hot"))
 fit <- lm(Ozone ~ Wind * Heat, data = airquality)
 visreg(fit, "Wind", by = "Heat")
 visreg(fit, "Wind", by = "Heat", layout = c(3, 1))
-visreg(fit, "Wind", by = "Heat", layout = c(3, 1), print.cond = interactive())
+visreg(fit, "Wind", by = "Heat", layout = c(3, 1), print_cond = interactive())
 visreg(fit, "Wind", by = "Heat", layout = c(3, 1), type = "contrast")
 visreg(
   fit,
@@ -15,28 +15,28 @@ visreg(
   by = "Heat",
   layout = c(3, 1),
   type = "contrast",
-  strip.names = TRUE
+  strip_names = TRUE
 )
 visreg(
   fit,
   "Wind",
   type = "contrast",
   cond = list(Heat = "Cool"),
-  print.cond = interactive()
+  print_cond = interactive()
 )
 visreg(
   fit,
   "Wind",
   type = "contrast",
   cond = list(Heat = "Mild"),
-  print.cond = interactive()
+  print_cond = interactive()
 )
 visreg(
   fit,
   "Wind",
   type = "contrast",
   cond = list(Heat = "Hot"),
-  print.cond = interactive()
+  print_cond = interactive()
 )
 visreg(fit, "Wind", by = "Heat", overlay = TRUE)
 visreg(fit, "Wind", by = "Heat", type = "contrast", overlay = TRUE)
@@ -55,11 +55,11 @@ airquality$Heat <- cut(airquality$Temp, 3, labels = c("Cool", "Mild", "Hot"))
 fit <- lm(Ozone ~ Wind * Heat, data = airquality)
 expect_warning(visreg(fit, "Wind") |> capture.output() |> invisible())
 expect_stdout(
-  visreg(fit, "Wind", print.cond = TRUE),
+  visreg(fit, "Wind", print_cond = TRUE),
   pattern = 'Conditions used'
 )
 expect_stdout(
-  visreg(fit, "Wind", by = "Heat", print.cond = TRUE),
+  visreg(fit, "Wind", by = "Heat", print_cond = TRUE),
   pattern = 'Conditions used'
 )
 

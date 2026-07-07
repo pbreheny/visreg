@@ -1,9 +1,9 @@
-ggFactorPlot <- function(
+gg_factor_plot <- function(
   v,
   partial,
   band,
   rug,
-  strip.names,
+  strip_names,
   overlay,
   top,
   line,
@@ -16,15 +16,11 @@ ggFactorPlot <- function(
   # Setup data frames
   fitData <- data.frame(
     x = v$fit[, v$meta$x],
-    fit = v$fit$visregFit,
-    ymin = v$fit$visregLwr,
-    ymax = v$fit$visregUpr
+    fit = v$fit$visreg_fit,
+    ymin = v$fit$visreg_lwr,
+    ymax = v$fit$visreg_upr
   )
-  resData <- data.frame(
-    x = v$res[, v$meta$x],
-    y = v$res$visregRes,
-    pos = v$res$visregPos
-  )
+  resData <- data.frame(x = v$res[, v$meta$x], y = v$res$visreg_res, pos = v$res$visreg_pos)
 
   if (hasBy) {
     rawBy <- v$fit[, v$meta$by]
@@ -34,12 +30,9 @@ ggFactorPlot <- function(
       resBy <- factor(v$res[, v$meta$by], levels = byLevels)
     } else {
       uniqueRaw <- unique(rawBy)
-      byLevels <- abbrNum(rawBy)
+      byLevels <- abbr_num(rawBy)
       fitBy <- factor(byLevels[match(rawBy, uniqueRaw)], levels = byLevels)
-      resBy <- factor(
-        byLevels[match(v$res[, v$meta$by], uniqueRaw)],
-        levels = byLevels
-      )
+      resBy <- factor(byLevels[match(v$res[, v$meta$by], uniqueRaw)], levels = byLevels)
     }
     fitData[[v$meta$by]] <- fitBy
     resData[[v$meta$by]] <- resBy
@@ -56,9 +49,7 @@ ggFactorPlot <- function(
     v$meta$yName
   }
 
-  p <- ggplot2::ggplot() +
-    ggplot2::xlab(xlab) +
-    ggplot2::ylab(ylab)
+  p <- ggplot2::ggplot() + ggplot2::xlab(xlab) + ggplot2::ylab(ylab)
 
   # Band (geom_tile), line (geom_errorbar with ymin=ymax=fit), and jitter
   # (residuals) aesthetic defaults.  Band and line are kept as separate
@@ -90,32 +81,29 @@ ggFactorPlot <- function(
       linewidth = 1
     )
     point.args <- list(
-      mapping = ggplot2::aes(
-        x = .data$x,
-        y = .data$y,
-        color = .data[[v$meta$by]]
-      ),
+      mapping = ggplot2::aes(x = .data$x, y = .data$y, color = .data[[v$meta$by]]),
       data = resData,
-      position = ggplot2::position_jitterdodge(
-        jitter.width = 0.15,
-        dodge.width = 0.7
-      ),
+      position = ggplot2::position_jitterdodge(jitter.width = 0.15, dodge.width = 0.7),
       size = 0.8
     )
     nBy <- length(byLevels)
     col <- pal(nBy)
     acol <- pal(nBy, alpha = 0.5)
-    if (length(fill)) fill.args[names(fill)] <- fill
-    if (length(line)) line.args[names(line)] <- line
-    if (length(points)) point.args[names(points)] <- points
-    if (is.character(strip.names) & length(strip.names) == nBy) {
+    if (length(fill)) {
+      fill.args[names(fill)] <- fill
+    }
+    if (length(line)) {
+      line.args[names(line)] <- line
+    }
+    if (length(points)) {
+      point.args[names(points)] <- points
+    }
+    if (is.character(strip_names) & length(strip_names) == nBy) {
       p <- p +
-        ggplot2::scale_fill_manual(values = acol, labels = strip.names) +
-        ggplot2::scale_color_manual(values = col, labels = strip.names)
+        ggplot2::scale_fill_manual(values = acol, labels = strip_names) +
+        ggplot2::scale_color_manual(values = col, labels = strip_names)
     } else {
-      p <- p +
-        ggplot2::scale_fill_manual(values = acol) +
-        ggplot2::scale_color_manual(values = col)
+      p <- p + ggplot2::scale_fill_manual(values = acol) + ggplot2::scale_color_manual(values = col)
     }
   } else {
     fill.args <- list(
@@ -142,8 +130,12 @@ ggFactorPlot <- function(
       size = 0.8,
       color = "gray50"
     )
-    if (length(fill)) fill.args[names(fill)] <- fill
-    if (length(line)) line.args[names(line)] <- line
+    if (length(fill)) {
+      fill.args[names(fill)] <- fill
+    }
+    if (length(line)) {
+      line.args[names(line)] <- line
+    }
     if (length(points)) point.args[names(points)] <- points
   }
 
@@ -164,40 +156,31 @@ ggFactorPlot <- function(
   }
 
   if (rug == 1) {
-    p <- p +
-      ggplot2::geom_rug(data = resData, ggplot2::aes(x = .data$x), sides = "b")
+    p <- p + ggplot2::geom_rug(data = resData, ggplot2::aes(x = .data$x), sides = "b")
   }
   if (rug == 2) {
     p <- p +
-      ggplot2::geom_rug(
-        data = resData[resData$pos, ],
-        ggplot2::aes(x = .data$x),
-        sides = "t"
-      ) +
-      ggplot2::geom_rug(
-        data = resData[!resData$pos, ],
-        ggplot2::aes(x = .data$x),
-        sides = "b"
-      )
+      ggplot2::geom_rug(data = resData[resData$pos, ], ggplot2::aes(x = .data$x), sides = "t") +
+      ggplot2::geom_rug(data = resData[!resData$pos, ], ggplot2::aes(x = .data$x), sides = "b")
   }
 
   # Facet
   if (hasBy & !overlay) {
     form <- as.formula(paste("~", v$meta$by))
     nBy <- length(byLevels)
-    if (identical(strip.names, TRUE)) {
+    if (identical(strip_names, TRUE)) {
       p <- p + ggplot2::facet_grid(form, labeller = ggplot2::label_both)
-    } else if (identical(strip.names, FALSE)) {
+    } else if (identical(strip_names, FALSE)) {
       p <- p + ggplot2::facet_grid(form)
-    } else if (is.character(strip.names) & length(strip.names) == nBy) {
-      names(strip.names) <- byLevels
-      args <- list(strip.names)
+    } else if (is.character(strip_names) & length(strip_names) == nBy) {
+      names(strip_names) <- byLevels
+      args <- list(strip_names)
       names(args) <- v$meta$by
       lbl <- do.call(ggplot2::labeller, args)
       p <- p + ggplot2::facet_grid(form, labeller = lbl)
     } else {
       stop(
-        "strip.names must either be logical or a character vector with length equal to the number of facets",
+        "strip_names must either be logical or a character vector with length equal to the number of facets",
         call. = FALSE
       )
     }

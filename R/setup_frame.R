@@ -1,21 +1,21 @@
-setupF <- function(fit, xvar, call.env, data) {
+setup_frame <- function(fit, xvar, call.env, data) {
   CALL <- if (isS4(fit)) fit@call else fit$call
   if (!is.null(data)) {
     Data <- data
   } else if (
     !is.null(CALL) &&
-      ('data' %in% names(CALL)) &&
+      ("data" %in% names(CALL)) &&
       (exists(tail(as.character(CALL$data), 1), call.env) ||
-        head(as.character(CALL$data), 1) == '::')
+        head(as.character(CALL$data), 1) == "::")
   ) {
     env <- call.env
     Data <- eval(CALL$data, envir = env)
   } else if (isS4(fit)) {
     FRAME <- try(fit@frame, silent = TRUE)
     DATA <- try(fit@data, silent = TRUE)
-    if (!inherits(DATA, 'try-error')) {
+    if (!inherits(DATA, "try-error")) {
       Data <- DATA
-    } else if (!inherits(FRAME, 'try-error')) {
+    } else if (!inherits(FRAME, "try-error")) {
       Data <- FRAME
     } else {
       stop(
@@ -42,15 +42,15 @@ setupF <- function(fit, xvar, call.env, data) {
     }
   }
 
-  if (inherits(fit, 'glmmTMB')) {
+  if (inherits(fit, "glmmTMB")) {
     form <- fit$modelInfo$allForm$combForm
   } else {
     form <- formula(fit)
   }
   if (!is.null(Data)) {
-    names(Data) <- gsub('offset\\((.*)\\)', '\\1', names(Data))
+    names(Data) <- gsub("offset\\((.*)\\)", "\\1", names(Data))
   }
-  if (inherits(fit, 'mlm') && fit$terms[[2L]] != 'call') {
+  if (inherits(fit, "mlm") && fit$terms[[2L]] != "call") {
     ff <- form
     ff[[2]] <- NULL
     av <- get_all_vars(ff, Data) # If mlm with matrix as Y, outside of data frame framework
@@ -64,7 +64,7 @@ setupF <- function(fit, xvar, call.env, data) {
     rf <- rf[, setdiff(names(rf), names(f)), drop = FALSE]
     if (nrow(rf) > 0) f <- cbind(f, rf)
   }
-  if ("subset" %in% names(CALL) & !(inherits(fit, 'averaging'))) {
+  if ("subset" %in% names(CALL) & !(inherits(fit, "averaging"))) {
     s <- CALL$subset
     subset <- eval(substitute(s), Data, env)
     f <- f[which(subset == TRUE), , drop = FALSE]
@@ -105,16 +105,13 @@ setupF <- function(fit, xvar, call.env, data) {
     }
   }
   if (missing(xvar)) {
-    all_x <- strsplit(parseFormula(formula(fit)[3]), " + ", fixed = TRUE)[[1]]
+    all_x <- strsplit(parse_formula(formula(fit)[3]), " + ", fixed = TRUE)[[1]]
     inModel <- sapply(names(f), function(x) x %in% all_x)
     const <- sapply(f, function(x) all(x == x[1]))
     xvar <- names(f)[!const & inModel]
   }
   if (length(xvar) == 0) {
-    stop(
-      "The model has no predictors; visreg has nothing to plot.",
-      call. = FALSE
-    )
+    stop("The model has no predictors; visreg has nothing to plot.", call. = FALSE)
   }
   for (i in 1:length(xvar)) {
     if (!is.element(xvar[i], names(f))) {

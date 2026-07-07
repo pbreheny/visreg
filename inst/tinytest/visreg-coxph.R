@@ -14,8 +14,8 @@ visreg(fit, "age", trans = exp, ylim = c(0, 20))
 # Interaction
 fit <- coxph(Surv(futime, fustat) ~ age * rx, data = ovarian)
 par(mfrow = c(1, 2))
-visreg(fit, "age", cond = list(rx = "1"), print.cond = interactive())
-visreg(fit, "age", cond = list(rx = "2"), print.cond = interactive())
+visreg(fit, "age", cond = list(rx = "1"), print_cond = interactive())
+visreg(fit, "age", cond = list(rx = "2"), print_cond = interactive())
 visreg(fit, "age", by = "rx")
 visreg2d(fit, x = "age", y = "rx")
 

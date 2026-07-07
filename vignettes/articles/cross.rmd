@@ -69,16 +69,16 @@ The appearance of points, lines, and bands is set with the `line`, `fill`, and `
 visreg(fit, "Wind", by="Heat", fill=list(fill="#008DFF33"))
 ```
 
-`visreg` sets up the facet strips internally via the `strip.names` option:
+`visreg` sets up the facet strips internally via the `strip_names` option:
 
 ```{r, h=4, w=9, out.width='100%'}
-visreg(fit, "Wind", by="Heat", strip.names=TRUE)
+visreg(fit, "Wind", by="Heat", strip_names=TRUE)
 ```
 
 You can also explicitly specify the labels for each strip:
 
 ```{r, h=4, w=9, out.width='100%'}
-visreg(fit, "Wind", by="Heat", strip.names=c("Cold days", "Mild days", "Hot days"))
+visreg(fit, "Wind", by="Heat", strip_names=c("Cold days", "Mild days", "Hot days"))
 ```
 
 Other aspects of faceting, such as the number of rows/columns, can be changed by adding a new `facet_wrap()` (or `facet_grid()`) to the returned plot:

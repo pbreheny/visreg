@@ -1,7 +1,7 @@
 # v is a list of three elements: fit, res, and meta
-# alternatively (class "visregList"), a list of visreg elements
+# alternatively (class "visreg_list"), a list of visreg elements
 
-setupV <- function(
+build_visreg <- function(
   fit,
   f,
   xvar,
@@ -18,17 +18,11 @@ setupV <- function(
 ) {
   # Initial setup
   if (length(xvar) > 1 & length(cond) > 1) {
-    stop(
-      "Cannot specify 'by' and multiple x variables simultaneously",
-      call. = FALSE
-    )
+    stop("Cannot specify 'by' and multiple x variables simultaneously", call. = FALSE)
   }
   J <- max(length(xvar), length(cond))
-  Attempt <- try(
-    max(attr(terms(as.formula(formula(fit))), "order")) > 1,
-    silent = TRUE
-  )
-  hasInteraction <- ifelse(inherits(Attempt, 'try-error'), FALSE, Attempt)
+  Attempt <- try(max(attr(terms(as.formula(formula(fit))), "order")) > 1, silent = TRUE)
+  hasInteraction <- ifelse(inherits(Attempt, "try-error"), FALSE, Attempt)
   lev <- attr(cond, "lev")
 
   # Get xy list
@@ -36,10 +30,10 @@ setupV <- function(
   for (j in 1:J) {
     cond.j <- if (length(cond) > 1) cond[[j]] else cond[[1]]
     name <- if (length(xvar) > 1) xvar[j] else xvar
-    xy[[j]] <- getXY(fit, f, name, nn, cond.j, type, trans, alpha, jitter, ...)
+    xy[[j]] <- get_xy(fit, f, name, nn, cond.j, type, trans, alpha, jitter, ...)
   }
   if (!missing(by)) {
-    xy <- subsetV(xy, f, by, lev, type)
+    xy <- subset_visreg(xy, f, by, lev, type)
   }
 
   # Format
@@ -59,19 +53,15 @@ setupV <- function(
       for (j in 1:length(xy)) {
         fit.j <- data.frame(
           xy[[j]]$x$DD,
-          visregFit = xy[[j]]$y$fit,
-          visregLwr = xy[[j]]$y$lwr,
-          visregUpr = xy[[j]]$y$upr
+          visreg_fit = xy[[j]]$y$fit,
+          visreg_lwr = xy[[j]]$y$lwr,
+          visreg_upr = xy[[j]]$y$upr
         )
-        res.j <- data.frame(
-          xy[[j]]$x$D,
-          visregRes = xy[[j]]$y$r,
-          visregPos = xy[[j]]$y$pos
-        )
+        res_j <- data.frame(xy[[j]]$x$D, visreg_res = xy[[j]]$y$r, visreg_pos = xy[[j]]$y$pos)
         fit.j[, xvar] <- xy[[j]]$x$xx
-        res.j[, xvar] <- xy[[j]]$x$x
+        res_j[, xvar] <- xy[[j]]$x$x
         v$fit <- rbind(v$fit, fit.j)
-        v$res <- rbind(v$res, res.j)
+        v$res <- rbind(v$res, res_j)
       }
       class(v) <- "visreg"
     } else {
@@ -82,15 +72,11 @@ setupV <- function(
         v[[j]] <- list(
           fit = data.frame(
             xy[[j]]$x$DD,
-            visregFit = xy[[j]]$y$fit,
-            visregLwr = xy[[j]]$y$lwr,
-            visregUpr = xy[[j]]$y$upr
+            visreg_fit = xy[[j]]$y$fit,
+            visreg_lwr = xy[[j]]$y$lwr,
+            visreg_upr = xy[[j]]$y$upr
           ),
-          res = data.frame(
-            xy[[j]]$x$D,
-            visregRes = xy[[j]]$y$r,
-            visregPos = xy[[j]]$y$pos
-          ),
+          res = data.frame(xy[[j]]$x$D, visreg_res = xy[[j]]$y$r, visreg_pos = xy[[j]]$y$pos),
           meta = meta.j
         )
         v[[j]]$fit[, xvar[j]] <- xy[[j]]$x$xx
@@ -100,7 +86,7 @@ setupV <- function(
       if (J == 1) {
         v <- v[[1]]
       } else {
-        class(v) <- "visregList"
+        class(v) <- "visreg_list"
       }
     }
   } else {
@@ -115,23 +101,23 @@ setupV <- function(
         for (j in 1:J) {
           fit.jk <- data.frame(
             xy[[j]]$x$DD,
-            visregFit = xy[[j]]$y$fit[, k],
-            visregLwr = xy[[j]]$y$lwr[, k],
-            visregUpr = xy[[j]]$y$upr[, k]
+            visreg_fit = xy[[j]]$y$fit[, k],
+            visreg_lwr = xy[[j]]$y$lwr[, k],
+            visreg_upr = xy[[j]]$y$upr[, k]
           )
-          res.jk <- data.frame(
+          res_jk <- data.frame(
             xy[[j]]$x$D,
-            visregRes = xy[[j]]$y$r[, k],
-            visregPos = xy[[j]]$y$pos[, k]
+            visreg_res = xy[[j]]$y$r[, k],
+            visreg_pos = xy[[j]]$y$pos[, k]
           )
           fit.jk[, xvar] <- xy[[j]]$x$xx
-          res.jk[, xvar] <- xy[[j]]$x$x
+          res_jk[, xvar] <- xy[[j]]$x$x
           v[[k]]$fit <- rbind(v[[k]]$fit, fit.jk)
-          v[[k]]$res <- rbind(v[[k]]$res, res.jk)
+          v[[k]]$res <- rbind(v[[k]]$res, res_jk)
         }
         class(v[[k]]) <- "visreg"
       }
-      class(v) <- "visregList"
+      class(v) <- "visreg_list"
     } else {
       v <- vector("list", J * K)
 
@@ -145,14 +131,14 @@ setupV <- function(
           v[[l]] <- list(
             fit = data.frame(
               xy[[j]]$x$DD,
-              visregFit = xy[[j]]$y$fit[, k],
-              visregLwr = xy[[j]]$y$lwr[, k],
-              visregUpr = xy[[j]]$y$upr[, k]
+              visreg_fit = xy[[j]]$y$fit[, k],
+              visreg_lwr = xy[[j]]$y$lwr[, k],
+              visreg_upr = xy[[j]]$y$upr[, k]
             ),
             res = data.frame(
               xy[[j]]$x$D,
-              visregRes = xy[[j]]$y$r[, k],
-              visregPos = xy[[j]]$y$pos[, k]
+              visreg_res = xy[[j]]$y$r[, k],
+              visreg_pos = xy[[j]]$y$pos[, k]
             ),
             meta = meta.jk
           )
@@ -161,7 +147,7 @@ setupV <- function(
           class(v[[l]]) <- "visreg"
         }
       }
-      class(v) <- "visregList"
+      class(v) <- "visreg_list"
     }
   }
   v

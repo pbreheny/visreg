@@ -1,4 +1,4 @@
-printCond <- function(v, warn = FALSE) {
+print_cond <- function(v, warn = FALSE) {
   if (warn) {
     warning(
       "  Note that you are attempting to plot a 'main effect' in a model that contains an

@@ -1,8 +1,7 @@
-# setupV for visreg2d
 # Returns a list of x, y, and z for plotting
-setupV2 <- function(fit, f, xvar, yvar, nn, cond, type, scale, trans) {
+build_visreg2d <- function(fit, f, xvar, yvar, nn, cond, type, scale, trans) {
   n.z <- if (inherits(fit, "mlm")) ncol(coef(fit)) else 1
-  form <- parseFormula(formula(fit)[3])
+  form <- parse_formula(formula(fit)[3])
   x <- f[, xvar]
   y <- f[, yvar]
   xx <- if (is.factor(x)) {
@@ -19,7 +18,7 @@ setupV2 <- function(fit, f, xvar, yvar, nn, cond, type, scale, trans) {
   names(xydf) <- c(xvar, yvar)
 
   if (type == "conditional") {
-    df <- fillFrame(f, xydf, cond)
+    df <- fill_frame(f, xydf, cond)
     DD <- model.frame(as.formula(paste("~", form)), df)
     DD <- cbind(DD, df[, setdiff(names(df), names(DD)), drop = FALSE])
     P <- predict(fit, newdata = DD)
@@ -35,7 +34,7 @@ setupV2 <- function(fit, f, xvar, yvar, nn, cond, type, scale, trans) {
     xref <- if (is.factor(x)) xx[1] else xref <- mean(x)
     yref <- if (is.factor(y)) yy[1] else yref <- mean(y)
     xydf <- rbind(c(xref, yref), xydf)
-    df <- fillFrame(f, xydf, cond)
+    df <- fill_frame(f, xydf, cond)
     DD <- rbind(f, df)
     if (inherits(fit, "mlm")) {
       ind <- apply(is.finite(coef(fit)), 1, all)
@@ -45,29 +44,18 @@ setupV2 <- function(fit, f, xvar, yvar, nn, cond, type, scale, trans) {
     } else {
       ind <- is.finite(coef(fit))
     }
-    XX. <- model.matrix(as.formula(paste("~", formula(fit)[3])), DD)[
-      -(1:nrow(f)),
-      ind
-    ]
+    XX. <- model.matrix(as.formula(paste("~", formula(fit)[3])), DD)[-(1:nrow(f)), ind]
     XX <- t(t(XX.[-1, ]) - XX.[1, ])
     if (inherits(fit, "mlm")) {
       z <- vector("list", n.z)
       for (i in 1:n.z) {
-        z[[i]] <- matrix(
-          trans(XX %*% coef(fit)[ind, i]),
-          nrow = length(xx),
-          ncol = length(yy)
-        )
+        z[[i]] <- matrix(trans(XX %*% coef(fit)[ind, i]), nrow = length(xx), ncol = length(yy))
       }
     } else {
-      z <- matrix(
-        trans(XX %*% coef(fit)[ind]),
-        nrow = length(xx),
-        ncol = length(yy)
-      )
+      z <- matrix(trans(XX %*% coef(fit)[ind]), nrow = length(xx), ncol = length(yy))
     }
   }
-  zname <- makeYName(fit, scale, trans, type)
+  zname <- make_y_name(fit, scale, trans, type)
   D <- model.frame(as.formula(paste("~", form)), df)
   condNames <- setdiff(names(D), c(xvar, yvar))
   condNames <- intersect(condNames, names(df))
@@ -85,14 +73,14 @@ setupV2 <- function(fit, f, xvar, yvar, nn, cond, type, scale, trans) {
       meta <- baseMeta
       meta$z <- zname[i]
       v[[i]] <- list(x = xx, y = yy, z = z[[i]], meta = meta)
-      class(v[[i]]) <- 'visreg2d'
+      class(v[[i]]) <- "visreg2d"
     }
-    class(v) <- 'visregList'
+    class(v) <- "visreg_list"
   } else {
     meta <- baseMeta
     meta$z <- zname
     v <- list(x = xx, y = yy, z = z, meta = meta)
-    class(v) <- 'visreg2d'
+    class(v) <- "visreg2d"
   }
   v
 }

@@ -1,4 +1,4 @@
-fillFrame <- function(f, x, cond) {
+fill_frame <- function(f, x, cond) {
   ## x  = data frame of x variable(s) being changed
   ## x2 = variables being filled by median
   ## x3 = variables specified by cond
@@ -11,21 +11,13 @@ fillFrame <- function(f, x, cond) {
         !is.element(names(f)[j], names(cond)) &&
         !is.element(names(f)[j], names(x))
     ) {
-      mode = names(sort(-table(f[j])))[1]
-      eval(parse(
-        text = c(
-          'cond=c(cond, list(',
-          names(f)[j],
-          '=factor(mode, levels=levels(f[, names(f)[j]]))))'
-        )
-      ))
+      mode <- names(sort(-table(f[j])))[1]
+      entry <- list(factor(mode, levels = levels(f[, j])))
+      names(entry) <- names(f)[j]
+      cond <- c(cond, entry)
     }
   }
-  exclude <- c(
-    names(x),
-    names(cond),
-    names(which(sapply(f, function(x) inherits(x, "Surv"))))
-  )
+  exclude <- c(names(x), names(cond), names(which(sapply(f, function(x) inherits(x, "Surv")))))
   x2 <- lapply(as.data.frame(f[, setdiff(names(f), exclude)]), median)
   names(x2) <- setdiff(names(f), exclude)
   x3 <- cond

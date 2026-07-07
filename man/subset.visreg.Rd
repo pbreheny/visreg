@@ -13,14 +13,17 @@
 
 \item{...}{Not used.}
 }
+\value{
+A \code{\link[=visreg]{visreg()}} object.
+}
 \description{
 Subset a visreg object so that only a portion of the full model is plotted.
 }
 \examples{
 # Fit a model and construct a visreg object
-airquality$Heat <- cut(airquality$Temp,3,labels=c("Cool","Mild","Hot"))
-fit <- lm(Ozone~ Solar.R + Wind*Heat,data=airquality)
-v <- visreg(fit, "Wind", by="Heat", plot=FALSE)
+airquality$Heat <- cut(airquality$Temp, 3, labels = c("Cool", "Mild", "Hot"))
+fit <- lm(Ozone ~ Solar.R + Wind * Heat, data = airquality)
+v <- visreg(fit, "Wind", by = "Heat", plot = FALSE)
 
 # Plot only certain levels
 vv <- subset(v, Heat \%in\% c("Cool", "Hot"))
@@ -29,4 +32,5 @@ plot(vv)
 # Plot only up to wind 15 mph
 vv <- subset(v, Wind < 15)
 plot(vv)
+
 }

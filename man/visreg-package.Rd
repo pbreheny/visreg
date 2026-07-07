@@ -8,7 +8,9 @@
 Provides a convenient interface for constructing plots to visualize the fit of regression models arising from a wide variety of models in R ('lm', 'glm', 'coxph', 'rlm', 'gam', 'locfit', 'lmer', 'randomForest', etc.)
 }
 \examples{
-\donttest{vignette("quick-start", package="visreg")}
+\donttest{
+vignette("quick-start", package = "visreg")
+}
 }
 \references{
 Breheny P and Burchett W. (2017) Visualization of regression models using

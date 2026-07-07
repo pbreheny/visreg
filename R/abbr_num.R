@@ -1,4 +1,4 @@
-abbrNum <- function(xx) {
+abbr_num <- function(xx) {
   x <- unique(xx)
   l <- format.info(x)
   if (length(l) == 1) {

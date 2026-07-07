@@ -1,94 +1,97 @@
 #' Visualization of regression functions
 #'
-#' A function for visualizing regression models quickly and easily. Default
-#' plots contain a confidence band, prediction line, and partial residuals.
-#' Factors, transformations, conditioning, interactions, and a variety of other
-#' options are supported.  The \code{visreg} function performs the calculations
-#' and, if \code{plot=TRUE} (the default), these calculations are passed to
-#' \code{plot.visreg} for plotting.
+#' A function for visualizing regression models quickly and easily. Default plots contain a
+#' confidence band, prediction line, and partial residuals. Factors, transformations, conditioning,
+#' interactions, and a variety of other options are supported. The `visreg` function performs the
+#' calculations and, if `plot=TRUE` (the default), these calculations are passed to `plot.visreg`
+#' for plotting.
 #'
-#' See \code{\link{plot.visreg}} for plotting options, such as changing the
-#' appearance of points, lines, confidence bands, etc.
+#' See [plot.visreg()] for plotting options, such as changing the appearance of points, lines,
+#' confidence bands, etc.
 #'
-#' @param fit The fitted model object you wish to visualize.  Any object with
-#' 'predict' and 'model.frame' methods are supported, including lm, glm, gam,
-#' rlm, coxph, and many more.
-#' @param xvar Character string specifying the variable to be put on the x-axis
-#' of your plot.  Both continuous variables and factors are supported.
-#' @param by (Optional) A variable allowing you to divide your plot into
-#' cross-sections based on levels of the \code{by} variable; particularly
-#' useful for visualizing models with interactions.  Supplied as a character
-#' string.  Cross-sections are displayed as facets of a ggplot2 plot.  Both
-#' continuous variables and factors are supported.
-#' @param breaks If a continuous variable is used for the \code{by} option, the
-#' \code{breaks} argument controls the values at which the cross-sections are
-#' taken. By default, cross-sections are taken at the 10th, 50th, and 90th
-#' quantiles.  If \code{breaks} is a single number, it specifies the number of
-#' breaks.  If \code{breaks} is a vector of numbers, it specifies the values at
-#' which the cross-sections are to be taken.  Each partial residuals appears
-#' exactly once in the plot, in the panel it is closest to.
-#' @param type The type of plot to be produced.  The following options are
-#' supported: \itemize{ \item If 'conditional' is selected, the plot returned
-#' shows the value of the variable on the x-axis and the change in response on
-#' the y-axis, holding all other variables constant (by default, median for
-#' numeric variables and most common category for factors).  \item If
-#' 'contrast' is selected, the plot returned shows the effect on the expected
-#' value of the response by moving the x variable away from a reference point
-#' on the x-axis (for numeric variables, this is taken to be the mean).  } For
-#' more details, see references.
-#' @param data The data frame used to fit the model.  Typically, visreg() can
-#' figure out where the data is, so it is not necessary to provide this.  In
-#' some cases, however, the data set cannot be located and must be supplied
-#' explicitly.
-#' @param trans (Optional) A function specifying a transformation for the
-#' vertical axis.
-#' @param scale By default, the model is plotted on the scale of the linear
-#' predictor.  If \code{scale='response'} for a glm, the inverse link function
-#' will be applied so that the model is plotted on the scale of the original
-#' response.
-#' @param xtrans (Optional) A function specifying a transformation for the
-#' horizontal axis.  Note that, for model terms such as \code{log(x)}, visreg
-#' automatically plots on the original axis (see examples).
-#' @param alpha Alpha level (1-coverage) for the confidence band displayed in
-#' the plot (default: 0.05).
-#' @param nn Controls the smoothness of the line and confidence band.
-#' Increasing this number will add to the computational burden, but produce a
-#' smoother plot (default: 101).
-#' @param cond Named list specifying conditional values of other explanatory
-#' variables. By default, conditional plots in visreg are constructed by
-#' filling in other explanatory variables with the median (for numeric
-#' variables) or most common category (for factors), but this can be overridden
-#' by specifying their values using \code{cond} (see examples).
-#' @param jitter Adds a small amount of noise to \code{xvar}.  Potentially
-#' useful if many observations have exactly the same value.  Default is FALSE.
-#' @param collapse If the \code{predict} method for \code{fit} returns a
-#' matrix, should this be returns as multiple visreg objects bound together as
-#' a list (\code{collapse=FALSE}) or collapsed down to a single \code{visreg}
-#' object (\code{collapse=TRUE}).
-#' @param plot Send the calculations to \code{\link{plot.visreg}}?  Default is
-#' TRUE.
-#' @param \dots Graphical parameters (e.g., \code{ylab}) can be passed to the
-#' function to customize the plots.  If \code{by=TRUE}, ggplot2 faceting
-#' parameters can be passed, such as \code{strip.names} (see examples below).
-#' @return A \code{visreg} or \code{visregList} object (which is simply a list
-#' of \code{visreg} objects).  A \code{visreg} object has three components:
-#' \item{fit}{A data frame with \code{nn} rows containing the fit of the model
-#' as \code{xvar} varies, along with lower and upper confidence bounds (named
-#' \code{visregFit}, \code{visregLwr}, and \code{visregUpr}, respectively). The
-#' fitted matrix of coefficients.} \item{res}{A data frame with \code{n} rows,
-#' where \code{n} is the number of observations in the original data set used
-#' to model.  This frame contains information about the residuals, named
-#' \code{visregReg} and \code{visregPos}; the latter records whether the
-#' residual was positive or negative.} \item{meta}{Contains meta-information
-#' needed to construct plots, such as the name of the x and y variables,
-#' whether there were any \code{by} variables, etc.}
-#' @author Patrick Breheny and Woodrow Burchett
-#' @seealso \url{https://pbreheny.github.io/visreg/} `[plot.visreg()]` `[visreg2d)]`
-#' @references \itemize{
-#'   \item \url{https://pbreheny.github.io/visreg/}
-#'   \item Breheny, P. and Burchett, W. (2017), Visualizing regression models using visreg.
-#'     \url{https://journal.r-project.org/archive/2017/RJ-2017-046/index.html}
+#' @param fit The fitted model object you wish to visualize. Any object with 'predict' and
+#'   'model.frame' methods are supported, including lm, glm, gam, rlm, coxph, and many more.
+#' @param xvar Character string specifying the variable to be put on the x-axis of your plot. Both
+#'   continuous variables and factors are supported.
+#' @param by (Optional) A variable allowing you to divide your plot into cross-sections based on
+#'   levels of the `by` variable; particularly useful for visualizing models with interactions.
+#'   Supplied as a character string. Cross-sections are displayed as facets of a ggplot2 plot. Both
+#'   continuous variables and factors are supported.
+#' @param breaks If a continuous variable is used for the `by` option, the `breaks` argument
+#'   controls the values at which the cross-sections are taken. By default, cross-sections are taken
+#'   at the 10th, 50th, and 90th quantiles. If `breaks` is a single number, it specifies the number
+#'   of breaks. If `breaks` is a vector of numbers, it specifies the values at which the
+#'   cross-sections are to be taken. Each partial residuals appears exactly once in the plot, in the
+#'   panel it is closest to.
+#' @param type The type of plot to be produced.  The following options are supported:
+#'   - If `"conditional"` is selected, the plot returned shows the value of the variable on the
+#'     x-axis and the change in response on the y-axis, holding all other variables constant (by
+#'     default, median for numeric variables and most common category for factors).
+#'   - If `"contrast"` is selected, the plot returned shows the effect on the expected value of the
+#'     response by moving the x variable away from a reference point on the x-axis (for numeric
+#'     variables, this is taken to be the mean).
+#'   For more details, see references.
+#' @param data The data frame used to fit the model. Typically, visreg() can figure out where the
+#'   data is, so it is not necessary to provide this. In some cases, however, the data set cannot be
+#'   located and must be supplied explicitly.
+#' @param trans (Optional) A function specifying a transformation for the vertical axis.
+#' @param scale By default, the model is plotted on the scale of the linear predictor. If
+#'   `scale='response'` for a glm, the inverse link function will be applied so that the model is
+#'   plotted on the scale of the original response.
+#' @param xtrans (Optional) A function specifying a transformation for the horizontal axis. Note
+#'   that, for model terms such as `log(x)`, visreg automatically plots on the original axis (see
+#'   examples).
+#' @param alpha Alpha level (1-coverage) for the confidence band displayed in the plot (default:
+#'   0.05).
+#' @param nn Controls the smoothness of the line and confidence band. Increasing this number will
+#'   add to the computational burden, but produce a smoother plot (default: 101).
+#' @param cond Named list specifying conditional values of other explanatory variables. By default,
+#'   conditional plots in visreg are constructed by filling in other explanatory variables with the
+#'   median (for numeric variables) or most common category (for factors), but this can be
+#'   overridden by specifying their values using `cond` (see examples).
+#' @param jitter Adds a small amount of noise to `xvar`. Potentially useful if many observations
+#'   have exactly the same value. Default is FALSE.
+#' @param collapse If the `predict` method for `fit` returns a matrix, should this be returns as
+#'   multiple visreg objects bound together as a list (`collapse=FALSE`) or collapsed down to a
+#'   single `visreg` object (`collapse=TRUE`).
+#' @param plot Send the calculations to [plot.visreg()]? Default is TRUE.
+#' @param \dots Graphical parameters (e.g., `ylab`) can be passed to the function to customize the
+#'   plots. If `by=TRUE`, ggplot2 faceting parameters can be passed, such as `strip_names` (see
+#'   examples below).
+#'
+#' @returns
+#' A `visreg` or `visreg_list` object (which is simply a list of `visreg` objects). A visreg` object
+#' has three components:
+#'
+#' \describe{
+#'   \item{fit}{
+#'     A data frame with `nn` rows containing the fit of the model as `xvar` varies, along with
+#'     lower and upper confidence bounds (named `visreg_fit`, `visreg_lwr`, and `visreg_upr`,
+#'     respectively). The fitted matrix of coefficients.
+#'   }
+#'   \item{res}{
+#'     A data frame with `n` rows, where `n` is the number of observations in the original data set
+#'     used to model. This frame contains information about the residuals, named `visregReg` and
+#'     `visreg_pos`; the latter records whether the residual was positive or negative.
+#'   }
+#'   \item{meta}{
+#'     Contains meta-information needed to construct plots, such as the name of the x and y
+#'     variables, whether there were any `by` variables, etc.
+#'   }
 #' }
+#'
+#' Note that if `plot = TRUE` (the default), then the `visreg` object is passed to [plot.visreg()]
+#' and a `ggplot` object is returned instead.
+#'
+#' @seealso
+#' [plot.visreg()] for plotting options, [visreg2d()] for creating two-dimensional visreg objects,
+#' and the [package website](https://pbreheny.github.io/visreg/) for detailed explanations and
+#' examples.
+#' @references
+#' - <https://pbreheny.github.io/visreg/>
+#' - Breheny, P. and Burchett, W. (2017), Visualizing regression models using visreg.
+#'   <https://journal.r-project.org/archive/2017/RJ-2017-046/index.html>
+#'
 #' @examples
 #'
 #' # --- Linear models ----------------------------------------
@@ -114,7 +117,7 @@
 #'
 #' ## Conditioning
 #' visreg(fit, "Wind", cond = list(Temp = 50))
-#' visreg(fit, "Wind", print.cond = TRUE)
+#' visreg(fit, "Wind", print_cond = TRUE)
 #' visreg(fit, "Wind", cond = list(Temp = 100))
 #'
 #' ## Interactions
@@ -165,8 +168,7 @@
 #' ## Return raw components of plot
 #' v <- visreg(fit, "Wind", cond = list(Heat = "Mild"))
 #'
-#' @export visreg
-
+#' @export
 visreg <- function(
   fit,
   xvar,
@@ -210,7 +212,7 @@ visreg <- function(
     )
   }
 
-  Data <- setupF(fit, xvar, parent.frame(), data)
+  Data <- setup_frame(fit, xvar, parent.frame(), data)
   xvar <- attr(Data, "xvar")
   if (attr(Data, "needsUpdate")) {
     if (inherits(fit, "coxph")) {
@@ -219,27 +221,13 @@ visreg <- function(
       fit <- update(fit, formula = formula(fit), data = Data)
     }
   }
-  cond <- setupCond(cond, Data, by, breaks)
+  cond <- setup_cond(cond, Data, by, breaks)
 
   # Calculate v
-  yName <- makeYName(fit, scale, trans, type)
-  v <- setupV(
-    fit,
-    Data,
-    xvar,
-    nn,
-    cond,
-    type,
-    trans,
-    xtrans,
-    alpha,
-    jitter,
-    by,
-    yName,
-    ...
-  )
+  yName <- make_y_name(fit, scale, trans, type)
+  v <- build_visreg(fit, Data, xvar, nn, cond, type, trans, xtrans, alpha, jitter, by, yName, ...)
   if (collapse) {
-    v <- collapse.visregList(v)
+    v <- collapse.visreg_list(v)
   }
 
   # Plot/return

@@ -34,10 +34,10 @@ The options described in [cross-sectional plots](cross.html) work in the same wa
 visreg(fit, "Heat", by="Wind", overlay=TRUE, breaks=c(6, 12))
 ```
 
-In particular, the option `strip.names` is used in the same way for consistency, even though there are no actual strips in an overlay plot:
+In particular, the option `strip_names` is used in the same way for consistency, even though there are no actual strips in an overlay plot:
 
 ```{r, h=5, w=5}
-visreg(fit, "Wind", by="Heat", overlay=TRUE, strip.names=c("Cold", "Not so hot", "Really hot"))
+visreg(fit, "Wind", by="Heat", overlay=TRUE, strip_names=c("Cold", "Not so hot", "Really hot"))
 ```
 
 Changing the appearance of lines and points that are common to all levels of `by` is accomplished in the same manner as [other `visreg` plots](options.html):

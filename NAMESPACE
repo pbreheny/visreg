@@ -2,11 +2,11 @@
 
 S3method(plot,visreg)
 S3method(plot,visreg2d)
-S3method(plot,visregList)
+S3method(plot,visreg_list)
 S3method(subset,visreg)
 export(visreg)
 export(visreg2d)
-export(visregList)
+export(visreg_list)
 import(grDevices)
 import(graphics)
 import(stats)

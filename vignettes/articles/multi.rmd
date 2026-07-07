@@ -11,7 +11,7 @@ knitr::knit_hooks$set(small.mar = function(before, options, envir) {
 })
 ```
 
-Multiple `visreg` objects can be bundled together in an object of class `visregList`; for example, when you submit `visreg(fit)`, you get a `visregList`, one `visreg` object for each predictor in the model.  `visregList`s can also be used for handling models with multiple outcomes.
+Multiple `visreg` objects can be bundled together in an object of class `visreg_list`; for example, when you submit `visreg(fit)`, you get a `visreg_list`, one `visreg` object for each predictor in the model.  `visreg_list`s can also be used for handling models with multiple outcomes.
 
 For example, suppose we fit a multinomial regression model using the `nnet` package:
 
@@ -36,13 +36,13 @@ fit <- rq(Ozone ~ Wind + Temp, tau=c(.25, .5, .75), data=airquality)
 v <- visreg(fit, "Wind", overlay=TRUE, collapse=TRUE)
 ```
 
-NOTE: `quantreg` does not return standand errors if you specify multiple quantiles of interest.  To obtain them, you must construct the `visregList` manually:
+NOTE: `quantreg` does not return standand errors if you specify multiple quantiles of interest.  To obtain them, you must construct the `visreg_list` manually:
 
 ```{r, h=3, w=9, out.width='100%'}
 fit1 <- rq(Ozone ~ Wind + Temp, tau=.25, data=airquality)
 fit2 <- rq(Ozone ~ Wind + Temp, tau=.5, data=airquality)
 fit3 <- rq(Ozone ~ Wind + Temp, tau=.75, data=airquality)
-v <- visregList(visreg(fit1, "Wind", plot=FALSE),
+v <- visreg_list(visreg(fit1, "Wind", plot=FALSE),
                 visreg(fit2, "Wind", plot=FALSE),
                 visreg(fit3, "Wind", plot=FALSE),
                 labels=c("25%", "50%", "75%"), collapse=TRUE)

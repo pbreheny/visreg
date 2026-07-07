@@ -14,11 +14,11 @@ visreg(fit, "x")
 visreg(fit, "x", by = "ID")
 visreg(fit, "x", by = "ID", re.form = ~ (1 | ID)) # Adds random effects back in
 
-visreg(fit, "x", by = "ID", overlay = TRUE, strip.names = TRUE)
+visreg(fit, "x", by = "ID", overlay = TRUE, strip_names = TRUE)
 v <- visreg(fit, "x", by = "ID", re.form = ~ 1 | ID)
-plot(v, overlay = TRUE, strip.names = FALSE)
-plot(v, overlay = TRUE, strip.names = TRUE)
-plot(v, overlay = TRUE, strip.names = LETTERS[1:10])
+plot(v, overlay = TRUE, strip_names = FALSE)
+plot(v, overlay = TRUE, strip_names = TRUE)
+plot(v, overlay = TRUE, strip_names = LETTERS[1:10])
 
 visreg(fit, "x", type = "contrast")
 visreg(fit, "x", by = "ID", type = "contrast")
