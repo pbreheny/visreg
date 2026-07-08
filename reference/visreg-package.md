@@ -26,6 +26,11 @@ Useful links:
 **Maintainer**: Patrick Breheny <patrick-breheny@uiowa.edu>
 ([ORCID](https://orcid.org/0000-0002-0650-1119))
 
+Authors:
+
+- Patrick Breheny <patrick-breheny@uiowa.edu>
+  ([ORCID](https://orcid.org/0000-0002-0650-1119))
+
 Other contributors:
 
 - Woodrow Burchett \[contributor\]

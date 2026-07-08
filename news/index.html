@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">visreg</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.8.0.2</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.8.1</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -60,6 +60,14 @@
       <small>Source: <a href="https://github.com/pbreheny/visreg/blob/main/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
     </div>
 
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="2.8.1" id="visreg-281">visreg 2.8.1<a class="anchor" aria-label="anchor" href="#visreg-281"></a></h2>
+<ul><li>Fixed: Various ggplot2 deprecation issues (aes_string, size instead of linewidth, etc)</li>
+<li>Fixed: Error if weight variable and character variable both present; <a href="https://github.com/pbreheny/visreg/issues/131" class="external-link">#131</a></li>
+<li>Fixed: Suppress lme4/Matrix deprecation warning</li>
+<li>Fixed: Bug in ggFactorPlot data mapping when rug=TRUE</li>
+<li>Internal: Fixed testing suite to avoid silent ggplot errors</li>
+</ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="2.8.0" id="visreg-280">visreg 2.8.0<a class="anchor" aria-label="anchor" href="#visreg-280"></a></h2><p class="text-muted">CRAN release: 2025-08-20</p>
 <ul><li>New: cond argument now accepts variables that aren’t in the model; fixes <a href="https://github.com/pbreheny/visreg/issues/67" class="external-link">#67</a></li>

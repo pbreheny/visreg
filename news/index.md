@@ -1,5 +1,15 @@
 # Changelog
 
+## visreg 2.8.1
+
+- Fixed: Various ggplot2 deprecation issues (aes_string, size instead of
+  linewidth, etc)
+- Fixed: Error if weight variable and character variable both present;
+  [\#131](https://github.com/pbreheny/visreg/issues/131)
+- Fixed: Suppress lme4/Matrix deprecation warning
+- Fixed: Bug in ggFactorPlot data mapping when rug=TRUE
+- Internal: Fixed testing suite to avoid silent ggplot errors
+
 ## visreg 2.8.0
 
 CRAN release: 2025-08-20
