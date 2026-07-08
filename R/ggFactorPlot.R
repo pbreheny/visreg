@@ -185,18 +185,14 @@ ggFactorPlot <- function(
   if (rug == 2) {
     p <- p +
       ggplot2::geom_rug(
-        mapping = ggplot2::aes(
-          x = pointData[v$res$visregPos, "visregGGX"],
-          y = v$fit$visregFit[1]
-        ),
+        data = pointData[v$res$visregPos, , drop = FALSE],
+        mapping = ggplot2::aes(x = .data$visregGGX),
         col = "gray50",
         sides = "t"
       ) +
       ggplot2::geom_rug(
-        mapping = ggplot2::aes(
-          x = pointData[v$res$visregPos, "visregGGX"],
-          y = v$fit$visregFit[1]
-        ),
+        data = pointData[!v$res$visregPos, , drop = FALSE],
+        mapping = ggplot2::aes(x = .data$visregGGX),
         col = "gray50",
         sides = "b"
       )
