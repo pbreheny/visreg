@@ -8,7 +8,7 @@
 
 # visreg: Visualization of Regression Models
 
-**visreg** is an R package for displaying the results of a fitted model in terms of how a predictor variable `x` affects an outcome `y`.  The implementation of **visreg** takes advantage of object-oriented programming in R, meaning that it works with virtually any type of formula-based model in R provided that the model class provides a `predict()` method:  `lm`, `glm`, `gam`, `rlm`, `nlme`, `lmer`, `coxph`, `svm`, `randomForest` and many more.
+**visreg** is an R package for displaying the results of a fitted model in terms of how a predictor variable `x` affects an outcome `y`. The implementation of **visreg** takes advantage of object-oriented programming in R, meaning that it works with virtually any type of formula-based model in R provided that the model class provides a `predict()` method: `lm`, `glm`, `gam`, `rlm`, `nlme`, `lmer`, `coxph`, `svm`, `randomForest` and many more.
 
 ## Installation
 
@@ -58,7 +58,7 @@ visreg(fit, "Wind", "Heat", gg=TRUE, ylab="Ozone")
 
 For more information on **visreg** syntax and how to use it, see:
 
-* The online documentation at <https://pbreheny.github.io/visreg/> contains many examples of visreg plots and the code to create them.
-* [Breheny P and Burchett W (2017).  Visualization of Regression Models Using visreg. *The R Journal*, 9: 56-71.](https://journal.r-project.org/archive/2017/RJ-2017-046/index.html)
+- The online documentation at <https://pbreheny.github.io/visreg/> contains many examples of visreg plots and the code to create them.
+- [Breheny P and Burchett W (2017). Visualization of Regression Models Using visreg. _The R Journal_, 9: 56-71.](https://doi.org/10.32614/RJ-2017-046)
 
 The website focuses more on syntax, options, and user interface, while the paper goes into more depth regarding the statistical details.

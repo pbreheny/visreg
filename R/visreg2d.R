@@ -37,7 +37,7 @@
 #' filling in other explanatory variables with the median (for numeric
 #' variables) or most common category (for factors), but this can be overridden
 #' by specifying their values using \code{cond} (see examples).
-#' @param plot Send the calculations to `[plot.visreg2d()]`, producing
+#' @param plot Send the calculations to [plot.visreg2d()], producing
 #' a plot?  Default is TRUE.
 #' @param \dots Graphical parameters (e.g., `ylab`) can be passed to the
 #' function to customize the plots.
@@ -50,11 +50,11 @@
 #'   and y variables.}
 #'
 #' @author Patrick Breheny and Woodrow Burchett
-#' @seealso \url{https://pbreheny.github.io/visreg/articles/surface.html} `[visreg()]`
+#' @seealso \url{https://pbreheny.github.io/visreg/articles/surface.html} [visreg()]
 #' @references \itemize{
 #'   \item \url{https://pbreheny.github.io/visreg/}
 #'   \item Breheny, P. and Burchett, W. (2017), Visualizing regression models using visreg.
-#'     \url{https://journal.r-project.org/archive/2017/RJ-2017-046/index.html}
+#'     \doi{10.32614/RJ-2017-046}
 #' }
 #'
 #' @examples

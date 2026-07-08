@@ -1,10 +1,11 @@
 ^pkgdown$
 ^docs$
 ^vignettes/articles$
+^roadmap.md$
+
 .version.json
-^.*\.Rproj$
-^\.Rproj\.user$
 ^\.github$
 .project.url
 ^\.positai$
 ^\.claude$
+^CLAUDE.md$

@@ -207,11 +207,11 @@ v <- visreg(fit, "Wind", cond = list(Heat = "Mild"))
 \itemize{
 \item \url{https://pbreheny.github.io/visreg/}
 \item Breheny, P. and Burchett, W. (2017), Visualizing regression models using visreg.
-\url{https://journal.r-project.org/archive/2017/RJ-2017-046/index.html}
+\doi{10.32614/RJ-2017-046}
 }
 }
 \seealso{
-\url{https://pbreheny.github.io/visreg/} \verb{[plot.visreg()]} \verb{[visreg2d)]}
+\url{https://pbreheny.github.io/visreg/} \code{\link[=plot.visreg]{plot.visreg()}} [visreg2d)]
 
 [visreg2d)]: R:visreg2d)
 }

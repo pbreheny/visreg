@@ -61,7 +61,7 @@ filling in other explanatory variables with the median (for numeric
 variables) or most common category (for factors), but this can be overridden
 by specifying their values using \code{cond} (see examples).}
 
-\item{plot}{Send the calculations to \verb{[plot.visreg2d()]}, producing
+\item{plot}{Send the calculations to \code{\link[=plot.visreg2d]{plot.visreg2d()}}, producing
 a plot?  Default is TRUE.}
 
 \item{\dots}{Graphical parameters (e.g., \code{ylab}) can be passed to the
@@ -101,11 +101,11 @@ visreg2d(fit, x="Wind", y="Temp", plot.type="gg")
 \itemize{
 \item \url{https://pbreheny.github.io/visreg/}
 \item Breheny, P. and Burchett, W. (2017), Visualizing regression models using visreg.
-\url{https://journal.r-project.org/archive/2017/RJ-2017-046/index.html}
+\doi{10.32614/RJ-2017-046}
 }
 }
 \seealso{
-\url{https://pbreheny.github.io/visreg/articles/surface.html} \verb{[visreg()]}
+\url{https://pbreheny.github.io/visreg/articles/surface.html} \code{\link[=visreg]{visreg()}}
 }
 \author{
 Patrick Breheny and Woodrow Burchett

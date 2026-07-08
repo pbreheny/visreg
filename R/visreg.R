@@ -83,11 +83,11 @@
 #' needed to construct plots, such as the name of the x and y variables,
 #' whether there were any \code{by} variables, etc.}
 #' @author Patrick Breheny and Woodrow Burchett
-#' @seealso \url{https://pbreheny.github.io/visreg/} `[plot.visreg()]` `[visreg2d)]`
+#' @seealso \url{https://pbreheny.github.io/visreg/} [plot.visreg()] [visreg2d)]
 #' @references \itemize{
 #'   \item \url{https://pbreheny.github.io/visreg/}
 #'   \item Breheny, P. and Burchett, W. (2017), Visualizing regression models using visreg.
-#'     \url{https://journal.r-project.org/archive/2017/RJ-2017-046/index.html}
+#'     \doi{10.32614/RJ-2017-046}
 #' }
 #' @examples
 #'
@@ -223,21 +223,7 @@ visreg <- function(
 
   # Calculate v
   yName <- makeYName(fit, scale, trans, type)
-  v <- setupV(
-    fit,
-    Data,
-    xvar,
-    nn,
-    cond,
-    type,
-    trans,
-    xtrans,
-    alpha,
-    jitter,
-    by,
-    yName,
-    ...
-  )
+  v <- setupV(fit, Data, xvar, nn, cond, type, trans, xtrans, alpha, jitter, by, yName, ...)
   if (collapse) {
     v <- collapse.visregList(v)
   }
