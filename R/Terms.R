@@ -16,9 +16,9 @@ Terms <- function(fit, f, x, trans, alpha, ...) {
     }
   } else {
     if (inherits(fit, 'glmmTMB')) {
-      V <- vcov(fit)$cond
+      V <- suppressWarnings(vcov(fit)$cond)
     } else {
-      V <- vcov(fit)
+      V <- suppressWarnings(vcov(fit))
     }
     dg <- if (inherits(V, 'Matrix')) Matrix::diag(V) else diag(V)
     if (inherits(fit, 'polr')) {
