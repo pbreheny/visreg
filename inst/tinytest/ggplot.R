@@ -75,7 +75,7 @@ visreg(
   "Wind",
   by = "Heat",
   gg = TRUE,
-  line = list(col = "blue", size = 5),
+  line = list(col = "blue", linewidth = 5),
   points = list(col = "red", size = 3),
   fill = list(fill = "yellow", col = "green")
 )
@@ -85,7 +85,7 @@ visreg(
   "Heat",
   by = "Wind",
   gg = TRUE,
-  line = list(col = "blue", size = 5),
+  line = list(col = "blue", linewidth = 5),
   points = list(col = "red", size = 3),
   fill = list(fill = "yellow", col = "green")
 )

@@ -118,13 +118,18 @@ ggContPlot <- function(
       p <- p + do.call("geom_point", point.args, envir = asNamespace("ggplot2"))
     }
   }
+  rug.point.args <- point.args
+  if ("size" %in% names(rug.point.args)) {
+    rug.point.args$linewidth <- rug.point.args$size
+    rug.point.args$size <- NULL
+  }
   if (rug == 1) {
-    rug.args <- point.args
+    rug.args <- rug.point.args
     rug.args$sides <- "b"
     p <- p + do.call("geom_rug", rug.args, envir = asNamespace("ggplot2"))
   }
   if (rug == 2) {
-    top.args <- bot.args <- point.args
+    top.args <- bot.args <- rug.point.args
     top.args$sides <- "t"
     bot.args$sides <- "b"
     top.args$data <- pointData[v$res$visregPos, ]
