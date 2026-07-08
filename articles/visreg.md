@@ -9,7 +9,7 @@ For details on `visreg` syntax and how to use it, see:
   contains many examples of visreg plots and the code to create them.
 - [Breheny P and Burchett W (2017). Visualization of Regression Models
   Using visreg. *The R Journal*, 9:
-  56-71.](https://journal.r-project.org/archive/2017/RJ-2017-046/index.html)
+  56-71.](https://doi.org/10.32614/RJ-2017-046)
 - The R help files
   [`?visreg`](https://pbreheny.github.io/visreg/reference/visreg.md),
   [`?plot.visreg`](https://pbreheny.github.io/visreg/reference/plot.visreg.md),

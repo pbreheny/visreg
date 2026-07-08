@@ -182,11 +182,13 @@ confidence bands, etc.
 
 - Breheny, P. and Burchett, W. (2017), Visualizing regression models
   using visreg.
-  <https://journal.r-project.org/archive/2017/RJ-2017-046/index.html>
+  [doi:10.32614/RJ-2017-046](https://doi.org/10.32614/RJ-2017-046)
 
 ## See also
 
-<https://pbreheny.github.io/visreg/> `[plot.visreg()]` `[visreg2d)]`
+<https://pbreheny.github.io/visreg/>
+[`plot.visreg()`](https://pbreheny.github.io/visreg/reference/plot.visreg.md)
+\[visreg2d)\]
 
 \[visreg2d)\]: R:visreg2d)
 

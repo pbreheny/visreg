@@ -1,4 +1,3 @@
-
 A number of options for [surface plots](surface.html) are also provided, such as `rgl` plots:
 
 ```r
@@ -10,7 +9,7 @@ visreg2d(fit, "Wind", "Temp", plot.type="rgl")
 ```{=html}
 <div class="container" style="width: 100%">
   <div class="row-fluid">
-    <iframe class="span12" 
+    <iframe class="span12"
 	    style="border: none; height: 484px; width: 100%"
 	    src="articles/rgl.html">
     </iframe>
@@ -26,4 +25,4 @@ If you have a question or feature request, please [submit an issue](https://gith
 
 The documentation provided here focuses on syntax, options, and user interface. For more details on the statistical methodology and implementation, see:
 
-* [Breheny P and Burchett W (2017).  Visualization of Regression Models Using visreg. *The R Journal*, 9: 56-71.](https://journal.r-project.org/archive/2017/RJ-2017-046/index.html)
+- [Breheny P and Burchett W (2017). Visualization of Regression Models Using visreg. _The R Journal_, 9: 56-71.](https://doi.org/10.32614/RJ-2017-046)
