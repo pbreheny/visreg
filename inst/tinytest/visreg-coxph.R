@@ -31,7 +31,7 @@ visreg(fit, "rx", type = "contrast")
 ovarian$Group <- factor(ovarian$rx)
 fit <- coxph(Surv(futime, fustat) ~ age + strata(Group), data = ovarian)
 visreg(fit, "age")
-visreg(fit, "age", type = 'contrast')
+visreg(fit, "age", type = "contrast")
 
 # Logical
 ovarian$rx <- ovarian$rx == 2

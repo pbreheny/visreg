@@ -1,2 +1,2 @@
 fit <- loess(Ozone ~ Wind, data = airquality)
-visreg(fit, 'Wind')
+visreg(fit, "Wind")

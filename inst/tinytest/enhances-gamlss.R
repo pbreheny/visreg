@@ -6,5 +6,5 @@ fit <- gamlss(
 )
 
 # gamlss prints out annoying "new prediction" messages
-visreg(fit, 'Temp') |> capture.output() |> invisible()
-visreg2d(fit, 'Temp', 'Wind') |> capture.output() |> invisible()
+visreg(fit, "Temp") |> capture.output() |> invisible()
+visreg2d(fit, "Temp", "Wind") |> capture.output() |> invisible()

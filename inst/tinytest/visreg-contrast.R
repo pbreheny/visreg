@@ -8,20 +8,8 @@ ozone <- airquality[complete.cases(airquality), ]
 ozone$Heat <- cut(ozone$Temp, 3, labels = c("Cool", "Mild", "Hot"))
 fit <- lm(Ozone ~ Wind * Heat, data = ozone)
 visreg(fit, "Wind", type = "contrast", by = "Heat", layout = c(3, 1))
-visreg(
-  fit,
-  "Wind",
-  type = "contrast",
-  cond = list(Heat = "Cool"),
-  print.cond = FALSE
-)
-visreg(
-  fit,
-  "Wind",
-  type = "contrast",
-  cond = list(Heat = "Hot"),
-  print.cond = FALSE
-)
+visreg(fit, "Wind", type = "contrast", cond = list(Heat = "Cool"), print.cond = FALSE)
+visreg(fit, "Wind", type = "contrast", cond = list(Heat = "Hot"), print.cond = FALSE)
 fit <- lm(Ozone ~ Wind + Heat, data = ozone)
 visreg(fit, "Wind", type = "contrast", cond = list(Heat = "Cool"))
 visreg(fit, "Wind", type = "contrast", cond = list(Heat = "Hot"))
@@ -44,13 +32,7 @@ fit <- lm(y ~ x1 * x2)
 visreg(fit, "x1", by = "x2")
 visreg(fit, "x1", cond = list(x2 = "B"), print.cond = interactive())
 visreg(fit, "x1", by = "x2", type = "contrast")
-visreg(
-  fit,
-  "x1",
-  cond = list(x2 = "B"),
-  type = "contrast",
-  print.cond = interactive()
-)
+visreg(fit, "x1", cond = list(x2 = "B"), type = "contrast", print.cond = interactive())
 
 x2 <- relevel(x2, "B")
 fit <- lm(y ~ x1 * x2)

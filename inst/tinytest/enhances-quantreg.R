@@ -2,9 +2,9 @@ suppressPackageStartupMessages(library(quantreg))
 
 # Basic usage
 fit <- rq(Ozone ~ ., data = airquality)
-visreg(fit, 'Wind')
+visreg(fit, "Wind")
 fit <- rq(Ozone ~ ., data = airquality, tau = 0.1)
-visreg(fit, 'Wind')
+visreg(fit, "Wind")
 
 # Multiple quantile overlay
 fit <- rq(Ozone ~ Wind + Temp, tau = c(.25, .5, .75), data = airquality)

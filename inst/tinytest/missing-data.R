@@ -70,14 +70,14 @@ y <- rnorm(length(x))
 y[11:15] <- NA
 fit <- lm(y ~ x)
 visreg(fit)
-visreg(fit, type = 'contrast')
+visreg(fit, type = "contrast")
 
 # data options
 data("birthwt", package = "MASS")
 TMP <- birthwt
 fit <- lm(bwt ~ age + race, TMP)
 rm(TMP)
-visreg(fit, 'age', data = birthwt)
-visreg2d(fit, 'age', 'race', data = birthwt)
+visreg(fit, "age", data = birthwt)
+visreg2d(fit, "age", "race", data = birthwt)
 fit$data <- birthwt
-visreg(fit, 'age')
+visreg(fit, "age")

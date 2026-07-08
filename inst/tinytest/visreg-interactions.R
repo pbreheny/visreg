@@ -9,59 +9,20 @@ visreg(fit, "Wind", by = "Heat")
 visreg(fit, "Wind", by = "Heat", layout = c(3, 1))
 visreg(fit, "Wind", by = "Heat", layout = c(3, 1), print.cond = interactive())
 visreg(fit, "Wind", by = "Heat", layout = c(3, 1), type = "contrast")
-visreg(
-  fit,
-  "Wind",
-  by = "Heat",
-  layout = c(3, 1),
-  type = "contrast",
-  strip.names = TRUE
-)
-visreg(
-  fit,
-  "Wind",
-  type = "contrast",
-  cond = list(Heat = "Cool"),
-  print.cond = interactive()
-)
-visreg(
-  fit,
-  "Wind",
-  type = "contrast",
-  cond = list(Heat = "Mild"),
-  print.cond = interactive()
-)
-visreg(
-  fit,
-  "Wind",
-  type = "contrast",
-  cond = list(Heat = "Hot"),
-  print.cond = interactive()
-)
+visreg(fit, "Wind", by = "Heat", layout = c(3, 1), type = "contrast", strip.names = TRUE)
+visreg(fit, "Wind", type = "contrast", cond = list(Heat = "Cool"), print.cond = interactive())
+visreg(fit, "Wind", type = "contrast", cond = list(Heat = "Mild"), print.cond = interactive())
+visreg(fit, "Wind", type = "contrast", cond = list(Heat = "Hot"), print.cond = interactive())
 visreg(fit, "Wind", by = "Heat", overlay = TRUE)
 visreg(fit, "Wind", by = "Heat", type = "contrast", overlay = TRUE)
-visreg(
-  fit,
-  "Wind",
-  by = "Heat",
-  type = "contrast",
-  overlay = TRUE,
-  partial = FALSE,
-  band = FALSE
-)
+visreg(fit, "Wind", by = "Heat", type = "contrast", overlay = TRUE, partial = FALSE, band = FALSE)
 
 # Print conditions
 airquality$Heat <- cut(airquality$Temp, 3, labels = c("Cool", "Mild", "Hot"))
 fit <- lm(Ozone ~ Wind * Heat, data = airquality)
 expect_warning(visreg(fit, "Wind") |> capture.output() |> invisible())
-expect_stdout(
-  visreg(fit, "Wind", print.cond = TRUE),
-  pattern = 'Conditions used'
-)
-expect_stdout(
-  visreg(fit, "Wind", by = "Heat", print.cond = TRUE),
-  pattern = 'Conditions used'
-)
+expect_stdout(visreg(fit, "Wind", print.cond = TRUE), pattern = "Conditions used")
+expect_stdout(visreg(fit, "Wind", by = "Heat", print.cond = TRUE), pattern = "Conditions used")
 
 # Factor on x axis
 visreg(fit, "Heat", by = "Wind")
@@ -82,20 +43,13 @@ fit <- lm(Ozone ~ Wind * Heat, data = airquality)
 v <- visreg(fit, "Wind", "Heat", breaks = c("Hot", "Cool"))
 
 # Breaks + transformation
-fit <- lm(
-  log(Ozone) ~ Solar.R + Wind + Temp + Wind * Temp + Wind * Solar.R,
-  data = airquality
-)
-visreg(fit, "Wind", by = 'Temp', breaks = 9, trans = exp)
-visreg(fit, "Wind", by = 'Solar.R', trans = exp)
-visreg(fit, "Wind", by = 'Solar.R', trans = exp, overlay = TRUE)
+fit <- lm(log(Ozone) ~ Solar.R + Wind + Temp + Wind * Temp + Wind * Solar.R, data = airquality)
+visreg(fit, "Wind", by = "Temp", breaks = 9, trans = exp)
+visreg(fit, "Wind", by = "Solar.R", trans = exp)
+visreg(fit, "Wind", by = "Solar.R", trans = exp, overlay = TRUE)
 
 # Numeric variables with few unique values
-airquality$Hotness <- as.numeric(cut(
-  airquality$Temp,
-  2,
-  labels = c("Cold", "Hot")
-))
+airquality$Hotness <- as.numeric(cut(airquality$Temp, 2, labels = c("Cold", "Hot")))
 fit <- lm(Ozone ~ Solar.R + Wind * Hotness, data = airquality)
 visreg(fit, "Wind", by = "Hotness")
 visreg(fit, "Wind", by = "Hotness", overlay = TRUE)
