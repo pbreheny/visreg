@@ -27,6 +27,11 @@ Useful links:
 \author{
 \strong{Maintainer}: Patrick Breheny \email{patrick-breheny@uiowa.edu} (\href{https://orcid.org/0000-0002-0650-1119}{ORCID})
 
+Authors:
+\itemize{
+  \item Patrick Breheny \email{patrick-breheny@uiowa.edu} (\href{https://orcid.org/0000-0002-0650-1119}{ORCID})
+}
+
 Other contributors:
 \itemize{
   \item Woodrow Burchett [contributor]

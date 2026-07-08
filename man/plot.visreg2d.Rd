@@ -56,23 +56,27 @@ Plot method for visualizing how two variables interact to affect the
 response in regression models.
 }
 \examples{
-fit <- lm(Ozone ~ Solar.R + Wind + Temp + I(Wind^2) + I(Temp^2) +
-I(Wind*Temp)+I(Wind*Temp^2) + I(Temp*Wind^2) + I(Temp^2*Wind^2),
-data=airquality)
+fit <- lm(
+  Ozone ~ Solar.R + Wind + Temp + I(Wind^2) + I(Temp^2) +
+    I(Wind * Temp) + I(Wind * Temp^2) + I(Temp * Wind^2) + I(Temp^2 * Wind^2),
+  data = airquality
+)
 
-visreg2d(fit, x="Wind", y="Temp", plot.type="image")
-visreg2d(fit, x="Wind", y="Temp", plot.type="image",
-         color=c("purple", "green", "red"))
-visreg2d(fit, x="Wind", y="Temp", plot.type="persp")
+visreg2d(fit, x = "Wind", y = "Temp", plot.type = "image")
+visreg2d(fit,
+  x = "Wind", y = "Temp", plot.type = "image",
+  color = c("purple", "green", "red")
+)
+visreg2d(fit, x = "Wind", y = "Temp", plot.type = "persp")
 
 ## Requires the rgl package
 \donttest{
-visreg2d(fit,x="Wind",y="Temp",plot.type="rgl")
+visreg2d(fit, x = "Wind", y = "Temp", plot.type = "rgl")
 }
 
 ## Requires the ggplot2 package
 \donttest{
-visreg2d(fit, x="Wind", y="Temp", plot.type="gg")
+visreg2d(fit, x = "Wind", y = "Temp", plot.type = "gg")
 }
 }
 \references{

@@ -1,6 +1,6 @@
 Package: visreg
 Title: Visualization of Regression Models
-Version: 2.8.0.2
+Version: 2.8.1
 Authors@R: c(
   person("Patrick", "Breheny", role=c("aut","cre"),
          email="patrick-breheny@uiowa.edu",
@@ -32,4 +32,4 @@ Enhances: nlme
 VignetteBuilder: knitr
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.3.2
+Config/roxygen2/version: 8.0.0

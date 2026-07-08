@@ -74,7 +74,7 @@ to render the plot if multiple panels are required. If \code{gg=TRUE}, it will
 use the \strong{ggplot2} package instead, provided that it is installed.}
 
 \item{line.par}{List of parameters (see \code{\link[=par]{par()}}) to pass to \code{lines(...)} or
-\code{\link[ggplot2:geom_path]{ggplot2::geom_line()}} when lines are plotted.}
+\code{\link[ggplot2:geom_line]{ggplot2::geom_line()}} when lines are plotted.}
 
 \item{fill.par}{List of parameters (see \code{\link[=par]{par()}}) to pass to \code{polygon(...)} or
 \code{\link[ggplot2:geom_polygon]{ggplot2::geom_polygon()}} when shaded confidence regions are plotted.}
