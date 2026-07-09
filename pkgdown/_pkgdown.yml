@@ -2,7 +2,7 @@ url: https://pbreheny.github.io/visreg/
 
 authors:
   Patrick Breheny:
-    href: https://myweb.uiowa.edu/pbreheny/
+    href: https://pbreheny.org/web/
 
 template:
   bootstrap: 5
@@ -31,45 +31,45 @@ navbar:
     basic:
       text: Basic framework
       menu:
-      - text: Getting started
-        href: articles/basic.html
-      - text: Contrast vs. conditional plots
-        href: articles/contrast.html
-      - text: Transformations
-        href: articles/trans.html
-      - text: Conditioning
-        href: articles/cond.html
-      - text: Graphical options
-        href: articles/options.html
-      - text: Visreg and ggplot2
-        href: articles/gg.html
+        - text: Getting started
+          href: articles/basic.html
+        - text: Contrast vs. conditional plots
+          href: articles/contrast.html
+        - text: Transformations
+          href: articles/trans.html
+        - text: Conditioning
+          href: articles/cond.html
+        - text: Graphical options
+          href: articles/options.html
+        - text: Visreg and ggplot2
+          href: articles/gg.html
     interaction:
       text: Models with interactions
       menu:
-      - text: Cross-sectional plots
-        href: articles/cross.html
-      - text: Overlay plots
-        href: articles/overlay.html
-      - text: Surface plots
-        href: articles/surface.html
+        - text: Cross-sectional plots
+          href: articles/cross.html
+        - text: Overlay plots
+          href: articles/overlay.html
+        - text: Surface plots
+          href: articles/surface.html
     special:
       text: Additional topics
       menu:
-      - text: GLMs
-        href: articles/glm.html
-      - text: Forests, SVMs, etc.
-        href: articles/blackbox.html
-      - text: Mixed models
-        href: articles/mixed.html
-      - text: Multiple outcomes
-        href: articles/multi.html
-      - text: FAQ
-        href: articles/faq.html
+        - text: GLMs
+          href: articles/glm.html
+        - text: Forests, SVMs, etc.
+          href: articles/blackbox.html
+        - text: Mixed models
+          href: articles/mixed.html
+        - text: Multiple outcomes
+          href: articles/multi.html
+        - text: FAQ
+          href: articles/faq.html
 
 home:
   links:
-  - text: News
-    href: news/index.html
+    - text: News
+      href: news/index.html
   sidebar:
     structure: [links, citation, authors, dev]
 
@@ -79,4 +79,3 @@ footer:
     right: last_updated
   components:
     last_updated: !expr paste("Last updated:", format(Sys.time(), "%B %d, %Y"))
-

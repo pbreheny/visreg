@@ -51,8 +51,8 @@
 #' [vignette](https://pbreheny.github.io/visreg/surface.html) for examples.
 #' @references
 #' - <https://pbreheny.github.io/visreg/>
-#' - Breheny, P. and Burchett, W. (2017), Visualizing regression models using visreg.
-#'   <https://journal.r-project.org/archive/2017/RJ-2017-046/index.html>
+#' - Breheny P and Burchett W. (2017) Visualization of regression models using
+#'   visreg. *R Journal*, **9**: 56-71.
 #'   \doi{10.32614/RJ-2017-046}
 #'
 #' @examples
