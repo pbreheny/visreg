@@ -1,19 +1,24 @@
 suppressPackageStartupMessages(library(gbm))
-if (interactive()) {
-  library(tinytest)
-}
+
+# predict.gbm() has no se.fit, so the band is always NA -- band = FALSE
+# avoids the resulting geom_ribbon "missing values" warning, same situation
+# as gamlss/polr
 
 # Continuous outcome
+set.seed(5)
 Data <- airquality[complete.cases(airquality), ]
 fit <- gbm(Ozone ~ ., data = Data, distribution = 'gaussian')
-expect_warning(visreg(fit, 'Wind'))
-visreg(fit, 'Wind', partial = FALSE, rug = FALSE)
+visreg(fit, 'Wind', band = FALSE) |> print() |> expect_warning()
+visreg(fit, 'Wind', partial = FALSE, rug = FALSE, band = FALSE) |> print() |> expect_silent()
+
+v <- suppressWarnings(visreg(fit, 'Wind', partial = FALSE, rug = FALSE, band = FALSE, plot = FALSE))
+expect_equal(round(head(v$fit$visreg_fit), 3), rep(73.112, 6))
 
 # Supply our own residuals() function
 registerS3method('residuals', 'gbm', function(fit) Data$Ozone - fit$fit)
-visreg(fit, 'Wind')
+visreg(fit, 'Wind', band = FALSE) |> print() |> expect_silent()
 fit <- gbm(Ozone ~ ., data = Data, n.trees = 10000, distribution = 'gaussian')
-visreg(fit, 'Wind')
+visreg(fit, 'Wind', band = FALSE) |> print() |> expect_silent()
 
 # Binary outcome
 data("birthwt", package = "MASS")
@@ -27,4 +32,7 @@ fit <- gbm(
   distribution = 'bernoulli'
 )
 registerS3method('residuals', 'gbm', function(fit) Data$low)
-visreg(fit, 'lwt', trans = binomial()$linkinv, ylim = 0:1, rug = 2)
+visreg(fit, 'lwt', rug = 2, band = FALSE) |> print() |> expect_silent()
+
+v <- visreg(fit, 'lwt', rug = 2, band = FALSE, plot = FALSE)
+expect_equal(round(head(v$fit$visreg_fit), 3), rep(0.215, 6))

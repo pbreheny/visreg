@@ -120,19 +120,23 @@ gg_cont_plot <- function(
       p <- p + do.call("geom_point", point.args, envir = asNamespace("ggplot2"))
     }
   }
+  rug_args <- point.args
+  if ("size" %in% names(rug_args)) {
+    rug_args$linewidth <- rug_args$size
+    rug_args$size <- NULL
+  }  
   if (rug == 1) {
-    rug.args <- point.args
-    rug.args$sides <- "b"
-    p <- p + do.call("geom_rug", rug.args, envir = asNamespace("ggplot2"))
+    rug_args$sides <- "b"
+    p <- p + do.call("geom_rug", rug_args, envir = asNamespace("ggplot2"))
   }
   if (rug == 2) {
-    top.args <- bot.args <- point.args
-    top.args$sides <- "t"
-    bot.args$sides <- "b"
-    top.args$data <- pointData[v$res$visreg_pos, ]
-    bot.args$data <- pointData[!v$res$visreg_pos, ]
-    p <- p + do.call("geom_rug", top.args, envir = asNamespace("ggplot2"))
-    p <- p + do.call("geom_rug", bot.args, envir = asNamespace("ggplot2"))
+    top_args <- bot_args <- rug_args
+    top_args$sides <- "t"
+    bot_args$sides <- "b"
+    top_args$data <- pointData[v$res$visreg_pos, ]
+    bot_args$data <- pointData[!v$res$visreg_pos, ]
+    p <- p + do.call("geom_rug", top_args, envir = asNamespace("ggplot2"))
+    p <- p + do.call("geom_rug", bot_args, envir = asNamespace("ggplot2"))
   }
 
   # Facet
