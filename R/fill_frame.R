@@ -5,7 +5,7 @@ fill_frame <- function(f, x, cond) {
   if (missing(cond)) {
     cond <- NULL
   }
-  for (j in 1:ncol(f)) {
+  for (j in seq_len(ncol(f))) {
     if (
       is.factor(f[, j]) &&
         !is.element(names(f)[j], names(cond)) &&
@@ -27,11 +27,11 @@ fill_frame <- function(f, x, cond) {
     }
   }
 
-  if (length(x2) > 0 & length(x3) > 0) {
+  if (length(x2) > 0 && length(x3) > 0) {
     newdf <- data.frame(x, x2, x3, check.names = FALSE)
-  } else if (length(x2) > 0 & length(x3) == 0) {
+  } else if (length(x2) > 0 && length(x3) == 0) {
     newdf <- data.frame(x, x2, check.names = FALSE)
-  } else if (length(x2) == 0 & length(x3) > 0) {
+  } else if (length(x2) == 0 && length(x3) > 0) {
     newdf <- data.frame(x, x3, check.names = FALSE)
   } else {
     newdf <- x

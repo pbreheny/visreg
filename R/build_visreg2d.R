@@ -44,7 +44,7 @@ build_visreg2d <- function(fit, f, xvar, yvar, nn, cond, type, scale, trans) {
     } else {
       ind <- is.finite(coef(fit))
     }
-    XX. <- model.matrix(as.formula(paste("~", formula(fit)[3])), DD)[-(1:nrow(f)), ind]
+    XX. <- model.matrix(as.formula(paste("~", formula(fit)[3])), DD)[-(seq_len(nrow(f))), ind]
     XX <- t(t(XX.[-1, ]) - XX.[1, ])
     if (inherits(fit, "mlm")) {
       z <- vector("list", n.z)

@@ -3,8 +3,8 @@ print_cond <- function(v) {
   X <- v$fit[, 1:p, drop = FALSE]
   X <- X[, -which(names(X) == v$meta$x), drop = FALSE]
   constant.columns <- which(sapply(X, function(x) all(x == x[1])))
-  varying.columns <- setdiff(1:ncol(X), constant.columns)
-  for (j in 1:ncol(X)) {
+  varying.columns <- setdiff(seq_len(ncol(X)), constant.columns)
+  for (j in seq_len(ncol(X))) {
     if (is.factor(X[, j])) X[, j] <- as.character(X[, j])
   }
   lines <- "Conditions used in construction of plot"

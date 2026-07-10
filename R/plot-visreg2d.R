@@ -77,7 +77,7 @@ plot.visreg2d <- function(
     ylab <- x$meta$y
   }
   if (missing(zlab)) {
-    if (plot.type %in% c("persp", "rgl") & is.expression(x$meta$z)) {
+    if (plot.type %in% c("persp", "rgl") && is.expression(x$meta$z)) {
       x$meta$z <- NULL
     } ## persp cannot handle expressions
     zlab <- if (is.null(x$meta$z)) {

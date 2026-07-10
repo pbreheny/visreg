@@ -1,7 +1,7 @@
 setup_cond <- function(cond, f, by, breaks) {
   for (i in seq_along(cond)) {
     if (i %in% names(f)) {
-      if (!is.character(cond[[i]]) & is.factor(f[, names(cond)[i]])) {
+      if (!is.character(cond[[i]]) && is.factor(f[, names(cond)[i]])) {
         cond[[i]] <- as.character(cond[[i]])
       }
     }

@@ -55,7 +55,7 @@ gg_factor_plot <- function(
   # (residuals) aesthetic defaults.  Band and line are kept as separate
   # layers, as with the continuous plot, so that the band never overplots
   # the residuals regardless of `top`.
-  if (hasBy & overlay) {
+  if (hasBy && overlay) {
     dodge <- ggplot2::position_dodge2(width = 0.7, padding = 0.1)
     fill.args <- list(
       mapping = ggplot2::aes(
@@ -98,7 +98,7 @@ gg_factor_plot <- function(
     if (length(points)) {
       point.args[names(points)] <- points
     }
-    if (is.character(strip_names) & length(strip_names) == nBy) {
+    if (is.character(strip_names) && length(strip_names) == nBy) {
       p <- p +
         ggplot2::scale_fill_manual(values = acol, labels = strip_names) +
         ggplot2::scale_color_manual(values = col, labels = strip_names)
@@ -165,14 +165,14 @@ gg_factor_plot <- function(
   }
 
   # Facet
-  if (hasBy & !overlay) {
+  if (hasBy && !overlay) {
     form <- as.formula(paste("~", v$meta$by))
     nBy <- length(byLevels)
     if (identical(strip_names, TRUE)) {
       p <- p + ggplot2::facet_grid(form, labeller = ggplot2::label_both)
     } else if (identical(strip_names, FALSE)) {
       p <- p + ggplot2::facet_grid(form)
-    } else if (is.character(strip_names) & length(strip_names) == nBy) {
+    } else if (is.character(strip_names) && length(strip_names) == nBy) {
       names(strip_names) <- byLevels
       args <- list(strip_names)
       names(args) <- v$meta$by

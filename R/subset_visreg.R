@@ -4,11 +4,11 @@ subset_visreg <- function(v, f, by, lev, type) {
   ## Calculate distance
   if (is.numeric(f[, by])) {
     D <- matrix(NA, nrow(f), length(v))
-    for (i in 1:length(v)) {
+    for (i in seq_along(v)) {
       D[, i] <- (f[, by] - lev[i])^2
     }
   }
-  for (i in 1:length(v)) {
+  for (i in seq_along(v)) {
     if (is.factor(f[, by])) {
       ind <- as.character(f[, by]) == as.character(lev[i])
     } else {

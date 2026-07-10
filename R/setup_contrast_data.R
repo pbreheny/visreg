@@ -6,7 +6,7 @@ setup_contrast_data <- function(fit, f, name, nn, cond, ...) {
     if (name %in% names(cond)) {
       if (cond[[name]] %in% levels(x)) {
         xref <- which(levels(x) == cond[[name]])
-      } else if (cond[[name]] %in% 1:length(levels(x))) {
+      } else if (cond[[name]] %in% seq_along(levels(x))) {
         xref <- cond[[name]]
       } else {
         warning(paste0(
@@ -49,27 +49,27 @@ setup_contrast_data <- function(fit, f, name, nn, cond, ...) {
   } else if (inherits(fit, "merMod")) {
     form <- formula(fit, fixed.only = TRUE)
     RHS <- formula(substitute(~R, list(R = form[[length(form)]])))
-    X. <- model.matrix(RHS, D)[-(1:nrow(f)), ind]
+    X. <- model.matrix(RHS, D)[-(seq_len(nrow(f))), ind]
   } else if (inherits(fit, "glmmadmb")) {
     form <- as.formula(paste("~", as.character(fit$fixed[3])))
-    X. <- model.matrix(form, D)[-(1:nrow(f)), ind]
+    X. <- model.matrix(form, D)[-(seq_len(nrow(f))), ind]
   } else if (inherits(fit, "betareg")) {
     form <- formula(fit)[3]
     ind <- ind[-length(ind)]
-    X. <- model.matrix(as.formula(paste("~", form)), D)[-(1:nrow(f)), ind]
+    X. <- model.matrix(as.formula(paste("~", form)), D)[-(seq_len(nrow(f))), ind]
   } else if (inherits(fit, "glmmTMB")) {
     form <- lme4::nobars(formula(fit))[3]
-    X. <- model.matrix(as.formula(paste("~", form)), D)[-(1:nrow(f)), ind]
+    X. <- model.matrix(as.formula(paste("~", form)), D)[-(seq_len(nrow(f))), ind]
   } else {
     form <- formula(fit)[3]
-    X. <- model.matrix(as.formula(paste("~", form)), D)[-(1:nrow(f)), ind]
+    X. <- model.matrix(as.formula(paste("~", form)), D)[-(seq_len(nrow(f))), ind]
   }
   X <- t(t(X.[-1, ]) - X.[1, ])
 
   ## Set up data frame with nn rows for prediction
   dots <- list(...)
   if (is.factor(x)) {
-    xx <- factor(c(xref, 1:length(levels(x))), labels = levels(x))
+    xx <- factor(c(xref, seq_along(levels(x))), labels = levels(x))
   } else {
     if ("xtrans" %in% names(dots)) {
       xx <- c(xref, seq(min(x), max(x), length = nn))
@@ -87,9 +87,9 @@ setup_contrast_data <- function(fit, f, name, nn, cond, ...) {
     DD <- model.frame(as.formula(paste("~", form)), df)
     XX. <- predict(fit, newdata = as.list(DD), type = "lpmatrix")
   } else if (inherits(fit, "merMod")) {
-    XX. <- model.matrix(RHS, DD)[-(1:nrow(f)), ind]
+    XX. <- model.matrix(RHS, DD)[-(seq_len(nrow(f))), ind]
   } else {
-    XX. <- model.matrix(as.formula(paste("~", form)), DD)[-(1:nrow(f)), ind]
+    XX. <- model.matrix(as.formula(paste("~", form)), DD)[-(seq_len(nrow(f))), ind]
   }
   XX <- t(t(XX.[-1, ]) - XX.[1, ])
 

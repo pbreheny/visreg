@@ -1,8 +1,8 @@
 collapse.visreg_list <- function(obj, labels, ...) {
   if (missing(labels)) {
     l <- sapply(obj, function(v) v$meta$y)
-    if (any(duplicated(l))) {
-      labels <- paste0("Y", 1:length(obj))
+    if (anyDuplicated(l) > 0) {
+      labels <- paste0("Y", seq_along(obj))
     } else {
       labels <- l
     }

@@ -64,10 +64,10 @@ setup_frame <- function(fit, xvar, call.env, data) {
     rf <- rf[, setdiff(names(rf), names(f)), drop = FALSE]
     if (nrow(rf) > 0) f <- cbind(f, rf)
   }
-  if ("subset" %in% names(CALL) & !(inherits(fit, "averaging"))) {
+  if ("subset" %in% names(CALL) && !(inherits(fit, "averaging"))) {
     s <- CALL$subset
     subset <- eval(substitute(s), Data, env)
-    f <- f[which(subset == TRUE), , drop = FALSE]
+    f <- f[which(subset), , drop = FALSE]
   }
   suppressWarnings(f <- f[!apply(is.na(f), 1, any), , drop = FALSE])
 
@@ -80,13 +80,13 @@ setup_frame <- function(fit, xvar, call.env, data) {
   }
   if (any(frameClasses == "character")) {
     needsUpdate <- TRUE
-    for (j in 1:ncol(f)) {
+    for (j in seq_len(ncol(f))) {
       if (typeof(f[, j]) == "character") f[, j] <- factor(f[, j])
     }
   }
   if (any(frameClasses == "logical")) {
     needsUpdate <- TRUE
-    for (j in 1:ncol(f)) {
+    for (j in seq_len(ncol(f))) {
       if (typeof(f[, j]) == "logical") f[, j] <- as.double(f[, j])
     }
   }
@@ -113,7 +113,7 @@ setup_frame <- function(fit, xvar, call.env, data) {
   if (length(xvar) == 0) {
     stop("The model has no predictors; visreg has nothing to plot.", call. = FALSE)
   }
-  for (i in 1:length(xvar)) {
+  for (i in seq_along(xvar)) {
     if (!is.element(xvar[i], names(f))) {
       stop(paste(xvar[i], "not in model"), call. = FALSE)
     }

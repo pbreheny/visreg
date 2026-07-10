@@ -1,6 +1,6 @@
 factorAxis2d <- function(xx, w, nn) {
   l <- levels(xx)
-  K <- length(levels(xx))
+  K <- nlevels(xx)
   len <- K * (1 - w) + (K - 1) * w
   m <- ((0:(K - 1)) / len + (1 - w) / (2 * len))
   ind <- integer(nn)
