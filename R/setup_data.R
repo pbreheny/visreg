@@ -10,8 +10,8 @@ setup_data <- function(fit, f, name, nn, cond, whitespace, ...) {
   simple_rhs <- paste(all.vars(rhs_form), collapse = " + ")
   simple_form <- as.formula(paste("~", simple_rhs))
   D <- model.frame(simple_form, df)
-  condNames <- setdiff(names(D), name)
-  condNames <- intersect(condNames, names(df))
+  cond_names <- setdiff(names(D), name)
+  cond_names <- intersect(cond_names, names(df))
   D <- cbind(D, df[, setdiff(names(df), names(D)), drop = FALSE])
 
   ## Set up nn-row data frame for prediction
@@ -40,6 +40,6 @@ setup_data <- function(fit, f, name, nn, cond, whitespace, ...) {
     DD = DD,
     factor = is.factor(x),
     name = name,
-    cond = D[1, condNames, drop = FALSE]
+    cond = D[1, cond_names, drop = FALSE]
   )
 }

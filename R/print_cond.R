@@ -2,17 +2,17 @@ print_cond <- function(v) {
   p <- ncol(v$fit) - 4
   X <- v$fit[, 1:p, drop = FALSE]
   X <- X[, -which(names(X) == v$meta$x), drop = FALSE]
-  constant.columns <- which(sapply(X, function(x) all(x == x[1])))
-  varying.columns <- setdiff(seq_len(ncol(X)), constant.columns)
+  constant_columns <- which(sapply(X, function(x) all(x == x[1])))
+  varying_columns <- setdiff(seq_len(ncol(X)), constant_columns)
   for (j in seq_len(ncol(X))) {
     if (is.factor(X[, j])) X[, j] <- as.character(X[, j])
   }
   lines <- "Conditions used in construction of plot"
-  for (j in varying.columns) {
+  for (j in varying_columns) {
     x <- paste(unique(X[, j]), collapse = " / ")
     lines <- c(lines, paste0(names(X)[j], ": ", x))
   }
-  for (j in constant.columns) {
+  for (j in constant_columns) {
     lines <- c(lines, paste0(names(X)[j], ": ", X[1, j]))
   }
   cond_text <- paste(lines, collapse = "\n")

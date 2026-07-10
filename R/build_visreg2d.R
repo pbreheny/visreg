@@ -1,6 +1,6 @@
 # Returns a list of x, y, and z for plotting
 build_visreg2d <- function(fit, f, xvar, yvar, nn, cond, type, scale, trans) {
-  n.z <- if (inherits(fit, "mlm")) ncol(coef(fit)) else 1
+  n_z <- if (inherits(fit, "mlm")) ncol(coef(fit)) else 1
   form <- parse_formula(formula(fit)[3])
   x <- f[, xvar]
   y <- f[, yvar]
@@ -23,8 +23,8 @@ build_visreg2d <- function(fit, f, xvar, yvar, nn, cond, type, scale, trans) {
     DD <- cbind(DD, df[, setdiff(names(df), names(DD)), drop = FALSE])
     P <- predict(fit, newdata = DD)
     if (inherits(fit, "mlm")) {
-      z <- vector("list", n.z)
-      for (i in 1:n.z) {
+      z <- vector("list", n_z)
+      for (i in 1:n_z) {
         z[[i]] <- matrix(trans(P[, i]), nrow = length(xx), ncol = length(yy))
       }
     } else {
@@ -47,8 +47,8 @@ build_visreg2d <- function(fit, f, xvar, yvar, nn, cond, type, scale, trans) {
     XX. <- model.matrix(as.formula(paste("~", formula(fit)[3])), DD)[-(seq_len(nrow(f))), ind]
     XX <- t(t(XX.[-1, ]) - XX.[1, ])
     if (inherits(fit, "mlm")) {
-      z <- vector("list", n.z)
-      for (i in 1:n.z) {
+      z <- vector("list", n_z)
+      for (i in 1:n_z) {
         z[[i]] <- matrix(trans(XX %*% coef(fit)[ind, i]), nrow = length(xx), ncol = length(yy))
       }
     } else {
@@ -57,19 +57,19 @@ build_visreg2d <- function(fit, f, xvar, yvar, nn, cond, type, scale, trans) {
   }
   zname <- make_y_name(fit, scale, trans, type)
   D <- model.frame(as.formula(paste("~", form)), df)
-  condNames <- setdiff(names(D), c(xvar, yvar))
-  condNames <- intersect(condNames, names(df))
+  cond_names <- setdiff(names(D), c(xvar, yvar))
+  cond_names <- intersect(cond_names, names(df))
   baseMeta <- list(
     x = xvar,
     y = yvar,
     trans = trans,
     class = class(fit),
-    cond = D[1, condNames, drop = FALSE]
+    cond = D[1, cond_names, drop = FALSE]
   )
 
-  if (n.z > 1) {
-    v <- vector("list", n.z)
-    for (i in 1:n.z) {
+  if (n_z > 1) {
+    v <- vector("list", n_z)
+    for (i in 1:n_z) {
       meta <- baseMeta
       meta$z <- zname[i]
       v[[i]] <- list(x = xx, y = yy, z = z[[i]], meta = meta)

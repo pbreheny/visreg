@@ -1,5 +1,5 @@
 refit_if_needed <- function(fit, dat) {
-  if (!attr(dat, "needsUpdate")) {
+  if (!attr(dat, "needs_update")) {
     return(fit)
   }
   if (inherits(fit, "coxph")) {

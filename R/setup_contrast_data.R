@@ -113,9 +113,9 @@ setup_contrast_data <- function(fit, f, name, nn, cond, ...) {
     XX <- XX[, -remove.xx, drop = FALSE]
     X <- X[, -remove.xx, drop = FALSE]
   }
-  condNames <- names(model.frame(as.formula(paste("~", parse_formula(formula(fit)[3]))), df))
-  condNames <- setdiff(condNames, name)
-  condNames <- intersect(condNames, names(df))
+  cond_names <- names(model.frame(as.formula(paste("~", parse_formula(formula(fit)[3]))), df))
+  cond_names <- setdiff(cond_names, name)
+  cond_names <- intersect(cond_names, names(df))
   return(list(
     x = x[-1],
     xx = xx[-1],
@@ -123,6 +123,6 @@ setup_contrast_data <- function(fit, f, name, nn, cond, ...) {
     XX = XX,
     factor = is.factor(x),
     name = name,
-    cond = df[1, condNames, drop = FALSE]
+    cond = df[1, cond_names, drop = FALSE]
   ))
 }

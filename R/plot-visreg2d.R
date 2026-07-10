@@ -105,20 +105,20 @@ plot.visreg2d <- function(
     lx <- ly <- TRUE
   }
   if (is.factor(x$x)) {
-    xAxis <- factorAxis2d(x$x, whitespace, 99)
-    xx <- xAxis$x
-    mx <- xAxis$m
-    lx <- xAxis$l
-    zz <- zz[xAxis$ind, ]
+    x_axis <- factorAxis2d(x$x, whitespace, 99)
+    xx <- x_axis$x
+    mx <- x_axis$m
+    lx <- x_axis$l
+    zz <- zz[x_axis$ind, ]
   } else {
     xx <- x$x
   }
   if (is.factor(x$y)) {
-    yAxis <- factorAxis2d(x$y, whitespace, 99)
-    yy <- yAxis$x
-    my <- yAxis$m
-    ly <- yAxis$l
-    zz <- zz[, yAxis$ind]
+    y_axis <- factorAxis2d(x$y, whitespace, 99)
+    yy <- y_axis$x
+    my <- y_axis$m
+    ly <- y_axis$l
+    zz <- zz[, y_axis$ind]
   } else {
     yy <- x$y
   }
@@ -127,7 +127,7 @@ plot.visreg2d <- function(
 
   if (plot.type == "image") {
     color.palette <- colorRampPalette(color, space = "Lab")
-    plot.args <- list(
+    plot_args <- list(
       x = xx,
       y = yy,
       z = zz,
@@ -138,18 +138,18 @@ plot.visreg2d <- function(
       color.palette = color.palette,
       main = zlab
     )
-    plot.args$plot.axes <- quote({
+    plot_args$plot.axes <- quote({
       axis(1, at = mx, labels = lx)
       axis(2, at = my, labels = ly)
     })
-    new.args <- list(...)
-    if (length(new.args)) {
-      plot.args[names(new.args)] <- new.args
+    new_args <- list(...)
+    if (length(new_args)) {
+      plot_args[names(new_args)] <- new_args
     }
-    do.call("filled.contour", plot.args)
+    do.call("filled.contour", plot_args)
   } else if (plot.type == "persp") {
     ticktype <- ifelse(is.factor(x$x) | is.factor(x$y), "simple", "detailed")
-    plot.args <- list(
+    plot_args <- list(
       x = xx,
       y = yy,
       z = zz,
@@ -164,23 +164,23 @@ plot.visreg2d <- function(
       border = "#BEBEBE33",
       shade = 0.5
     )
-    new.args <- list(...)
-    if (length(new.args)) {
-      plot.args[names(new.args)] <- new.args
+    new_args <- list(...)
+    if (length(new_args)) {
+      plot_args[names(new_args)] <- new_args
     }
-    p <- do.call("persp", plot.args)
+    p <- do.call("persp", plot_args)
     return(p)
   } else if (plot.type == "rgl") {
     if (!requireNamespace("rgl")) {
       stop("You must first install the rgl package: install.packages('rgl')", call. = FALSE)
     }
-    plot.args <- list(x = xx, y = yy, z = zz, xlab = xlab, ylab = ylab, zlab = zlab, color = color)
-    new.args <- list(...)
-    if (length(new.args)) {
-      plot.args[names(new.args)] <- new.args
+    plot_args <- list(x = xx, y = yy, z = zz, xlab = xlab, ylab = ylab, zlab = zlab, color = color)
+    new_args <- list(...)
+    if (length(new_args)) {
+      plot_args[names(new_args)] <- new_args
     }
     # if (i >= 2) rgl::open3d()
-    do.call(rgl::persp3d, plot.args)
+    do.call(rgl::persp3d, plot_args)
   } else if (plot.type == "gg") {
     if (!requireNamespace("ggplot2")) {
       stop("You must first install the ggplot2 package: install.packages('ggplot2')", call. = FALSE)

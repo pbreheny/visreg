@@ -72,28 +72,28 @@ setup_frame <- function(fit, xvar, call.env, data) {
   suppressWarnings(f <- f[!apply(is.na(f), 1, any), , drop = FALSE])
 
   # Handle some variable type issues
-  needsUpdate <- FALSE
+  needs_update <- FALSE
   f <- droplevels(f)
   frameClasses <- sapply(f, class)
   if (any(frameClasses == "Surv")) {
-    needsUpdate <- TRUE
+    needs_update <- TRUE
   }
   if (any(frameClasses == "character")) {
-    needsUpdate <- TRUE
+    needs_update <- TRUE
     for (j in seq_len(ncol(f))) {
       if (typeof(f[, j]) == "character") f[, j] <- factor(f[, j])
     }
   }
   if (any(frameClasses == "logical")) {
-    needsUpdate <- TRUE
+    needs_update <- TRUE
     for (j in seq_len(ncol(f))) {
       if (typeof(f[, j]) == "logical") f[, j] <- as.double(f[, j])
     }
   }
-  # When needsUpdate is TRUE, update() will be called with f as the data. If the
+  # When needs_update is TRUE, update() will be called with f as the data. If the
   # original call referenced weight/offset columns by name that aren't in the
   # formula (so not in f), add them now so update() can find them.
-  if (needsUpdate && !is.null(Data)) {
+  if (needs_update && !is.null(Data)) {
     for (extra_arg in c("weights", "offset")) {
       extra_call <- CALL[[extra_arg]]
       if (!is.null(extra_call)) {
@@ -106,9 +106,9 @@ setup_frame <- function(fit, xvar, call.env, data) {
   }
   if (missing(xvar)) {
     all_x <- strsplit(parse_formula(formula(fit)[3]), " + ", fixed = TRUE)[[1]]
-    inModel <- sapply(names(f), function(x) x %in% all_x)
+    in_model <- sapply(names(f), function(x) x %in% all_x)
     const <- sapply(f, function(x) all(x == x[1]))
-    xvar <- names(f)[!const & inModel]
+    xvar <- names(f)[!const & in_model]
   }
   if (length(xvar) == 0) {
     stop("The model has no predictors; visreg has nothing to plot.", call. = FALSE)
@@ -119,7 +119,7 @@ setup_frame <- function(fit, xvar, call.env, data) {
     }
   }
 
-  attr(f, "needsUpdate") <- needsUpdate
+  attr(f, "needs_update") <- needs_update
   attr(f, "xvar") <- xvar
   f
 }

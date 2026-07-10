@@ -105,7 +105,7 @@ visreg2d <- function(
 
   # Set up f
   f <- setup_frame(fit, c(xvar, yvar), parent.frame(), data)
-  if (attr(f, "needsUpdate")) {
+  if (attr(f, "needs_update")) {
     fit <- update(fit, data = f)
   }
   cond <- setup_cond(cond, f)[[1]]

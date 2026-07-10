@@ -1,7 +1,7 @@
 # v is a list of three elements: fit, res, and meta
 # alternatively (class "visreg_list"), a list of visreg elements
 
-build_visreg <- function(fit, f, xvar, nn, cond, type, trans, alpha, jitter, by, yName, ...) {
+build_visreg <- function(fit, f, xvar, nn, cond, type, trans, alpha, jitter, by, y_name, ...) {
   # Initial setup
   if (length(xvar) > 1 && length(cond) > 1) {
     stop("Cannot specify 'by' and multiple x variables simultaneously", call. = FALSE)
@@ -31,7 +31,7 @@ build_visreg <- function(fit, f, xvar, nn, cond, type, trans, alpha, jitter, by,
     y = xy[[1]]$y$name,
     has_interaction = unname(has_interaction[xvar[1]]),
     main_effect_warn = unname(main_effect_warn[xvar[1]]),
-    yName = yName,
+    y_name = y_name,
     trans = trans,
     class = class(fit)
   )
@@ -41,26 +41,26 @@ build_visreg <- function(fit, f, xvar, nn, cond, type, trans, alpha, jitter, by,
       meta$by <- by
       v <- list(fit = NULL, res = NULL, meta = meta)
       for (j in seq_along(xy)) {
-        fit.j <- data.frame(
+        fit_j <- data.frame(
           xy[[j]]$x$DD,
           visreg_fit = xy[[j]]$y$fit,
           visreg_lwr = xy[[j]]$y$lwr,
           visreg_upr = xy[[j]]$y$upr
         )
         res_j <- data.frame(xy[[j]]$x$D, visreg_res = xy[[j]]$y$r, visreg_pos = xy[[j]]$y$pos)
-        fit.j[, xvar] <- xy[[j]]$x$xx
+        fit_j[, xvar] <- xy[[j]]$x$xx
         res_j[, xvar] <- xy[[j]]$x$x
-        v$fit <- rbind(v$fit, fit.j)
+        v$fit <- rbind(v$fit, fit_j)
         v$res <- rbind(v$res, res_j)
       }
       class(v) <- "visreg"
     } else {
       v <- vector("list", J)
       for (j in 1:J) {
-        meta.j <- meta
-        meta.j$x <- xvar[j]
-        meta.j$has_interaction <- unname(has_interaction[xvar[j]])
-        meta.j$main_effect_warn <- unname(main_effect_warn[xvar[j]])
+        meta_j <- meta
+        meta_j$x <- xvar[j]
+        meta_j$has_interaction <- unname(has_interaction[xvar[j]])
+        meta_j$main_effect_warn <- unname(main_effect_warn[xvar[j]])
         v[[j]] <- list(
           fit = data.frame(
             xy[[j]]$x$DD,
@@ -69,7 +69,7 @@ build_visreg <- function(fit, f, xvar, nn, cond, type, trans, alpha, jitter, by,
             visreg_upr = xy[[j]]$y$upr
           ),
           res = data.frame(xy[[j]]$x$D, visreg_res = xy[[j]]$y$r, visreg_pos = xy[[j]]$y$pos),
-          meta = meta.j
+          meta = meta_j
         )
         v[[j]]$fit[, xvar[j]] <- xy[[j]]$x$xx
         v[[j]]$res[, xvar[j]] <- xy[[j]]$x$x
@@ -86,12 +86,12 @@ build_visreg <- function(fit, f, xvar, nn, cond, type, trans, alpha, jitter, by,
       meta$by <- by
       v <- vector("list", K)
       for (k in 1:K) {
-        meta.k <- meta
-        meta.k$y <- meta$y[k]
-        meta.k$yName <- meta$yName[k]
-        v[[k]] <- list(fit = NULL, res = NULL, meta = meta.k)
+        meta_k <- meta
+        meta_k$y <- meta$y[k]
+        meta_k$y_name <- meta$y_name[k]
+        v[[k]] <- list(fit = NULL, res = NULL, meta = meta_k)
         for (j in 1:J) {
-          fit.jk <- data.frame(
+          fit_jk <- data.frame(
             xy[[j]]$x$DD,
             visreg_fit = xy[[j]]$y$fit[, k],
             visreg_lwr = xy[[j]]$y$lwr[, k],
@@ -102,9 +102,9 @@ build_visreg <- function(fit, f, xvar, nn, cond, type, trans, alpha, jitter, by,
             visreg_res = xy[[j]]$y$r[, k],
             visreg_pos = xy[[j]]$y$pos[, k]
           )
-          fit.jk[, xvar] <- xy[[j]]$x$xx
+          fit_jk[, xvar] <- xy[[j]]$x$xx
           res_jk[, xvar] <- xy[[j]]$x$x
-          v[[k]]$fit <- rbind(v[[k]]$fit, fit.jk)
+          v[[k]]$fit <- rbind(v[[k]]$fit, fit_jk)
           v[[k]]$res <- rbind(v[[k]]$res, res_jk)
         }
         class(v[[k]]) <- "visreg"
@@ -115,12 +115,12 @@ build_visreg <- function(fit, f, xvar, nn, cond, type, trans, alpha, jitter, by,
 
       for (j in 1:J) {
         for (k in 1:K) {
-          meta.jk <- meta
-          meta.jk$x <- meta$x[j]
-          meta.jk$y <- meta$y[k]
-          meta.jk$yName <- meta$yName[k]
-          meta.jk$has_interaction <- unname(has_interaction[meta$x[j]])
-          meta.jk$main_effect_warn <- unname(main_effect_warn[meta$x[j]])
+          meta_jk <- meta
+          meta_jk$x <- meta$x[j]
+          meta_jk$y <- meta$y[k]
+          meta_jk$y_name <- meta$y_name[k]
+          meta_jk$has_interaction <- unname(has_interaction[meta$x[j]])
+          meta_jk$main_effect_warn <- unname(main_effect_warn[meta$x[j]])
           l <- (j - 1) * K + k
           v[[l]] <- list(
             fit = data.frame(
@@ -134,7 +134,7 @@ build_visreg <- function(fit, f, xvar, nn, cond, type, trans, alpha, jitter, by,
               visreg_res = xy[[j]]$y$r[, k],
               visreg_pos = xy[[j]]$y$pos[, k]
             ),
-            meta = meta.jk
+            meta = meta_jk
           )
           v[[l]]$fit[, xvar[j]] <- xy[[j]]$x$xx
           v[[l]]$res[, xvar[j]] <- xy[[j]]$x$x

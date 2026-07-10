@@ -31,10 +31,10 @@ gg_cont_plot <- function(
   if ("ylab" %in% names(dots)) {
     ylab <- dots$ylab
   } else {
-    ylab <- if (is.null(v$meta$yName)) {
+    ylab <- if (is.null(v$meta$y_name)) {
       paste("f(", v$meta$x, ")", sep = "")
     } else {
-      v$meta$yName
+      v$meta$y_name
     }
   }
 
@@ -43,7 +43,7 @@ gg_cont_plot <- function(
   # Aesthetic defaults; each layer carries its own data + mapping, so none
   # of them rely on inheriting aesthetics from a base plot/data
   if ("by" %in% names(v$meta) && overlay) {
-    fill.args <- list(
+    fill_args <- list(
       mapping = ggplot2::aes(
         x = .data$x,
         ymin = .data$ymin,
@@ -52,12 +52,12 @@ gg_cont_plot <- function(
       ),
       data = fill_data
     )
-    line.args <- list(
+    line_args <- list(
       mapping = ggplot2::aes(x = .data$x, y = .data$y, color = .data[[v$meta$by]]),
       data = line_data,
       linewidth = 1
     )
-    point.args <- list(
+    point_args <- list(
       mapping = ggplot2::aes(x = .data$x, y = .data$y, color = .data[[v$meta$by]]),
       data = point_data,
       size = 0.8
@@ -65,13 +65,13 @@ gg_cont_plot <- function(
     acol <- pal(nlevels(bb), alpha = 0.3)
     col <- pal(nlevels(bb))
     if (length(fill)) {
-      fill.args[names(fill)] <- fill
+      fill_args[names(fill)] <- fill
     }
     if (length(line)) {
-      line.args[names(line)] <- line
+      line_args[names(line)] <- line
     }
     if (length(points)) {
-      point.args[names(points)] <- points
+      point_args[names(points)] <- points
     }
     if (is.character(strip_names) && length(strip_names) == nlevels(bb)) {
       p <- p +
@@ -81,48 +81,48 @@ gg_cont_plot <- function(
       p <- p + ggplot2::scale_fill_manual(values = acol) + ggplot2::scale_color_manual(values = col)
     }
   } else {
-    fill.args <- list(
+    fill_args <- list(
       mapping = ggplot2::aes(x = .data$x, ymin = .data$ymin, ymax = .data$ymax),
       data = fill_data,
       fill = "gray85"
     )
-    line.args <- list(
+    line_args <- list(
       mapping = ggplot2::aes(x = .data$x, y = .data$y),
       data = line_data,
       linewidth = 1,
       color = "#008DFFFF"
     )
-    point.args <- list(
+    point_args <- list(
       mapping = ggplot2::aes(x = .data$x, y = .data$y),
       data = point_data,
       size = 0.8,
       color = "gray50"
     )
     if (length(fill)) {
-      fill.args[names(fill)] <- fill
+      fill_args[names(fill)] <- fill
     }
     if (length(line)) {
-      line.args[names(line)] <- line
+      line_args[names(line)] <- line
     }
-    if (length(points)) point.args[names(points)] <- points
+    if (length(points)) point_args[names(points)] <- points
   }
 
   # Add geoms
   if (band) {
-    p <- p + do.call("geom_ribbon", fill.args, envir = asNamespace("ggplot2"))
+    p <- p + do.call("geom_ribbon", fill_args, envir = asNamespace("ggplot2"))
   }
   if (!partial) {
-    p <- p + do.call("geom_line", line.args, envir = asNamespace("ggplot2"))
+    p <- p + do.call("geom_line", line_args, envir = asNamespace("ggplot2"))
   } else {
     if (top == "line") {
-      p <- p + do.call("geom_point", point.args, envir = asNamespace("ggplot2"))
-      p <- p + do.call("geom_line", line.args, envir = asNamespace("ggplot2"))
+      p <- p + do.call("geom_point", point_args, envir = asNamespace("ggplot2"))
+      p <- p + do.call("geom_line", line_args, envir = asNamespace("ggplot2"))
     } else {
-      p <- p + do.call("geom_line", line.args, envir = asNamespace("ggplot2"))
-      p <- p + do.call("geom_point", point.args, envir = asNamespace("ggplot2"))
+      p <- p + do.call("geom_line", line_args, envir = asNamespace("ggplot2"))
+      p <- p + do.call("geom_point", point_args, envir = asNamespace("ggplot2"))
     }
   }
-  rug_args <- point.args
+  rug_args <- point_args
   if ("size" %in% names(rug_args)) {
     rug_args$linewidth <- rug_args$size
     rug_args$size <- NULL

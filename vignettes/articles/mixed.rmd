@@ -7,7 +7,7 @@ library(visreg)
 knitr::opts_knit$set(aliases = c(h = "fig.height", w = "fig.width"))
 knitr::opts_chunk$set(comment = "#", collapse = TRUE, cache = FALSE, tidy = FALSE)
 knitr::knit_hooks$set(small.mar = function(before, options, envir) {
-  if (before) par(mar = c(4, 4, .1, .1))
+  if (before) par(mar = c(4, 4, 0.1, 0.1))
 })
 ```
 
@@ -48,8 +48,8 @@ The `visreg` package can also be used to plot random effects, although again, th
 
 ```{r, h=4, w=9, out.width='100%'}
 v <- visreg(fit, "Time", by = "Cow", re.form = ~ (Time | Cow), plot = FALSE)
-subCow <- sample(levels(Milk$Cow), 10)
-vv <- subset(v, Cow %in% subCow)
+sub_cow <- sample(levels(Milk$Cow), 10)
+vv <- subset(v, Cow %in% sub_cow)
 plot(vv, ylab = "Protein", layout = c(5, 2))
 ```
 
