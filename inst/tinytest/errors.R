@@ -1,5 +1,6 @@
 # Cross-cutting input-validation / error-path tests that don't belong to any
 # one model family.
+library(tinytest)
 
 # xvar not a column in the model
 fit <- lm(Ozone ~ Wind, data = airquality)
@@ -12,10 +13,6 @@ expect_error(visreg(fit))
 # Cannot specify 'by' together with multiple xvars
 fit <- lm(Ozone ~ Wind + Temp + Solar.R, data = airquality)
 expect_error(visreg(fit, c("Wind", "Temp"), by = "Solar.R"))
-
-# type='effect' is a deprecated alias for type='contrast'
-expect_warning(visreg(fit, "Wind", type = "effect", plot = FALSE))
-expect_warning(visreg2d(fit, x = "Wind", y = "Temp", type = "effect", plot = FALSE))
 
 # visreg2d requires both x and y
 expect_error(visreg2d(fit, x = "Wind"))

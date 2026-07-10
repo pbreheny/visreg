@@ -8,7 +8,7 @@ compute_terms <- function(fit, f, x, trans, alpha, ...) {
     r <- rr <- matrix(NA, nrow = nrow(x$X), ncol = n_y)
     for (i in 1:n_y) {
       v <- summ[[i]]$sigma^2 * summ[[i]]$cov.unscaled
-      se[, i] <- rowSums(x$XX * (x$XX %*% v)) |> sqrt()
+      se[, i] <- Matrix::rowSums(x$XX * (x$XX %*% v)) |> sqrt()
       ind <- is.finite(b[, i])
       yy[, i] <- x$XX %*% b[ind, i]
       rr[, i] <- visreg_resid(fit)[, i]
@@ -31,7 +31,7 @@ compute_terms <- function(fit, f, x, trans, alpha, ...) {
       keep <- which(!is.na(dg))
       v <- v[keep, keep, drop = FALSE]
     }
-    se <- rowSums(x$XX * (x$XX %*% v)) |> sqrt()
+    se <- Matrix::rowSums(x$XX * (x$XX %*% v)) |> sqrt()
     yy <- drop(x$XX %*% b[is.finite(b)])
     rr <- visreg_resid(fit)
     if (is.null(rr)) {
