@@ -5,22 +5,10 @@ ozone <- airquality[complete.cases(airquality), ]
 ozone$Heat <- cut(ozone$Temp, 3, labels = c("Cool", "Mild", "Hot"))
 fit <- lm(Ozone ~ Wind * Heat, data = ozone)
 visreg(fit, "Wind", type = "contrast", by = "Heat") |> print() |> expect_silent()
-visreg(
-  fit,
-  "Wind",
-  type = "contrast",
-  cond = list(Heat = "Cool"),
-  print_cond = FALSE
-) |>
+visreg(fit, "Wind", type = "contrast", cond = list(Heat = "Cool"), print_cond = FALSE) |>
   print() |>
   expect_silent()
-visreg(
-  fit,
-  "Wind",
-  type = "contrast",
-  cond = list(Heat = "Hot"),
-  print_cond = FALSE
-) |>
+visreg(fit, "Wind", type = "contrast", cond = list(Heat = "Hot"), print_cond = FALSE) |>
   print() |>
   expect_silent()
 
@@ -39,9 +27,7 @@ visreg(fit, "Heat", type = "contrast", cond = list(Heat = "Hot")) |> print() |> 
 
 # An invalid level for `cond` on the contrast reference falls back to the
 # reference level with a warning
-visreg(fit, "Heat", type = "contrast", cond = list(Heat = "nope")) |>
-  print() |>
-  expect_warning()
+visreg(fit, "Heat", type = "contrast", cond = list(Heat = "nope")) |> print() |> expect_warning()
 
 # Real example; overparameterized model
 CO2$Plant <- factor(as.character(CO2$Plant))
@@ -57,13 +43,7 @@ fit <- lm(y ~ x1 * x2)
 visreg(fit, "x1", by = "x2") |> print() |> expect_silent()
 visreg(fit, "x1", cond = list(x2 = "B"), print_cond = FALSE) |> print() |> expect_silent()
 visreg(fit, "x1", by = "x2", type = "contrast") |> print() |> expect_silent()
-visreg(
-  fit,
-  "x1",
-  cond = list(x2 = "B"),
-  type = "contrast",
-  print_cond = FALSE
-) |>
+visreg(fit, "x1", cond = list(x2 = "B"), type = "contrast", print_cond = FALSE) |>
   print() |>
   expect_silent()
 

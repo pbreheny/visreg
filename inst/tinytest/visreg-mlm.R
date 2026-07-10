@@ -1,9 +1,6 @@
 suppressPackageStartupMessages(library(rgl))
 
-fit <- lm(
-  cbind(Sepal.Length, Sepal.Width, Petal.Length) ~ Species + Petal.Width,
-  iris
-)
+fit <- lm(cbind(Sepal.Length, Sepal.Width, Petal.Length) ~ Species + Petal.Width, iris)
 visreg(fit, "Species") |> print() |> expect_silent()
 visreg(fit, "Species", type = "contrast") |> print() |> expect_silent()
 visreg(fit, "Petal.Width") |> print() |> expect_silent()
@@ -31,19 +28,10 @@ visreg(fit, "Petal.Width", rug = TRUE, jitter = TRUE, type = "contrast") |>
 visreg(fit, "Species", rug = TRUE) |> print() |> expect_silent()
 visreg(fit, "Species", rug = TRUE, type = "contrast") |> print() |> expect_silent()
 visreg(fit, "Petal.Width", by = "Species", rug = TRUE) |> print() |> expect_silent()
-visreg(
-  fit,
-  "Petal.Width",
-  by = "Species",
-  rug = TRUE,
-  overlay = TRUE,
-  jitter = TRUE
-) |>
+visreg(fit, "Petal.Width", by = "Species", rug = TRUE, overlay = TRUE, jitter = TRUE) |>
   print() |>
   expect_silent()
-visreg(fit, "Species", by = "Petal.Width", rug = TRUE, overlay = TRUE) |>
-  print() |>
-  expect_silent()
+visreg(fit, "Species", by = "Petal.Width", rug = TRUE, overlay = TRUE) |> print() |> expect_silent()
 
 visreg2d(fit, "Species", "Petal.Width") |> expect_silent()
 
@@ -57,5 +45,5 @@ expect_equal(round(v[[1]]$z[1, 1], 3), -0.687)
 
 visreg2d(fit, "Petal.Width", "Petal.Length", plot.type = "persp") |> expect_silent()
 p <- visreg2d(fit, "Petal.Width", "Petal.Length", plot.type = "gg")
-gridExtra::marrangeGrob(p, nrow = 2, ncol = 1, top = '') |> print() |> expect_silent()
+gridExtra::marrangeGrob(p, nrow = 2, ncol = 1, top = "") |> print() |> expect_silent()
 visreg2d(fit, "Petal.Width", "Petal.Length", plot.type = "rgl") |> expect_silent()

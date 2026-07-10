@@ -39,24 +39,22 @@ visreg(fit, "Wind", by = "Heat", partial = FALSE, band = FALSE) |> print() |> ex
 v <- visreg(fit, "Wind", by = "Heat", plot = FALSE)
 expect_equal(round(head(v$fit$visreg_fit[v$fit$Heat == "Cool"], 3), 3), c(24.791, 24.661, 24.530))
 expect_equal(round(head(v$fit$visreg_fit[v$fit$Heat == "Mild"], 3), 3), c(60.327, 59.678, 59.029))
-expect_equal(
-  round(head(v$fit$visreg_fit[v$fit$Heat == "Hot"], 3), 3),
-  c(102.206, 101.329, 100.451)
-)
+expect_equal(round(head(v$fit$visreg_fit[v$fit$Heat == "Hot"], 3), 3), c(102.206, 101.329, 100.451))
 
 # A plot on top of the returned plot; an additive fit here, so there's no
 # 'main effect in an interaction model' warning to work around
 fit_add <- lm(Ozone ~ Wind + Heat + Solar.R + Mon, data = airquality)
-(visreg(fit_add, "Wind") + ggplot2::geom_smooth(color = 'red', method = 'loess', formula = y ~ x)) |>
+(visreg(fit_add, "Wind") +
+  ggplot2::geom_smooth(color = "red", method = "loess", formula = y ~ x)) |>
   print() |>
   expect_silent()
-visreg(fit_add, "Wind", line = list(color = 'green')) |> print() |> expect_silent()
+visreg(fit_add, "Wind", line = list(color = "green")) |> print() |> expect_silent()
 visreg(fit_add, "Heat", line = list(color = "green")) |> print() |> expect_silent()
 
 # Print conditions
 expect_warning(visreg(fit, "Wind") |> print())
-expect_stdout(visreg(fit, "Wind", print_cond = TRUE), pattern = 'Conditions used')
-expect_stdout(visreg(fit, "Wind", by = "Heat", print_cond = TRUE), pattern = 'Conditions used')
+expect_stdout(visreg(fit, "Wind", print_cond = TRUE), pattern = "Conditions used")
+expect_stdout(visreg(fit, "Wind", by = "Heat", print_cond = TRUE), pattern = "Conditions used")
 
 # Factor on x axis
 visreg(fit, "Heat", by = "Wind") |> print() |> expect_silent()
@@ -89,11 +87,7 @@ fit <- lm(Ozone ~ Wind * Heat, data = airquality)
 visreg(fit, "Wind", "Heat", breaks = c("Hot", "Cool")) |> print() |> expect_silent()
 
 # Numeric variables with few unique values
-airquality$Hotness <- as.numeric(cut(
-  airquality$Temp,
-  2,
-  labels = c("Cold", "Hot")
-))
+airquality$Hotness <- as.numeric(cut(airquality$Temp, 2, labels = c("Cold", "Hot")))
 fit <- lm(Ozone ~ Solar.R + Wind * Hotness, data = airquality)
 visreg(fit, "Wind", by = "Hotness") |> print() |> expect_silent()
 visreg(fit, "Wind", by = "Hotness", overlay = TRUE) |> print() |> expect_silent()

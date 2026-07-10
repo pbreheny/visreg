@@ -67,7 +67,7 @@ and plot the partial residuals on top, specify \code{top='points'}.}
 \item{...}{Additional arguments passed on to the plot, such as \code{xlab}, \code{ylab}.}
 }
 \value{
-A ggplot object, or if \code{x} is a \verb{[visreg_list()]}, a list of ggplot objects.
+A ggplot object, or if \code{x} is a \code{\link[=visreg_list]{visreg_list()}}, a list of ggplot objects.
 }
 \description{
 Default plots contain a
@@ -76,7 +76,7 @@ interactions, and a variety of other options are supported. The \code{plot.visre
 a \code{visreg} object as calculated by \code{\link[=visreg]{visreg()}} and creates the plot.
 }
 \details{
-If \code{x} is a \verb{[visreg_list()]}, \code{plot.visreg_list()} is dispatched instead; it simply calls
+If \code{x} is a \code{\link[=visreg_list]{visreg_list()}}, \code{plot.visreg_list()} is dispatched instead; it simply calls
 \code{plot.visreg()} on each element in turn, passing along the same arguments to each element.
 }
 \examples{
@@ -93,5 +93,6 @@ visreg. \emph{R Journal}, \strong{9}: 56-71.
 \doi{10.32614/RJ-2017-046}
 }
 \seealso{
-\url{https://pbreheny.github.io/visreg/articles/options.html}, \code{\link[=visreg]{visreg()}}, \code{\link[=visreg2d]{visreg2d()}}
+\link{visreg2d} for creating \code{visreg} objects, and the
+\href{https://pbreheny.github.io/visreg/surface.html}{options vignette} for examples.
 }

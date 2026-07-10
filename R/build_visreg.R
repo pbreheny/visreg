@@ -1,23 +1,9 @@
 # v is a list of three elements: fit, res, and meta
 # alternatively (class "visreg_list"), a list of visreg elements
 
-build_visreg <- function(
-  fit,
-  f,
-  xvar,
-  nn,
-  cond,
-  type,
-  trans,
-  xtrans,
-  alpha,
-  jitter,
-  by,
-  yName,
-  ...
-) {
+build_visreg <- function(fit, f, xvar, nn, cond, type, trans, alpha, jitter, by, yName, ...) {
   # Initial setup
-  if (length(xvar) > 1 & length(cond) > 1) {
+  if (length(xvar) > 1 && length(cond) > 1) {
     stop("Cannot specify 'by' and multiple x variables simultaneously", call. = FALSE)
   }
   J <- max(length(xvar), length(cond))
@@ -50,7 +36,7 @@ build_visreg <- function(
     if (!missing(by)) {
       meta$by <- by
       v <- list(fit = NULL, res = NULL, meta = meta)
-      for (j in 1:length(xy)) {
+      for (j in seq_along(xy)) {
         fit.j <- data.frame(
           xy[[j]]$x$DD,
           visreg_fit = xy[[j]]$y$fit,

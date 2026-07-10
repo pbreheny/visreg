@@ -13,15 +13,17 @@ gg_cont_plot <- function(
 ) {
   # Setup data frames
   xx <- v$fit[, v$meta$x]
-  fillData <- data.frame(x = xx, ymin = v$fit$visreg_lwr, ymax = v$fit$visreg_upr)
-  lineData <- data.frame(x = xx, y = v$fit$visreg_fit)
-  pointData <- data.frame(x = v$res[, v$meta$x], y = v$res$visreg_res)
+  fill_data <- data.frame(x = xx, ymin = v$fit$visreg_lwr, ymax = v$fit$visreg_upr)
+  line_data <- data.frame(x = xx, y = v$fit$visreg_fit)
+  point_data <- data.frame(x = v$res[, v$meta$x], y = v$res$visreg_res)
   if ("by" %in% names(v$meta)) {
     bb <- factor(v$fit[, v$meta$by])
-    fillData[[v$meta$by]] <- bb
-    lineData[[v$meta$by]] <- bb
-    pointData[[v$meta$by]] <- factor(v$res[, v$meta$by])
+    fill_data[[v$meta$by]] <- bb
+    line_data[[v$meta$by]] <- bb
+    point_data[[v$meta$by]] <- factor(v$res[, v$meta$by])
   }
+
+  a <- "a"
 
   # Plotting defaults
   dots <- list(...)
@@ -40,7 +42,7 @@ gg_cont_plot <- function(
 
   # Aesthetic defaults; each layer carries its own data + mapping, so none
   # of them rely on inheriting aesthetics from a base plot/data
-  if ("by" %in% names(v$meta) & overlay) {
+  if ("by" %in% names(v$meta) && overlay) {
     fill.args <- list(
       mapping = ggplot2::aes(
         x = .data$x,
@@ -48,20 +50,20 @@ gg_cont_plot <- function(
         ymax = .data$ymax,
         fill = .data[[v$meta$by]]
       ),
-      data = fillData
+      data = fill_data
     )
     line.args <- list(
       mapping = ggplot2::aes(x = .data$x, y = .data$y, color = .data[[v$meta$by]]),
-      data = lineData,
+      data = line_data,
       linewidth = 1
     )
     point.args <- list(
       mapping = ggplot2::aes(x = .data$x, y = .data$y, color = .data[[v$meta$by]]),
-      data = pointData,
+      data = point_data,
       size = 0.8
     )
-    acol <- pal(length(levels(bb)), alpha = 0.3)
-    col <- pal(length(levels(bb)))
+    acol <- pal(nlevels(bb), alpha = 0.3)
+    col <- pal(nlevels(bb))
     if (length(fill)) {
       fill.args[names(fill)] <- fill
     }
@@ -71,7 +73,7 @@ gg_cont_plot <- function(
     if (length(points)) {
       point.args[names(points)] <- points
     }
-    if (is.character(strip_names) & length(strip_names) == length(levels(bb))) {
+    if (is.character(strip_names) && length(strip_names) == nlevels(bb)) {
       p <- p +
         ggplot2::scale_fill_manual(values = acol, labels = strip_names) +
         ggplot2::scale_color_manual(values = col, labels = strip_names)
@@ -81,18 +83,18 @@ gg_cont_plot <- function(
   } else {
     fill.args <- list(
       mapping = ggplot2::aes(x = .data$x, ymin = .data$ymin, ymax = .data$ymax),
-      data = fillData,
+      data = fill_data,
       fill = "gray85"
     )
     line.args <- list(
       mapping = ggplot2::aes(x = .data$x, y = .data$y),
-      data = lineData,
+      data = line_data,
       linewidth = 1,
       color = "#008DFFFF"
     )
     point.args <- list(
       mapping = ggplot2::aes(x = .data$x, y = .data$y),
-      data = pointData,
+      data = point_data,
       size = 0.8,
       color = "gray50"
     )
@@ -124,7 +126,7 @@ gg_cont_plot <- function(
   if ("size" %in% names(rug_args)) {
     rug_args$linewidth <- rug_args$size
     rug_args$size <- NULL
-  }  
+  }
   if (rug == 1) {
     rug_args$sides <- "b"
     p <- p + do.call("geom_rug", rug_args, envir = asNamespace("ggplot2"))
@@ -133,21 +135,20 @@ gg_cont_plot <- function(
     top_args <- bot_args <- rug_args
     top_args$sides <- "t"
     bot_args$sides <- "b"
-    top_args$data <- pointData[v$res$visreg_pos, ]
-    bot_args$data <- pointData[!v$res$visreg_pos, ]
+    top_args$data <- point_data[v$res$visreg_pos, ]
+    bot_args$data <- point_data[!v$res$visreg_pos, ]
     p <- p + do.call("geom_rug", top_args, envir = asNamespace("ggplot2"))
     p <- p + do.call("geom_rug", bot_args, envir = asNamespace("ggplot2"))
   }
 
   # Facet
-  if ("by" %in% names(v$meta) & !overlay) {
+  if ("by" %in% names(v$meta) && !overlay) {
     form <- as.formula(paste("~", v$meta$by))
-    K <- length(levels(bb))
     if (identical(strip_names, TRUE)) {
       p <- p + ggplot2::facet_grid(form, labeller = ggplot2::label_both)
     } else if (identical(strip_names, FALSE)) {
       p <- p + ggplot2::facet_grid(form)
-    } else if (is.character(strip_names) & length(strip_names) == K) {
+    } else if (is.character(strip_names) && length(strip_names) == nlevels(bb)) {
       names(strip_names) <- levels(bb)
       args <- list(strip_names)
       names(args) <- v$meta$by

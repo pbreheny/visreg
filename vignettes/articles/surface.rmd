@@ -4,10 +4,10 @@ title: Surface plots
 
 ```{r include=FALSE}
 library(visreg)
-knitr::opts_knit$set(aliases=c(h = 'fig.height', w = 'fig.width'))
-knitr::opts_chunk$set(comment='#', collapse=TRUE, cache=FALSE, tidy=FALSE)
+knitr::opts_knit$set(aliases = c(h = "fig.height", w = "fig.width"))
+knitr::opts_chunk$set(comment = "#", collapse = TRUE, cache = FALSE, tidy = FALSE)
 knitr::knit_hooks$set(small.mar = function(before, options, envir) {
-  if (before) par(mar = c(4, 4, .1, .1))
+  if (before) par(mar = c(4, 4, 0.1, 0.1))
 })
 ```
 
@@ -15,7 +15,7 @@ Suppose we have a model with a complicated interaction between two continuous va
 
 ```{r, message=FALSE}
 library(splines)
-fit <- lm(Ozone ~ Solar.R +ns(Wind, df=2)*ns(Temp, df=2), data=airquality)
+fit <- lm(Ozone ~ Solar.R + ns(Wind, df = 2) * ns(Temp, df = 2), data = airquality)
 ```
 
 We might wish to visualize how ozone depends on wind and temperature as a continuous regression surface. `visreg2d` provides two main options for this, filled contour plots and perspective plots.
@@ -31,7 +31,7 @@ visreg2d(fit, "Wind", "Temp")
 Here, wind and temperature are laid out on a two-dimensional grid, and colors are used to represent the level of ozone.  A legend is provided to the left.  R's `filled.contour` function is used to generate the plot, so if you wish to change any options, you will need to look at `?filled.contour` to see the correct syntax.  For example, if we want different colors,
 
 ```{r, h=4, w=5}
-visreg2d(fit, "Wind", "Temp", color.palette=colorRampPalette(c("black", "white", "purple")))
+visreg2d(fit, "Wind", "Temp", color.palette = colorRampPalette(c("black", "white", "purple")))
 ```
 
 # Perspective plots
@@ -39,19 +39,19 @@ visreg2d(fit, "Wind", "Temp", color.palette=colorRampPalette(c("black", "white",
 The other option provided by `visreg2d` is to represent the surface as a three-dimensional image.  This can be done in a static manner using `type="persp"`:
 
 ```{r, h=5, w=5}
-visreg2d(fit, "Wind", "Temp", plot.type="persp")
+visreg2d(fit, "Wind", "Temp", plot.type = "persp")
 ```
 
 Or dynamically using `type="rgl"`:
 
 ```{r eval=FALSE}
-visreg2d(fit, "Wind", "Temp", plot.type="rgl")
+visreg2d(fit, "Wind", "Temp", plot.type = "rgl")
 ```
 
 ```{=html}
 <div class="container" style="width: 100%">
   <div class="row-fluid">
-    <iframe class="span12" 
+    <iframe class="span12"
 	    style="border: none; height: 484px; width: 100%"
 	    src="rgl.html">
     </iframe>

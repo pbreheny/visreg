@@ -1,15 +1,12 @@
 # Subsets
 fit1 <- lm(Ozone ~ Wind + Temp, airquality, subset = (Month <= 7))
 fit2 <- lm(Ozone ~ Wind + Temp, airquality, subset = (Month > 7))
-v <- visreg_list(
-  visreg(fit1, 'Wind', plot = FALSE),
-  visreg(fit2, 'Wind', plot = FALSE)
-)
+v <- visreg_list(visreg(fit1, "Wind", plot = FALSE), visreg(fit2, "Wind", plot = FALSE))
 plot(v) |> print() |> expect_silent()
 v <- visreg_list(
-  visreg(fit1, 'Wind', plot = FALSE),
-  visreg(fit2, 'Wind', plot = FALSE),
-  labels = c('May-Jun', 'Jul-Aug'),
+  visreg(fit1, "Wind", plot = FALSE),
+  visreg(fit2, "Wind", plot = FALSE),
+  labels = c("May-Jun", "Jul-Aug"),
   collapse = TRUE
 )
 plot(v) |> print() |> expect_silent()
@@ -27,15 +24,12 @@ expect_equal(
 # Models
 fit1 <- lm(Ozone ~ Wind + Solar.R, airquality)
 fit2 <- lm(Ozone ~ Wind + Temp, airquality)
-v <- visreg_list(
-  visreg(fit1, 'Wind', plot = FALSE),
-  visreg(fit2, 'Wind', plot = FALSE)
-)
+v <- visreg_list(visreg(fit1, "Wind", plot = FALSE), visreg(fit2, "Wind", plot = FALSE))
 plot(v) |> print() |> expect_silent()
 v <- visreg_list(
-  visreg(fit1, 'Wind', plot = FALSE),
-  visreg(fit2, 'Wind', plot = FALSE),
-  labels = c('Adj for Solar', 'Adj for Temp'),
+  visreg(fit1, "Wind", plot = FALSE),
+  visreg(fit2, "Wind", plot = FALSE),
+  labels = c("Adj for Solar", "Adj for Temp"),
   collapse = TRUE
 )
 plot(v) |> print() |> expect_silent()

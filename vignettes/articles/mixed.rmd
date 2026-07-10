@@ -4,8 +4,8 @@ title: Mixed models
 
 ```{r include=FALSE}
 library(visreg)
-knitr::opts_knit$set(aliases=c(h = 'fig.height', w = 'fig.width'))
-knitr::opts_chunk$set(comment='#', collapse=TRUE, cache=FALSE, tidy=FALSE)
+knitr::opts_knit$set(aliases = c(h = "fig.height", w = "fig.width"))
+knitr::opts_chunk$set(comment = "#", collapse = TRUE, cache = FALSE, tidy = FALSE)
 knitr::knit_hooks$set(small.mar = function(before, options, envir) {
   if (before) par(mar = c(4, 4, .1, .1))
 })
@@ -16,10 +16,10 @@ knitr::knit_hooks$set(small.mar = function(before, options, envir) {
 As an illustration, consider the following random-intercept, random-slope model from a study involving the protein content of cows' milk in the weeks following calving:
 
 ```{r, message=FALSE}
-library(lme4, quietly=TRUE)
-data(Milk, package="nlme")
-ctrl <- lmerControl(optCtrl=list(xtol_rel=1e-6)) # Warning otherwise
-fit <- lmer(protein ~ Diet + Time + (Time|Cow), Milk, control=ctrl)
+library(lme4, quietly = TRUE)
+data(Milk, package = "nlme")
+ctrl <- lmerControl(optCtrl = list(xtol_rel = 1e-6)) # Warning otherwise
+fit <- lmer(protein ~ Diet + Time + (Time | Cow), Milk, control = ctrl)
 ```
 
 # Plotting fixed effects
@@ -27,14 +27,16 @@ fit <- lmer(protein ~ Diet + Time + (Time|Cow), Milk, control=ctrl)
 As mentioned above, a conditional plot will lack confidence bands (due to the large number of points, we're making the partial residuals smaller and partially transparent):
 
 ```{r, h=5, w=5}
-visreg(fit, "Diet", ylab="Protein", points=list(col="#55555540", cex=0.25))
+visreg(fit, "Diet", ylab = "Protein", points = list(col = "#55555540", cex = 0.25))
 ```
 
 But, because the random effect terms drop out of a contrast plot, we do have bands here:
 
 ```{r, h=5, w=5}
-visreg(fit, "Diet", type="contrast", ylab=expression(Delta*'Protein'), 
-       points=list(col="#55555540", cex=0.25))
+visreg(fit, "Diet",
+  type = "contrast", ylab = expression(Delta * "Protein"),
+  points = list(col = "#55555540", cex = 0.25)
+)
 ```
 
 # Plotting random effects
@@ -45,10 +47,10 @@ The `visreg` package can also be used to plot random effects, although again, th
 * For the sake of space, I'm going to subset the plot to ten cows rather than all 79.  This can be accomplished by returning, then subsetting, the raw `visreg` object prior to plotting.
 
 ```{r, h=4, w=9, out.width='100%'}
-v <- visreg(fit, "Time", by="Cow", re.form=~(Time|Cow), plot=FALSE)
+v <- visreg(fit, "Time", by = "Cow", re.form = ~ (Time | Cow), plot = FALSE)
 subCow <- sample(levels(Milk$Cow), 10)
 vv <- subset(v, Cow %in% subCow)
-plot(vv, ylab="Protein", layout=c(5,2))
+plot(vv, ylab = "Protein", layout = c(5, 2))
 ```
 
 Returning the data frames, estimates, confidence intervals, and residuals used in the construction of its plots like this allows users to write their own extensions and modifications of `visreg` plots.

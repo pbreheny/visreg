@@ -27,7 +27,14 @@ data("birthwt", package = "MASS")
 birthwt$race <- factor(birthwt$race, labels = c("White", "Black", "Other"))
 fit_glm <- glm(low ~ age + race + lwt, data = birthwt, family = "binomial")
 expect_warning(visreg(fit_glm, "age", scale = "response", type = "contrast", plot = FALSE))
-expect_warning(visreg2d(fit_glm, x = "age", y = "lwt", scale = "response", type = "contrast", plot = FALSE))
+expect_warning(visreg2d(
+  fit_glm,
+  x = "age",
+  y = "lwt",
+  scale = "response",
+  type = "contrast",
+  plot = FALSE
+))
 
 # by= breaks that don't match the levels of a factor by-variable
 airquality$Heat <- cut(airquality$Temp, 3, labels = c("Cool", "Mild", "Hot"))

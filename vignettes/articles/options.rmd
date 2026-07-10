@@ -5,8 +5,8 @@ title: Graphical options
 ```{r include=FALSE}
 library(visreg)
 library(ggplot2)
-knitr::opts_knit$set(aliases=c(h = 'fig.height', w = 'fig.width'))
-knitr::opts_chunk$set(comment='#', collapse=TRUE, cache=FALSE, tidy=FALSE)
+knitr::opts_knit$set(aliases = c(h = "fig.height", w = "fig.width"))
+knitr::opts_chunk$set(comment = "#", collapse = TRUE, cache = FALSE, tidy = FALSE)
 knitr::knit_hooks$set(small.mar = function(before, options, envir) {
   if (before) par(mar = c(4, 4, .1, .1))
 })
@@ -15,8 +15,8 @@ knitr::knit_hooks$set(small.mar = function(before, options, envir) {
 `visreg` tries to set up pleasant-looking default options, but everything can be tailored to user specifications.  For the plots below, we work from this general model:
 
 ```{r, h=5, w=5}
-airquality$Heat <- cut(airquality$Temp, 3, labels=c("Cool", "Mild", "Hot"))
-fit <- lm(Ozone ~ Solar.R + Wind + Heat, data=airquality)
+airquality$Heat <- cut(airquality$Temp, 3, labels = c("Cool", "Mild", "Hot"))
+fit <- lm(Ozone ~ Solar.R + Wind + Heat, data = airquality)
 ```
 
 # Turning on/off plot components
@@ -24,23 +24,23 @@ fit <- lm(Ozone ~ Solar.R + Wind + Heat, data=airquality)
 By default, `visreg` includes the fitted line, confidence bands, and partial residuals, but the residuals and the bands can be turned off:
 
 ```{r, h=5, w=5}
-visreg(fit, "Wind", band=FALSE)
+visreg(fit, "Wind", band = FALSE)
 ```
 
 ```{r, h=5, w=5}
-visreg(fit, "Wind", partial=FALSE)
+visreg(fit, "Wind", partial = FALSE)
 ```
 
 Note that by default, when you turn off partial residuals, visreg tries to display a rug so you can at least see where the observations are.  You can turn this off too:
 
 ```{r, h=5, w=5}
-visreg(fit, "Wind", partial=FALSE, rug=FALSE)
+visreg(fit, "Wind", partial = FALSE, rug = FALSE)
 ```
 
 Finally, there is an option for displaying separate rugs for positive and negative residuals on the top and bottom axes, respectively, with `rug=2` (this is particularly useful for [logistic regression](glm.html)):
 
 ```{r, h=5, w=5}
-visreg(fit, "Wind", rug=2, partial=FALSE)
+visreg(fit, "Wind", rug = 2, partial = FALSE)
 ```
 
 # Jittering
@@ -48,12 +48,12 @@ visreg(fit, "Wind", rug=2, partial=FALSE)
 If there are many ties in a numeric variable `x`, jittering can be helpful way to avoid overplotting:
 
 ```{r, h=5, w=5}
-fit <- lm(Ozone ~ Solar.R + Wind + poly(Month, 2), data=airquality)
+fit <- lm(Ozone ~ Solar.R + Wind + poly(Month, 2), data = airquality)
 visreg(fit, "Month")
 ```
 
 ```{r, h=5, w=5, dependson="nojit"}
-visreg(fit, "Month", jitter=TRUE)
+visreg(fit, "Month", jitter = TRUE)
 ```
 
 # Appearance of points, lines, and bands
@@ -67,9 +67,11 @@ Specifying `col='red'` won't work, because `visreg` can't know whether you're tr
 Each of these is passed along to the underlying `ggplot2` geom (`geom_line`/`geom_ribbon`/`geom_point` for a continuous `x`, or `geom_errorbar`/`geom_tile`/`geom_jitter` for a factor `x`), so any parameter that geom accepts can be specified:
 
 ```{r, h=5, w=5}
-visreg(fit, "Wind", line=list(color="red"),
-                    fill=list(fill="green"),
-                    points=list(size=1.5, shape=1))
+visreg(fit, "Wind",
+  line = list(color = "red"),
+  fill = list(fill = "green"),
+  points = list(size = 1.5, shape = 1)
+)
 ```
 
 # Generic plot options
@@ -77,11 +79,11 @@ visreg(fit, "Wind", line=list(color="red"),
 `visreg` returns a `gg` object, so its appearance can be customized just like any other `ggplot2` plot, by adding further components.  Here's an example that adds a title and re-labels the (log-transformed) y-axis:
 
 ```{r, h=5, w=5}
-fit <- lm(log(Ozone) ~ Solar.R + Wind + Temp, data=airquality)
+fit <- lm(log(Ozone) ~ Solar.R + Wind + Temp, data = airquality)
 at <- seq(1.5, 5, 0.5)
-visreg(fit, "Wind", ylab="Ozone") +
+visreg(fit, "Wind", ylab = "Ozone") +
   ggtitle("Ozone is bad for you") +
-  scale_y_continuous(breaks=at, labels=round(exp(at), 1))
+  scale_y_continuous(breaks = at, labels = round(exp(at), 1))
 ```
 
 # Band width for factors
@@ -89,12 +91,12 @@ visreg(fit, "Wind", ylab="Ozone") +
 When `x` is a factor, the width of the confidence band (and its accompanying line) is controlled through the `fill`/`line` arguments' `width` parameter:
 
 ```{r, h=4, w=4}
-fit <- lm(Ozone ~ Solar.R + Wind + Heat, data=airquality)
-visreg(fit, "Heat", fill=list(width=.9))
+fit <- lm(Ozone ~ Solar.R + Wind + Heat, data = airquality)
+visreg(fit, "Heat", fill = list(width = .9))
 ```
 
 ```{r, h=4, w=4}
-visreg(fit, "Heat", fill=list(width=.1))
+visreg(fit, "Heat", fill = list(width = .1))
 ```
 
 # Subsetting the plot
@@ -102,7 +104,7 @@ visreg(fit, "Heat", fill=list(width=.1))
 Occasionally, you might want to plot only a subset of the levels or observations; you can use `subset` to accomplish this:
 
 ```{r, h=4, w=7}
-v <- visreg(fit, "Wind", by="Heat", plot=FALSE)
+v <- visreg(fit, "Wind", by = "Heat", plot = FALSE)
 v1 <- subset(v, Heat %in% c("Cool", "Hot"))
 plot(v1)
 ```

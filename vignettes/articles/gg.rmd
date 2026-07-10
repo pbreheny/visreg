@@ -5,8 +5,8 @@ title: visreg and ggplot2
 ```{r include=FALSE}
 library(visreg)
 library(ggplot2)
-knitr::opts_knit$set(aliases=c(h = 'fig.height', w = 'fig.width'))
-knitr::opts_chunk$set(comment='#', collapse=TRUE, cache=FALSE, tidy=FALSE)
+knitr::opts_knit$set(aliases = c(h = "fig.height", w = "fig.width"))
+knitr::opts_chunk$set(comment = "#", collapse = TRUE, cache = FALSE, tidy = FALSE)
 knitr::knit_hooks$set(small.mar = function(before, options, envir) {
   if (before) par(mar = c(4, 4, .1, .1))
 })
@@ -15,22 +15,24 @@ knitr::knit_hooks$set(small.mar = function(before, options, envir) {
 `visreg` plots are built with `ggplot2`. For example:
 
 ```{r, h=5, w=5}
-fit <- lm(Ozone ~ Solar.R + Wind + Temp, data=airquality)
+fit <- lm(Ozone ~ Solar.R + Wind + Temp, data = airquality)
 visreg(fit, "Wind")
 ```
 
 [Graphical options](options) regarding the appearance of points, lines, and bands are specified via the `line`, `fill`, and `points` arguments:
 
 ```{r, h=5, w=5}
-visreg(fit, "Wind", line=list(color="red"),
-                     fill=list(fill="green"),
-                     points=list(size=2, shape=1))
+visreg(fit, "Wind",
+  line = list(color = "red"),
+  fill = list(fill = "green"),
+  points = list(size = 2, shape = 1)
+)
 ```
 
 `visreg` returns a `gg` object, so you can use `ggplot2` to add additional layers to the graph.  For example, we could add a smoother:
 
 ```{r, h=5, w=5}
-visreg(fit, "Wind") + geom_smooth(method="loess", col='#FF4E37', fill='#FF4E37')
+visreg(fit, "Wind") + geom_smooth(method = "loess", col = "#FF4E37", fill = "#FF4E37")
 ```
 
 Or we could modify the theme:

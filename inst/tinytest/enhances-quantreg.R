@@ -2,13 +2,13 @@ suppressPackageStartupMessages(library(quantreg))
 
 # Basic usage
 fit <- rq(Ozone ~ ., data = airquality)
-visreg(fit, 'Wind') |> print() |> expect_silent()
+visreg(fit, "Wind") |> print() |> expect_silent()
 
-v <- visreg(fit, 'Wind', plot = FALSE)
+v <- visreg(fit, "Wind", plot = FALSE)
 expect_equal(round(head(v$fit$visreg_fit), 3), c(64.357, 63.809, 63.262, 62.715, 62.168, 61.620))
 
 fit <- rq(Ozone ~ ., data = airquality, tau = 0.1)
-visreg(fit, 'Wind') |> print() |> expect_silent()
+visreg(fit, "Wind") |> print() |> expect_silent()
 
 # Multiple quantile overlay; predict.rq() doesn't provide se.fit for the
 # multi-tau matrix form, so the band is always NA -- band = FALSE avoids the

@@ -5,8 +5,8 @@ title: Cross-sectional plots
 ```{r include=FALSE}
 library(visreg)
 library(ggplot2)
-knitr::opts_knit$set(aliases=c(h = 'fig.height', w = 'fig.width'))
-knitr::opts_chunk$set(comment='#', collapse=TRUE, cache=FALSE, tidy=FALSE)
+knitr::opts_knit$set(aliases = c(h = "fig.height", w = "fig.width"))
+knitr::opts_chunk$set(comment = "#", collapse = TRUE, cache = FALSE, tidy = FALSE)
 knitr::knit_hooks$set(small.mar = function(before, options, envir) {
   if (before) par(mar = c(4, 4, .1, .1))
 })
@@ -19,20 +19,20 @@ For models with interactions, we must simultaneously visualize the effect of two
 Let's fit a model that involves an interaction between a continuous term and a categorical term:
 
 ```{r}
-airquality$Heat <- cut(airquality$Temp, 3, labels=c("Cool", "Mild", "Hot"))
-fit <- lm(Ozone ~ Solar.R + Wind * Heat, data=airquality)
+airquality$Heat <- cut(airquality$Temp, 3, labels = c("Cool", "Mild", "Hot"))
+fit <- lm(Ozone ~ Solar.R + Wind * Heat, data = airquality)
 ```
 
 We can then use `visreg` to see how the effect of wind on ozone differs depending on the temperature:
 
 ```{r, h=4, w=9, out.width='100%'}
-visreg(fit, "Wind", by="Heat")
+visreg(fit, "Wind", by = "Heat")
 ```
 
 Or alternatively, see how the effect of temperature depends on the wind level:
 
 ```{r, h=4, w=9, out.width='100%'}
-visreg(fit, "Heat", by="Wind")
+visreg(fit, "Heat", by = "Wind")
 ```
 
 Note that, since `Wind` is a continuous variable, the panels above are somewhat arbitrary.  By default, `visreg` sets up three panels using the 10th, 50th, and 90th percentiles, but [the user can change both the number and the location of these break points](#opt).
@@ -46,13 +46,13 @@ In all of these plots, note that each partial residuals appears exactly once in 
 For a numeric `by` variable, the `breaks` argument controls the values at which the cross-sections are taken. By default, cross-sections are taken at three quantiles (10th, 50th, and 90th), but a larger number can be specified:
 
 ```{r, h=3.5, w=12, out.width='100%'}
-visreg(fit, "Heat", by="Wind", breaks=4)
+visreg(fit, "Heat", by = "Wind", breaks = 4)
 ```
 
 If `breaks` is a vector of numbers, it specifies the values at which the cross-sections are to be taken:
 
 ```{r, h=4, w=9, out.width='100%'}
-visreg(fit, "Heat", by="Wind", breaks=c(seq(5, 15, 5)))
+visreg(fit, "Heat", by = "Wind", breaks = c(seq(5, 15, 5)))
 ```
 
 # Graphical options
@@ -60,29 +60,29 @@ visreg(fit, "Heat", by="Wind", breaks=c(seq(5, 15, 5)))
 Plots are built with `ggplot2`, and the returned object has class `gg`, so its appearance can be changed via the usual `ggplot2` components, such as themes:
 
 ```{r, h=4, w=9, out.width='100%'}
-visreg(fit, "Wind", by="Heat") + theme_bw()
+visreg(fit, "Wind", by = "Heat") + theme_bw()
 ```
 
 The appearance of points, lines, and bands is set with the `line`, `fill`, and `points` arguments, [as described here](options.html):
 
 ```{r, h=4, w=9, out.width='100%'}
-visreg(fit, "Wind", by="Heat", fill=list(fill="#008DFF33"))
+visreg(fit, "Wind", by = "Heat", fill = list(fill = "#008DFF33"))
 ```
 
 `visreg` sets up the facet strips internally via the `strip_names` option:
 
 ```{r, h=4, w=9, out.width='100%'}
-visreg(fit, "Wind", by="Heat", strip_names=TRUE)
+visreg(fit, "Wind", by = "Heat", strip_names = TRUE)
 ```
 
 You can also explicitly specify the labels for each strip:
 
 ```{r, h=4, w=9, out.width='100%'}
-visreg(fit, "Wind", by="Heat", strip_names=c("Cold days", "Mild days", "Hot days"))
+visreg(fit, "Wind", by = "Heat", strip_names = c("Cold days", "Mild days", "Hot days"))
 ```
 
 Other aspects of faceting, such as the number of rows/columns, can be changed by adding a new `facet_wrap()` (or `facet_grid()`) to the returned plot:
 
 ```{r, h=3.5, w=12, out.width='100%'}
-visreg(fit, "Heat", by="Wind", breaks=4) + facet_wrap(~Wind, nrow=1)
+visreg(fit, "Heat", by = "Wind", breaks = 4) + facet_wrap(~Wind, nrow = 1)
 ```

@@ -43,6 +43,3 @@ plot(vv2)
 \seealso{
 \code{\link[=visreg]{visreg()}}, \code{\link[=plot.visreg]{plot.visreg()}}
 }
-\author{
-Patrick Breheny
-}

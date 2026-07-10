@@ -26,10 +26,7 @@ visreg(fit, "Solar.R") |> print() |> expect_silent()
 data(Orthodont, package = "nlme")
 Orthodont$nsex <- as.numeric(Orthodont$Sex == "Male")
 fit <- lmer(
-  distance ~ age +
-    (age | Subject) +
-    (0 + nsex | Subject) +
-    (0 + nsex:age | Subject),
+  distance ~ age + (age | Subject) + (0 + nsex | Subject) + (0 + nsex:age | Subject),
   data = Orthodont
 ) |>
   suppressMessages()
@@ -62,8 +59,7 @@ visreg(fit, "age", type = "contrast") |> print() |> expect_silent()
 
 # mgcv
 set.seed(2)
-capture.output(dat <- gamSim(2, n = 200, dist = "normal", scale = 0.1)$data) |>
-  invisible()
+capture.output(dat <- gamSim(2, n = 200, dist = "normal", scale = 0.1)$data) |> invisible()
 fit <- gam(y ~ s(x) + s(z), data = dat)
 visreg(fit, "x") |> print() |> expect_silent()
 

@@ -13,7 +13,6 @@ visreg(
   data = NULL,
   trans = I,
   scale = c("linear", "response"),
-  xtrans,
   alpha = 0.05,
   nn = 101,
   cond = list(),
@@ -63,10 +62,6 @@ located and must be supplied explicitly.}
 \code{scale='response'} for a glm, the inverse link function will be applied so that the model is
 plotted on the scale of the original response.}
 
-\item{xtrans}{(Optional) A function specifying a transformation for the horizontal axis. Note
-that, for model terms such as \code{log(x)}, visreg automatically plots on the original axis (see
-examples).}
-
 \item{alpha}{Alpha level (1-coverage) for the confidence band displayed in the plot (default:
 0.05).}
 
@@ -85,15 +80,15 @@ have exactly the same value. Default is FALSE.}
 multiple visreg objects bound together as a list (\code{collapse=FALSE}) or collapsed down to a
 single \code{visreg} object (\code{collapse=TRUE}).}
 
-\item{plot}{Send the calculations to \verb{[plot.visreg()]}? Default is TRUE.}
+\item{plot}{Send the calculations to \code{\link[=plot.visreg]{plot.visreg()}}? Default is TRUE.}
 
 \item{\dots}{Graphical parameters (e.g., \code{ylab}) can be passed to the function to customize the
 plots. If \code{by=TRUE}, ggplot2 faceting parameters can be passed, such as \code{strip_names} (see
 examples below).}
 }
 \value{
-A \code{visreg} or \code{visreg_list} object (which is simply a list of \code{visreg} objects). A
-\code{visreg} object has three components:
+A \code{visreg} or \code{visreg_list} object (which is simply a list of \code{visreg} objects). A visreg` object
+has three components:
 
 \describe{
 \item{fit}{
@@ -111,6 +106,9 @@ Contains meta-information needed to construct plots, such as the name of the x a
 variables, whether there were any \code{by} variables, etc.
 }
 }
+
+Note that if \code{plot = TRUE} (the default), then the \code{visreg} object is passed to \code{\link[=plot.visreg]{plot.visreg()}}
+and a \code{ggplot} object is returned instead.
 }
 \description{
 A function for visualizing regression models quickly and easily. Default plots contain a
@@ -120,7 +118,7 @@ calculations and, if \code{plot=TRUE} (the default), these calculations are pass
 for plotting.
 }
 \details{
-See \verb{[plot.visreg()]} for plotting options, such as changing the appearance of points, lines,
+See \code{\link[=plot.visreg]{plot.visreg()}} for plotting options, such as changing the appearance of points, lines,
 confidence bands, etc.
 }
 \examples{
@@ -203,13 +201,13 @@ v <- visreg(fit, "Wind", cond = list(Heat = "Mild"))
 \references{
 \itemize{
 \item \url{https://pbreheny.github.io/visreg/}
-\item Breheny, P. and Burchett, W. (2017), Visualizing regression models using visreg.
-\url{https://journal.r-project.org/archive/2017/RJ-2017-046/index.html}
+\item Breheny P and Burchett W. (2017) Visualization of regression models using
+visreg. \emph{R Journal}, \strong{9}: 56-71.
+\doi{10.32614/RJ-2017-046}
 }
 }
 \seealso{
-\url{https://pbreheny.github.io/visreg/}, \code{\link[=plot.visreg]{plot.visreg()}}, and \verb{[visreg2d()]}
-}
-\author{
-Patrick Breheny and Woodrow Burchett
+\code{\link[=plot.visreg]{plot.visreg()}} for plotting options, \code{\link[=visreg2d]{visreg2d()}} for creating two-dimensional visreg objects,
+and the \href{https://pbreheny.github.io/visreg/}{package website} for detailed explanations and
+examples.
 }

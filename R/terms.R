@@ -3,12 +3,12 @@ compute_terms <- function(fit, f, x, trans, alpha, ...) {
 
   if (inherits(fit, "mlm")) {
     summ <- summary(fit)
-    n.y <- length(summ)
-    yy <- SE <- matrix(NA, nrow = nrow(x$XX), ncol = n.y)
-    r <- rr <- matrix(NA, nrow = nrow(x$X), ncol = n.y)
-    for (i in 1:n.y) {
-      V <- summ[[i]]$sigma^2 * summ[[i]]$cov.unscaled
-      SE[, i] <- sqrt(apply(x$XX * (x$XX %*% V), 1, sum))
+    n_y <- length(summ)
+    yy <- se <- matrix(NA, nrow = nrow(x$XX), ncol = n_y)
+    r <- rr <- matrix(NA, nrow = nrow(x$X), ncol = n_y)
+    for (i in 1:n_y) {
+      v <- summ[[i]]$sigma^2 * summ[[i]]$cov.unscaled
+      se[, i] <- rowSums(x$XX * (x$XX %*% v)) |> sqrt()
       ind <- is.finite(b[, i])
       yy[, i] <- x$XX %*% b[ind, i]
       rr[, i] <- visreg_resid(fit)[, i]
@@ -16,22 +16,22 @@ compute_terms <- function(fit, f, x, trans, alpha, ...) {
     }
   } else {
     if (inherits(fit, "glmmTMB")) {
-      V <- vcov(fit)$cond
+      v <- vcov(fit)$cond
     } else {
-      V <- vcov(fit)
+      v <- vcov(fit)
     }
-    dg <- if (inherits(V, "Matrix")) Matrix::diag(V) else diag(V)
+    dg <- if (inherits(v, "Matrix")) Matrix::diag(v) else diag(v)
     if (inherits(fit, "polr")) {
-      remove <- grep("|", colnames(V), fixed = TRUE)
-      V <- V[-remove, -remove, drop = FALSE]
+      keep <- grep("|", colnames(v), fixed = TRUE, invert = TRUE)
+      v <- v[keep, keep, drop = FALSE]
     } else if (inherits(fit, "betareg")) {
-      V <- V[-nrow(V), -ncol(V), drop = FALSE]
+      v <- v[-nrow(v), -ncol(v), drop = FALSE]
     }
-    if (any(is.na(dg))) {
-      remove <- which(is.na(dg))
-      V <- V[-remove, -remove, drop = FALSE]
+    if (anyNA(dg)) {
+      keep <- which(!is.na(dg))
+      v <- v[keep, keep, drop = FALSE]
     }
-    SE <- sqrt(apply(x$XX * (x$XX %*% V), 1, sum))
+    se <- rowSums(x$XX * (x$XX %*% v)) |> sqrt()
     yy <- drop(x$XX %*% b[is.finite(b)])
     rr <- visreg_resid(fit)
     if (is.null(rr)) {
@@ -40,26 +40,29 @@ compute_terms <- function(fit, f, x, trans, alpha, ...) {
     r <- drop(x$X %*% b[is.finite(b)]) + rr
     if (nrow(x$X) != length(rr)) {
       warning(
-        "Residuals do not match data; have you changed the original data set?  If so, visreg is probably not displaying the residuals for the data set that was actually used to fit the model."
+        "Residuals do not match data; have you changed the original data set? If so, visreg is",
+        "probably not displaying the residuals for the data set that was actually used to fit",
+        "the model.",
+        call. = FALSE
       )
     }
   }
   if (!all(is.finite(b))) {
-    warning("prediction from a rank-deficient fit may be misleading")
+    warning("prediction from a rank-deficient fit may be misleading", call. = FALSE)
   }
   m <- ifelse(
-    identical(class(fit), "lm") || identical(class(fit), "mlm"),
+    class(fit)[1] == "lm" || class(fit)[1] == "mlm",
     qt(1 - alpha / 2, fit$df.residual),
     qnorm(1 - alpha / 2)
   )
-  lwr <- yy - m * SE
-  upr <- yy + m * SE
+  lwr <- yy - m * se
+  upr <- yy + m * se
   if (inherits(fit, "mlm")) {
     val <- list(
-      fit = matrix(as.double(trans(yy)), ncol = n.y),
-      lwr = matrix(as.double(trans(lwr)), ncol = n.y),
-      upr = matrix(as.double(trans(upr)), ncol = n.y),
-      r = matrix(as.double(trans(r)), ncol = n.y)
+      fit = matrix(as.double(trans(yy)), ncol = n_y),
+      lwr = matrix(as.double(trans(lwr)), ncol = n_y),
+      upr = matrix(as.double(trans(upr)), ncol = n_y),
+      r = matrix(as.double(trans(r)), ncol = n_y)
     )
     val$name <- colnames(val$fit) <- colnames(fit$fitted.values)
   } else {
@@ -72,6 +75,6 @@ compute_terms <- function(fit, f, x, trans, alpha, ...) {
     )
   }
   val$pos <- rr > 0
-  val$n <- if (inherits(fit, "mlm")) n.y else 1
+  val$n <- if (inherits(fit, "mlm")) n_y else 1
   val
 }

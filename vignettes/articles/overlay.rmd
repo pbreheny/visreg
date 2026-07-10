@@ -4,8 +4,8 @@ title: Overlay plots
 
 ```{r include=FALSE}
 library(visreg)
-knitr::opts_knit$set(aliases=c(h = 'fig.height', w = 'fig.width'))
-knitr::opts_chunk$set(comment='#', collapse=TRUE, cache=FALSE, tidy=FALSE)
+knitr::opts_knit$set(aliases = c(h = "fig.height", w = "fig.width"))
+knitr::opts_chunk$set(comment = "#", collapse = TRUE, cache = FALSE, tidy = FALSE)
 knitr::knit_hooks$set(small.mar = function(before, options, envir) {
   if (before) par(mar = c(4, 4, .1, .1))
 })
@@ -14,43 +14,43 @@ knitr::knit_hooks$set(small.mar = function(before, options, envir) {
 The default [cross-sectional plot](cross.html) places the different cross-sections in separate panels.  Occasionally, it is more helpful to overlay the plots on top of one another to see more directly how they compare.  Using the same model as [before](cross.html):
 
 ```{r}
-airquality$Heat <- cut(airquality$Temp, 3, labels=c("Cool", "Mild", "Hot"))
-fit <- lm(Ozone ~ Solar.R + Wind * Heat, data=airquality)
+airquality$Heat <- cut(airquality$Temp, 3, labels = c("Cool", "Mild", "Hot"))
+fit <- lm(Ozone ~ Solar.R + Wind * Heat, data = airquality)
 ```
 
 We can specify `overlay=TRUE` to obtain a version of the plot in which all the images are overlaid:
 
 ```{r, h=5, w=5}
-visreg(fit, "Wind", by="Heat", overlay=TRUE)
+visreg(fit, "Wind", by = "Heat", overlay = TRUE)
 ```
 
 ```{r, h=5, w=5}
-visreg(fit, "Heat", by="Wind", overlay=TRUE)
+visreg(fit, "Heat", by = "Wind", overlay = TRUE)
 ```
 
 The options described in [cross-sectional plots](cross.html) work in the same way here.  For example,
 
 ```{r, h=5, w=5}
-visreg(fit, "Heat", by="Wind", overlay=TRUE, breaks=c(6, 12))
+visreg(fit, "Heat", by = "Wind", overlay = TRUE, breaks = c(6, 12))
 ```
 
 In particular, the option `strip_names` is used in the same way for consistency, even though there are no actual strips in an overlay plot:
 
 ```{r, h=5, w=5}
-visreg(fit, "Wind", by="Heat", overlay=TRUE, strip_names=c("Cold", "Not so hot", "Really hot"))
+visreg(fit, "Wind", by = "Heat", overlay = TRUE, strip_names = c("Cold", "Not so hot", "Really hot"))
 ```
 
 Changing the appearance of lines and points that are common to all levels of `by` is accomplished in the same manner as [other `visreg` plots](options.html):
 
 ```{r, h=5, w=5}
-visreg(fit, "Wind", by="Heat", overlay=TRUE, line=list(linewidth=1))
+visreg(fit, "Wind", by = "Heat", overlay = TRUE, line = list(linewidth = 1))
 ```
 
 Since the colors of the lines, points, and bands in an overlay plot are mapped to the levels of `by`, changing them level-by-level is done the usual `ggplot2` way, by adding a scale to the returned plot:
 
 ```{r, h=5, w=5, message=FALSE, warning=FALSE}
 library(ggplot2)
-visreg(fit, "Wind", by="Heat", overlay=TRUE) +
-  scale_color_manual(values=c("#00C1C9", "#D63EFF", "#FF4E37")) +
-  scale_fill_manual(values=c("#00C1C980", "#D63EFF80", "#FF4E3780"))
+visreg(fit, "Wind", by = "Heat", overlay = TRUE) +
+  scale_color_manual(values = c("#00C1C9", "#D63EFF", "#FF4E37")) +
+  scale_fill_manual(values = c("#00C1C980", "#D63EFF80", "#FF4E3780"))
 ```

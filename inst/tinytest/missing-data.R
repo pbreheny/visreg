@@ -79,14 +79,14 @@ y <- rnorm(length(x))
 y[11:15] <- NA
 fit <- lm(y ~ x)
 visreg(fit) |> print() |> expect_silent()
-visreg(fit, type = 'contrast') |> print() |> expect_silent()
+visreg(fit, type = "contrast") |> print() |> expect_silent()
 
 # data options
 data("birthwt", package = "MASS")
 TMP <- birthwt
 fit <- lm(bwt ~ age + race, TMP)
 rm(TMP)
-visreg(fit, 'age', data = birthwt) |> print() |> expect_silent()
-visreg2d(fit, 'age', 'race', data = birthwt) |> expect_silent()
+visreg(fit, "age", data = birthwt) |> print() |> expect_silent()
+visreg2d(fit, "age", "race", data = birthwt) |> expect_silent()
 fit$data <- birthwt
-visreg(fit, 'age') |> print() |> expect_silent()
+visreg(fit, "age") |> print() |> expect_silent()

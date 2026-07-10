@@ -58,7 +58,7 @@ conditional plots in visreg are constructed by filling in other explanatory vari
 median (for numeric variables) or most common category (for factors), but this can be
 overridden by specifying their values using \code{cond} (see examples).}
 
-\item{plot}{Send the calculations to \verb{[plot.visreg2d()]}, producing a plot? Default is TRUE.}
+\item{plot}{Send the calculations to \code{\link[=plot.visreg2d]{plot.visreg2d()}}, producing a plot? Default is TRUE.}
 
 \item{\dots}{Graphical parameters (e.g., \code{ylab}) can be passed to the function to customize the
 plots.}
@@ -100,11 +100,12 @@ visreg2d(fit, x = "Wind", y = "Temp")
 \references{
 \itemize{
 \item \url{https://pbreheny.github.io/visreg/}
-\item Breheny, P. and Burchett, W. (2017), Visualizing regression models using visreg.
-\url{https://journal.r-project.org/archive/2017/RJ-2017-046/index.html}
+\item Breheny P and Burchett W. (2017) Visualization of regression models using
+visreg. \emph{R Journal}, \strong{9}: 56-71.
 \doi{10.32614/RJ-2017-046}
 }
 }
 \seealso{
-\url{https://pbreheny.github.io/visreg/articles/surface.html} \verb{[visreg()]}
+\code{\link[=plot.visreg2d]{plot.visreg2d()}} for the plotting function and the
+\href{https://pbreheny.github.io/visreg/surface.html}{vignette} for examples.
 }

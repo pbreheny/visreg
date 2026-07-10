@@ -8,12 +8,12 @@ fit <- betareg(yield ~ batch + temp, data = GasolineYield)
 # Note: band must be set via plot(v, band = FALSE) rather than
 # visreg(fit, ..., band = FALSE) directly -- visreg_pred() forwards all `...`
 # through to predict(), and predict.betareg() errors on unknown arguments.
-v <- visreg(fit, 'temp', plot = FALSE)
+v <- visreg(fit, "temp", plot = FALSE)
 plot(v, band = FALSE) |> print() |> expect_silent()
-visreg(fit, 'temp', type = 'contrast') |> print() |> expect_silent()
+visreg(fit, "temp", type = "contrast") |> print() |> expect_silent()
 
 expect_equal(round(head(v$fit$visreg_fit), 3), c(-2.184, -2.157, -2.131, -2.105, -2.079, -2.053))
 
-fit <- betareg(yield ~ gravity + temp, data = GasolineYield, link = 'logit')
-v <- visreg(fit, 'temp', plot = FALSE)
+fit <- betareg(yield ~ gravity + temp, data = GasolineYield, link = "logit")
+v <- visreg(fit, "temp", plot = FALSE)
 plot(v, band = FALSE) |> print() |> expect_silent()

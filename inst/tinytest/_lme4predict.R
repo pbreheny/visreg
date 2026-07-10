@@ -10,8 +10,8 @@ f <- function(object, newdata, se.fit = FALSE, ...) {
     lme4:::predict.merMod(object, newdata, ...)
   }
 }
-registerS3method('predict', 'lmerMod', f)
+registerS3method("predict", "lmerMod", f)
 predict(fit, Milk[1, ])
 predict(fit, Milk[1, ], se.fit = TRUE)
 
-visreg(fit, 'Diet')
+visreg(fit, "Diet")

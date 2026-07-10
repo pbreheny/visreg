@@ -29,4 +29,4 @@ expect_equal(round(head(v$fit$visreg_fit), 3), c(-0.087, -0.072, -0.058, -0.043,
 # Works with random intercept
 vf1 <- varIdent(c(Female = 0.5), form = ~ 1 | Sex)
 fit <- lme(distance ~ age + Sex, data = Orthodont, random = ~1, weights = vf1)
-visreg(fit, 'age', band = FALSE) |> print() |> expect_silent()
+visreg(fit, "age", band = FALSE) |> print() |> expect_silent()

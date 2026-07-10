@@ -87,23 +87,18 @@ visreg2d <- function(
   ...
 ) {
   # Setup
-  if (type[1] == "effect") {
-    warning(
-      "Please note that type='effect' is deprecated and may not be supported in future versions of visreg.  Use type='contrast' instead."
-    )
-    type <- "contrast"
-  }
   type <- match.arg(type)
   scale <- match.arg(scale)
   if (scale == "response") {
     trans <- family(fit)$linkinv
   }
-  if (missing(xvar) | missing(yvar)) {
+  if (missing(xvar) || missing(yvar)) {
     stop("Must specify and x and y variable", call. = FALSE)
   }
-  if (!identical(trans, I) & type == "contrast") {
+  if (!identical(trans, I) && type == "contrast") {
     warning(
-      "You are attempting to transform a contrast.  The resulting plot is not guaranteed to be meaningful.",
+      "You are attempting to transform a contrast. The resulting plot is not guaranteed",
+      "to be meaningful.",
       call. = FALSE
     )
   }
@@ -118,7 +113,7 @@ visreg2d <- function(
   # Calculate v
   v <- build_visreg2d(fit, f, xvar, yvar, nn, cond, type, scale, trans)
 
-  # Plot/return
+  # Plot or return
   if (plot) {
     p <- plot(v, ...)
     if (!is.null(p) && inherits(p, "gg") || inherits(p, "list")) {

@@ -32,7 +32,7 @@ visreg(fit, "rx", type = "contrast") |> print() |> expect_silent()
 ovarian$Group <- factor(ovarian$rx)
 fit <- coxph(Surv(futime, fustat) ~ age + strata(Group), data = ovarian)
 visreg(fit, "age") |> print() |> expect_silent()
-visreg(fit, "age", type = 'contrast') |> print() |> expect_silent()
+visreg(fit, "age", type = "contrast") |> print() |> expect_silent()
 
 # Logical
 ovarian$rx <- ovarian$rx == 2

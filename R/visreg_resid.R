@@ -4,8 +4,8 @@ visreg_resid <- function(fit) {
       rr <- fit$y - fit$predicted
     }
     if (fit$type == "classification") {
-      P <- predict(fit, type = "prob")
-      rr <- (fit$y == colnames(P)[2]) - P[, 2]
+      p_mat <- predict(fit, type = "prob")
+      rr <- (fit$y == colnames(p_mat)[2]) - p_mat[, 2]
     }
   } else if (inherits(fit, "coxph")) {
     rr <- residuals(fit, type = "deviance")
@@ -18,7 +18,7 @@ visreg_resid <- function(fit) {
   } else {
     rr <- residuals(fit)
   }
-  if (!is.matrix(rr) & length(rr) > 0) {
+  if (!is.matrix(rr) && length(rr) > 0) {
     rr <- rr[!is.na(rr)]
   }
   rr

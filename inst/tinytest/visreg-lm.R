@@ -24,17 +24,17 @@ visreg(fit, "Wind") |> print() |> expect_silent()
 
 # Cond
 fit <- lm(Ozone ~ Solar.R + Wind + Temp, data = airquality)
-visreg(fit, "Wind", cond = list('Temp' = 100)) |> print() |> expect_silent()
-visreg(fit, "Wind", cond = list('Temp' = 0, 'Solar.R' = 0)) |> print() |> expect_silent()
+visreg(fit, "Wind", cond = list("Temp" = 100)) |> print() |> expect_silent()
+visreg(fit, "Wind", cond = list("Temp" = 0, "Solar.R" = 0)) |> print() |> expect_silent()
 
 # Factors
 airquality$Heat <- cut(airquality$Temp, 3, labels = c("Cool", "Mild", "Hot"))
 fit <- lm(Ozone ~ Solar.R + Wind + Heat, data = airquality)
 visreg(fit, "Wind") |> print() |> expect_silent()
-visreg(fit, "Wind", cond = list(Heat = 'Mild')) |> print() |> expect_silent() ## Same as above
+visreg(fit, "Wind", cond = list(Heat = "Mild")) |> print() |> expect_silent() ## Same as above
 visreg(fit, "Wind", type = "contrast") |> print() |> expect_silent()
 visreg(fit, "Wind", cond = list(Solar.R = 250)) |> print() |> expect_silent()
-visreg(fit, "Wind", cond = list(Heat = 'Cool')) |> print() |> expect_silent()
+visreg(fit, "Wind", cond = list(Heat = "Cool")) |> print() |> expect_silent()
 visreg(fit, "Heat") |> print() |> expect_silent()
 
 v <- visreg(fit, "Heat", plot = FALSE)

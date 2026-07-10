@@ -7,7 +7,7 @@ fit <- glm(low ~ age + race + smoke + lwt, data = birthwt, family = "binomial")
 visreg(fit, "age") |> print() |> expect_silent()
 visreg(fit, "lwt") |> print() |> expect_silent()
 visreg(fit, "race") |> print() |> expect_silent()
-visreg(fit, "race", cond = list(smoke = 'Smoker')) |> print() |> expect_silent()
+visreg(fit, "race", cond = list(smoke = "Smoker")) |> print() |> expect_silent()
 visreg(fit, "smoke") |> print() |> expect_silent()
 
 v <- visreg(fit, "age", plot = FALSE)
@@ -21,11 +21,7 @@ expect_equal(round(v$fit$visreg_lwr, 3), c(-2.421, -1.398, -1.289))
 expect_equal(round(v$fit$visreg_upr, 3), c(-0.979, 0.461, -0.225))
 
 ## Transformation of X
-fit <- glm(
-  low ~ age + I(age^2) + race + smoke + lwt,
-  data = birthwt,
-  family = "binomial"
-)
+fit <- glm(low ~ age + I(age^2) + race + smoke + lwt, data = birthwt, family = "binomial")
 visreg(fit, "age") |> print() |> expect_silent()
 visreg(fit, "age", type = "contrast") |> print() |> expect_silent()
 
@@ -39,12 +35,10 @@ expect_equal(round(head(v$fit$visreg_fit), 3), c(0.183, 0.182, 0.181, 0.180, 0.1
 
 ## scale="response" + type="contrast" warns (transforming a contrast is not
 ## guaranteed to be meaningful)
-visreg(fit, "age", scale = "response", type = "contrast") |>
-  print() |>
-  expect_warning()
+visreg(fit, "age", scale = "response", type = "contrast") |> print() |> expect_warning()
 
 ## Cond
-visreg(fit, "lwt", scale = "response", cond = list(smoke = 'Smoker')) |> print() |> expect_silent()
+visreg(fit, "lwt", scale = "response", cond = list(smoke = "Smoker")) |> print() |> expect_silent()
 visreg(fit, "lwt", scale = "response", by = "smoke") |> print() |> expect_silent()
 
 ## Rug
@@ -57,15 +51,7 @@ visreg(fit, "age", by = "race", scale = "response", rug = 2, jitter = TRUE) |>
   print() |>
   expect_silent()
 visreg(fit, "race", by = "age", scale = "response", rug = 2) |> print() |> expect_silent()
-visreg(
-  fit,
-  "age",
-  by = "race",
-  scale = "response",
-  rug = 2,
-  jitter = TRUE,
-  overlay = TRUE
-) |>
+visreg(fit, "age", by = "race", scale = "response", rug = 2, jitter = TRUE, overlay = TRUE) |>
   print() |>
   expect_silent()
 visreg(fit, "race", by = "age", scale = "response", rug = 2, overlay = TRUE) |>

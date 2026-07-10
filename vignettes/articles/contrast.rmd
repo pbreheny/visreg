@@ -4,8 +4,8 @@ title: Contrast vs. conditional plots
 
 ```{r include=FALSE}
 library(visreg)
-knitr::opts_knit$set(aliases=c(h = 'fig.height', w = 'fig.width'))
-knitr::opts_chunk$set(comment='#', collapse=TRUE, cache=FALSE, tidy=FALSE)
+knitr::opts_knit$set(aliases = c(h = "fig.height", w = "fig.width"))
+knitr::opts_chunk$set(comment = "#", collapse = TRUE, cache = FALSE, tidy = FALSE)
 knitr::knit_hooks$set(small.mar = function(before, options, envir) {
   if (before) par(mar = c(4, 4, .1, .1))
 })
@@ -23,13 +23,13 @@ To summarize, the primary advantage of a contrast plot is that we don't have to 
 To see how contrast plots compare to conditional plots, let's fit the same model as in [getting started](basic.html), but display contrast plots and conditional plots side-by-side:
 
 ```{r, h=4, w=8, out.width='100%'}
-airquality$Heat <- cut(airquality$Temp, 3, labels=c("Cool", "Mild", "Hot"))
-fit <- lm(Ozone ~ Solar.R + Wind + Heat, data=airquality)
-par(mfrow=c(1,2))
-visreg(fit, "Wind", type="conditional")
-visreg(fit, "Wind", type="contrast")
-visreg(fit, "Heat", type="conditional")
-visreg(fit, "Heat", type="contrast")
+airquality$Heat <- cut(airquality$Temp, 3, labels = c("Cool", "Mild", "Hot"))
+fit <- lm(Ozone ~ Solar.R + Wind + Heat, data = airquality)
+par(mfrow = c(1, 2))
+visreg(fit, "Wind", type = "conditional")
+visreg(fit, "Wind", type = "contrast")
+visreg(fit, "Heat", type = "conditional")
+visreg(fit, "Heat", type = "contrast")
 ```
 
 The similarity between the plots is that the slopes of the lines, and the differences between the levels of `Heat`, are exactly the same in both plots.  However, the vertical axes and the confidence intervals are different.  In particular, the confidence interval for a contrast plot has zero width at the reference level: we can say with certainty that $\Ex(Y | x_0) - \Ex(Y | x_0)=0$.  There is always uncertainty, however, about the actual value of $\Ex(Y)$ in a conditional plot for all values of $x$.  Likewise, at the mean value of wind, `r round(mean(airquality$Wind), 2)`, the contrast plot passes through 0 by construction, wheras the conditional plot passes through `r round(predict(fit, newdata=with(airquality, data.frame(Solar.R=mean(Solar.R, na.rm=TRUE), Wind=mean(Wind), Heat='Mild'))), 1)`.
