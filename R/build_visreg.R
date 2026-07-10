@@ -7,8 +7,11 @@ build_visreg <- function(fit, f, xvar, nn, cond, type, trans, alpha, jitter, by,
     stop("Cannot specify 'by' and multiple x variables simultaneously", call. = FALSE)
   }
   J <- max(length(xvar), length(cond))
-  Attempt <- try(max(attr(terms(as.formula(formula(fit))), "order")) > 1, silent = TRUE)
-  hasInteraction <- ifelse(inherits(Attempt, "try-error"), FALSE, Attempt)
+  # Variables explicitly addressed via 'by' or 'cond' (same for every element of 'cond')
+  covered <- if (length(cond) >= 1) names(cond[[1]]) else character(0)
+  interacting <- setNames(lapply(xvar, interacting_vars, fit = fit), xvar)
+  has_interaction <- vapply(interacting, function(iv) length(iv) > 0, logical(1))
+  main_effect_warn <- vapply(interacting, function(iv) length(setdiff(iv, covered)) > 0, logical(1))
   lev <- attr(cond, "lev")
 
   # Get xy list
@@ -26,7 +29,8 @@ build_visreg <- function(fit, f, xvar, nn, cond, type, trans, alpha, jitter, by,
   meta <- list(
     x = xvar,
     y = xy[[1]]$y$name,
-    hasInteraction = hasInteraction,
+    has_interaction = unname(has_interaction[xvar[1]]),
+    main_effect_warn = unname(main_effect_warn[xvar[1]]),
     yName = yName,
     trans = trans,
     class = class(fit)
@@ -55,6 +59,8 @@ build_visreg <- function(fit, f, xvar, nn, cond, type, trans, alpha, jitter, by,
       for (j in 1:J) {
         meta.j <- meta
         meta.j$x <- xvar[j]
+        meta.j$has_interaction <- unname(has_interaction[xvar[j]])
+        meta.j$main_effect_warn <- unname(main_effect_warn[xvar[j]])
         v[[j]] <- list(
           fit = data.frame(
             xy[[j]]$x$DD,
@@ -113,6 +119,8 @@ build_visreg <- function(fit, f, xvar, nn, cond, type, trans, alpha, jitter, by,
           meta.jk$x <- meta$x[j]
           meta.jk$y <- meta$y[k]
           meta.jk$yName <- meta$yName[k]
+          meta.jk$has_interaction <- unname(has_interaction[meta$x[j]])
+          meta.jk$main_effect_warn <- unname(main_effect_warn[meta$x[j]])
           l <- (j - 1) * K + k
           v[[l]] <- list(
             fit = data.frame(

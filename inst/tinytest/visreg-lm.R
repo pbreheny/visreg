@@ -61,21 +61,19 @@ visreg(
   line = list(color = "blue", linewidth = 10),
   points = list(color = "red", size = 2),
   alpha = .001,
-  fill = list(fill = "yellow", color = "green"),
-  print_cond = FALSE
+  fill = list(fill = "yellow", color = "green")
 ) |>
   print() |>
-  expect_silent()
+  expect_warning()
 visreg(
   fit,
   "Wind",
   line = list(color = "blue", linewidth = 10),
   points = list(color = "red", size = 2),
-  fill = list(fill = "yellow", color = "green"),
-  print_cond = FALSE
+  fill = list(fill = "yellow", color = "green")
 ) |>
   print() |>
-  expect_silent()
+  expect_warning()
 visreg(
   fit,
   "Wind",

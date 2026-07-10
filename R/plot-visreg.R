@@ -73,18 +73,12 @@ plot.visreg <- function(
   ...
 ) {
   top <- match.arg(top)
-  warn <- FALSE
-  if (missing(print_cond)) {
-    if (!("by" %in% names(x$meta)) & x$meta$hasInteraction) {
-      print_cond <- warn <- TRUE
-    }
-  }
-  if (print_cond) {
-    print_cond(x, warn)
+  if (print_cond || isTRUE(x$meta$main_effect_warn)) {
+    print_cond(x)
   }
 
   if (all(is.na(x$res$visreg_res))) {
-    if (partial | rug) {
+    if (partial || rug) {
       partial <- FALSE
       rug <- FALSE
       warning(paste0(

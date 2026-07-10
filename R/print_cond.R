@@ -1,12 +1,4 @@
-print_cond <- function(v, warn = FALSE) {
-  if (warn) {
-    warning(
-      "  Note that you are attempting to plot a 'main effect' in a model that contains an
-  interaction.  This is potentially misleading; you may wish to consider using the 'by'
-  argument.",
-      call. = FALSE
-    )
-  }
+print_cond <- function(v) {
   p <- ncol(v$fit) - 4
   X <- v$fit[, 1:p, drop = FALSE]
   X <- X[, -which(names(X) == v$meta$x), drop = FALSE]
@@ -15,12 +7,25 @@ print_cond <- function(v, warn = FALSE) {
   for (j in 1:ncol(X)) {
     if (is.factor(X[, j])) X[, j] <- as.character(X[, j])
   }
-  cat("Conditions used in construction of plot\n")
+  lines <- "Conditions used in construction of plot"
   for (j in varying.columns) {
     x <- paste(unique(X[, j]), collapse = " / ")
-    cat(names(X)[j], ": ", x, "\n", sep = "")
+    lines <- c(lines, paste0(names(X)[j], ": ", x))
   }
   for (j in constant.columns) {
-    cat(names(X)[j], ": ", X[1, j], "\n", sep = "")
+    lines <- c(lines, paste0(names(X)[j], ": ", X[1, j]))
+  }
+  cond_text <- paste(lines, collapse = "\n")
+
+  if (isTRUE(v$meta$main_effect_warn)) {
+    warning(
+      "  You are plotting the effect of '", v$meta$x, "' as if it were a 'main effect', but the
+  model contains an interaction involving this variable that has not been addressed via the 'by'
+  or 'cond' argument.  The plot therefore shows the effect of '", v$meta$x, "' conditional on the
+  values below, not its overall effect.\n\n  ", cond_text,
+      call. = FALSE
+    )
+  } else {
+    cat(cond_text, "\n", sep = "")
   }
 }

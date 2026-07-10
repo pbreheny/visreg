@@ -1,3 +1,5 @@
+library(tinytest)
+
 # Basics
 airquality$Heat <- cut(airquality$Temp, 3, labels = c("Cool", "Mild", "Hot"))
 airquality$Mon <- factor(month.abb[airquality$Month], levels = month.abb[5:9])
@@ -52,8 +54,8 @@ visreg(fit_add, "Wind", line = list(color = "green")) |> print() |> expect_silen
 visreg(fit_add, "Heat", line = list(color = "green")) |> print() |> expect_silent()
 
 # Print conditions
-expect_warning(visreg(fit, "Wind") |> print())
-expect_stdout(visreg(fit, "Wind", print_cond = TRUE), pattern = "Conditions used")
+expect_warning(visreg(fit, "Wind") |> print(), pattern = "Conditions used")
+expect_warning(visreg(fit, "Wind", print_cond = TRUE), pattern = "Conditions used")
 expect_stdout(visreg(fit, "Wind", by = "Heat", print_cond = TRUE), pattern = "Conditions used")
 
 # Factor on x axis
