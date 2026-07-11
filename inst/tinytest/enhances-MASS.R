@@ -1,3 +1,4 @@
+library(tinytest)
 suppressPackageStartupMessages(library(MASS))
 
 # rlm

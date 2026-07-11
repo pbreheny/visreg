@@ -38,7 +38,7 @@
 #'   [ggplot2::geom_crossbar()] (factor `xvar`) when shaded confidence regions are plotted.
 #' @param points List of parameters to pass to [ggplot2::geom_point()] (continuous `xvar`) or
 #'   [ggplot2::geom_jitter()] (factor `xvar`) when partial residuals are plotted.
-#' @param ... Additional arguments passed on to the plot, such as `xlab`, `ylab`.
+#' @param ... Not used.
 #'
 #' @returns A ggplot object, or if `x` is a [visreg_list()], a list of ggplot objects.
 #'
@@ -90,8 +90,8 @@ plot.visreg <- function(
   }
 
   if (is.factor(x$fit[, x$meta$x])) {
-    gg_factor_plot(x, partial, band, rug, strip_names, overlay, top, line, fill, points, ...)
+    gg_factor_plot(x, partial, band, rug, strip_names, overlay, top, line, fill, points)
   } else {
-    gg_cont_plot(x, partial, band, rug, strip_names, overlay, top, line, fill, points, ...)
+    gg_cont_plot(x, partial, band, rug, strip_names, overlay, top, line, fill, points)
   }
 }

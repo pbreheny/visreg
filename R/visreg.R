@@ -52,8 +52,11 @@
 #'   multiple visreg objects bound together as a list (`collapse=FALSE`) or collapsed down to a
 #'   single `visreg` object (`collapse=TRUE`).
 #' @param plot Send the calculations to [plot.visreg()]? Default is TRUE.
-#' @param \dots Graphical parameters (e.g., `ylab`) can be passed to the function to customize the
-#'   plots. If `by=TRUE`, ggplot2 faceting parameters can be passed, such as `strip_names` (see
+#' @param predict Named list of additional arguments to pass to `predict()` (e.g.,
+#'   `list(re.form = NA)` for a mixed model). Most models never need this; it exists as an
+#'   escape hatch since `predict()` methods vary by model class and aren't otherwise
+#'   accessible from `visreg()`.
+#' @param ... Graphical parameters (e.g., `partial`) to pass to [plot.visreg()] (see
 #'   examples below).
 #'
 #' @returns
@@ -182,6 +185,7 @@ visreg <- function(
   jitter = FALSE,
   collapse = FALSE,
   plot = TRUE,
+  predict = list(),
   ...
 ) {
   # Setup
@@ -196,7 +200,7 @@ visreg <- function(
 
   # Calculate v
   y_name <- make_y_name(fit, scale, trans, type)
-  v <- build_visreg(fit, dat, xvar, nn, cond, type, trans, alpha, jitter, by, y_name, ...)
+  v <- build_visreg(fit, dat, xvar, nn, cond, type, trans, alpha, jitter, by, y_name, predict)
   if (collapse) {
     v <- collapse_visreg_list(v)
   }

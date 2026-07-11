@@ -1,4 +1,4 @@
-setup_data <- function(fit, f, name, nn, cond, whitespace, ...) {
+setup_data <- function(fit, f, name, nn, cond, whitespace) {
   # Set up n-row data frame for residuals
   x_res <- f[, name]
   df_res <- data.frame(x_res)
@@ -15,7 +15,6 @@ setup_data <- function(fit, f, name, nn, cond, whitespace, ...) {
   frame_res <- cbind(simple_res, df[, setdiff(names(df), names(simple_res)), drop = FALSE])
 
   ## Set up nn-row data frame for prediction
-  dots <- list(...)
   if (is.factor(x_res)) {
     x_fit <- factor(levels(x_res), levels = levels(x_res))
   } else {

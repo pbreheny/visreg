@@ -1,4 +1,4 @@
-compute_response <- function(fit, x, trans, alpha, ...) {
+compute_response <- function(fit, x, trans, alpha, predict = list()) {
   # Calculate partial residuals
   res <- visreg_resid(fit)
   n_res <- if (is.matrix(res)) nrow(res) else length(res)
@@ -10,7 +10,7 @@ compute_response <- function(fit, x, trans, alpha, ...) {
       call. = FALSE
     )
   }
-  y <- visreg_pred(fit, x$frame_res, ...)
+  y <- visreg_pred(fit, x$frame_res, predict = predict)
   if (is.null(res)) {
     r <- NULL
   } else {
@@ -18,7 +18,7 @@ compute_response <- function(fit, x, trans, alpha, ...) {
   }
 
   # Calculate predictions
-  p <- visreg_pred(fit, x$frame_fit, se_fit = TRUE, ...)
+  p <- visreg_pred(fit, x$frame_fit, se_fit = TRUE, predict = predict)
 
   # Format output
   if (inherits(p, "svystat")) {

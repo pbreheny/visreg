@@ -1,49 +1,49 @@
 predict_arg_patches <- list(
-  lme = function(fit, args, dots) {
+  lme = function(fit, args, predict) {
     args$level <- 0
     args
   },
-  merMod = function(fit, args, dots) {
-    if (!("re.form" %in% names(dots))) {
+  merMod = function(fit, args, predict) {
+    if (!("re.form" %in% names(predict))) {
       args$re.form <- NA
     }
     args
   },
-  rq = function(fit, args, dots) {
+  rq = function(fit, args, predict) {
     args$interval <- "confidence"
     args
   },
-  svm = function(fit, args, dots) {
+  svm = function(fit, args, predict) {
     args$probability <- TRUE
     args
   },
-  multinom = function(fit, args, dots) {
+  multinom = function(fit, args, predict) {
     args$type <- "probs"
     args
   },
-  polr = function(fit, args, dots) {
+  polr = function(fit, args, predict) {
     args$type <- "probs"
     args
   },
-  gbm = function(fit, args, dots) {
+  gbm = function(fit, args, predict) {
     args$n.trees <- length(fit$trees)
     args
   },
-  betareg = function(fit, args, dots) {
+  betareg = function(fit, args, predict) {
     args$type <- c("link", "variance")
     args
   }
 )
 
-build_predict_args <- function(fit, dat, dots) {
+build_predict_args <- function(fit, dat, predict) {
   predict_args <- list(object = fit, newdata = dat)
   for (cls in names(predict_arg_patches)) {
     if (inherits(fit, cls)) {
-      predict_args <- predict_arg_patches[[cls]](fit, predict_args, dots)
+      predict_args <- predict_arg_patches[[cls]](fit, predict_args, predict)
     }
   }
-  if (length(dots)) {
-    predict_args[names(dots)] <- dots
+  if (length(predict)) {
+    predict_args[names(predict)] <- predict
   }
   predict_args
 }
@@ -79,11 +79,10 @@ do_predict <- function(fit, dat, se_fit, predict_args) {
   p
 }
 
-visreg_pred <- function(fit, dat, se_fit = FALSE, ...) {
-  dots <- list(...)
+visreg_pred <- function(fit, dat, se_fit = FALSE, predict = list()) {
   if (inherits(fit, "betareg")) {
     se_fit <- FALSE
   }
-  predict_args <- build_predict_args(fit, dat, dots)
+  predict_args <- build_predict_args(fit, dat, predict)
   do_predict(fit, dat, se_fit, predict_args)
 }

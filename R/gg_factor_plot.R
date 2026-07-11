@@ -8,8 +8,7 @@ gg_factor_plot <- function(
   top,
   line,
   fill,
-  points,
-  ...
+  points
 ) {
   has_by <- "by" %in% names(v$meta)
 
@@ -39,11 +38,8 @@ gg_factor_plot <- function(
   }
 
   # Plotting defaults
-  dots <- list(...)
-  xlab <- if ("xlab" %in% names(dots)) dots$xlab else v$meta$x
-  ylab <- if ("ylab" %in% names(dots)) {
-    dots$ylab
-  } else if (is.null(v$meta$y_name)) {
+  xlab <- v$meta$x
+  ylab <- if (is.null(v$meta$y_name)) {
     paste("f(", v$meta$x, ")", sep = "")
   } else {
     v$meta$y_name

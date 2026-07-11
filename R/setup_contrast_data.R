@@ -1,4 +1,4 @@
-setup_contrast_data <- function(fit, f, name, nn, cond, ...) {
+setup_contrast_data <- function(fit, f, name, nn, cond) {
   x_res <- f[, name]
 
   # Setup reference value (baseline the contrast is measured against)
@@ -83,7 +83,6 @@ setup_contrast_data <- function(fit, f, name, nn, cond, ...) {
   matrix_res <- t(t(raw_matrix_res[-1, ]) - raw_matrix_res[1, ])
 
   # Fit design matrix (nn rows)
-  dots <- list(...)
   if (is.factor(x_res)) {
     x_fit <- factor(c(x_ref, seq_along(levels(x_res))), labels = levels(x_res))
   } else {

@@ -6,11 +6,9 @@ set.seed(7)
 n <- 10
 j <- 3
 alpha <- rnorm(n)
-df <- data.frame(
-  y = rnorm(n * j, mean = x + alpha[id], sd = 0.5),
-  x = runif(n * j),
-  id = rep(1:n, j) |> factor()
-)
+df <- data.frame(x = runif(n * j), id = rep(1:n, j) |> factor())
+df$y <- rnorm(n * j, mean = df$x + alpha[df$id], sd = 0.5)
+
 
 # predict.lme() has no se.fit, so the conditional-type band is always NA --
 # band = FALSE avoids the resulting geom_ribbon "missing values" warning; the
@@ -23,7 +21,9 @@ visreg(fit, "x", type = "contrast") |> print() |> expect_silent()
 visreg(fit, "x", by = "id", band = FALSE) |> print() |> expect_silent()
 lattice::xyplot(y ~ x | id, data = df, pch = 19) |> print() |> expect_silent() # Note: Not the same as the above!
 # Random effects eliminated in visreg
-visreg(fit, "x", by = "id", level = 1, band = FALSE) |> print() |> expect_silent() # Add the random effects back in
+visreg(fit, "x", by = "id", predict = list(level = 1), band = FALSE) |>
+  print() |>
+  expect_silent() # Add the random effects back in
 
 v <- visreg(fit, "x", band = FALSE, plot = FALSE)
 expect_equal(round(head(v$fit$visreg_fit), 3), c(-0.087, -0.072, -0.058, -0.043, -0.028, -0.014))

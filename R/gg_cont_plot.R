@@ -8,8 +8,7 @@ gg_cont_plot <- function(
   top,
   line,
   fill,
-  points,
-  ...
+  points
 ) {
   # Setup data frames
   xx <- v$fit[, v$meta$x]
@@ -23,19 +22,12 @@ gg_cont_plot <- function(
     point_data[[v$meta$by]] <- factor(v$res[, v$meta$by])
   }
 
-  a <- "a"
-
   # Plotting defaults
-  dots <- list(...)
-  xlab <- if ("xlab" %in% names(dots)) dots$xlab else v$meta$x
-  if ("ylab" %in% names(dots)) {
-    ylab <- dots$ylab
+  xlab <- v$meta$x
+  ylab <- if (is.null(v$meta$y_name)) {
+    paste("f(", v$meta$x, ")", sep = "")
   } else {
-    ylab <- if (is.null(v$meta$y_name)) {
-      paste("f(", v$meta$x, ")", sep = "")
-    } else {
-      v$meta$y_name
-    }
+    v$meta$y_name
   }
 
   p <- ggplot2::ggplot() + ggplot2::xlab(xlab) + ggplot2::ylab(ylab)

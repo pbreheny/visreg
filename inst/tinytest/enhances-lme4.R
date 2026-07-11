@@ -14,13 +14,15 @@ df <- data.frame(y = y, x = x, id = factor(id))
 fit <- lmer(y ~ x + (1 | id), data = df)
 visreg(fit, "x") |> print() |> expect_silent()
 visreg(fit, "x", by = "id") |> print() |> expect_silent()
-visreg(fit, "x", by = "id", re.form = ~ (1 | id)) |> print() |> expect_silent() # Adds random effects back in
+visreg(fit, "x", by = "id", predict = list(re.form = ~ (1 | id))) |>
+  print() |>
+  expect_silent() # Adds random effects back in
 
 v <- visreg(fit, "x", plot = FALSE)
 expect_equal(round(head(v$fit$visreg_fit), 3), c(0.307, 0.314, 0.321, 0.327, 0.334, 0.341))
 
 visreg(fit, "x", by = "id", overlay = TRUE, strip_names = TRUE) |> print() |> expect_silent()
-v <- visreg(fit, "x", by = "id", re.form = ~ 1 | id)
+v <- visreg(fit, "x", by = "id", predict = list(re.form = ~ 1 | id))
 plot(v, overlay = TRUE, strip_names = FALSE) |> print() |> expect_silent()
 plot(v, overlay = TRUE, strip_names = TRUE) |> print() |> expect_silent()
 plot(v, overlay = TRUE, strip_names = LETTERS[1:10]) |> print() |> expect_silent()

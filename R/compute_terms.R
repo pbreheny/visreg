@@ -1,4 +1,4 @@
-compute_terms <- function(fit, f, x, trans, alpha, ...) {
+compute_terms <- function(fit, f, x, trans, alpha) {
   b <- visreg_coef(fit)
 
   if (inherits(fit, "mlm")) {

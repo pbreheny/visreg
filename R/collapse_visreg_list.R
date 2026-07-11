@@ -1,4 +1,4 @@
-collapse_visreg_list <- function(obj, labels, ...) {
+collapse_visreg_list <- function(obj, labels) {
   if (missing(labels)) {
     l <- sapply(obj, function(v) v$meta$y)
     if (anyDuplicated(l) > 0) {
