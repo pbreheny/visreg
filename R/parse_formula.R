@@ -2,8 +2,8 @@ parse_formula <- function(form) {
   form <- gsub("\\|", "\\+", as.character(form))
   form <- gsub("\\*", "\\+", as.character(form))
   f <- if (grepl("\\+", form)) unlist(strsplit(form, "\\+")) else form
-  n.f <- length(f)
-  for (i in 1:n.f) {
+  n_f <- length(f)
+  for (i in 1:n_f) {
     f[i] <- gsub(" ", "", f[i])
     if (substr(f[i], 1, 3) %in% c("te(", "ti(", "lp(") || substr(f[i], 1, 2) %in% c("s(")) {
       matched <- gregexpr("\\((?>[^()]|(?R))*\\)", f[i], perl = TRUE)

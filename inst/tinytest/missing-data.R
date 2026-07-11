@@ -43,20 +43,20 @@ fit <- lm(y ~ a + b + c + d, df)
 visreg(fit) |> print() |> expect_silent()
 
 # Data not in global scope
-myFun <- function(form) {
-  Data <- data.frame(x = rnorm(100), y = rnorm(100), z = rnorm(100))
-  fit <- lm(form, data = Data)
+my_fun <- function(form) {
+  dat <- data.frame(x = rnorm(100), y = rnorm(100), z = rnorm(100))
+  fit <- lm(form, data = dat)
   visreg(fit) |> print() |> expect_silent()
   visreg2d(fit, "x", "y") |> expect_silent()
 }
-myFun(z ~ x + y)
+my_fun(z ~ x + y)
 
 # Data reachable only via the fitting function's closure environment, not
 # from the caller's frame -- exercises setup_frame()'s environment(fit$terms)
 # fallback for locating a model's data set
 make_fit <- function() {
-  Data <- data.frame(x = rnorm(20), y = rnorm(20))
-  lm(y ~ x, data = Data)
+  dat <- data.frame(x = rnorm(20), y = rnorm(20))
+  lm(y ~ x, data = dat)
 }
 call_visreg <- function(fit) visreg(fit, "x", plot = FALSE)
 v <- call_visreg(make_fit())
@@ -64,9 +64,9 @@ expect_equal(nrow(v$res), 20)
 
 # Data unreachable from anywhere (removed after fitting): setup_frame() must
 # error rather than silently misbehaving
-Data <- data.frame(x = rnorm(20), y = rnorm(20))
-fit_orphan <- lm(y ~ x, data = Data)
-rm(Data)
+dat <- data.frame(x = rnorm(20), y = rnorm(20))
+fit_orphan <- lm(y ~ x, data = dat)
+rm(dat)
 expect_error(visreg(fit_orphan, "x"))
 
 # Data in a package namespace
@@ -83,9 +83,9 @@ visreg(fit, type = "contrast") |> print() |> expect_silent()
 
 # data options
 data("birthwt", package = "MASS")
-TMP <- birthwt
-fit <- lm(bwt ~ age + race, TMP)
-rm(TMP)
+tmp <- birthwt
+fit <- lm(bwt ~ age + race, tmp)
+rm(tmp)
 visreg(fit, "age", data = birthwt) |> print() |> expect_silent()
 visreg2d(fit, "age", "race", data = birthwt) |> expect_silent()
 fit$data <- birthwt

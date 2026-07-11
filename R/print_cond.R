@@ -1,28 +1,36 @@
 print_cond <- function(v) {
   p <- ncol(v$fit) - 4
-  X <- v$fit[, 1:p, drop = FALSE]
-  X <- X[, -which(names(X) == v$meta$x), drop = FALSE]
-  constant_columns <- which(sapply(X, function(x) all(x == x[1])))
-  varying_columns <- setdiff(seq_len(ncol(X)), constant_columns)
-  for (j in seq_len(ncol(X))) {
-    if (is.factor(X[, j])) X[, j] <- as.character(X[, j])
+  frame_fit <- v$fit[, 1:p, drop = FALSE]
+  frame_nox <- frame_fit[, -which(names(frame_fit) == v$meta$x), drop = FALSE]
+  v$fit[, 1:p, drop = FALSE] |> _[, -which(names(frame_nox) == v$meta$x), drop = FALSE]
+  constant_columns <- which(sapply(frame_nox, \(x) all(x == x[1])))
+  varying_columns <- setdiff(seq_len(ncol(frame_nox)), constant_columns)
+  for (j in seq_len(ncol(frame_nox))) {
+    if (is.factor(frame_nox[, j])) {
+      frame_nox[, j] <- as.character(frame_nox[, j])
+    }
   }
   lines <- "Conditions used in construction of plot"
   for (j in varying_columns) {
-    x <- paste(unique(X[, j]), collapse = " / ")
-    lines <- c(lines, paste0(names(X)[j], ": ", x))
+    x <- paste(unique(frame_nox[, j]), collapse = " / ")
+    lines <- c(lines, paste0(names(frame_nox)[j], ": ", x))
   }
   for (j in constant_columns) {
-    lines <- c(lines, paste0(names(X)[j], ": ", X[1, j]))
+    lines <- c(lines, paste0(names(frame_nox)[j], ": ", frame_nox[1, j]))
   }
   cond_text <- paste(lines, collapse = "\n")
 
   if (isTRUE(v$meta$main_effect_warn)) {
     warning(
-      "  You are plotting the effect of '", v$meta$x, "' as if it were a 'main effect', but the
+      "  You are plotting the effect of '",
+      v$meta$x,
+      "' as if it were a 'main effect', but the
   model contains an interaction involving this variable that has not been addressed via the 'by'
-  or 'cond' argument.  The plot therefore shows the effect of '", v$meta$x, "' conditional on the
-  values below, not its overall effect.\n\n  ", cond_text,
+  or 'cond' argument.  The plot therefore shows the effect of '",
+      v$meta$x,
+      "' conditional on the
+  values below, not its overall effect.\n\n  ",
+      cond_text,
       call. = FALSE
     )
   } else {

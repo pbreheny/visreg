@@ -35,15 +35,15 @@ compute_response <- function(fit, x, trans, alpha, ...) {
   lwr <- p$fit - m * p$se.fit
   if (is.matrix(p$fit)) {
     if (length(r) == 0) {
-      R <- matrix(NA, nrow(x$frame_res), ncol = ncol(p$fit))
+      r_mat <- matrix(NA, nrow(x$frame_res), ncol = ncol(p$fit))
     } else {
-      R <- matrix(trans(r), ncol = ncol(p$fit))
+      r_mat <- matrix(trans(r), ncol = ncol(p$fit))
     }
     val <- list(
       fit = matrix(trans(p$fit), ncol = ncol(p$fit)),
       lwr = matrix(trans(lwr), ncol = ncol(p$fit)),
       upr = matrix(trans(upr), ncol = ncol(p$fit)),
-      r = R
+      r = r_mat
     )
     val$name <- colnames(val$fit) <- colnames(p$fit)
   } else {

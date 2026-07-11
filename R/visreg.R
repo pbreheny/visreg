@@ -198,7 +198,7 @@ visreg <- function(
   y_name <- make_y_name(fit, scale, trans, type)
   v <- build_visreg(fit, dat, xvar, nn, cond, type, trans, alpha, jitter, by, y_name, ...)
   if (collapse) {
-    v <- collapse.visreg_list(v)
+    v <- collapse_visreg_list(v)
   }
 
   # Plot or return

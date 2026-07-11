@@ -1,3 +1,4 @@
+library(tinytest)
 suppressPackageStartupMessages(library(gamlss))
 fit <- gamlss(
   Ozone ~ Solar.R + pb(Wind) + cs(Temp),

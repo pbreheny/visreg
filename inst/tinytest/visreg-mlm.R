@@ -14,10 +14,10 @@ expect_equal(round(v[[2]]$fit$visreg_fit, 3), c(4.251, 2.750, 2.407)) # Sepal.Wi
 expect_equal(round(v[[3]]$fit$visreg_fit, 3), c(2.536, 4.234, 4.812)) # Petal.Length
 
 # Works with no names?
-Y <- with(iris, cbind(Sepal.Length, Sepal.Width, Petal.Length))
-dimnames(Y) <- NULL
-fit <- lm(Y ~ Species + Petal.Width, iris)
-visreg:::se.mlm(fit) |> expect_silent()
+y <- with(iris, cbind(Sepal.Length, Sepal.Width, Petal.Length))
+dimnames(y) <- NULL
+fit <- lm(y ~ Species + Petal.Width, iris)
+visreg:::se_mlm(fit) |> expect_silent()
 visreg(fit, "Species") |> print() |> expect_silent()
 
 # Rug
