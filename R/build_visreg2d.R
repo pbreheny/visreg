@@ -59,7 +59,7 @@ build_visreg2d <- function(fit, f, xvar, yvar, nn, cond, type, scale, trans) {
   D <- model.frame(as.formula(paste("~", form)), df)
   cond_names <- setdiff(names(D), c(xvar, yvar))
   cond_names <- intersect(cond_names, names(df))
-  baseMeta <- list(
+  base_meta <- list(
     x = xvar,
     y = yvar,
     trans = trans,
@@ -70,14 +70,14 @@ build_visreg2d <- function(fit, f, xvar, yvar, nn, cond, type, scale, trans) {
   if (n_z > 1) {
     v <- vector("list", n_z)
     for (i in 1:n_z) {
-      meta <- baseMeta
+      meta <- base_meta
       meta$z <- zname[i]
       v[[i]] <- list(x = xx, y = yy, z = z[[i]], meta = meta)
       class(v[[i]]) <- "visreg2d"
     }
     class(v) <- "visreg_list"
   } else {
-    meta <- baseMeta
+    meta <- base_meta
     meta$z <- zname
     v <- list(x = xx, y = yy, z = z, meta = meta)
     class(v) <- "visreg2d"

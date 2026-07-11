@@ -8,9 +8,8 @@ get_xy <- function(fit, f, name, nn, cond, type, trans, alpha, jitter, ...) {
     x <- setup_data(fit, f, name, nn, cond, ...)
   }
 
-  if (jitter && is.numeric(x$x)) {
-    x$x <- jitter(x$x)
+  if (jitter && is.numeric(x$x_res)) {
+    x$x_res <- jitter(x$x_res)
   }
-  dots <- list(...)
   list(x = x, y = y)
 }

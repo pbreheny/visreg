@@ -1,3 +1,4 @@
+library(tinytest)
 suppressPackageStartupMessages(library(gbm))
 
 # predict.gbm() has no se.fit, so the band is always NA -- band = FALSE

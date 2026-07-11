@@ -1,13 +1,14 @@
 setup_contrast_data <- function(fit, f, name, nn, cond, ...) {
-  # Set up n x p matrix for (conditional) partial residuals
-  x <- f[, name]
-  if (is.factor(x)) {
-    xref <- 1
+  x_res <- f[, name]
+
+  # Setup reference value (baseline the contrast is measured against)
+  if (is.factor(x_res)) {
+    x_ref <- 1
     if (name %in% names(cond)) {
-      if (cond[[name]] %in% levels(x)) {
-        xref <- which(levels(x) == cond[[name]])
-      } else if (cond[[name]] %in% seq_along(levels(x))) {
-        xref <- cond[[name]]
+      if (cond[[name]] %in% levels(x_res)) {
+        x_ref <- which(levels(x_res) == cond[[name]])
+      } else if (cond[[name]] %in% seq_along(levels(x_res))) {
+        x_ref <- cond[[name]]
       } else {
         warning(paste0(
           "You have specified a value for ",
@@ -18,111 +19,123 @@ setup_contrast_data <- function(fit, f, name, nn, cond, ...) {
     }
   } else {
     if (name %in% names(cond)) {
-      xref <- cond[[name]]
+      x_ref <- cond[[name]]
     } else {
-      xref <- mean(x)
+      x_ref <- mean(x_res)
     }
   }
-  x <- if (is.factor(x)) {
-    factor(c(xref, as.integer(x)), labels = levels(x))
-  } else {
-    c(xref, x)
-  }
-  xdf <- data.frame(x)
-  names(xdf) <- name
-  df <- fill_frame(f, xdf, cond)
-  D <- rbind(f[, names(df)], df)
-  b <- visreg_coef(fit)
 
+  # Residual design matrix (n rows)
+  x_res <- if (is.factor(x_res)) {
+    factor(c(x_ref, as.integer(x_res)), labels = levels(x_res))
+  } else {
+    c(x_ref, x_res)
+  }
+  x_res_df <- data.frame(x_res)
+  names(x_res_df) <- name
+  frame_res <- fill_frame(f, x_res_df, cond)
+  # Stack the original data on top of the reference + residual rows so that
+  # model.matrix() derives contrasts/bases (e.g. spline knots) from the full
+  # data, then below we discard the original rows and keep only the tail.
+  stacked_frame_res <- rbind(f[, names(frame_res)], frame_res)
+  coefs <- visreg_coef(fit)
+
+  # Various special cases
   if (inherits(fit, "mlm")) {
-    ind <- apply(is.finite(b), 1, all)
-    if (!identical(ind, apply(is.finite(b), 1, any))) {
+    finite_coef <- apply(is.finite(coefs), 1, all)
+    if (!identical(finite_coef, apply(is.finite(coefs), 1, any))) {
       stop("Inconsistent NA/NaN coefficients across outcomes", call. = FALSE)
     }
   } else {
-    ind <- is.finite(b)
+    finite_coef <- is.finite(coefs)
   }
   if (inherits(fit, "gam")) {
     form <- parse_formula(formula(fit)[3])
-    D <- model.frame(as.formula(paste("~", form)), df)
-    X. <- predict(fit, newdata = as.list(D), type = "lpmatrix")
+    stacked_frame_res <- model.frame(as.formula(paste("~", form)), frame_res)
+    raw_matrix_res <- predict(fit, newdata = as.list(stacked_frame_res), type = "lpmatrix")
   } else if (inherits(fit, "merMod")) {
     form <- formula(fit, fixed.only = TRUE)
-    RHS <- formula(substitute(~R, list(R = form[[length(form)]])))
-    X. <- model.matrix(RHS, D)[-(seq_len(nrow(f))), ind]
+    fixed_rhs <- formula(substitute(~R, list(R = form[[length(form)]])))
+    raw_matrix_res <- model.matrix(fixed_rhs, stacked_frame_res)[-(seq_len(nrow(f))), finite_coef]
   } else if (inherits(fit, "glmmadmb")) {
     form <- as.formula(paste("~", as.character(fit$fixed[3])))
-    X. <- model.matrix(form, D)[-(seq_len(nrow(f))), ind]
+    raw_matrix_res <- model.matrix(form, stacked_frame_res)[-(seq_len(nrow(f))), finite_coef]
   } else if (inherits(fit, "betareg")) {
     form <- formula(fit)[3]
-    ind <- ind[-length(ind)]
-    X. <- model.matrix(as.formula(paste("~", form)), D)[-(seq_len(nrow(f))), ind]
+    finite_coef <- finite_coef[-length(finite_coef)]
+    raw_matrix_res <- model.matrix(as.formula(paste("~", form)), stacked_frame_res)[
+      -(seq_len(nrow(f))),
+      finite_coef
+    ]
   } else if (inherits(fit, "glmmTMB")) {
     form <- lme4::nobars(formula(fit))[3]
-    X. <- model.matrix(as.formula(paste("~", form)), D)[-(seq_len(nrow(f))), ind]
+    raw_matrix_res <- model.matrix(as.formula(paste("~", form)), stacked_frame_res)[
+      -(seq_len(nrow(f))),
+      finite_coef
+    ]
   } else {
     form <- formula(fit)[3]
-    X. <- model.matrix(as.formula(paste("~", form)), D)[-(seq_len(nrow(f))), ind]
+    raw_matrix_res <- model.matrix(as.formula(paste("~", form)), stacked_frame_res)[
+      -(seq_len(nrow(f))),
+      finite_coef
+    ]
   }
-  X <- t(t(X.[-1, ]) - X.[1, ])
+  matrix_res <- t(t(raw_matrix_res[-1, ]) - raw_matrix_res[1, ])
 
-  ## Set up data frame with nn rows for prediction
+  # Fit design matrix (nn rows)
   dots <- list(...)
-  if (is.factor(x)) {
-    xx <- factor(c(xref, seq_along(levels(x))), labels = levels(x))
+  if (is.factor(x_res)) {
+    x_fit <- factor(c(x_ref, seq_along(levels(x_res))), labels = levels(x_res))
   } else {
-    if ("xtrans" %in% names(dots)) {
-      xx <- c(xref, seq(min(x), max(x), length = nn))
-      fi <- approxfun(dots$xtrans(x), x)
-      xx <- seq(dots$xtrans(min(x)), dots$xtrans(max(x)), len = nn) |> fi()
-    } else {
-      xx <- c(xref, seq(min(x), max(x), length = nn))
-    }
+    x_fit <- c(x_ref, seq(min(x_res), max(x_res), length = nn))
   }
-  xxdf <- data.frame(xx)
-  names(xxdf) <- name
-  df <- fill_frame(f, xxdf, cond)
-  DD <- rbind(f[, names(df)], df)
+  x_fit_df <- data.frame(x_fit)
+  names(x_fit_df) <- name
+  frame_fit <- fill_frame(f, x_fit_df, cond)
+  stacked_frame_fit <- rbind(f[, names(frame_fit)], frame_fit)
   if (inherits(fit, "gam")) {
-    DD <- model.frame(as.formula(paste("~", form)), df)
-    XX. <- predict(fit, newdata = as.list(DD), type = "lpmatrix")
+    stacked_frame_fit <- model.frame(as.formula(paste("~", form)), frame_fit)
+    raw_matrix_fit <- predict(fit, newdata = as.list(stacked_frame_fit), type = "lpmatrix")
   } else if (inherits(fit, "merMod")) {
-    XX. <- model.matrix(RHS, DD)[-(seq_len(nrow(f))), ind]
+    raw_matrix_fit <- model.matrix(fixed_rhs, stacked_frame_fit)[-(seq_len(nrow(f))), finite_coef]
   } else {
-    XX. <- model.matrix(as.formula(paste("~", form)), DD)[-(seq_len(nrow(f))), ind]
+    raw_matrix_fit <- model.matrix(as.formula(paste("~", form)), stacked_frame_fit)[
+      -(seq_len(nrow(f))),
+      finite_coef
+    ]
   }
-  XX <- t(t(XX.[-1, ]) - XX.[1, ])
+  matrix_fit <- t(t(raw_matrix_fit[-1, ]) - raw_matrix_fit[1, ])
 
-  ## Remove extraneous columns for coxph
+  # Remove extraneous columns for coxph/polr
   if (inherits(fit, "coxph")) {
-    remove.xx <- c(
-      grep("(Intercept)", colnames(XX), fixed = TRUE),
-      grep("strata(", colnames(XX), fixed = TRUE),
-      grep("cluster(", colnames(XX), fixed = TRUE)
+    remove_cols <- c(
+      grep("(Intercept)", colnames(matrix_fit), fixed = TRUE),
+      grep("strata(", colnames(matrix_fit), fixed = TRUE),
+      grep("cluster(", colnames(matrix_fit), fixed = TRUE)
     )
-    remove.x <- c(
-      grep("(Intercept)", colnames(X), fixed = TRUE),
-      grep("strata(", colnames(XX), fixed = TRUE),
-      grep("cluster(", colnames(X), fixed = TRUE)
-    )
-    XX <- XX[, -remove.xx, drop = FALSE]
-    X <- X[, -remove.xx, drop = FALSE]
+    matrix_fit <- matrix_fit[, -remove_cols, drop = FALSE]
+    matrix_res <- matrix_res[, -remove_cols, drop = FALSE]
   } else if (inherits(fit, "polr")) {
-    remove.xx <- grep("(Intercept)", colnames(XX), fixed = TRUE)
-    remove.x <- grep("(Intercept)", colnames(X), fixed = TRUE)
-    XX <- XX[, -remove.xx, drop = FALSE]
-    X <- X[, -remove.xx, drop = FALSE]
+    remove_cols <- grep("(Intercept)", colnames(matrix_fit), fixed = TRUE)
+    matrix_fit <- matrix_fit[, -remove_cols, drop = FALSE]
+    matrix_res <- matrix_res[, -remove_cols, drop = FALSE]
   }
-  cond_names <- names(model.frame(as.formula(paste("~", parse_formula(formula(fit)[3]))), df))
-  cond_names <- setdiff(cond_names, name)
-  cond_names <- intersect(cond_names, names(df))
-  return(list(
-    x = x[-1],
-    xx = xx[-1],
-    X = X,
-    XX = XX,
-    factor = is.factor(x),
-    name = name,
-    cond = df[1, cond_names, drop = FALSE]
+
+  # Conditioning values for the other covariates
+  cond_names <- names(model.frame(
+    as.formula(paste("~", parse_formula(formula(fit)[3]))),
+    frame_fit
   ))
+  cond_names <- setdiff(cond_names, name)
+  cond_names <- intersect(cond_names, names(frame_fit))
+
+  list(
+    x_res = x_res[-1],
+    x_fit = x_fit[-1],
+    matrix_res = matrix_res,
+    matrix_fit = matrix_fit,
+    factor = is.factor(x_res),
+    name = name,
+    cond = frame_fit[1, cond_names, drop = FALSE]
+  )
 }

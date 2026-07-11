@@ -126,7 +126,7 @@ plot.visreg2d <- function(
   ylim <- if (is.factor(x$y)) c(0, 1) else range(x$y)
 
   if (plot.type == "image") {
-    color.palette <- colorRampPalette(color, space = "Lab")
+    color_palette <- colorRampPalette(color, space = "Lab")
     plot_args <- list(
       x = xx,
       y = yy,
@@ -135,7 +135,7 @@ plot.visreg2d <- function(
       ylim = ylim,
       xlab = xlab,
       ylab = ylab,
-      color.palette = color.palette,
+      color_palette = color_palette,
       main = zlab
     )
     plot_args$plot.axes <- quote({

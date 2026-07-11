@@ -4,15 +4,15 @@ compute_terms <- function(fit, f, x, trans, alpha, ...) {
   if (inherits(fit, "mlm")) {
     summ <- summary(fit)
     n_y <- length(summ)
-    yy <- se <- matrix(NA, nrow = nrow(x$XX), ncol = n_y)
-    r <- rr <- matrix(NA, nrow = nrow(x$X), ncol = n_y)
+    yy <- se <- matrix(NA, nrow = nrow(x$matrix_fit), ncol = n_y)
+    r <- rr <- matrix(NA, nrow = nrow(x$matrix_res), ncol = n_y)
     for (i in 1:n_y) {
       v <- summ[[i]]$sigma^2 * summ[[i]]$cov.unscaled
-      se[, i] <- Matrix::rowSums(x$XX * (x$XX %*% v)) |> sqrt()
+      se[, i] <- Matrix::rowSums(x$matrix_fit * (x$matrix_fit %*% v)) |> sqrt()
       ind <- is.finite(b[, i])
-      yy[, i] <- x$XX %*% b[ind, i]
+      yy[, i] <- x$matrix_fit %*% b[ind, i]
       rr[, i] <- visreg_resid(fit)[, i]
-      r[, i] <- x$X %*% b[ind, i] + rr[, i]
+      r[, i] <- x$matrix_res %*% b[ind, i] + rr[, i]
     }
   } else {
     if (inherits(fit, "glmmTMB")) {
@@ -31,14 +31,14 @@ compute_terms <- function(fit, f, x, trans, alpha, ...) {
       keep <- which(!is.na(dg))
       v <- v[keep, keep, drop = FALSE]
     }
-    se <- Matrix::rowSums(x$XX * (x$XX %*% v)) |> sqrt()
-    yy <- drop(x$XX %*% b[is.finite(b)])
+    se <- Matrix::rowSums(x$matrix_fit * (x$matrix_fit %*% v)) |> sqrt()
+    yy <- drop(x$matrix_fit %*% b[is.finite(b)])
     rr <- visreg_resid(fit)
     if (is.null(rr)) {
-      rr <- rep(NA, nrow(x$X))
+      rr <- rep(NA, nrow(x$matrix_res))
     }
-    r <- drop(x$X %*% b[is.finite(b)]) + rr
-    if (nrow(x$X) != length(rr)) {
+    r <- drop(x$matrix_res %*% b[is.finite(b)]) + rr
+    if (nrow(x$matrix_res) != length(rr)) {
       warning(
         "Residuals do not match data; have you changed the original data set? If so, visreg is",
         "probably not displaying the residuals for the data set that was actually used to fit",
@@ -75,6 +75,6 @@ compute_terms <- function(fit, f, x, trans, alpha, ...) {
     )
   }
   val$pos <- rr > 0
-  val$n <- if (inherits(fit, "mlm")) n_y else 1
+  val$n_y <- if (inherits(fit, "mlm")) n_y else 1
   val
 }

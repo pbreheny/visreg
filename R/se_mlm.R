@@ -1,4 +1,4 @@
-se.mlm <- function(object, newdata) {
+se_mlm <- function(object, newdata) {
   coef <- coef(object)
   ny <- ncol(coef)
   effects <- object$effects

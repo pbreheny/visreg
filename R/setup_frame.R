@@ -1,125 +1,102 @@
-setup_frame <- function(fit, xvar, call.env, data) {
-  CALL <- if (isS4(fit)) fit@call else fit$call
-  if (!is.null(data)) {
-    Data <- data
-  } else if (
-    !is.null(CALL) &&
-      ("data" %in% names(CALL)) &&
-      (exists(tail(as.character(CALL$data), 1), call.env) ||
-        head(as.character(CALL$data), 1) == "::")
-  ) {
-    env <- call.env
-    Data <- eval(CALL$data, envir = env)
-  } else if (isS4(fit)) {
-    FRAME <- try(fit@frame, silent = TRUE)
-    DATA <- try(fit@data, silent = TRUE)
-    if (!inherits(DATA, "try-error")) {
-      Data <- DATA
-    } else if (!inherits(FRAME, "try-error")) {
-      Data <- FRAME
-    } else {
-      stop(
-        "visreg cannot find the data set used to fit your model; supply it using the 'data=' option",
-        call. = FALSE
-      )
-    }
-  } else {
-    ENV <- environment(fit$terms)
-    if ("data" %in% names(fit) && is.data.frame(fit$data)) {
-      Data <- fit$data
-      env <- NULL
-    } else if (is.null(CALL$data)) {
-      env <- NULL
-      Data <- NULL
-    } else if (exists(as.character(CALL$data), ENV)) {
-      env <- ENV
-      Data <- eval(CALL$data, envir = ENV)
-    } else {
-      stop(
-        "visreg cannot find the data set used to fit your model; supply it using the 'data=' option",
-        call. = FALSE
-      )
-    }
-  }
+setup_frame <- function(fit, xvar, call_env, data) {
+  fit_call <- if (isS4(fit)) fit@call else fit$call
 
+  # Locate the data used to fit the model
+  located <- locate_source_data(fit, fit_call, call_env, data)
+  source_data <- located$data
+  data_env <- located$env
+
+  # Build the model frame
   if (inherits(fit, "glmmTMB")) {
     form <- fit$modelInfo$allForm$combForm
   } else {
     form <- formula(fit)
   }
-  if (!is.null(Data)) {
-    names(Data) <- gsub("offset\\((.*)\\)", "\\1", names(Data))
+  if (!is.null(source_data)) {
+    names(source_data) <- gsub("offset\\((.*)\\)", "\\1", names(source_data))
   }
   if (inherits(fit, "mlm") && fit$terms[[2L]] != "call") {
-    ff <- form
-    ff[[2]] <- NULL
-    av <- get_all_vars(ff, Data) # If mlm with matrix as Y, outside of data frame framework
+    # mlm with a matrix response: strip the response so get_all_vars() can
+    # find the predictors outside of the usual data-frame-column framework
+    rhs_formula <- form
+    rhs_formula[[2]] <- NULL
+    raw_vars <- get_all_vars(rhs_formula, source_data)
   } else {
-    av <- get_all_vars(form, Data) # https://bugs.r-project.org/bugzilla3/show_bug.cgi?id=14905
+    raw_vars <- get_all_vars(form, source_data) # https://bugs.r-project.org/bugzilla3/show_bug.cgi?id=14905
   }
-  f <- as.data.frame(av)
+  model_frame <- as.data.frame(raw_vars)
 
-  if (inherits(CALL$random, "call")) {
-    rf <- as.data.frame(as.list(get_all_vars(CALL$random, Data)))
-    rf <- rf[, setdiff(names(rf), names(f)), drop = FALSE]
-    if (nrow(rf) > 0) f <- cbind(f, rf)
+  # nlme-style models specify random effects in a separate formula; pull in
+  # any variables referenced there that aren't already in the model frame
+  if (inherits(fit_call$random, "call")) {
+    random_vars <- as.data.frame(as.list(get_all_vars(fit_call$random, source_data)))
+    random_vars <- random_vars[, setdiff(names(random_vars), names(model_frame)), drop = FALSE]
+    if (nrow(random_vars) > 0) model_frame <- cbind(model_frame, random_vars)
   }
-  if ("subset" %in% names(CALL) && !(inherits(fit, "averaging"))) {
-    s <- CALL$subset
-    subset <- eval(substitute(s), Data, env)
-    f <- f[which(subset), , drop = FALSE]
-  }
-  suppressWarnings(f <- f[!apply(is.na(f), 1, any), , drop = FALSE])
 
-  # Handle some variable type issues
+  # Restrict to rows the original model actually used
+  if ("subset" %in% names(fit_call) && !inherits(fit, "averaging")) {
+    keep <- eval(fit_call$subset, source_data, data_env)
+    model_frame <- model_frame[which(keep), , drop = FALSE]
+  }
+  suppressWarnings(model_frame <- model_frame[!apply(is.na(model_frame), 1, any), , drop = FALSE])
+
+  # Coerce variable types that predict()/update()
   needs_update <- FALSE
-  f <- droplevels(f)
-  frameClasses <- sapply(f, class)
-  if (any(frameClasses == "Surv")) {
+  model_frame <- droplevels(model_frame)
+  frame_classes <- sapply(model_frame, class)
+  if (any(frame_classes == "Surv")) {
     needs_update <- TRUE
   }
-  if (any(frameClasses == "character")) {
+  if (any(frame_classes == "character")) {
     needs_update <- TRUE
-    for (j in seq_len(ncol(f))) {
-      if (typeof(f[, j]) == "character") f[, j] <- factor(f[, j])
+    for (j in seq_len(ncol(model_frame))) {
+      if (typeof(model_frame[, j]) == "character") model_frame[, j] <- factor(model_frame[, j])
     }
   }
-  if (any(frameClasses == "logical")) {
+  if (any(frame_classes == "logical")) {
     needs_update <- TRUE
-    for (j in seq_len(ncol(f))) {
-      if (typeof(f[, j]) == "logical") f[, j] <- as.double(f[, j])
+    for (j in seq_len(ncol(model_frame))) {
+      if (typeof(model_frame[, j]) == "logical") model_frame[, j] <- as.double(model_frame[, j])
     }
   }
-  # When needs_update is TRUE, update() will be called with f as the data. If the
-  # original call referenced weight/offset columns by name that aren't in the
-  # formula (so not in f), add them now so update() can find them.
-  if (needs_update && !is.null(Data)) {
+  # When needs_update is TRUE, update() will be called with model_frame as
+  # the data. If the original call referenced weight/offset columns by name
+  # that aren't in the formula (so not in model_frame), add them now so
+  # update() can find them.
+  if (needs_update && !is.null(source_data)) {
     for (extra_arg in c("weights", "offset")) {
-      extra_call <- CALL[[extra_arg]]
+      extra_call <- fit_call[[extra_arg]]
       if (!is.null(extra_call)) {
         extra_name <- tryCatch(as.character(extra_call), error = function(e) character(0))
-        if (length(extra_name) == 1 && extra_name %in% names(Data) && !extra_name %in% names(f)) {
-          f[[extra_name]] <- Data[rownames(f), extra_name]
+        if (
+          length(extra_name) == 1 &&
+            extra_name %in% names(source_data) &&
+            !extra_name %in% names(model_frame)
+        ) {
+          model_frame[[extra_name]] <- source_data[rownames(model_frame), extra_name]
         }
       }
     }
   }
+
+  # Determine/validate xvar
   if (missing(xvar)) {
-    all_x <- strsplit(parse_formula(formula(fit)[3]), " + ", fixed = TRUE)[[1]]
-    in_model <- sapply(names(f), function(x) x %in% all_x)
-    const <- sapply(f, function(x) all(x == x[1]))
-    xvar <- names(f)[!const & in_model]
+    formula_terms <- strsplit(parse_formula(formula(fit)[3]), " + ", fixed = TRUE)[[1]]
+    in_model <- sapply(names(model_frame), function(x) x %in% formula_terms)
+    is_constant <- sapply(model_frame, function(x) all(x == x[1]))
+    xvar <- names(model_frame)[!is_constant & in_model]
   }
   if (length(xvar) == 0) {
     stop("The model has no predictors; visreg has nothing to plot.", call. = FALSE)
   }
   for (i in seq_along(xvar)) {
-    if (!is.element(xvar[i], names(f))) {
+    if (!is.element(xvar[i], names(model_frame))) {
       stop(paste(xvar[i], "not in model"), call. = FALSE)
     }
   }
 
-  attr(f, "needs_update") <- needs_update
-  attr(f, "xvar") <- xvar
-  f
+  attr(model_frame, "needs_update") <- needs_update
+  attr(model_frame, "xvar") <- xvar
+  model_frame
 }

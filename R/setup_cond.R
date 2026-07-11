@@ -10,7 +10,7 @@ setup_cond <- function(cond, f, by, breaks) {
   if (missing(by)) {
     cond <- list(cond)
   } else {
-    cond.orig <- cond
+    cond_orig <- cond
     if (is.numeric(f[, by])) {
       if (length(breaks) == 1) {
         unique.by <- unique(f[, by])
@@ -23,7 +23,7 @@ setup_cond <- function(cond, f, by, breaks) {
       } else {
         lev <- breaks
       }
-      n.by <- length(lev)
+      n_by <- length(lev)
     } else {
       if (is.factor(breaks) || is.character(breaks)) {
         if (!all(breaks %in% levels(f[, by]))) {
@@ -33,13 +33,13 @@ setup_cond <- function(cond, f, by, breaks) {
       } else {
         lev <- levels(f[, by])
       }
-      n.by <- length(lev)
+      n_by <- length(lev)
     }
 
-    cond <- vector("list", n.by)
-    for (i in 1:n.by) {
+    cond <- vector("list", n_by)
+    for (i in 1:n_by) {
       a <- if (is.factor(lev)) as.character(lev[i]) else lev[i]
-      cond[[i]] <- c(a, cond.orig)
+      cond[[i]] <- c(a, cond_orig)
       names(cond[[i]])[1] <- by
       cond[[i]] <- as.list(cond[[i]])
     }

@@ -1,8 +1,8 @@
 compute_response <- function(fit, x, trans, alpha, ...) {
-  ## Calculate partial residuals
-  rr <- visreg_resid(fit)
-  nr <- if (is.matrix(rr)) nrow(rr) else length(rr)
-  if (nr > 0 && nrow(x$D) != nr) {
+  # Calculate partial residuals
+  res <- visreg_resid(fit)
+  n_res <- if (is.matrix(res)) nrow(res) else length(res)
+  if (n_res > 0 && nrow(x$frame_res) != n_res) {
     warning(
       "Residuals do not match data; have you changed the original data set?  If so, visreg is",
       "probably not displaying the residuals for the data set that was actually used to fit",
@@ -10,17 +10,17 @@ compute_response <- function(fit, x, trans, alpha, ...) {
       call. = FALSE
     )
   }
-  y <- visreg_pred(fit, x$D, ...)
-  if (is.null(rr)) {
+  y <- visreg_pred(fit, x$frame_res, ...)
+  if (is.null(res)) {
     r <- NULL
   } else {
-    r <- y + rr
+    r <- y + res
   }
 
   # Calculate predictions
-  p <- visreg_pred(fit, x$DD, se_fit = TRUE, ...)
+  p <- visreg_pred(fit, x$frame_fit, se_fit = TRUE, ...)
 
-  ## Format output
+  # Format output
   if (inherits(p, "svystat")) {
     p <- list(fit = as.double(p), se.fit = sqrt(attr(p, "var")))
   } else if (inherits(fit, "rq")) {
@@ -35,7 +35,7 @@ compute_response <- function(fit, x, trans, alpha, ...) {
   lwr <- p$fit - m * p$se.fit
   if (is.matrix(p$fit)) {
     if (length(r) == 0) {
-      R <- matrix(NA, nrow(x$D), ncol = ncol(p$fit))
+      R <- matrix(NA, nrow(x$frame_res), ncol = ncol(p$fit))
     } else {
       R <- matrix(trans(r), ncol = ncol(p$fit))
     }
@@ -48,7 +48,7 @@ compute_response <- function(fit, x, trans, alpha, ...) {
     val$name <- colnames(val$fit) <- colnames(p$fit)
   } else {
     if (length(r) == 0) {
-      r <- rep(NA_real_, nrow(x$D))
+      r <- rep(NA_real_, nrow(x$frame_res))
     }
     val <- list(
       fit = as.double(trans(p$fit)),
@@ -58,14 +58,14 @@ compute_response <- function(fit, x, trans, alpha, ...) {
       name = as.character(formula(fit)[2])
     )
   }
-  val$pos <- rr > 0
+  val$pos <- res > 0
   if (length(val$pos) == 0) {
     if (is.matrix(p$fit)) {
-      val$pos <- matrix(NA, nrow(x$D), ncol(p$fit))
+      val$pos <- matrix(NA, nrow(x$frame_res), ncol(p$fit))
     } else {
-      val$pos <- rep(NA_real_, nrow(x$D))
+      val$pos <- rep(NA_real_, nrow(x$frame_res))
     }
   }
-  val$n <- if (is.matrix(p$fit)) ncol(p$fit) else 1
+  val$n_y <- if (is.matrix(p$fit)) ncol(p$fit) else 1
   val
 }

@@ -53,7 +53,7 @@ do_predict <- function(fit, dat, se_fit, predict_args) {
     if (inherits(fit, "mlm")) {
       p <- list(
         fit = suppressWarnings(do.call("predict", predict_args)),
-        se.fit = se.mlm(fit, newdata = dat)
+        se.fit = se_mlm(fit, newdata = dat)
       )
     } else if (inherits(fit, "randomForest") && fit$type == "classification") {
       predict_args$type <- "prob"

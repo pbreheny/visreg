@@ -11,7 +11,7 @@ gg_factor_plot <- function(
   points,
   ...
 ) {
-  hasBy <- "by" %in% names(v$meta)
+  has_by <- "by" %in% names(v$meta)
 
   # Setup data frames
   fit_data <- data.frame(
@@ -22,7 +22,7 @@ gg_factor_plot <- function(
   )
   res_data <- data.frame(x = v$res[, v$meta$x], y = v$res$visreg_res, pos = v$res$visreg_pos)
 
-  if (hasBy) {
+  if (has_by) {
     raw_by <- v$fit[, v$meta$by]
     if (is.factor(raw_by)) {
       by_levels <- levels(raw_by)
@@ -55,7 +55,7 @@ gg_factor_plot <- function(
   # (residuals) aesthetic defaults.  Band and line are kept as separate
   # layers, as with the continuous plot, so that the band never overplots
   # the residuals regardless of `top`.
-  if (hasBy && overlay) {
+  if (has_by && overlay) {
     dodge <- ggplot2::position_dodge2(width = 0.7, padding = 0.1)
     fill_args <- list(
       mapping = ggplot2::aes(
@@ -165,7 +165,7 @@ gg_factor_plot <- function(
   }
 
   # Facet
-  if (hasBy && !overlay) {
+  if (has_by && !overlay) {
     form <- as.formula(paste("~", v$meta$by))
     n_by <- length(by_levels)
     if (identical(strip_names, TRUE)) {
