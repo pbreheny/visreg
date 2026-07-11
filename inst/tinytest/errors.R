@@ -89,9 +89,9 @@ expect_equal(colnames(v), c("unname(Sepal.Length)", "unname(Sepal.Width)"))
 
 # se_mlm(): a partially-empty response name (only some cbind() columns
 # explicitly named) gets a placeholder
-Y <- with(iris, cbind(Sepal.Length, Sepal.Width))
-colnames(Y) <- c("", "y2")
-fit_mlm2 <- lm(Y ~ Species + Petal.Width, iris)
+y <- with(iris, cbind(Sepal.Length, Sepal.Width))
+colnames(y) <- c("", "y2")
+fit_mlm2 <- lm(y ~ Species + Petal.Width, iris)
 v <- visreg:::se_mlm(fit_mlm2)
 expect_equal(colnames(v), c("Y1", "y2"))
 

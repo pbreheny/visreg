@@ -1,3 +1,4 @@
+library(tinytest)
 suppressPackageStartupMessages(library(nnet))
 
 airquality$Heat <- cut(airquality$Temp, 3, labels = c("Cool", "Mild", "Hot"))

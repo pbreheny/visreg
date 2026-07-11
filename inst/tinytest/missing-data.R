@@ -4,7 +4,7 @@ fit <- lm(Ozone ~ Solar.R, data = ozone)
 visreg(fit, "Solar.R") |> print() |> expect_silent()
 
 x <- rnorm(nrow(ozone))
-x[sample(1:nrow(ozone), 20)] <- NA
+x[sample(seq_len(nrow(ozone)), 20)] <- NA
 fit <- lm(Ozone ~ Solar.R + x, data = ozone)
 visreg(fit, "Solar.R") |> print() |> expect_silent()
 visreg(fit, "x") |> print() |> expect_silent()

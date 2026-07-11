@@ -1,7 +1,7 @@
 set.seed(1)
-DF <- data.frame(A = sample(LETTERS[1:3], 100, replace = TRUE), B = runif(100))
-DF$y <- (DF$A == "A") + DF$B + rnorm(100)
-fit <- lm(y ~ A + B, DF)
+df <- data.frame(A = sample(LETTERS[1:3], 100, replace = TRUE), B = runif(100))
+df$y <- (df$A == "A") + df$B + rnorm(100)
+fit <- lm(y ~ A + B, df)
 
 visreg(fit, "A", "B", top = "points", points = list(size = 2)) |> print() |> expect_silent()
 visreg(fit, "A", "B", top = "line", points = list(size = 2)) |> print() |> expect_silent()

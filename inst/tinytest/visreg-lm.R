@@ -48,8 +48,8 @@ fit <- lm(Ozone ~ Solar.R + Wind + Heat, data = airquality)
 visreg(fit, "Heat") |> print() |> expect_silent()
 
 # Band width option tests
-visreg(fit, "Heat", fill = list(width = .1)) |> print() |> expect_silent()
-visreg(fit, "Heat", fill = list(width = .9)) |> print() |> expect_silent()
+visreg(fit, "Heat", fill = list(width = 0.1)) |> print() |> expect_silent()
+visreg(fit, "Heat", fill = list(width = 0.9)) |> print() |> expect_silent()
 
 # Plotting options
 airquality$Heat <- cut(airquality$Temp, 3, labels = c("Cool", "Mild", "Hot"))
@@ -60,7 +60,7 @@ visreg(
   xlab = "Heat Category",
   line = list(color = "blue", linewidth = 10),
   points = list(color = "red", size = 2),
-  alpha = .001,
+  alpha = 0.001,
   fill = list(fill = "yellow", color = "green")
 ) |>
   print() |>
@@ -80,7 +80,7 @@ visreg(
   by = "Heat",
   line = list(color = "blue", linewidth = 10),
   points = list(color = "red", size = 2),
-  alpha = .001,
+  alpha = 0.001,
   fill = list(fill = "yellow", color = "green")
 ) |>
   print() |>
@@ -91,7 +91,7 @@ visreg(
   by = "Wind",
   line = list(color = "blue", linewidth = 10),
   points = list(color = "red", size = 2),
-  alpha = .001,
+  alpha = 0.001,
   fill = list(fill = "yellow", color = "green")
 ) |>
   print() |>
@@ -103,7 +103,7 @@ color <- c("purple", "orange", "yellow")
   by = "Heat",
   line = list(linewidth = 10),
   points = list(size = 2),
-  fill = list(fill = rgb(.1, .1, .1, .3)),
+  fill = list(fill = rgb(0.1, 0.1, 0.1, 0.3)),
   overlay = TRUE
 ) +
   ggplot2::scale_color_manual(values = color) +
@@ -117,7 +117,7 @@ color <- c("purple", "orange", "yellow", "red")
   by = "Wind",
   line = list(linewidth = 10),
   points = list(size = 2),
-  fill = list(fill = rgb(.1, .1, .1, .3)),
+  fill = list(fill = rgb(0.1, 0.1, 0.1, 0.3)),
   overlay = TRUE
 ) +
   ggplot2::scale_color_manual(values = color) +

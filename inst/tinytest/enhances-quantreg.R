@@ -13,14 +13,14 @@ visreg(fit, "Wind") |> print() |> expect_silent()
 # Multiple quantile overlay; predict.rq() doesn't provide se.fit for the
 # multi-tau matrix form, so the band is always NA -- band = FALSE avoids the
 # resulting geom_ribbon "missing values" warning
-fit <- rq(Ozone ~ Wind + Temp, tau = c(.25, .5, .75), data = airquality)
+fit <- rq(Ozone ~ Wind + Temp, tau = c(0.25, 0.5, 0.75), data = airquality)
 v <- visreg(fit, "Wind", plot = FALSE, collapse = TRUE)
 plot(v, overlay = TRUE, band = FALSE) |> print() |> expect_silent()
 
 # If you want confidence bands, fit each quantile separately instead
-fit1 <- rq(Ozone ~ Wind + Temp, tau = .25, data = airquality)
-fit2 <- rq(Ozone ~ Wind + Temp, tau = .5, data = airquality)
-fit3 <- rq(Ozone ~ Wind + Temp, tau = .75, data = airquality)
+fit1 <- rq(Ozone ~ Wind + Temp, tau = 0.25, data = airquality)
+fit2 <- rq(Ozone ~ Wind + Temp, tau = 0.5, data = airquality)
+fit3 <- rq(Ozone ~ Wind + Temp, tau = 0.75, data = airquality)
 v <- visreg_list(
   visreg(fit1, "Wind", plot = FALSE),
   visreg(fit2, "Wind", plot = FALSE),
@@ -32,7 +32,7 @@ v <- visreg_list(
   visreg(fit1, "Wind", plot = FALSE),
   visreg(fit2, "Wind", plot = FALSE),
   visreg(fit3, "Wind", plot = FALSE),
-  labels = paste("tau", c(.25, .5, .75), sep = "="),
+  labels = paste("tau", c(0.25, 0.5, 0.75), sep = "="),
   collapse = TRUE
 )
 plot(v, ylab = "Ozone") |> print() |> expect_silent()
