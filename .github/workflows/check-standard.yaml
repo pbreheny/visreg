@@ -16,9 +16,9 @@ jobs:
       fail-fast: false
       matrix:
         config:
-          - {os: windows-latest, r: 'release'}
-          - {os: ubuntu-latest,   r: 'devel', http-user-agent: 'release'}
-          - {os: ubuntu-latest,   r: 'release'}
+          - { os: windows-latest, r: "release" }
+          - { os: ubuntu-latest, r: "devel", http-user-agent: "release" }
+          - { os: ubuntu-latest, r: "release" }
 
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
@@ -54,9 +54,9 @@ jobs:
             any::quantreg
             any::randomForest
             any::rgl
+            any::rms
           needs: check
 
       - uses: r-lib/actions/check-r-package@v2
         with:
           args: '"--no-manual"'
-

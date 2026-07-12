@@ -39,6 +39,7 @@ jobs:
             any::quantreg
             any::randomForest
             any::rgl
+            any::rms
             any::xml2
           needs: coverage
 

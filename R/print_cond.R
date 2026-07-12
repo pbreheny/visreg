@@ -2,7 +2,6 @@ print_cond <- function(v) {
   p <- ncol(v$fit) - 4
   frame_fit <- v$fit[, 1:p, drop = FALSE]
   frame_nox <- frame_fit[, -which(names(frame_fit) == v$meta$x), drop = FALSE]
-  v$fit[, 1:p, drop = FALSE] |> _[, -which(names(frame_nox) == v$meta$x), drop = FALSE]
   constant_columns <- which(sapply(frame_nox, \(x) all(x == x[1])))
   varying_columns <- setdiff(seq_len(ncol(frame_nox)), constant_columns)
   for (j in seq_len(ncol(frame_nox))) {
