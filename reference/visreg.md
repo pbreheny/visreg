@@ -19,7 +19,6 @@ visreg(
   data = NULL,
   trans = I,
   scale = c("linear", "response"),
-  xtrans,
   alpha = 0.05,
   nn = 101,
   cond = list(),
@@ -48,8 +47,8 @@ visreg(
   (Optional) A variable allowing you to divide your plot into
   cross-sections based on levels of the `by` variable; particularly
   useful for visualizing models with interactions. Supplied as a
-  character string. Uses the lattice package. Both continuous variables
-  and factors are supported.
+  character string. Cross-sections are displayed as facets of a ggplot2
+  plot. Both continuous variables and factors are supported.
 
 - breaks:
 
@@ -65,17 +64,15 @@ visreg(
 
   The type of plot to be produced. The following options are supported:
 
-  - If 'conditional' is selected, the plot returned shows the value of
+  - If `"conditional"` is selected, the plot returned shows the value of
     the variable on the x-axis and the change in response on the y-axis,
     holding all other variables constant (by default, median for numeric
     variables and most common category for factors).
 
-  - If 'contrast' is selected, the plot returned shows the effect on the
-    expected value of the response by moving the x variable away from a
-    reference point on the x-axis (for numeric variables, this is taken
-    to be the mean).
-
-  For more details, see references.
+  - If `"contrast"` is selected, the plot returned shows the effect on
+    the expected value of the response by moving the x variable away
+    from a reference point on the x-axis (for numeric variables, this is
+    taken to be the mean). For more details, see references.
 
 - data:
 
@@ -95,12 +92,6 @@ visreg(
   If `scale='response'` for a glm, the inverse link function will be
   applied so that the model is plotted on the scale of the original
   response.
-
-- xtrans:
-
-  (Optional) A function specifying a transformation for the horizontal
-  axis. Note that, for model terms such as `log(x)`, visreg
-  automatically plots on the original axis (see examples).
 
 - alpha:
 
@@ -136,32 +127,32 @@ visreg(
 - plot:
 
   Send the calculations to
-  [`plot.visreg`](https://pbreheny.github.io/visreg/reference/plot.visreg.md)?
+  [`plot.visreg()`](https://pbreheny.github.io/visreg/reference/plot.visreg.md)?
   Default is TRUE.
 
 - ...:
 
   Graphical parameters (e.g., `ylab`) can be passed to the function to
-  customize the plots. If `by=TRUE`, lattice parameters can be passed,
-  such as layout (see examples below).
+  customize the plots. If `by=TRUE`, ggplot2 faceting parameters can be
+  passed, such as `strip_names` (see examples below).
 
 ## Value
 
-A `visreg` or `visregList` object (which is simply a list of `visreg`
-objects). A `visreg` object has three components:
+A `visreg` or `visreg_list` object (which is simply a list of `visreg`
+objects). A visreg\` object has three components:
 
 - fit:
 
   A data frame with `nn` rows containing the fit of the model as `xvar`
   varies, along with lower and upper confidence bounds (named
-  `visregFit`, `visregLwr`, and `visregUpr`, respectively). The fitted
-  matrix of coefficients.
+  `visreg_fit`, `visreg_lwr`, and `visreg_upr`, respectively). The
+  fitted matrix of coefficients.
 
 - res:
 
   A data frame with `n` rows, where `n` is the number of observations in
   the original data set used to model. This frame contains information
-  about the residuals, named `visregReg` and `visregPos`; the latter
+  about the residuals, named `visregReg` and `visreg_pos`; the latter
   records whether the residual was positive or negative.
 
 - meta:
@@ -169,10 +160,15 @@ objects). A `visreg` object has three components:
   Contains meta-information needed to construct plots, such as the name
   of the x and y variables, whether there were any `by` variables, etc.
 
+Note that if `plot = TRUE` (the default), then the `visreg` object is
+passed to
+[`plot.visreg()`](https://pbreheny.github.io/visreg/reference/plot.visreg.md)
+and a `ggplot` object is returned instead.
+
 ## Details
 
 See
-[`plot.visreg`](https://pbreheny.github.io/visreg/reference/plot.visreg.md)
+[`plot.visreg()`](https://pbreheny.github.io/visreg/reference/plot.visreg.md)
 for plotting options, such as changing the appearance of points, lines,
 confidence bands, etc.
 
@@ -180,21 +176,18 @@ confidence bands, etc.
 
 - <https://pbreheny.github.io/visreg/>
 
-- Breheny, P. and Burchett, W. (2017), Visualizing regression models
-  using visreg.
+- Breheny P and Burchett W. (2017) Visualization of regression models
+  using visreg. *R Journal*, **9**: 56-71.
   [doi:10.32614/RJ-2017-046](https://doi.org/10.32614/RJ-2017-046)
 
 ## See also
 
-<https://pbreheny.github.io/visreg/>
 [`plot.visreg()`](https://pbreheny.github.io/visreg/reference/plot.visreg.md)
-\[visreg2d)\]
-
-\[visreg2d)\]: R:visreg2d)
-
-## Author
-
-Patrick Breheny and Woodrow Burchett
+for plotting options,
+[`visreg2d()`](https://pbreheny.github.io/visreg/reference/visreg2d.md)
+for creating two-dimensional visreg objects, and the [package
+website](https://pbreheny.github.io/visreg/) for detailed explanations
+and examples.
 
 ## Examples
 
@@ -231,7 +224,7 @@ visreg(fit3, "Wind", trans = exp, ylab = "Ozone")
 ## Conditioning
 visreg(fit, "Wind", cond = list(Temp = 50))
 
-visreg(fit, "Wind", print.cond = TRUE)
+visreg(fit, "Wind", print_cond = TRUE)
 #> Conditions used in construction of plot
 #> Solar.R: 207
 #> Temp: 79
@@ -278,6 +271,7 @@ visreg(fit, "lwt",
   xlab = "Mother's Weight", ylab = "P(low birthweight)", rug = 2
 )
 
+
 ## Proportional hazards
 require(survival)
 #> Loading required package: survival
@@ -293,22 +287,10 @@ require(MASS)
 #> Loading required package: MASS
 fit <- rlm(Ozone ~ Solar.R + Wind * Heat, data = airquality)
 visreg(fit, "Wind", cond = list(Heat = "Mild"))
-#> Warning:   Note that you are attempting to plot a 'main effect' in a model that contains an
-#>   interaction.  This is potentially misleading; you may wish to consider using the 'by'
-#>   argument.
-#> Conditions used in construction of plot
-#> Solar.R: 207
-#> Heat: Mild
 
 
 ## And more...; anything with a 'predict' method should work
 
 ## Return raw components of plot
 v <- visreg(fit, "Wind", cond = list(Heat = "Mild"))
-#> Warning:   Note that you are attempting to plot a 'main effect' in a model that contains an
-#>   interaction.  This is potentially misleading; you may wish to consider using the 'by'
-#>   argument.
-#> Conditions used in construction of plot
-#> Solar.R: 207
-#> Heat: Mild
 ```

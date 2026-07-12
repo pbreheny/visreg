@@ -10,10 +10,10 @@ surface:
 
 ``` r
 
-fit <- lm(Ozone ~ Solar.R + Wind + Temp + I(Wind^2) + I(Temp^2) + I(Wind*Temp)+I(Wind*Temp^2) + 
-          I(Temp*Wind^2) + I(Temp^2*Wind^2), data=airquality)
-visreg2d(fit, x="Wind", y="Temp", plot.type="gg") +
-  geom_point(aes(Wind, Temp), data=subset(airquality, !is.na(Ozone)), col='gray50')
+fit <- lm(Ozone ~ Solar.R + Wind + Temp + I(Wind^2) + I(Temp^2) + I(Wind * Temp) + I(Wind * Temp^2) +
+  I(Temp * Wind^2) + I(Temp^2 * Wind^2), data = airquality)
+visreg2d(fit, x = "Wind", y = "Temp", plot.type = "gg") +
+  geom_point(aes(Wind, Temp), data = subset(airquality, !is.na(Ozone)), col = "gray50")
 ```
 
 ![](faq_files/figure-html/unnamed-chunk-2-1.png)
@@ -29,9 +29,9 @@ and one plot for the legend:
 p <- quote({
   axis(1, at = mx, labels = lx)
   axis(2, at = my, labels = ly)
-  with(airquality, points(Wind, Temp, pch=19))
+  with(airquality, points(Wind, Temp, pch = 19))
 })
-visreg2d(fit, x="Wind", y="Temp", plot.type="image", plot.axes=p)
+visreg2d(fit, x = "Wind", y = "Temp", plot.type = "image", plot.axes = p)
 ```
 
 ![](faq_files/figure-html/unnamed-chunk-3-1.png)
@@ -51,14 +51,14 @@ question):
 library(mgcv)
 library(tibble)
 n <- 20
-Data <- tibble(
-  ID = factor(rep(LETTERS[1:n], each=5)),
-  x  = rnorm(n*5),
+dat <- tibble(
+  ID = factor(rep(LETTERS[1:n], each = 5)),
+  x  = rnorm(n * 5),
   lp = rnorm(n)[as.numeric(ID)] + x^2 - 1,
   p  = binomial()$linkinv(lp),
-  y  = rbinom(n*5, 1, p)
+  y  = rbinom(n * 5, 1, p)
 )
-fit <- gamm(y~s(x), data=Data, dist='binomial', random=list(ID=~1))
+fit <- gamm(y ~ s(x), data = dat, dist = "binomial", random = list(ID = ~1))
 ```
 
 Now, `fit$gam` does not include the call (i.e., `fit$gam$call` is
@@ -66,7 +66,7 @@ Now, `fit$gam` does not include the call (i.e., `fit$gam$call` is
 
 ``` r
 
-visreg(fit$gam, 'x')
+visreg(fit$gam, "x")
 # Error in `FUN()`:
 # ! object 'y' not found
 ```
@@ -75,8 +75,8 @@ So you have to include it manually:
 
 ``` r
 
-fit$gam$data <- Data
-visreg(fit$gam, 'x')
+fit$gam$data <- dat
+visreg(fit$gam, "x")
 ```
 
 ![](faq_files/figure-html/unnamed-chunk-6-1.png)
@@ -95,7 +95,7 @@ with the model from the previous question, this code fails:
 
 ``` r
 
-visreg(fit$gam, 'x', scale='response')
+visreg(fit$gam, "x", scale = "response")
 # Error in `UseMethod()`:
 # ! no applicable method for 'family' applied to an object of class "gam"
 ```
@@ -105,7 +105,7 @@ Since this is a binomial model with a logistic link,
 
 ``` r
 
-visreg(fit$gam, 'x', trans=binomial()$linkinv, ylab="Probability")
+visreg(fit$gam, "x", trans = binomial()$linkinv, ylab = "Probability")
 ```
 
 ![](faq_files/figure-html/unnamed-chunk-8-1.png)
@@ -117,8 +117,8 @@ You can achieve this via
 
 ``` r
 
-fit <- lm(Ozone ~ Solar.R + Wind + Temp, data=airquality)
-visreg(fit, "Wind", gg=TRUE) + coord_flip()
+fit <- lm(Ozone ~ Solar.R + Wind + Temp, data = airquality)
+visreg(fit, "Wind") + coord_flip()
 ```
 
 ![](faq_files/figure-html/unnamed-chunk-9-1.png)

@@ -25,6 +25,16 @@ To install the latest development version from GitHub:
 remotes::install_github("pbreheny/visreg")
 ```
 
+Note that version 3.0 of visreg introduced a number of [breaking
+changes](https://pbreheny.github.io/visreg/articles/migrating-to-3-0.html);
+if you wish to install the “legacy” version of visreg, version 2.8.1 was
+the final CRAN release before these changes took place:
+
+``` r
+
+remotes::install_version("visreg", "2.8.1")
+```
+
 ## Usage
 
 The basic usage is that you fit a model, for example:
@@ -72,6 +82,7 @@ the paper goes into more depth regarding the statistical details.
 ## All functions
 
 - [`plot(`*`<visreg>`*`)`](https://pbreheny.github.io/visreg/reference/plot.visreg.md)
+  [`plot(`*`<visreg_list>`*`)`](https://pbreheny.github.io/visreg/reference/plot.visreg.md)
   : Visualization of regression functions
 - [`plot(`*`<visreg2d>`*`)`](https://pbreheny.github.io/visreg/reference/plot.visreg2d.md)
   : Visualization of regression functions for two variables
@@ -81,14 +92,14 @@ the paper goes into more depth regarding the statistical details.
   Visualization of regression functions
 - [`visreg2d()`](https://pbreheny.github.io/visreg/reference/visreg2d.md)
   : Visualization of regression functions for two variables
-- [`visregList()`](https://pbreheny.github.io/visreg/reference/visregList.md)
+- [`visreg_list()`](https://pbreheny.github.io/visreg/reference/visreg_list.md)
   : Join multiple visreg objects together in a list
 
 # 
 
 ``` r
 
-fit <- lm(Ozone ~ Solar.R + Wind + Temp, data=airquality)
+fit <- lm(Ozone ~ Solar.R + Wind + Temp, data = airquality)
 ```
 
 and then you pass it to `visreg`:
@@ -108,10 +119,9 @@ A more complex example, which uses the
 library(mgcv)
 # Loading required package: nlme
 # This is mgcv 1.9-4. For overview type '?mgcv'.
-airquality$Heat <- cut(airquality$Temp, 3, labels=c("Cool", "Mild", "Hot"))
-fit <- gam(Ozone ~ s(Wind, by=Heat, sp=0.1), data=airquality)
-visreg(fit, "Wind", "Heat", gg=TRUE, ylab="Ozone")
-# Loading required namespace: ggplot2
+airquality$Heat <- cut(airquality$Temp, 3, labels = c("Cool", "Mild", "Hot"))
+fit <- gam(Ozone ~ s(Wind, by = Heat, sp = 0.1), data = airquality)
+visreg(fit, "Wind", "Heat", ylab = "Ozone")
 ```
 
 ![](index_files/figure-html/unnamed-chunk-4-1.png)

@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">visreg</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.8.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.99.0.1</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -36,6 +36,7 @@
     <li><a class="dropdown-item" href="../articles/blackbox.html">Forests, SVMs, etc.</a></li>
     <li><a class="dropdown-item" href="../articles/mixed.html">Mixed models</a></li>
     <li><a class="dropdown-item" href="../articles/multi.html">Multiple outcomes</a></li>
+    <li><a class="dropdown-item" href="../articles/migrating-to-3-0.html">Migrating to 3.0</a></li>
     <li><a class="dropdown-item" href="../articles/faq.html">FAQ</a></li>
   </ul></li>
 <li class="nav-item"><a class="nav-link" href="../reference/index.html">Reference</a></li>
@@ -61,7 +62,11 @@
     </div>
 
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="2.8.1" id="visreg-281">visreg 2.8.1<a class="anchor" aria-label="anchor" href="#visreg-281"></a></h2>
+<h2 class="pkg-version" data-toc-text="3.0.0" id="visreg-300">visreg 3.0.0<a class="anchor" aria-label="anchor" href="#visreg-300"></a></h2>
+<ul><li>Change: Removed deprecation support for type = “effect”</li>
+</ul></div>
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="2.8.1" id="visreg-281">visreg 2.8.1<a class="anchor" aria-label="anchor" href="#visreg-281"></a></h2><p class="text-muted">CRAN release: 2026-07-08</p>
 <ul><li>Fixed: Various ggplot2 deprecation issues (aes_string, size instead of linewidth, etc)</li>
 <li>Fixed: Error if weight variable and character variable both present; <a href="https://github.com/pbreheny/visreg/issues/131" class="external-link">#131</a></li>
 <li>Fixed: Suppress lme4/Matrix deprecation warning</li>
@@ -84,7 +89,7 @@
 <li>Internal: Now uses Roxygen</li>
 </ul></div>
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="2.7.0" id="visreg-270-2020-06-04">visreg 2.7.0 (2020-06-04)<a class="anchor" aria-label="anchor" href="#visreg-270-2020-06-04"></a></h2><p class="text-muted">CRAN release: 2020-06-04</p>
+<h2 class="pkg-version" data-toc-text="2.7.0" id="visreg-270">visreg 2.7.0<a class="anchor" aria-label="anchor" href="#visreg-270"></a></h2><p class="text-muted">CRAN release: 2020-06-04</p>
 <ul><li>Changed: Plots are now constructed in a consistent order across all varieties (lattice, base, gg, overlay, etc.), with lines on top (fixes <a href="https://github.com/pbreheny/visreg/issues/50" class="external-link">#50</a>)</li>
 <li>New: Option to change the default layering with top=“points”</li>
 <li>Fixed: Resolved namespace issue with factor plots using lattice</li>
@@ -92,7 +97,7 @@
 <li>Fixed: strip.names and rug colors now work correctly for ggplot (fixes <a href="https://github.com/pbreheny/visreg/issues/85" class="external-link">#85</a>)</li>
 </ul></div>
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="2.6.1" id="visreg-261-2020-03-13">visreg 2.6.1 (2020-03-13)<a class="anchor" aria-label="anchor" href="#visreg-261-2020-03-13"></a></h2><p class="text-muted">CRAN release: 2020-03-13</p>
+<h2 class="pkg-version" data-toc-text="2.6.1" id="visreg-261">visreg 2.6.1<a class="anchor" aria-label="anchor" href="#visreg-261"></a></h2><p class="text-muted">CRAN release: 2020-03-13</p>
 <ul><li>Fixed: Better handling of S4 formulas and data</li>
 <li>Fixed: xlim no longer used in setting up visreg object; fixes <a href="https://github.com/pbreheny/visreg/issues/81" class="external-link">#81</a></li>
 <li>Changed: Added warning if user attempts to combine contrast and transformation; fixes <a href="https://github.com/pbreheny/visreg/issues/78" class="external-link">#78</a></li>
@@ -100,7 +105,7 @@
 <li>New version numbering system</li>
 </ul></div>
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="2.6-0" id="visreg-26-0-2019-11-27">visreg 2.6-0 (2019-11-27)<a class="anchor" aria-label="anchor" href="#visreg-26-0-2019-11-27"></a></h2><p class="text-muted">CRAN release: 2019-11-27</p>
+<h2 class="pkg-version" data-toc-text="2.6-0" id="visreg-26-0">visreg 2.6-0<a class="anchor" aria-label="anchor" href="#visreg-26-0"></a></h2><p class="text-muted">CRAN release: 2019-11-27</p>
 <ul><li>New: visreg(), visreg2d() now accept data= option for explicit data passing</li>
 <li>Fixed: coxph models now work when update() is required (<a href="https://github.com/pbreheny/visreg/issues/76" class="external-link">#76</a>)</li>
 <li>Fixed: Improved formula parsing (now uses all.vars)</li>
@@ -109,12 +114,12 @@
 <li>Internal: More consistent handling of matrix outcome (mlm)</li>
 </ul></div>
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="2.5-1" id="visreg-25-1-2019-06-26">visreg 2.5-1 (2019-06-26)<a class="anchor" aria-label="anchor" href="#visreg-25-1-2019-06-26"></a></h2><p class="text-muted">CRAN release: 2019-06-27</p>
+<h2 class="pkg-version" data-toc-text="2.5-1" id="visreg-25-1">visreg 2.5-1<a class="anchor" aria-label="anchor" href="#visreg-25-1"></a></h2><p class="text-muted">CRAN release: 2019-06-27</p>
 <ul><li>Fixed: Restoring compatibility with current version of quantreg</li>
 <li>Fixed: Restoring compatibility with current version of survey</li>
 </ul></div>
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="2.5-0" id="visreg-25-0-2018-02-26">visreg 2.5-0 (2018-02-26)<a class="anchor" aria-label="anchor" href="#visreg-25-0-2018-02-26"></a></h2><p class="text-muted">CRAN release: 2018-02-26</p>
+<h2 class="pkg-version" data-toc-text="2.5-0" id="visreg-25-0">visreg 2.5-0<a class="anchor" aria-label="anchor" href="#visreg-25-0"></a></h2><p class="text-muted">CRAN release: 2018-02-26</p>
 <ul><li>New: Overlay now works for gg plots</li>
 <li>New: gg option for visreg2d</li>
 <li>New: Improved support for betareg models</li>
@@ -127,7 +132,7 @@
 <li>Fixed: Formula parsing for strata() in coxph models</li>
 </ul></div>
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="2.4-1" id="visreg-24-1-2017-06-23">visreg 2.4-1 (2017-06-23)<a class="anchor" aria-label="anchor" href="#visreg-24-1-2017-06-23"></a></h2><p class="text-muted">CRAN release: 2017-06-23</p>
+<h2 class="pkg-version" data-toc-text="2.4-1" id="visreg-24-1">visreg 2.4-1<a class="anchor" aria-label="anchor" href="#visreg-24-1"></a></h2><p class="text-muted">CRAN release: 2017-06-23</p>
 <ul><li>New: Can now specify reference level for contrast plots by including x variable in ‘cond’ list (thank you <a href="mailto:GitHub@jealie" class="email">GitHub@jealie</a> for implementing this!)</li>
 <li>Changed: Default for transformed outcomes now rug=2</li>
 <li>Changed: Default color for persp plot</li>
@@ -139,13 +144,13 @@
 <li>Fixed: print.cond warning using warning() instead of printing text</li>
 </ul></div>
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="2.4-0" id="visreg-24-0-2017-06-09">visreg 2.4-0 (2017-06-09)<a class="anchor" aria-label="anchor" href="#visreg-24-0-2017-06-09"></a></h2><p class="text-muted">CRAN release: 2017-06-09</p>
+<h2 class="pkg-version" data-toc-text="2.4-0" id="visreg-24-0">visreg 2.4-0<a class="anchor" aria-label="anchor" href="#visreg-24-0"></a></h2><p class="text-muted">CRAN release: 2017-06-09</p>
 <ul><li>New: gg=TRUE works for regular plots, not just cross-sectional plots</li>
 <li>New: gg=TRUE returns a gg object, which can then be manipulated further</li>
 <li>Fixed: bug in coxph models with type=‘contrast’</li>
 </ul></div>
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="2.3-0" id="visreg-23-0-2016-07-30">visreg 2.3-0 (2016-07-30)<a class="anchor" aria-label="anchor" href="#visreg-23-0-2016-07-30"></a></h2><p class="text-muted">CRAN release: 2016-07-30</p>
+<h2 class="pkg-version" data-toc-text="2.3-0" id="visreg-23-0">visreg 2.3-0<a class="anchor" aria-label="anchor" href="#visreg-23-0"></a></h2><p class="text-muted">CRAN release: 2016-07-30</p>
 <ul><li>New: Added support for multi-response models such multinom, with accompanying visregList() function and collapse option for further control/options</li>
 <li>New: Added option to use ggplot2 instead of lattice to produce multi-panel plots</li>
 <li>New: Support for glmmADMB models</li>
@@ -159,29 +164,29 @@
 <li>Fixed: Some issues with svm models (package: e1071)</li>
 </ul></div>
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="2.2-2" id="visreg-22-2-2016-02-06">visreg 2.2-2 (2016-02-06)<a class="anchor" aria-label="anchor" href="#visreg-22-2-2016-02-06"></a></h2><p class="text-muted">CRAN release: 2016-02-06</p>
+<h2 class="pkg-version" data-toc-text="2.2-2" id="visreg-22-2">visreg 2.2-2<a class="anchor" aria-label="anchor" href="#visreg-22-2"></a></h2><p class="text-muted">CRAN release: 2016-02-06</p>
 <ul><li>Fixed: bug involving an incompatibility between formulas with a . and formulas with an s() in them (2.2-1 extended visreg to formulas with a ., but this broke compatibility with formulas with s() and similar terms)</li>
 </ul></div>
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="2.2-1" id="visreg-22-1-2016-01-05">visreg 2.2-1 (2016-01-05)<a class="anchor" aria-label="anchor" href="#visreg-22-1-2016-01-05"></a></h2><p class="text-muted">CRAN release: 2016-01-05</p>
+<h2 class="pkg-version" data-toc-text="2.2-1" id="visreg-22-1">visreg 2.2-1<a class="anchor" aria-label="anchor" href="#visreg-22-1"></a></h2><p class="text-muted">CRAN release: 2016-01-05</p>
 <ul><li>New: Improved support for packages that do not provide a residuals() generic</li>
 <li>Changed: Deviance residuals now used for ‘coxph’ (survival) models instead of martingale residuals</li>
 <li>Internal: Changes to NAMESPACE for compatibility with development versions of R</li>
 <li>Fixed: Now compatible with ‘quantreg’ and ‘betareg’ packages</li>
 </ul></div>
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="2.2-0" id="visreg-22-0-2015-04-22">visreg 2.2-0 (2015-04-22)<a class="anchor" aria-label="anchor" href="#visreg-22-0-2015-04-22"></a></h2><p class="text-muted">CRAN release: 2015-04-22</p>
+<h2 class="pkg-version" data-toc-text="2.2-0" id="visreg-22-0">visreg 2.2-0<a class="anchor" aria-label="anchor" href="#visreg-22-0"></a></h2><p class="text-muted">CRAN release: 2015-04-22</p>
 <ul><li>New: Added support for random forests from the ‘randomForest’ package</li>
 <li>New: Added support for models from the ‘rms’ package</li>
 </ul></div>
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="2.1-1" id="visreg-21-1-2015-02-25">visreg 2.1-1 (2015-02-25)<a class="anchor" aria-label="anchor" href="#visreg-21-1-2015-02-25"></a></h2><p class="text-muted">CRAN release: 2015-02-25</p>
+<h2 class="pkg-version" data-toc-text="2.1-1" id="visreg-21-1">visreg 2.1-1<a class="anchor" aria-label="anchor" href="#visreg-21-1"></a></h2><p class="text-muted">CRAN release: 2015-02-25</p>
 <ul><li>New: plot.visreg can now return trellis objects so that you can arrange multiple trellis plots to your liking.</li>
 <li>Fixed: Contrast plots now work for lme4 models</li>
 <li>Fixed: Survival examples no longer depend on splines</li>
 </ul></div>
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="2.1-0" id="visreg-21-0-2014-11-27">visreg 2.1-0 (2014-11-27)<a class="anchor" aria-label="anchor" href="#visreg-21-0-2014-11-27"></a></h2><p class="text-muted">CRAN release: 2014-11-27</p>
+<h2 class="pkg-version" data-toc-text="2.1-0" id="visreg-21-0">visreg 2.1-0<a class="anchor" aria-label="anchor" href="#visreg-21-0"></a></h2><p class="text-muted">CRAN release: 2014-11-27</p>
 <ul><li>New: visreg now returns simple, structured objects that a user can modify and inspect prior to plotting</li>
 <li>Internal: Major overhaul to visreg’s internal structure</li>
 <li>Internal: visreg() now separated from plot.visreg()</li>
@@ -189,41 +194,41 @@
 <li>Fixed: strip.names now works for factors and shingles for both overlay and lattice plots (thank you to Dan Silver for pointing this out).</li>
 </ul></div>
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="2.0-6" id="visreg-20-6-2015-08-26">visreg 2.0-6 (2015-08-26)<a class="anchor" aria-label="anchor" href="#visreg-20-6-2015-08-26"></a></h2><p class="text-muted">CRAN release: 2014-08-26</p>
+<h2 class="pkg-version" data-toc-text="2.0-6" id="visreg-20-6">visreg 2.0-6<a class="anchor" aria-label="anchor" href="#visreg-20-6"></a></h2><p class="text-muted">CRAN release: 2014-08-26</p>
 <ul><li>Changed: Rugs are now plotted by default instead of partial residuals when a transformation has been applied</li>
 <li>Fixed: Issue with S4 models not being compatible with as.formula(); visreg now refrains from calling as.formula (thank you to Nick Livingston for bringing this issue to my attention)</li>
 </ul></div>
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="2.0-5" id="visreg-20-5-2014-05-30">visreg 2.0-5 (2014-05-30)<a class="anchor" aria-label="anchor" href="#visreg-20-5-2014-05-30"></a></h2><p class="text-muted">CRAN release: 2014-05-30</p>
+<h2 class="pkg-version" data-toc-text="2.0-5" id="visreg-20-5">visreg 2.0-5<a class="anchor" aria-label="anchor" href="#visreg-20-5"></a></h2><p class="text-muted">CRAN release: 2014-05-30</p>
 <ul><li>Fixed: Bug arising when passing plot options such as ‘xlim’ when used in conjunction with lme4 models; thank you to Vincent Maire for pointing this bug out</li>
 </ul></div>
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="2.0-4" id="visreg-20-4-2013-10-29">visreg 2.0-4 (2013-10-29)<a class="anchor" aria-label="anchor" href="#visreg-20-4-2013-10-29"></a></h2><p class="text-muted">CRAN release: 2013-10-29</p>
+<h2 class="pkg-version" data-toc-text="2.0-4" id="visreg-20-4">visreg 2.0-4<a class="anchor" aria-label="anchor" href="#visreg-20-4"></a></h2><p class="text-muted">CRAN release: 2013-10-29</p>
 <ul><li>New: Added compatibility with models from the ‘lme4’ package; tThank you to Jack Hogg for pointing out this incompatibility (same limitations regarding error bands as ‘lme’ models)</li>
 </ul></div>
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="2.0-3" id="visreg-20-3-2013-09-27">visreg 2.0-3 (2013-09-27)<a class="anchor" aria-label="anchor" href="#visreg-20-3-2013-09-27"></a></h2><p class="text-muted">CRAN release: 2013-09-27</p>
+<h2 class="pkg-version" data-toc-text="2.0-3" id="visreg-20-3">visreg 2.0-3<a class="anchor" aria-label="anchor" href="#visreg-20-3"></a></h2><p class="text-muted">CRAN release: 2013-09-27</p>
 <ul><li>New: Added compatibility with ‘lme’ models; conditional models still cannot include error bands due to lack of this feature in predict.lme, but the package will produce reasonable plots of means and partial residuals (Thank you to Jason Rohr for pointing out this incompatibility and the bugs below)</li>
 <li>New: Pption to manually relabel panel strips</li>
 <li>Fixed: Bug in passing ‘scales’ to latticePlot</li>
 <li>Fixed: Bug when trying to panel by every unique value of ‘by’ variable</li>
 </ul></div>
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="2.0-2" id="visreg-20-2-2013-08-28">visreg 2.0-2 (2013-08-28)<a class="anchor" aria-label="anchor" href="#visreg-20-2-2013-08-28"></a></h2><p class="text-muted">CRAN release: 2013-08-28</p>
+<h2 class="pkg-version" data-toc-text="2.0-2" id="visreg-20-2">visreg 2.0-2<a class="anchor" aria-label="anchor" href="#visreg-20-2"></a></h2><p class="text-muted">CRAN release: 2013-08-28</p>
 <ul><li>New: Compatible with output from the ‘survey’ package; thank you to Marco Pomati for pointing this incompatibility out</li>
 <li>Internal: Fixed calling of generics to be compatible with changes in R version 3.1</li>
 <li>Fixed: Bug for mlm models in which users received an incorrect warning about residuals</li>
 <li>Fixed: Improved generalizability of fillFrame with factors; was incompatible with some instances of predict()</li>
 </ul></div>
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="2.0-1" id="visreg-20-1-2013-08-10">visreg 2.0-1 (2013-08-10)<a class="anchor" aria-label="anchor" href="#visreg-20-1-2013-08-10"></a></h2><p class="text-muted">CRAN release: 2013-08-10</p>
+<h2 class="pkg-version" data-toc-text="2.0-1" id="visreg-20-1">visreg 2.0-1<a class="anchor" aria-label="anchor" href="#visreg-20-1"></a></h2><p class="text-muted">CRAN release: 2013-08-10</p>
 <ul><li>Fixed: Bug for spline models of variables with ‘.’ in their names</li>
 <li>Fixed: Bug for survival models in which the Surv object is created outside the call to visreg</li>
 <li>Fixed: Levels of a factor no longer dropped from the model; thank you to Johannes Kutsam for pointing this out</li>
 <li>Fixed: Scoping issue resolved – can now call visreg, visreg2d from a function without fit or data present in the global environment; thank you to Johannes Kutsam for pointing this out</li>
 </ul></div>
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="2.0-0" id="visreg-20-0-2013-05-23">visreg 2.0-0 (2013-05-23)<a class="anchor" aria-label="anchor" href="#visreg-20-0-2013-05-23"></a></h2><p class="text-muted">CRAN release: 2013-05-23</p>
+<h2 class="pkg-version" data-toc-text="2.0-0" id="visreg-20-0">visreg 2.0-0<a class="anchor" aria-label="anchor" href="#visreg-20-0"></a></h2><p class="text-muted">CRAN release: 2013-05-23</p>
 <ul><li>New: Added ‘overlay’ option</li>
 <li>New: Extrapolation now allowed</li>
 <li>New: print.cond option, with warning when user tries to plot a main effect in the presence of interactions</li>
@@ -237,23 +242,23 @@
 <li>Internal: Expanded suite of tests</li>
 </ul></div>
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="1.2-1" id="visreg-12-1-2013-02-21">visreg 1.2-1 (2013-02-21)<a class="anchor" aria-label="anchor" href="#visreg-12-1-2013-02-21"></a></h2><p class="text-muted">CRAN release: 2013-02-21</p>
+<h2 class="pkg-version" data-toc-text="1.2-1" id="visreg-12-1">visreg 1.2-1<a class="anchor" aria-label="anchor" href="#visreg-12-1"></a></h2><p class="text-muted">CRAN release: 2013-02-21</p>
 <ul><li>Fixed: Bug in calculation of confidence bands for quasilikelihood models; thank you to Ariel Muldoon for pointing this out</li>
 <li>Fixed: Side-effect which caused trellis settings to be changed when visreg changed them internally</li>
 </ul></div>
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="1.2-0" id="visreg-12-0-2013-01-20">visreg 1.2-0 (2013-01-20)<a class="anchor" aria-label="anchor" href="#visreg-12-0-2013-01-20"></a></h2><p class="text-muted">CRAN release: 2013-01-20</p>
+<h2 class="pkg-version" data-toc-text="1.2-0" id="visreg-12-0">visreg 1.2-0<a class="anchor" aria-label="anchor" href="#visreg-12-0"></a></h2><p class="text-muted">CRAN release: 2013-01-20</p>
 <ul><li>New: Support for models from the ‘gam’ package</li>
 <li>New: Improved support for ‘coxph’ models from ‘survival’ package</li>
 <li>Fixed: Bug in ‘removeFormulaFormatting’ to allow further compatibility for splines with use of ‘cond’</li>
 <li>Fixed: Bug in use of ns/bs with type=‘effect’</li>
 </ul></div>
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="1.1-1" id="visreg-11-1-2012-11-14">visreg 1.1-1 (2012-11-14)<a class="anchor" aria-label="anchor" href="#visreg-11-1-2012-11-14"></a></h2><p class="text-muted">CRAN release: 2012-11-14</p>
+<h2 class="pkg-version" data-toc-text="1.1-1" id="visreg-11-1">visreg 1.1-1<a class="anchor" aria-label="anchor" href="#visreg-11-1"></a></h2><p class="text-muted">CRAN release: 2012-11-14</p>
 <ul><li>Fixed: Bug in ‘removeFormulaFormatting’; now compatible with ns() and bs() from the ‘splines’ package</li>
 </ul></div>
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="1.1-0" id="visreg-11-0-2012-09-28">visreg 1.1-0 (2012-09-28)<a class="anchor" aria-label="anchor" href="#visreg-11-0-2012-09-28"></a></h2><p class="text-muted">CRAN release: 2012-09-28</p>
+<h2 class="pkg-version" data-toc-text="1.1-0" id="visreg-11-0">visreg 1.1-0<a class="anchor" aria-label="anchor" href="#visreg-11-0"></a></h2><p class="text-muted">CRAN release: 2012-09-28</p>
 <ul><li>New: Finer control of plots with line.par, fill.par, points.par</li>
 <li>New: Support for multiple response (class ‘mlm’) models</li>
 <li>Fixed: Bug in ‘ask’ behavior when multiple plots created</li>
@@ -262,7 +267,7 @@
 <li>Changed: Default for ylabels now las=1 (always horizontal); thank you to Doug Bates for this advice</li>
 </ul></div>
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="1.0-0" id="visreg-10-0-2012-05-31">visreg 1.0-0 (2012-05-31)<a class="anchor" aria-label="anchor" href="#visreg-10-0-2012-05-31"></a></h2><p class="text-muted">CRAN release: 2012-05-31</p>
+<h2 class="pkg-version" data-toc-text="1.0-0" id="visreg-10-0">visreg 1.0-0<a class="anchor" aria-label="anchor" href="#visreg-10-0"></a></h2><p class="text-muted">CRAN release: 2012-05-31</p>
 <ul><li>New: Now on CRAN!</li>
 <li>New: Improved support for contrast plots:
 <ul><li>Extensive revision to implementation</li>
@@ -286,7 +291,7 @@
 <li>Fixed: Patched ‘get_all_vars’ bug when variables are in environment rather than data frame</li>
 </ul></div>
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="0.4-0" id="visreg-04-0-2012-02-18">visreg 0.4-0 (2012-02-18)<a class="anchor" aria-label="anchor" href="#visreg-04-0-2012-02-18"></a></h2>
+<h2 class="pkg-version" data-toc-text="0.4-0" id="visreg-04-0">visreg 0.4-0<a class="anchor" aria-label="anchor" href="#visreg-04-0"></a></h2>
 <ul><li>Internal: New ‘setupCond’ function to handle setting up of cond when ‘by’ variables are present</li>
 <li>Internal: New functions ‘visregPlot’ and ‘visregLatticePlot’ to separate work done by the two types of plots (‘by’ present or absent)</li>
 <li>Internal: New function getXY for shared code</li>
@@ -298,13 +303,13 @@
 <li>Changed: Manner in which cross-sections are taken when ‘by’ is numeric; number of observations in each cross-section is now more even</li>
 </ul></div>
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="0.3-0" id="visreg-03-0-2011-12-03">visreg 0.3-0 (2011-12-03)<a class="anchor" aria-label="anchor" href="#visreg-03-0-2011-12-03"></a></h2>
+<h2 class="pkg-version" data-toc-text="0.3-0" id="visreg-03-0">visreg 0.3-0<a class="anchor" aria-label="anchor" href="#visreg-03-0"></a></h2>
 <ul><li>New: Added ‘jitter’ option</li>
 <li>New: Improved handling of trellis parameters</li>
 <li>Internal: Reorganized frame construction again, using ‘get_all_vars’; now works with missing data and various other strange situations where f(x) is in the model but x isn’t</li>
 </ul></div>
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="0.2-0" id="visreg-02-0-2011-08-23">visreg 0.2-0 (2011-08-23)<a class="anchor" aria-label="anchor" href="#visreg-02-0-2011-08-23"></a></h2>
+<h2 class="pkg-version" data-toc-text="0.2-0" id="visreg-02-0">visreg 0.2-0<a class="anchor" aria-label="anchor" href="#visreg-02-0"></a></h2>
 <ul><li>New: Added ‘by’ argument to support interactions</li>
 <li>New: visreg() now returns ‘x’ and ‘y’ invisibly</li>
 <li>New: Added ‘scale’ option for GLMs</li>
@@ -314,7 +319,7 @@
 <li>Documentation: Added documentation</li>
 </ul></div>
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="0.1-0" id="visreg-01-0-2011-07-22">visreg 0.1-0 (2011-07-22)<a class="anchor" aria-label="anchor" href="#visreg-01-0-2011-07-22"></a></h2>
+<h2 class="pkg-version" data-toc-text="0.1-0" id="visreg-01-0">visreg 0.1-0<a class="anchor" aria-label="anchor" href="#visreg-01-0"></a></h2>
 <ul><li>New: Added glm suport</li>
 <li>New: Added factor support in 1d version</li>
 <li>New: Added “terms” option for 2d plots</li>
@@ -326,22 +331,22 @@
 <li>Fixed: Bug that occurs when a variable is class ‘logical’</li>
 </ul></div>
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="0.0-3" id="visreg-00-3-2011-07-02">visreg 0.0-3 (2011-07-02)<a class="anchor" aria-label="anchor" href="#visreg-00-3-2011-07-02"></a></h2>
+<h2 class="pkg-version" data-toc-text="0.0-3" id="visreg-00-3">visreg 0.0-3<a class="anchor" aria-label="anchor" href="#visreg-00-3"></a></h2>
 <ul><li>New: ‘trans’ option for transforming response variable</li>
 <li>Intenal: Changed internal data frame evaluation, allowing the ability to lookup variables in the original data frame when constructing derived variables</li>
 </ul></div>
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="0.0-2" id="visreg-00-2-2011-06-24">visreg 0.0-2 (2011-06-24)<a class="anchor" aria-label="anchor" href="#visreg-00-2-2011-06-24"></a></h2>
+<h2 class="pkg-version" data-toc-text="0.0-2" id="visreg-00-2">visreg 0.0-2<a class="anchor" aria-label="anchor" href="#visreg-00-2"></a></h2>
 <ul><li>New: fill=‘median’ option</li>
 </ul></div>
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="0.0-1" id="visreg-00-1-2011-06-09">visreg 0.0-1 (2011-06-09)<a class="anchor" aria-label="anchor" href="#visreg-00-1-2011-06-09"></a></h2>
+<h2 class="pkg-version" data-toc-text="0.0-1" id="visreg-00-1">visreg 0.0-1<a class="anchor" aria-label="anchor" href="#visreg-00-1"></a></h2>
 <ul><li>New: ‘type’ option to visreg, allowing both conditional and contrast plots</li>
 <li>New: fill=‘zero’ option</li>
 <li>Changed: Default y label in visreg</li>
 </ul></div>
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="0.0-0" id="visreg-00-0-2011-05-12">visreg 0.0-0 (2011-05-12)<a class="anchor" aria-label="anchor" href="#visreg-00-0-2011-05-12"></a></h2>
+<h2 class="pkg-version" data-toc-text="0.0-0" id="visreg-00-0">visreg 0.0-0<a class="anchor" aria-label="anchor" href="#visreg-00-0"></a></h2>
 <ul><li>New: Package infrastructure established</li>
 <li>New: visreg.R, visreg2d.R: Polynomial terms handled correctly</li>
 </ul></div>
@@ -350,11 +355,11 @@
 
 
     <footer><div class="pkgdown-footer-left">
-  <p>Developed by <a href="https://myweb.uiowa.edu/pbreheny/" class="external-link">Patrick Breheny</a>.</p>
+  <p>Developed by <a href="https://pbreheny.org/web/" class="external-link">Patrick Breheny</a>.</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Last updated: July 08, 2026</p>
+  <p>Last updated: July 12, 2026</p>
 </div>
 
     </footer></div>

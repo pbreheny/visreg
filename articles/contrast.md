@@ -1,4 +1,4 @@
-# Contrast vs. conditional plots
+# Contrast vs. conditional plots
 
 Conditional plots were discussed in [getting
 started](https://pbreheny.github.io/visreg/articles/basic.md). The
@@ -36,22 +36,34 @@ display contrast plots and conditional plots side-by-side:
 
 ``` r
 
-airquality$Heat <- cut(airquality$Temp, 3, labels=c("Cool", "Mild", "Hot"))
-fit <- lm(Ozone ~ Solar.R + Wind + Heat, data=airquality)
-par(mfrow=c(1,2))
-visreg(fit, "Wind", type="conditional")
-visreg(fit, "Wind", type="contrast")
+airquality$Heat <- cut(airquality$Temp, 3, labels = c("Cool", "Mild", "Hot"))
+fit <- lm(Ozone ~ Solar.R + Wind + Heat, data = airquality)
+par(mfrow = c(1, 2))
+visreg(fit, "Wind", type = "conditional")
 ```
 
 ![](contrast_files/figure-html/unnamed-chunk-3-1.png)
 
 ``` r
 
-visreg(fit, "Heat", type="conditional")
-visreg(fit, "Heat", type="contrast")
+visreg(fit, "Wind", type = "contrast")
 ```
 
 ![](contrast_files/figure-html/unnamed-chunk-3-2.png)
+
+``` r
+
+visreg(fit, "Heat", type = "conditional")
+```
+
+![](contrast_files/figure-html/unnamed-chunk-3-3.png)
+
+``` r
+
+visreg(fit, "Heat", type = "contrast")
+```
+
+![](contrast_files/figure-html/unnamed-chunk-3-4.png)
 
 The similarity between the plots is that the slopes of the lines, and
 the differences between the levels of `Heat`, are exactly the same in

@@ -25,7 +25,7 @@ the following model:
 
 ``` r
 
-fit <- lm(Ozone ~ Solar.R + Wind + Temp, data=airquality)
+fit <- lm(Ozone ~ Solar.R + Wind + Temp, data = airquality)
 ```
 
 We can then visualize what the model says about the relationship between
@@ -48,15 +48,15 @@ model contains an interaction:
 
 ``` r
 
-airquality$Heat <- cut(airquality$Temp, 3, labels=c("Cool","Mild","Hot"))
-fit <- lm(Ozone ~ Solar.R + Wind*Heat, data=airquality)
+airquality$Heat <- cut(airquality$Temp, 3, labels = c("Cool", "Mild", "Hot"))
+fit <- lm(Ozone ~ Solar.R + Wind * Heat, data = airquality)
 ```
 
 Visreg can plot cross-sections of this fit, either in separate panels:
 
 ``` r
 
-visreg(fit, "Wind", by="Heat")
+visreg(fit, "Wind", by = "Heat")
 ```
 
 ![](visreg_files/figure-html/unnamed-chunk-5-1.png)
@@ -65,7 +65,7 @@ Or overlaid on top of one another:
 
 ``` r
 
-visreg(fit, "Wind", by="Heat", overlay=TRUE)
+visreg(fit, "Wind", by = "Heat", overlay = TRUE)
 ```
 
 ![](visreg_files/figure-html/unnamed-chunk-6-1.png)
@@ -74,7 +74,7 @@ Or as a two-dimensional filled contour plot (level plot):
 
 ``` r
 
-fit <- lm(Ozone ~ poly(Wind, 2)*poly(Temp, 2), data=airquality)
+fit <- lm(Ozone ~ poly(Wind, 2) * poly(Temp, 2), data = airquality)
 visreg2d(fit, "Wind", "Temp")
 ```
 

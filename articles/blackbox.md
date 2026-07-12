@@ -18,9 +18,11 @@ aq <- na.omit(airquality)
 
 ``` r
 
-library(randomForest, quietly=TRUE)
-fit <- randomForest(Ozone ~ Solar.R + Wind + Temp, data=aq)
-visreg(fit, "Temp", ylab="Ozone")
+library(randomForest, quietly = TRUE)
+fit <- randomForest(Ozone ~ Solar.R + Wind + Temp, data = aq)
+visreg(fit, "Temp", ylab = "Ozone")
+# Warning: Removed 101 rows containing missing values or values outside the scale range
+# (`geom_ribbon()`).
 ```
 
 ![](blackbox_files/figure-html/unnamed-chunk-3-1.png)
@@ -30,8 +32,10 @@ visreg(fit, "Temp", ylab="Ozone")
 ``` r
 
 library(e1071)
-fit <- svm(Ozone ~ Solar.R + Wind + Temp, data=aq)
-visreg(fit, "Temp", ylab="Ozone")
+fit <- svm(Ozone ~ Solar.R + Wind + Temp, data = aq)
+visreg(fit, "Temp", ylab = "Ozone")
+# Warning: Removed 101 rows containing missing values or values outside the scale range
+# (`geom_ribbon()`).
 ```
 
 ![](blackbox_files/figure-html/unnamed-chunk-4-1.png)
@@ -48,7 +52,9 @@ user-defined `residuals` method:
 
 ``` r
 
-residuals.gbm <- function(fit) {fit$data$y - fit$fit}
+residuals.gbm <- function(fit) {
+  fit$data$y - fit$fit
+}
 ```
 
 This is useful to be aware of in general: if you are ever working with a
@@ -60,8 +66,10 @@ Once defined, we
 ``` r
 
 library(gbm)
-fit <- gbm(Ozone ~ Solar.R + Wind + Temp, data=aq, distribution="gaussian")
-visreg(fit, "Temp", ylab="Ozone")
+fit <- gbm(Ozone ~ Solar.R + Wind + Temp, data = aq, distribution = "gaussian")
+visreg(fit, "Temp", ylab = "Ozone")
+# Warning: Removed 101 rows containing missing values or values outside the scale range
+# (`geom_ribbon()`).
 ```
 
 ![](blackbox_files/figure-html/unnamed-chunk-6-1.png)
@@ -73,8 +81,10 @@ the number of trees, we obtain a much more reasonable fit:
 
 ``` r
 
-fit <- gbm(Ozone ~ Solar.R + Wind + Temp, data=aq, distribution="gaussian", n.trees=5000)
-visreg(fit, "Temp", ylab="Ozone")
+fit <- gbm(Ozone ~ Solar.R + Wind + Temp, data = aq, distribution = "gaussian", n.trees = 5000)
+visreg(fit, "Temp", ylab = "Ozone")
+# Warning: Removed 101 rows containing missing values or values outside the scale range
+# (`geom_ribbon()`).
 ```
 
 ![](blackbox_files/figure-html/unnamed-chunk-7-1.png)

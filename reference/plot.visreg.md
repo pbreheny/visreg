@@ -1,10 +1,9 @@
 # Visualization of regression functions
 
-A function for visualizing regression models quickly and easily. Default
-plots contain a confidence band, prediction line, and partial residuals.
-Factors, transformations, conditioning, interactions, and a variety of
-other options are supported. The `plot.visreg()` function accepts a
-`visreg` or `visregList` object as calculated by
+Default plots contain a confidence band, prediction line, and partial
+residuals. Factors, transformations, conditioning, interactions, and a
+variety of other options are supported. The `plot.visreg()` function
+accepts a `visreg` object as calculated by
 [`visreg()`](https://pbreheny.github.io/visreg/reference/visreg.md) and
 creates the plot.
 
@@ -15,27 +14,27 @@ creates the plot.
 plot(
   x,
   overlay = FALSE,
-  print.cond = FALSE,
-  whitespace = 0.2,
+  print_cond = FALSE,
   partial = identical(x$meta$trans, I),
   band = TRUE,
   rug = ifelse(partial, 0, 2),
-  strip.names = is.numeric(x$fit[, x$meta$by]),
-  legend = TRUE,
+  strip_names = is.numeric(x$fit[, x$meta$by]),
   top = c("line", "points"),
-  gg = FALSE,
-  line.par = NULL,
-  fill.par = NULL,
-  points.par = NULL,
+  line = NULL,
+  fill = NULL,
+  points = NULL,
   ...
 )
+
+# S3 method for class 'visreg_list'
+plot(x, ...)
 ```
 
 ## Arguments
 
 - x:
 
-  A `visreg` or `visregList` object; see
+  A `visreg` or `visreg_list` object; see
   [`visreg()`](https://pbreheny.github.io/visreg/reference/visreg.md).
 
 - overlay:
@@ -44,19 +43,13 @@ plot(
   display each cross-section. If `overlay=TRUE`, these cross-sections
   are overlaid on top of each other in a single plot.
 
-- print.cond:
+- print_cond:
 
-  If `print.cond=TRUE`, the explanatory variable values conditioned on
+  If `print_cond=TRUE`, the explanatory variable values conditioned on
   in a conditional plot are printed to the console (default: `FALSE`).
-  If `print.cond=TRUE` and `type="contrast"`, the conditions will still
+  If `print_cond=TRUE` and `type="contrast"`, the conditions will still
   be printed, but they have no bearing on the plot unless interactions
   are present.
-
-- whitespace:
-
-  When `xvar` is a factor, `whitespace` determines the amount of space
-  in between factors on the x-axis. Default is 0.2, meaning that 20
-  percent of the horizontal axis is whitespace.
 
 - partial:
 
@@ -69,29 +62,23 @@ plot(
 
 - rug:
 
-  By default, partial residuals are plotted. Alternatively, a
-  [`rug()`](https://rdrr.io/r/graphics/rug.html) may be plotted along
-  the horizontal axis instead. Setting `rug=TRUE` turns off partial
-  residuals by default; if one wants both to be plotted, both `rug=TRUE`
-  and `partial=TRUE` need to be specified. Two types of rug plots are
-  available. If `rug=1` or `rug=TRUE`, then a basic rug is drawn on the
-  bottom. If `rug=2`, then separate rugs are drawn on the top for
-  observations with positive residuals and on the bottom for
+  By default, partial residuals are plotted. Alternatively, a rug may be
+  plotted along the horizontal axis instead. Setting `rug=TRUE` turns
+  off partial residuals by default; if one wants both to be plotted,
+  both `rug=TRUE` and `partial=TRUE` need to be specified. Two types of
+  rug plots are available. If `rug=1` or `rug=TRUE`, then a basic rug is
+  drawn on the bottom. If `rug=2`, then separate rugs are drawn on the
+  top for observations with positive residuals and on the bottom for
   observations with negative residuals. Such plots are particularly
   useful in logistic regression (see examples).
 
-- strip.names:
+- strip_names:
 
-  When `by=TRUE`, `strip.names=TRUE` adds the name of the `by` variable
+  When `by=TRUE`, `strip_names=TRUE` adds the name of the `by` variable
   to the strip at the top of each panel. Default is `FALSE` for factors
-  and `TRUE` for numeric `by` variables. `strip.names` can also be a
+  and `TRUE` for numeric `by` variables. `strip_names` can also be a
   character vector, in which case it replaces the strip names altogether
   with values chosen by the user.
-
-- legend:
-
-  For overlay plots, (`overlay=TRUE`), should visreg create a legend? If
-  `legend=TRUE` (the default), a legend is placed in the top margin.
 
 - top:
 
@@ -100,40 +87,47 @@ plot(
   obscuring certain residuals. To change this behavior and plot the
   partial residuals on top, specify `top='points'`.
 
-- gg:
+- line:
 
-  By default (`gg=FALSE`), `visreg` will use the **lattice** package to
-  render the plot if multiple panels are required. If `gg=TRUE`, it will
-  use the **ggplot2** package instead, provided that it is installed.
-
-- line.par:
-
-  List of parameters (see
-  [`par()`](https://rdrr.io/r/graphics/par.html)) to pass to
-  `lines(...)` or
+  List of parameters to pass to
   [`ggplot2::geom_line()`](https://ggplot2.tidyverse.org/reference/geom_path.html)
-  when lines are plotted.
+  (continuous `xvar`) or
+  [`ggplot2::geom_crossbar()`](https://ggplot2.tidyverse.org/reference/geom_linerange.html)
+  (factor `xvar`) when the fitted line is plotted.
 
-- fill.par:
+- fill:
 
-  List of parameters (see
-  [`par()`](https://rdrr.io/r/graphics/par.html)) to pass to
-  `polygon(...)` or
-  [`ggplot2::geom_polygon()`](https://ggplot2.tidyverse.org/reference/geom_polygon.html)
-  when shaded confidence regions are plotted.
+  List of parameters to pass to
+  [`ggplot2::geom_ribbon()`](https://ggplot2.tidyverse.org/reference/geom_ribbon.html)
+  (continuous `xvar`) or
+  [`ggplot2::geom_crossbar()`](https://ggplot2.tidyverse.org/reference/geom_linerange.html)
+  (factor `xvar`) when shaded confidence regions are plotted.
 
-- points.par:
+- points:
 
-  List of parameters ([`par()`](https://rdrr.io/r/graphics/par.html)) to
-  pass to `points(...)` or
+  List of parameters to pass to
   [`ggplot2::geom_point()`](https://ggplot2.tidyverse.org/reference/geom_point.html)
-  when partial residuals are plotted.
+  (continuous `xvar`) or
+  [`ggplot2::geom_jitter()`](https://ggplot2.tidyverse.org/reference/geom_jitter.html)
+  (factor `xvar`) when partial residuals are plotted.
 
 - ...:
 
-  Graphical parameters can be passed to the function to customize the
-  plots. If `by=TRUE`, lattice parameters can be passed, such as
-  `layout` (see examples below).
+  Additional arguments passed on to the plot, such as `xlab`, `ylab`.
+
+## Value
+
+A ggplot object, or if `x` is a
+[`visreg_list()`](https://pbreheny.github.io/visreg/reference/visreg_list.md),
+a list of ggplot objects.
+
+## Details
+
+If `x` is a
+[`visreg_list()`](https://pbreheny.github.io/visreg/reference/visreg_list.md),
+`plot.visreg_list()` is dispatched instead; it simply calls
+`plot.visreg()` on each element in turn, passing along the same
+arguments to each element.
 
 ## References
 
@@ -143,23 +137,18 @@ using visreg. *R Journal*, **9**: 56-71.
 
 ## See also
 
-<https://pbreheny.github.io/visreg/articles/options.html>,
-[`visreg()`](https://pbreheny.github.io/visreg/reference/visreg.md),
-[`visreg2d()`](https://pbreheny.github.io/visreg/reference/visreg2d.md)
-
-## Author
-
-Patrick Breheny and Woodrow Burchett
+[visreg2d](https://pbreheny.github.io/visreg/reference/visreg2d.md) for
+creating `visreg` objects, and the [options
+vignette](https://pbreheny.github.io/visreg/surface.html) for examples.
 
 ## Examples
 
 ``` r
-fit <- lm(Ozone ~ Solar.R + Wind + Temp,data=airquality)
-visreg(fit, "Wind", line=list(col="red"), points=list(cex=1, pch=1))
+fit <- lm(Ozone ~ Solar.R + Wind + Temp, data = airquality)
+visreg(fit, "Wind", line = list(color = "red"), points = list(size = 1, shape = 1))
 
 
-## Changing appearance
-visreg(fit, "Wind", line=list(col="red"), points=list(cex=1, pch=1))
+# Changing appearance
+visreg(fit, "Wind", line = list(color = "red"), points = list(size = 1, shape = 1))
 
-## See ?visreg and https://pbreheny.github.io/visreg for more examples
 ```

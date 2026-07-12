@@ -15,10 +15,10 @@ milk in the weeks following calving:
 
 ``` r
 
-library(lme4, quietly=TRUE)
-data(Milk, package="nlme")
-ctrl <- lmerControl(optCtrl=list(xtol_rel=1e-6)) # Warning otherwise
-fit <- lmer(protein ~ Diet + Time + (Time|Cow), Milk, control=ctrl)
+library(lme4, quietly = TRUE)
+data(Milk, package = "nlme")
+ctrl <- lmerControl(optCtrl = list(xtol_rel = 1e-6)) # Warning otherwise
+fit <- lmer(protein ~ Diet + Time + (Time | Cow), Milk, control = ctrl)
 ```
 
 ## Plotting fixed effects
@@ -29,7 +29,8 @@ smaller and partially transparent):
 
 ``` r
 
-visreg(fit, "Diet", ylab="Protein", points=list(col="#55555540", cex=0.25))
+visreg(fit, "Diet", ylab = "Protein", points = list(col = "#55555540", cex = 0.25))
+# Warning: Duplicated aesthetics after name standardisation: colour and size
 ```
 
 ![](mixed_files/figure-html/unnamed-chunk-3-1.png)
@@ -39,8 +40,11 @@ have bands here:
 
 ``` r
 
-visreg(fit, "Diet", type="contrast", ylab=expression(Delta*'Protein'), 
-       points=list(col="#55555540", cex=0.25))
+visreg(fit, "Diet",
+  type = "contrast", ylab = expression(Delta * "Protein"),
+  points = list(col = "#55555540", cex = 0.25)
+)
+# Warning: Duplicated aesthetics after name standardisation: colour and size
 ```
 
 ![](mixed_files/figure-html/unnamed-chunk-4-1.png)
@@ -62,10 +66,10 @@ of the code are worth pointing out:
 
 ``` r
 
-v <- visreg(fit, "Time", by="Cow", re.form=~(Time|Cow), plot=FALSE)
-subCow <- sample(levels(Milk$Cow), 10)
-vv <- subset(v, Cow %in% subCow)
-plot(vv, ylab="Protein", layout=c(5,2))
+v <- visreg(fit, "Time", by = "Cow", re.form = ~ (Time | Cow), plot = FALSE)
+sub_cow <- sample(levels(Milk$Cow), 10)
+vv <- subset(v, Cow %in% sub_cow)
+plot(vv, ylab = "Protein", layout = c(5, 2))
 ```
 
 ![](mixed_files/figure-html/unnamed-chunk-5-1.png)

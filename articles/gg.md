@@ -1,37 +1,36 @@
 # visreg and ggplot2
 
-By default, `visreg` will use base R graphics as the engine; however,
-you also have the option of using `ggplot2` as the engine. For example:
+`visreg` plots are built with `ggplot2`. For example:
 
 ``` r
 
-fit <- lm(Ozone ~ Solar.R + Wind + Temp, data=airquality)
-visreg(fit, "Wind", gg=TRUE)
+fit <- lm(Ozone ~ Solar.R + Wind + Temp, data = airquality)
+visreg(fit, "Wind")
 ```
 
 ![](gg_files/figure-html/unnamed-chunk-2-1.png)
 
 [Graphical options](https://pbreheny.github.io/visreg/articles/options)
-regarding the appearance of points, lines, and bands are specified in
-the same way as with base R:
+regarding the appearance of points, lines, and bands are specified via
+the `line`, `fill`, and `points` arguments:
 
 ``` r
 
-visreg(fit, "Wind", gg=TRUE, line=list(col="red"),
-                             fill=list(fill="green"),
-                             points=list(size=5, pch=1))
+visreg(fit, "Wind",
+  line = list(color = "red"),
+  fill = list(fill = "green"),
+  points = list(size = 2, shape = 1)
+)
 ```
 
 ![](gg_files/figure-html/unnamed-chunk-3-1.png)
 
-Note that `visreg` returns a `gg` object, and therefore, you can use
-`ggplot2` to add additional layers to the graph. For example, we could
-add a smoother:
+`visreg` returns a `gg` object, so you can use `ggplot2` to add
+additional layers to the graph. For example, we could add a smoother:
 
 ``` r
 
-visreg(fit, "Wind", gg=TRUE) + geom_smooth(method="loess", col='#FF4E37', fill='#FF4E37')
-# `geom_smooth()` using formula = 'y ~ x'
+visreg(fit, "Wind") + geom_smooth(method = "loess", col = "#FF4E37", fill = "#FF4E37")
 ```
 
 ![](gg_files/figure-html/unnamed-chunk-4-1.png)
@@ -40,7 +39,7 @@ Or we could modify the theme:
 
 ``` r
 
-visreg(fit, "Wind", gg=TRUE) + theme_bw()
+visreg(fit, "Wind") + theme_bw()
 ```
 
 ![](gg_files/figure-html/unnamed-chunk-5-1.png)

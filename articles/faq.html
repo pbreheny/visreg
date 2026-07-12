@@ -11,7 +11,9 @@
 <link href="../deps/bootstrap-5.3.8/bootstrap.min.css" rel="stylesheet">
 <script src="../deps/bootstrap-5.3.8/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
-<script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><link href="../extra.css" rel="stylesheet">
+<script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><script src="faq_files/libs/quarto-html/popper.min.js"></script><script src="faq_files/libs/quarto-html/tippy.umd.min.js"></script><link href="faq_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="faq_files/libs/quarto-html/light-border.css" rel="stylesheet">
+<!-- pkgdown --><script src="../pkgdown.js"></script><link href="../extra.css" rel="stylesheet">
 <meta property="og:title" content="Frequently asked questions">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" integrity="sha384-nB0miv6/jRmo5UMMR1wu3Gz6NLsoTkbqJghGIsx//Rlm+ZU03BU6SQNC66uf4l5+" crossorigin="anonymous">
 <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js" integrity="sha384-7zkQWkzuo3B5mTepMUcHkMB5jZaolc2xDwL6VFqjFALcbeS9Ggm/Yr2r3Dy4lfFg" crossorigin="anonymous"></script><script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js" integrity="sha384-43gviWU0YVjaDtb/GhzOouOXtZMP/7XUzwPTstBeZFe/+rCMvRwr4yROQP43s0Xk" crossorigin="anonymous" onload="renderMathInElement(document.body);"></script>
@@ -24,7 +26,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">visreg</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.8.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.99.0.1</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -59,6 +61,7 @@
     <li><a class="dropdown-item" href="../articles/blackbox.html">Forests, SVMs, etc.</a></li>
     <li><a class="dropdown-item" href="../articles/mixed.html">Mixed models</a></li>
     <li><a class="dropdown-item" href="../articles/multi.html">Multiple outcomes</a></li>
+    <li><a class="dropdown-item" href="../articles/migrating-to-3-0.html">Migrating to 3.0</a></li>
     <li><a class="dropdown-item" href="../articles/faq.html">FAQ</a></li>
   </ul>
 </li>
@@ -82,132 +85,221 @@
 
 
   </div>
-</nav><div class="container template-article">
-
-
-
-
+</nav><div class="container template-quarto">
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
 
       <h1>Frequently asked questions</h1>
-            
-      
-      <small class="dont-index">Source: <a href="https://github.com/pbreheny/visreg/blob/main/vignettes/articles/faq.rmd" class="external-link"><code>vignettes/articles/faq.rmd</code></a></small>
-      <div class="d-none name"><code>faq.rmd</code></div>
+
+
+
+
+      <small class="dont-index">Source: <a href="https://github.com/pbreheny/visreg/blob/main/vignettes/articles/faq.qmd" class="external-link"><code>vignettes/articles/faq.qmd</code></a></small>
+      <div class="d-none name"><code></code></div>
     </div>
 
-    
-    
-<p>This page contains miscellaneous questions that I have been asked
-about visreg, with answers posted here so that others can read them
-too.</p>
-<div class="section level2">
-<h2 id="q-in-visreg2d-is-it-possible-to-superimpose-data-points-onto-the-plot">Q: In <code>visreg2d</code>, is it possible to superimpose data
-points onto the plot?<a class="anchor" aria-label="anchor" href="#q-in-visreg2d-is-it-possible-to-superimpose-data-points-onto-the-plot"></a>
+
+
+
+
+
+    <p>This page contains miscellaneous questions that I have been asked about visreg, with answers posted here so that others can read them too.</p>
+<section class="section level2"><h2 id="q-in-visreg2d-is-it-possible-to-superimpose-data-points-onto-the-plot">Q: In <code>visreg2d</code>, is it possible to superimpose data points onto the plot?<a class="anchor" aria-label="anchor" href="#q-in-visreg2d-is-it-possible-to-superimpose-data-points-onto-the-plot"></a>
 </h2>
-<p>Yes; it’s probably easiest to do this using <code>ggplot2</code> to
-render the surface:</p>
-<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">fit</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">Ozone</span> <span class="op">~</span> <span class="va">Solar.R</span> <span class="op">+</span> <span class="va">Wind</span> <span class="op">+</span> <span class="va">Temp</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/AsIs.html" class="external-link">I</a></span><span class="op">(</span><span class="va">Wind</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/AsIs.html" class="external-link">I</a></span><span class="op">(</span><span class="va">Temp</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/AsIs.html" class="external-link">I</a></span><span class="op">(</span><span class="va">Wind</span><span class="op">*</span><span class="va">Temp</span><span class="op">)</span><span class="op">+</span><span class="fu"><a href="https://rdrr.io/r/base/AsIs.html" class="external-link">I</a></span><span class="op">(</span><span class="va">Wind</span><span class="op">*</span><span class="va">Temp</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span> <span class="op">+</span> </span>
-<span>          <span class="fu"><a href="https://rdrr.io/r/base/AsIs.html" class="external-link">I</a></span><span class="op">(</span><span class="va">Temp</span><span class="op">*</span><span class="va">Wind</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/AsIs.html" class="external-link">I</a></span><span class="op">(</span><span class="va">Temp</span><span class="op">^</span><span class="fl">2</span><span class="op">*</span><span class="va">Wind</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span>, data<span class="op">=</span><span class="va">airquality</span><span class="op">)</span></span>
-<span><span class="fu"><a href="../reference/visreg2d.html">visreg2d</a></span><span class="op">(</span><span class="va">fit</span>, x<span class="op">=</span><span class="st">"Wind"</span>, y<span class="op">=</span><span class="st">"Temp"</span>, plot.type<span class="op">=</span><span class="st">"gg"</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu">geom_point</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span><span class="va">Wind</span>, <span class="va">Temp</span><span class="op">)</span>, data<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/subset.html" class="external-link">subset</a></span><span class="op">(</span><span class="va">airquality</span>, <span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">Ozone</span><span class="op">)</span><span class="op">)</span>, col<span class="op">=</span><span class="st">'gray50'</span><span class="op">)</span></span></code></pre></div>
-<p><img src="faq_files/figure-html/unnamed-chunk-2-1.png" class="r-plt" alt="" width="480"></p>
-<p>You can do it with base R graphics too, but it’s kind of complicated
-because of how <code><a href="https://rdrr.io/r/graphics/filled.contour.html" class="external-link">filled.contour()</a></code> works and the way in which
-it actually creates two plots, one main plot and one plot for the
-legend:</p>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<p>Yes; it’s probably easiest to do this using <code>ggplot2</code> to render the surface:</p>
+<div class="cell" data-h="6" data-w="7">
+<div class="sourceCode cell-code" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">fit</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">Ozone</span> <span class="op">~</span> <span class="va">Solar.R</span> <span class="op">+</span> <span class="va">Wind</span> <span class="op">+</span> <span class="va">Temp</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/AsIs.html" class="external-link">I</a></span><span class="op">(</span><span class="va">Wind</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/AsIs.html" class="external-link">I</a></span><span class="op">(</span><span class="va">Temp</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/AsIs.html" class="external-link">I</a></span><span class="op">(</span><span class="va">Wind</span> <span class="op">*</span> <span class="va">Temp</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/AsIs.html" class="external-link">I</a></span><span class="op">(</span><span class="va">Wind</span> <span class="op">*</span> <span class="va">Temp</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/AsIs.html" class="external-link">I</a></span><span class="op">(</span><span class="va">Temp</span> <span class="op">*</span> <span class="va">Wind</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/AsIs.html" class="external-link">I</a></span><span class="op">(</span><span class="va">Temp</span><span class="op">^</span><span class="fl">2</span> <span class="op">*</span> <span class="va">Wind</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">airquality</span><span class="op">)</span></span>
+<span><span class="fu"><a href="../reference/visreg2d.html">visreg2d</a></span><span class="op">(</span><span class="va">fit</span>, x <span class="op">=</span> <span class="st">"Wind"</span>, y <span class="op">=</span> <span class="st">"Temp"</span>, plot.type <span class="op">=</span> <span class="st">"gg"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">geom_point</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span><span class="va">Wind</span>, <span class="va">Temp</span><span class="op">)</span>, data <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/subset.html" class="external-link">subset</a></span><span class="op">(</span><span class="va">airquality</span>, <span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">Ozone</span><span class="op">)</span><span class="op">)</span>, col <span class="op">=</span> <span class="st">"gray50"</span><span class="op">)</span></span></code></pre></div>
+<div class="cell-output-display">
+<div>
+<figure><p><img src="faq_files/figure-html/unnamed-chunk-2-1.png" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>You can do it with base R graphics too, but it’s kind of complicated because of how <code><a href="https://rdrr.io/r/graphics/filled.contour.html" class="external-link">filled.contour()</a></code> works and the way in which it actually creates two plots, one main plot and one plot for the legend:</p>
+<div class="cell" data-h="6" data-w="9">
+<div class="sourceCode cell-code" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">p</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/substitute.html" class="external-link">quote</a></span><span class="op">(</span><span class="op">{</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/graphics/axis.html" class="external-link">axis</a></span><span class="op">(</span><span class="fl">1</span>, at <span class="op">=</span> <span class="va">mx</span>, labels <span class="op">=</span> <span class="va">lx</span><span class="op">)</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/graphics/axis.html" class="external-link">axis</a></span><span class="op">(</span><span class="fl">2</span>, at <span class="op">=</span> <span class="va">my</span>, labels <span class="op">=</span> <span class="va">ly</span><span class="op">)</span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/base/with.html" class="external-link">with</a></span><span class="op">(</span><span class="va">airquality</span>, <span class="fu"><a href="https://rdrr.io/r/graphics/points.html" class="external-link">points</a></span><span class="op">(</span><span class="va">Wind</span>, <span class="va">Temp</span>, pch<span class="op">=</span><span class="fl">19</span><span class="op">)</span><span class="op">)</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/with.html" class="external-link">with</a></span><span class="op">(</span><span class="va">airquality</span>, <span class="fu"><a href="https://rdrr.io/r/graphics/points.html" class="external-link">points</a></span><span class="op">(</span><span class="va">Wind</span>, <span class="va">Temp</span>, pch <span class="op">=</span> <span class="fl">19</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="op">}</span><span class="op">)</span></span>
-<span><span class="fu"><a href="../reference/visreg2d.html">visreg2d</a></span><span class="op">(</span><span class="va">fit</span>, x<span class="op">=</span><span class="st">"Wind"</span>, y<span class="op">=</span><span class="st">"Temp"</span>, plot.type<span class="op">=</span><span class="st">"image"</span>, plot.axes<span class="op">=</span><span class="va">p</span><span class="op">)</span></span></code></pre></div>
-<p><img src="faq_files/figure-html/unnamed-chunk-3-1.png" class="r-plt" alt="" width="480"></p>
-<p>Doing this through the axes is admittedly very weird – it’s not my
-idea; see <code><a href="https://rdrr.io/r/graphics/filled.contour.html" class="external-link">?filled.contour</a></code>.</p>
+<span><span class="fu"><a href="../reference/visreg2d.html">visreg2d</a></span><span class="op">(</span><span class="va">fit</span>, x <span class="op">=</span> <span class="st">"Wind"</span>, y <span class="op">=</span> <span class="st">"Temp"</span>, plot.type <span class="op">=</span> <span class="st">"image"</span>, plot.axes <span class="op">=</span> <span class="va">p</span><span class="op">)</span></span></code></pre></div>
+<div class="cell-output-display">
+<div>
+<figure><p><img src="faq_files/figure-html/unnamed-chunk-3-1.png" width="672"></p>
+</figure>
 </div>
-<div class="section level2">
-<h2 id="q-does-visreg-work-with-gamm-mgcv-or-gamm4-objects">Q: Does <code>visreg</code> work with <code>gamm</code> (mgcv) or
-<code>gamm4</code> objects?<a class="anchor" aria-label="anchor" href="#q-does-visreg-work-with-gamm-mgcv-or-gamm4-objects"></a>
+</div>
+</div>
+<p>Doing this through the axes is admittedly very weird – it’s not my idea; see <code><a href="https://rdrr.io/r/graphics/filled.contour.html" class="external-link">?filled.contour</a></code>.</p>
+</section><section class="section level2"><h2 id="q-does-visreg-work-with-gamm-mgcv-or-gamm4-objects">Q: Does <code>visreg</code> work with <code>gamm</code> (mgcv) or <code>gamm4</code> objects?<a class="anchor" aria-label="anchor" href="#q-does-visreg-work-with-gamm-mgcv-or-gamm4-objects"></a>
 </h2>
-<p>Yes, although it takes a minor workaround since these objects have an
-unusual structure. First, let’s simulate some data and fit a model (I’m
-just using a <code>tibble</code> here for convenience, it isn’t relevant
-to the question):</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<p>Yes, although it takes a minor workaround since these objects have an unusual structure. First, let’s simulate some data and fit a model (I’m just using a <code>tibble</code> here for convenience, it isn’t relevant to the question):</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">mgcv</span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://tibble.tidyverse.org/" class="external-link">tibble</a></span><span class="op">)</span></span>
 <span><span class="va">n</span> <span class="op">&lt;-</span> <span class="fl">20</span></span>
-<span><span class="va">Data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a></span><span class="op">(</span></span>
-<span>  ID <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="va">LETTERS</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="va">n</span><span class="op">]</span>, each<span class="op">=</span><span class="fl">5</span><span class="op">)</span><span class="op">)</span>,</span>
-<span>  x  <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="va">n</span><span class="op">*</span><span class="fl">5</span><span class="op">)</span>,</span>
+<span><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a></span><span class="op">(</span></span>
+<span>  ID <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="va">LETTERS</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="va">n</span><span class="op">]</span>, each <span class="op">=</span> <span class="fl">5</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>  x  <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="va">n</span> <span class="op">*</span> <span class="fl">5</span><span class="op">)</span>,</span>
 <span>  lp <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="va">n</span><span class="op">)</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="va">ID</span><span class="op">)</span><span class="op">]</span> <span class="op">+</span> <span class="va">x</span><span class="op">^</span><span class="fl">2</span> <span class="op">-</span> <span class="fl">1</span>,</span>
 <span>  p  <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/family.html" class="external-link">binomial</a></span><span class="op">(</span><span class="op">)</span><span class="op">$</span><span class="fu">linkinv</span><span class="op">(</span><span class="va">lp</span><span class="op">)</span>,</span>
-<span>  y  <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Binomial.html" class="external-link">rbinom</a></span><span class="op">(</span><span class="va">n</span><span class="op">*</span><span class="fl">5</span>, <span class="fl">1</span>, <span class="va">p</span><span class="op">)</span></span>
+<span>  y  <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Binomial.html" class="external-link">rbinom</a></span><span class="op">(</span><span class="va">n</span> <span class="op">*</span> <span class="fl">5</span>, <span class="fl">1</span>, <span class="va">p</span><span class="op">)</span></span>
 <span><span class="op">)</span></span>
-<span><span class="va">fit</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/mgcv/man/gamm.html" class="external-link">gamm</a></span><span class="op">(</span><span class="va">y</span><span class="op">~</span><span class="fu"><a href="https://rdrr.io/pkg/mgcv/man/s.html" class="external-link">s</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>, data<span class="op">=</span><span class="va">Data</span>, dist<span class="op">=</span><span class="st">'binomial'</span>, random<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>ID<span class="op">=</span><span class="op">~</span><span class="fl">1</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<p>Now, <code>fit$gam</code> does not include the call (i.e.,
-<code>fit$gam$call</code> is <code>NULL</code>), which means
-<code>visreg</code> won’t be able to find the data:</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/visreg.html">visreg</a></span><span class="op">(</span><span class="va">fit</span><span class="op">$</span><span class="va">gam</span>, <span class="st">'x'</span><span class="op">)</span></span>
-<span><span class="co"># <span style="color: #BBBB00; font-weight: bold;">Error</span><span style="font-weight: bold;"> in `FUN()`:</span></span></span>
-<span><span class="co"># <span style="color: #BBBB00;">!</span> object 'y' not found</span></span></code></pre></div>
+<span><span class="va">fit</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/mgcv/man/gamm.html" class="external-link">gamm</a></span><span class="op">(</span><span class="va">y</span> <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/pkg/mgcv/man/s.html" class="external-link">s</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">dat</span>, dist <span class="op">=</span> <span class="st">"binomial"</span>, random <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>ID <span class="op">=</span> <span class="op">~</span><span class="fl">1</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+</div>
+<p>Now, <code>fit$gam</code> does not include the call (i.e., <code>fit$gam$call</code> is <code>NULL</code>), which means <code>visreg</code> won’t be able to find the data:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/visreg.html">visreg</a></span><span class="op">(</span><span class="va">fit</span><span class="op">$</span><span class="va">gam</span>, <span class="st">"x"</span><span class="op">)</span></span>
+<span><span class="co"># Error in `FUN()`:</span></span>
+<span><span class="co"># ! object 'y' not found</span></span></code></pre></div>
+</div>
 <p>So you have to include it manually:</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">fit</span><span class="op">$</span><span class="va">gam</span><span class="op">$</span><span class="va">data</span> <span class="op">&lt;-</span> <span class="va">Data</span></span>
-<span><span class="fu"><a href="../reference/visreg.html">visreg</a></span><span class="op">(</span><span class="va">fit</span><span class="op">$</span><span class="va">gam</span>, <span class="st">'x'</span><span class="op">)</span></span></code></pre></div>
-<p><img src="faq_files/figure-html/unnamed-chunk-6-1.png" class="r-plt" alt="" width="480"></p>
+<div class="cell" data-h="5" data-w="5">
+<div class="sourceCode cell-code" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">fit</span><span class="op">$</span><span class="va">gam</span><span class="op">$</span><span class="va">data</span> <span class="op">&lt;-</span> <span class="va">dat</span></span>
+<span><span class="fu"><a href="../reference/visreg.html">visreg</a></span><span class="op">(</span><span class="va">fit</span><span class="op">$</span><span class="va">gam</span>, <span class="st">"x"</span><span class="op">)</span></span></code></pre></div>
+<div class="cell-output-display">
+<div>
+<figure><p><img src="faq_files/figure-html/unnamed-chunk-6-1.png" width="672"></p>
+</figure>
 </div>
-<div class="section level2">
-<h2 id="q-im-getting-the-following-error-message-error-in-usemethodfamily-no-applicable-method-for-family-applied-to-an-object-of-class-xxxx-">Q: I’m getting the following error message:
-<code>Error in UseMethod("family") : no applicable method for 'family' applied to an object of class XXXX</code>.<a class="anchor" aria-label="anchor" href="#q-im-getting-the-following-error-message-error-in-usemethodfamily-no-applicable-method-for-family-applied-to-an-object-of-class-xxxx-"></a>
+</div>
+</div>
+</section><section class="section level2"><h2 id="q-im-getting-the-following-error-message-error-in-usemethodfamily-no-applicable-method-for-family-applied-to-an-object-of-class-xxxx-">Q: I’m getting the following error message: <code>Error in UseMethod("family") : no applicable method for 'family' applied to an object of class XXXX</code>.<a class="anchor" aria-label="anchor" href="#q-im-getting-the-following-error-message-error-in-usemethodfamily-no-applicable-method-for-family-applied-to-an-object-of-class-xxxx-"></a>
 </h2>
-<p>When you specify <code>scale='response'</code>, you’re telling
-<code>visreg</code> to automatically find the transformation mapping the
-linear predictor to the scale of the response. It can only do that if
-the fitted model object provides that transformation through the
-<code><a href="https://rdrr.io/r/stats/family.html" class="external-link">family()</a></code> method. Many R models (e.g., <code>glm</code>) do
-this, but some (e.g., the <code>glmmADMB</code> package,
-<code>gamm</code> from the <code>mgcv</code> package) don’t. If you’re
-working with one of these models, you’ll have to supply that
-transformation yourself. For example, with the model from the previous
-question, this code fails:</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/visreg.html">visreg</a></span><span class="op">(</span><span class="va">fit</span><span class="op">$</span><span class="va">gam</span>, <span class="st">'x'</span>, scale<span class="op">=</span><span class="st">'response'</span><span class="op">)</span></span>
-<span><span class="co"># <span style="color: #BBBB00; font-weight: bold;">Error</span><span style="font-weight: bold;"> in `UseMethod()`:</span></span></span>
-<span><span class="co"># <span style="color: #BBBB00;">!</span> no applicable method for 'family' applied to an object of class "gam"</span></span></code></pre></div>
-<p>Since this is a binomial model with a logistic link,
-<code>binomial()$linkinv</code> provides the inverse transformation:</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/visreg.html">visreg</a></span><span class="op">(</span><span class="va">fit</span><span class="op">$</span><span class="va">gam</span>, <span class="st">'x'</span>, trans<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/stats/family.html" class="external-link">binomial</a></span><span class="op">(</span><span class="op">)</span><span class="op">$</span><span class="va">linkinv</span>, ylab<span class="op">=</span><span class="st">"Probability"</span><span class="op">)</span></span></code></pre></div>
-<p><img src="faq_files/figure-html/unnamed-chunk-8-1.png" class="r-plt" alt="" width="480"></p>
+<p>When you specify <code>scale='response'</code>, you’re telling <code>visreg</code> to automatically find the transformation mapping the linear predictor to the scale of the response. It can only do that if the fitted model object provides that transformation through the <code><a href="https://rdrr.io/r/stats/family.html" class="external-link">family()</a></code> method. Many R models (e.g., <code>glm</code>) do this, but some (e.g., the <code>glmmADMB</code> package, <code>gamm</code> from the <code>mgcv</code> package) don’t. If you’re working with one of these models, you’ll have to supply that transformation yourself. For example, with the model from the previous question, this code fails:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/visreg.html">visreg</a></span><span class="op">(</span><span class="va">fit</span><span class="op">$</span><span class="va">gam</span>, <span class="st">"x"</span>, scale <span class="op">=</span> <span class="st">"response"</span><span class="op">)</span></span>
+<span><span class="co"># Error in `UseMethod()`:</span></span>
+<span><span class="co"># ! no applicable method for 'family' applied to an object of class "gam"</span></span></code></pre></div>
 </div>
-<div class="section level2">
-<h2 id="q-can-i-have-the-response-variable-on-the-horizontal-axis-instead-of-the-vertical-axis">Q: Can I have the response variable on the horizontal axis instead
-of the vertical axis?<a class="anchor" aria-label="anchor" href="#q-can-i-have-the-response-variable-on-the-horizontal-axis-instead-of-the-vertical-axis"></a>
+<p>Since this is a binomial model with a logistic link, <code>binomial()$linkinv</code> provides the inverse transformation:</p>
+<div class="cell" data-h="5" data-w="5">
+<div class="sourceCode cell-code" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/visreg.html">visreg</a></span><span class="op">(</span><span class="va">fit</span><span class="op">$</span><span class="va">gam</span>, <span class="st">"x"</span>, trans <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/family.html" class="external-link">binomial</a></span><span class="op">(</span><span class="op">)</span><span class="op">$</span><span class="va">linkinv</span>, ylab <span class="op">=</span> <span class="st">"Probability"</span><span class="op">)</span></span></code></pre></div>
+<div class="cell-output-display">
+<div>
+<figure><p><img src="faq_files/figure-html/unnamed-chunk-8-1.png" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section><section class="section level2"><h2 id="q-can-i-have-the-response-variable-on-the-horizontal-axis-instead-of-the-vertical-axis">Q: Can I have the response variable on the horizontal axis instead of the vertical axis?<a class="anchor" aria-label="anchor" href="#q-can-i-have-the-response-variable-on-the-horizontal-axis-instead-of-the-vertical-axis"></a>
 </h2>
 <p>You can achieve this via <code><a href="https://ggplot2.tidyverse.org/reference/coord_flip.html" class="external-link">ggplot2::coord_flip</a></code>:</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">fit</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">Ozone</span> <span class="op">~</span> <span class="va">Solar.R</span> <span class="op">+</span> <span class="va">Wind</span> <span class="op">+</span> <span class="va">Temp</span>, data<span class="op">=</span><span class="va">airquality</span><span class="op">)</span></span>
-<span><span class="fu"><a href="../reference/visreg.html">visreg</a></span><span class="op">(</span><span class="va">fit</span>, <span class="st">"Wind"</span>, gg<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span> <span class="op">+</span> <span class="fu">coord_flip</span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p><img src="faq_files/figure-html/unnamed-chunk-9-1.png" class="r-plt" alt="" width="480"></p>
+<div class="cell" data-h="5" data-w="5">
+<div class="sourceCode cell-code" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">fit</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">Ozone</span> <span class="op">~</span> <span class="va">Solar.R</span> <span class="op">+</span> <span class="va">Wind</span> <span class="op">+</span> <span class="va">Temp</span>, data <span class="op">=</span> <span class="va">airquality</span><span class="op">)</span></span>
+<span><span class="fu"><a href="../reference/visreg.html">visreg</a></span><span class="op">(</span><span class="va">fit</span>, <span class="st">"Wind"</span><span class="op">)</span> <span class="op">+</span> <span class="fu">coord_flip</span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<div class="cell-output-display">
+<div>
+<figure><p><img src="faq_files/figure-html/unnamed-chunk-9-1.png" width="672"></p>
+</figure>
 </div>
-  </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
-    </nav></aside>
 </div>
-
+</div>
+</section><script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'light-border',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config);
+    }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script></main>
+</div>
 
 
     <footer><div class="pkgdown-footer-left">
-  <p>Developed by <a href="https://myweb.uiowa.edu/pbreheny/" class="external-link">Patrick Breheny</a>.</p>
+  <p>Developed by <a href="https://pbreheny.org/web/" class="external-link">Patrick Breheny</a>.</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Last updated: July 08, 2026</p>
+  <p>Last updated: July 12, 2026</p>
 </div>
 
     </footer>

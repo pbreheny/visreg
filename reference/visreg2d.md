@@ -43,17 +43,15 @@ visreg2d(
 
   The type of plot to be produced. The following options are supported:
 
-  - If 'conditional' is selected, the plot returned shows the value of
+  - If `"conditional"` is selected, the plot returned shows the value of
     the variable on the x-axis and the change in response on the y-axis,
     holding all other variables constant (by default, median for numeric
     variables and most common category for factors).
 
-  - If 'contrast' is selected, the plot returned shows the effect on the
-    expected value of the response by moving the x variable away from a
-    reference point on the x-axis (for numeric variables, this is taken
-    to be the mean).
-
-  For more details, see references.
+  - If `"contrast"` is selected, the plot returned shows the effect on
+    the expected value of the response by moving the x variable away
+    from a reference point on the x-axis (for numeric variables, this is
+    taken to be the mean). For more details, see references.
 
 - data:
 
@@ -123,38 +121,35 @@ A `visreg2d` object consisting of:
 
 - <https://pbreheny.github.io/visreg/>
 
-- Breheny, P. and Burchett, W. (2017), Visualizing regression models
-  using visreg.
+- Breheny P and Burchett W. (2017) Visualization of regression models
+  using visreg. *R Journal*, **9**: 56-71.
   [doi:10.32614/RJ-2017-046](https://doi.org/10.32614/RJ-2017-046)
 
 ## See also
 
-<https://pbreheny.github.io/visreg/articles/surface.html>
-[`visreg()`](https://pbreheny.github.io/visreg/reference/visreg.md)
-
-## Author
-
-Patrick Breheny and Woodrow Burchett
+[`plot.visreg2d()`](https://pbreheny.github.io/visreg/reference/plot.visreg2d.md)
+for the plotting function and the
+[vignette](https://pbreheny.github.io/visreg/surface.html) for examples.
 
 ## Examples
 
 ``` r
-fit <- lm(Ozone ~ Solar.R + Wind + Temp + I(Wind^2) + I(Temp^2) +
-I(Wind*Temp)+I(Wind*Temp^2) + I(Temp*Wind^2) + I(Temp^2*Wind^2),
-data=airquality)
+fit <- lm(
+  Ozone ~ Solar.R + Wind + Temp + I(Wind^2) + I(Temp^2) +
+    I(Wind * Temp) + I(Wind * Temp^2) + I(Temp * Wind^2) + I(Temp^2 * Wind^2),
+  data = airquality
+)
 
-visreg2d(fit, x="Wind", y="Temp", plot.type="image")
+visreg2d(fit, x = "Wind", y = "Temp", plot.type = "image")
 
-visreg2d(fit, x="Wind", y="Temp", plot.type="persp")
+visreg2d(fit, x = "Wind", y = "Temp", plot.type = "persp")
 
 
 ## Requires the rgl package
 if (FALSE) { # \dontrun{
-visreg2d(fit, x="Wind", y="Temp", plot.type="rgl")
+visreg2d(fit, x = "Wind", y = "Temp", plot.type = "rgl")
 } # }
 
-## Requires the ggplot2 package
-if (FALSE) { # \dontrun{
-visreg2d(fit, x="Wind", y="Temp", plot.type="gg")
-} # }
+visreg2d(fit, x = "Wind", y = "Temp")
+
 ```

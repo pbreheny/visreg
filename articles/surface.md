@@ -6,7 +6,7 @@ continuous variables:
 ``` r
 
 library(splines)
-fit <- lm(Ozone ~ Solar.R +ns(Wind, df=2)*ns(Temp, df=2), data=airquality)
+fit <- lm(Ozone ~ Solar.R + ns(Wind, df = 2) * ns(Temp, df = 2), data = airquality)
 ```
 
 We might wish to visualize how ozone depends on wind and temperature as
@@ -33,7 +33,7 @@ see the correct syntax. For example, if we want different colors,
 
 ``` r
 
-visreg2d(fit, "Wind", "Temp", color.palette=colorRampPalette(c("black", "white", "purple")))
+visreg2d(fit, "Wind", "Temp", color.palette = colorRampPalette(c("black", "white", "purple")))
 ```
 
 ![](surface_files/figure-html/unnamed-chunk-4-1.png)
@@ -46,7 +46,7 @@ three-dimensional image. This can be done in a static manner using
 
 ``` r
 
-visreg2d(fit, "Wind", "Temp", plot.type="persp")
+visreg2d(fit, "Wind", "Temp", plot.type = "persp")
 ```
 
 ![](surface_files/figure-html/unnamed-chunk-5-1.png)
@@ -55,7 +55,7 @@ Or dynamically using `type="rgl"`:
 
 ``` r
 
-visreg2d(fit, "Wind", "Temp", plot.type="rgl")
+visreg2d(fit, "Wind", "Temp", plot.type = "rgl")
 ```
 
 For the interactive `rgl` option, you will need to install the `rgl`

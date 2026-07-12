@@ -4,7 +4,7 @@ Let’s begin with a simple, additive, linear model:
 
 ``` r
 
-fit <- lm(Ozone ~ Solar.R + Wind + Temp, data=airquality)
+fit <- lm(Ozone ~ Solar.R + Wind + Temp, data = airquality)
 summary(fit)$coef
 #                 Estimate  Std. Error   t value     Pr(>|t|)
 # (Intercept) -64.34207893 23.05472435 -2.790841 6.226638e-03
@@ -33,8 +33,8 @@ with visreg (adding a horizontal line here that represents the null):
 
 ``` r
 
-visreg(fit, "Solar.R")
-abline(h=44.5, lty=2)
+visreg(fit, "Solar.R") +
+  ggplot2::geom_hline(yintercept = 44.5, linetype = 2)
 ```
 
 ![](basic_files/figure-html/unnamed-chunk-4-1.png)
@@ -58,8 +58,8 @@ discretizing `Temp`, and then visualizes its relationship with `Ozone`:
 
 ``` r
 
-airquality$Heat <- cut(airquality$Temp, 3, labels=c("Cool", "Mild", "Hot"))
-fit <- lm(Ozone ~ Solar.R + Wind + Heat, data=airquality)
+airquality$Heat <- cut(airquality$Temp, 3, labels = c("Cool", "Mild", "Hot"))
+fit <- lm(Ozone ~ Solar.R + Wind + Heat, data = airquality)
 visreg(fit, "Heat")
 ```
 

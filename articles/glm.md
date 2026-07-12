@@ -5,9 +5,9 @@ model:
 
 ``` r
 
-data("birthwt", package="MASS")
-fit <- glm(low ~ age + race + smoke + lwt, data=birthwt, family="binomial")
-visreg(fit, "lwt", xlab="Mother's weight", ylab="Log odds (low birthweight)")
+data("birthwt", package = "MASS")
+fit <- glm(low ~ age + race + smoke + lwt, data = birthwt, family = "binomial")
+visreg(fit, "lwt", xlab = "Mother's weight", ylab = "Log odds (low birthweight)")
 ```
 
 ![](glm_files/figure-html/unnamed-chunk-2-1.png)
@@ -30,7 +30,7 @@ although for GLMs the shortcut `scale="response"` is provided:
 
 ``` r
 
-visreg(fit, "lwt", scale="response", rug=2, xlab="Mother's weight", ylab="P(low birthweight)")
+visreg(fit, "lwt", scale = "response", rug = 2, xlab = "Mother's weight", ylab = "P(low birthweight)")
 ```
 
 ![](glm_files/figure-html/unnamed-chunk-3-1.png)
@@ -50,7 +50,7 @@ using a log link:
 ``` r
 
 n <- 50
-x <- seq(-5, 5, len=n)
+x <- seq(-5, 5, len = n)
 y <- rpois(n, lambda = exp(x))
 ```
 
@@ -65,20 +65,32 @@ then fit a Poisson regression model:
 
 ``` r
 
-fit <- glm(y ~ x, family=poisson)
+fit <- glm(y ~ x, family = poisson)
 ```
 
 and visualize with `visreg`:
 
 ``` r
 
-par(mfrow=c(1,3))
+par(mfrow = c(1, 3))
 visreg(fit, "x")
-visreg(fit, "x", scale="response")
-visreg(fit, "x", scale="response", partial=TRUE)
 ```
 
 ![](glm_files/figure-html/unnamed-chunk-7-1.png)
+
+``` r
+
+visreg(fit, "x", scale = "response")
+```
+
+![](glm_files/figure-html/unnamed-chunk-7-2.png)
+
+``` r
+
+visreg(fit, "x", scale = "response", partial = TRUE)
+```
+
+![](glm_files/figure-html/unnamed-chunk-7-3.png)
 
 The default `visreg` plot (left) clearly illustrates that 49 of the
 observations fit the model well, but the 50th is a big outlier. By

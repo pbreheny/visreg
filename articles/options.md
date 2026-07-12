@@ -6,8 +6,8 @@ we work from this general model:
 
 ``` r
 
-airquality$Heat <- cut(airquality$Temp, 3, labels=c("Cool", "Mild", "Hot"))
-fit <- lm(Ozone ~ Solar.R + Wind + Heat, data=airquality)
+airquality$Heat <- cut(airquality$Temp, 3, labels = c("Cool", "Mild", "Hot"))
+fit <- lm(Ozone ~ Solar.R + Wind + Heat, data = airquality)
 ```
 
 ## Turning on/off plot components
@@ -17,14 +17,14 @@ partial residuals, but the residuals and the bands can be turned off:
 
 ``` r
 
-visreg(fit, "Wind", band=FALSE)
+visreg(fit, "Wind", band = FALSE)
 ```
 
 ![](options_files/figure-html/unnamed-chunk-3-1.png)
 
 ``` r
 
-visreg(fit, "Wind", partial=FALSE)
+visreg(fit, "Wind", partial = FALSE)
 ```
 
 ![](options_files/figure-html/unnamed-chunk-4-1.png)
@@ -35,7 +35,7 @@ can turn this off too:
 
 ``` r
 
-visreg(fit, "Wind", partial=FALSE, rug=FALSE)
+visreg(fit, "Wind", partial = FALSE, rug = FALSE)
 ```
 
 ![](options_files/figure-html/unnamed-chunk-5-1.png)
@@ -47,7 +47,7 @@ regression](https://pbreheny.github.io/visreg/articles/glm.md)):
 
 ``` r
 
-visreg(fit, "Wind", rug=2, partial=FALSE)
+visreg(fit, "Wind", rug = 2, partial = FALSE)
 ```
 
 ![](options_files/figure-html/unnamed-chunk-6-1.png)
@@ -59,7 +59,7 @@ helpful way to avoid overplotting:
 
 ``` r
 
-fit <- lm(Ozone ~ Solar.R + Wind + poly(Month, 2), data=airquality)
+fit <- lm(Ozone ~ Solar.R + Wind + poly(Month, 2), data = airquality)
 visreg(fit, "Month")
 ```
 
@@ -67,7 +67,7 @@ visreg(fit, "Month")
 
 ``` r
 
-visreg(fit, "Month", jitter=TRUE)
+visreg(fit, "Month", jitter = TRUE)
 ```
 
 ![](options_files/figure-html/unnamed-chunk-8-1.png)
@@ -76,54 +76,65 @@ visreg(fit, "Month", jitter=TRUE)
 
 Specifying `col='red'` won’t work, because `visreg` can’t know whether
 you’re trying to change the color of the line, the band, or the points.
-These options must be specified through separate parameters lists:
+These options must be specified through separate parameter lists:
 
-- `line.par`: Controls the appearance of the fitted line
-- `fill.par`: Controls the appearance of the confidence band
-- `points.par`: Controls the appearance of the partial residuals
+- `line`: Controls the appearance of the fitted line
+- `fill`: Controls the appearance of the confidence band
+- `points`: Controls the appearance of the partial residuals
 
-Each of these can be abbreviated, as in the example below:
+Each of these is passed along to the underlying `ggplot2` geom
+(`geom_line`/`geom_ribbon`/`geom_point` for a continuous `x`, or
+`geom_errorbar`/`geom_tile`/`geom_jitter` for a factor `x`), so any
+parameter that geom accepts can be specified:
 
 ``` r
 
-visreg(fit, "Wind", line=list(col="red"),
-                    fill=list(col="green"),
-                    points=list(cex=1.5, pch=1))
+visreg(fit, "Wind",
+  line = list(color = "red"),
+  fill = list(fill = "green"),
+  points = list(size = 1.5, shape = 1)
+)
 ```
 
 ![](options_files/figure-html/unnamed-chunk-9-1.png)
 
 ## Generic plot options
 
-Other options get passed along to `plot`, so any option that you could
-normally pass to `plot`, like `main`, will work fine. Here’s an example
-that includes a bunch of options like this:
+`visreg` returns a `gg` object, so its appearance can be customized just
+like any other `ggplot2` plot, by adding further components. Here’s an
+example that adds a title and re-labels the (log-transformed) y-axis:
 
 ``` r
 
-fit <- lm(log(Ozone) ~ Solar.R + Wind + Temp, data=airquality)
-visreg(fit, "Wind", yaxt="n", main="Ozone is bad for you", bty="n", ylab="Ozone")
+fit <- lm(log(Ozone) ~ Solar.R + Wind + Temp, data = airquality)
 at <- seq(1.5, 5, 0.5)
-lab <- round(exp(at), 1)
-axis(2, at=at, lab=lab, las=1)
+visreg(fit, "Wind", ylab = "Ozone") +
+  ggtitle("Ozone is bad for you") +
+  scale_y_continuous(breaks = at, labels = round(exp(at), 1))
 ```
 
 ![](options_files/figure-html/unnamed-chunk-10-1.png)
 
-## Whitespace for factors
+## Band width for factors
 
-When `x` is a factor, the `whitespace` option controls the amount of
-whitespace in between the categories:
+When `x` is a factor, the width of the confidence band (and its
+accompanying line) is controlled through the `fill`/`line` arguments’
+`width` parameter:
 
 ``` r
 
-fit <- lm(Ozone ~ Solar.R + Wind + Heat, data=airquality)
-par(mfrow=c(1,2))
-visreg(fit, "Heat", whitespace=.1)
-visreg(fit, "Heat", whitespace=.5)
+fit <- lm(Ozone ~ Solar.R + Wind + Heat, data = airquality)
+visreg(fit, "Heat", fill = list(width = .9))
 ```
 
 ![](options_files/figure-html/unnamed-chunk-11-1.png)
+
+``` r
+
+visreg(fit, "Heat", fill = list(width = .1))
+```
+
+![](options_files/figure-html/unnamed-chunk-12-1.png)
 
 ## Subsetting the plot
 
@@ -132,17 +143,17 @@ observations; you can use `subset` to accomplish this:
 
 ``` r
 
-v <- visreg(fit, "Wind", by="Heat", plot=FALSE)
+v <- visreg(fit, "Wind", by = "Heat", plot = FALSE)
 v1 <- subset(v, Heat %in% c("Cool", "Hot"))
 plot(v1)
 ```
 
-![](options_files/figure-html/unnamed-chunk-12-1.png)
+![](options_files/figure-html/unnamed-chunk-13-1.png)
 
 ``` r
 
 v2 <- subset(v, Wind < 15)
-plot(v2, layout=c(3,1))
+plot(v2)
 ```
 
-![](options_files/figure-html/unnamed-chunk-13-1.png)
+![](options_files/figure-html/unnamed-chunk-14-1.png)

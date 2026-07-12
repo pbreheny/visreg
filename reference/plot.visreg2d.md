@@ -14,7 +14,7 @@ plot(
   ylab,
   zlab,
   color,
-  print.cond = FALSE,
+  print_cond = FALSE,
   whitespace = 0.2,
   ...
 )
@@ -59,11 +59,11 @@ plot(
   surface. For `plot.type='image'` or `plot.type='gg'`, a vector of
   colors used to establish a color palette.
 
-- print.cond:
+- print_cond:
 
-  If `print.cond==TRUE`, the explanatory variable values conditioned on
+  If `print_cond==TRUE`, the explanatory variable values conditioned on
   in a conditional plot are printed to the console (default: `FALSE`).
-  If `print.cond==TRUE` and `type=="contrast"`, the conditions will
+  If `print_cond==TRUE` and `type=="contrast"`, the conditions will
   still be printed, but they have no bearing on the plot unless
   interactions are present.
 
@@ -86,12 +86,10 @@ using visreg. *R Journal*, **9**: 56-71.
 
 ## See also
 
-https://pbreheny.github.io/visreg/surface.html,
-[`visreg()`](https://pbreheny.github.io/visreg/reference/visreg.md)
-
-## Author
-
-Patrick Breheny and Woodrow Burchett
+[`visreg2d()`](https://pbreheny.github.io/visreg/reference/visreg2d.md)
+for creating two-dimensional `visreg` objects, and the [surface plots
+vignette](https://pbreheny.github.io/visreg/surface.html) for examples
+and details.
 
 ## Examples
 

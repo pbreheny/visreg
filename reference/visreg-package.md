@@ -38,6 +38,8 @@ Other contributors:
 ## Examples
 
 ``` r
-vignette("quick-start", package="visreg")
+# \donttest{
+vignette("quick-start", package = "visreg")
 #> Warning: vignette ‘quick-start’ not found
+# }
 ```

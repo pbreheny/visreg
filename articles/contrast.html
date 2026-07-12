@@ -5,14 +5,16 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>Contrast vs. conditional plots • visreg</title>
+<title>Contrast vs. conditional plots • visreg</title>
 <!-- katex math --><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" integrity="sha384-nB0miv6/jRmo5UMMR1wu3Gz6NLsoTkbqJghGIsx//Rlm+ZU03BU6SQNC66uf4l5+" crossorigin="anonymous">
 <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js" integrity="sha384-7zkQWkzuo3B5mTepMUcHkMB5jZaolc2xDwL6VFqjFALcbeS9Ggm/Yr2r3Dy4lfFg" crossorigin="anonymous"></script><script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js" integrity="sha384-43gviWU0YVjaDtb/GhzOouOXtZMP/7XUzwPTstBeZFe/+rCMvRwr4yROQP43s0Xk" crossorigin="anonymous" onload="renderMathInElement(document.body);"></script><script src="../katex-auto.js"></script><script src="../lightswitch.js"></script><script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="../deps/bootstrap-5.3.8/bootstrap.min.css" rel="stylesheet">
 <script src="../deps/bootstrap-5.3.8/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
-<script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><link href="../extra.css" rel="stylesheet">
-<meta property="og:title" content="Contrast vs. conditional plots">
+<script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><script src="contrast_files/libs/quarto-html/popper.min.js"></script><script src="contrast_files/libs/quarto-html/tippy.umd.min.js"></script><link href="contrast_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="contrast_files/libs/quarto-html/light-border.css" rel="stylesheet">
+<!-- pkgdown --><script src="../pkgdown.js"></script><link href="../extra.css" rel="stylesheet">
+<meta property="og:title" content="Contrast vs. conditional plots">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" integrity="sha384-nB0miv6/jRmo5UMMR1wu3Gz6NLsoTkbqJghGIsx//Rlm+ZU03BU6SQNC66uf4l5+" crossorigin="anonymous">
 <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js" integrity="sha384-7zkQWkzuo3B5mTepMUcHkMB5jZaolc2xDwL6VFqjFALcbeS9Ggm/Yr2r3Dy4lfFg" crossorigin="anonymous"></script><script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js" integrity="sha384-43gviWU0YVjaDtb/GhzOouOXtZMP/7XUzwPTstBeZFe/+rCMvRwr4yROQP43s0Xk" crossorigin="anonymous" onload="renderMathInElement(document.body);"></script>
 </head>
@@ -24,7 +26,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">visreg</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.8.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.99.0.1</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -59,6 +61,7 @@
     <li><a class="dropdown-item" href="../articles/blackbox.html">Forests, SVMs, etc.</a></li>
     <li><a class="dropdown-item" href="../articles/mixed.html">Mixed models</a></li>
     <li><a class="dropdown-item" href="../articles/multi.html">Multiple outcomes</a></li>
+    <li><a class="dropdown-item" href="../articles/migrating-to-3-0.html">Migrating to 3.0</a></li>
     <li><a class="dropdown-item" href="../articles/faq.html">FAQ</a></li>
   </ul>
 </li>
@@ -82,111 +85,167 @@
 
 
   </div>
-</nav><div class="container template-article">
-
-
-
-
+</nav><div class="container template-quarto">
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
 
-      <h1>Contrast vs. conditional plots</h1>
-            
-      
-      <small class="dont-index">Source: <a href="https://github.com/pbreheny/visreg/blob/main/vignettes/articles/contrast.rmd" class="external-link"><code>vignettes/articles/contrast.rmd</code></a></small>
-      <div class="d-none name"><code>contrast.rmd</code></div>
+      <h1>Contrast vs. conditional plots</h1>
+
+
+
+
+      <small class="dont-index">Source: <a href="https://github.com/pbreheny/visreg/blob/main/vignettes/articles/contrast.qmd" class="external-link"><code>vignettes/articles/contrast.qmd</code></a></small>
+      <div class="d-none name"><code></code></div>
     </div>
 
-    
-    
-<p>Conditional plots were discussed in <a href="basic.html">getting
-started</a>. The downside of a conditional plot is that all of the terms
-in the model must be specified – i.e., to plot the relationship between
-wind and ozone, we also need to specify a value for temperature (or use
-the median as a default). Specifically, letting <span class="math inline">x</span> denote the predictor of interest, <span class="math inline">y</span> the outcome, and <span class="math inline">\mathbf{X}_{-j}</span> the other predictors in the
-model, a conditional plot represents the relationship <span class="math inline">f(x) = \mathbb{E}(Y | x,
-\mathbf{X}_{-j})</span>.</p>
-<p>As an alternative, we could consider relative changes, or as they are
-called in statistics, <em>contrasts</em>. To be specific, let <span class="math inline">x_0</span> denote a reference value for, e.g., wind,
-and consider plotting <span class="math inline">f(x) = \mathbb{E}(Y | x)
-- \mathbb{E}(Y | x_0)</span>. Readers who have taken a course in
-regression will recognize that this is one of the defining
-characteristics of a <em>regression</em> model: a one-unit change in
-<span class="math inline">x</span> has the same effect on <span class="math inline">\mathbb{E}(Y)</span> regardless of what the other
-terms in the model are. Models outside the regression framework, such as
-<a href="blackbox.html">random forests and support vector machines</a>,
-do not have this property, and therefore, may only be visualized with
-conditional plots.</p>
-<p>To summarize, the primary advantage of a contrast plot is that we
-don’t have to specify <span class="math inline">\mathbf{X}_{-j}</span>,
-while the primary disadvantage is that we have to specify a reference
-value <span class="math inline">\mathbf{x}_0</span>. By default, the
-reference value in <code>visreg</code> for a numeric variable is its
-mean, and for a factor its first, or reference, level.</p>
-<p>To see how contrast plots compare to conditional plots, let’s fit the
-same model as in <a href="basic.html">getting started</a>, but display
-contrast plots and conditional plots side-by-side:</p>
-<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">airquality</span><span class="op">$</span><span class="va">Heat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cut.html" class="external-link">cut</a></span><span class="op">(</span><span class="va">airquality</span><span class="op">$</span><span class="va">Temp</span>, <span class="fl">3</span>, labels<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Cool"</span>, <span class="st">"Mild"</span>, <span class="st">"Hot"</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="va">fit</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">Ozone</span> <span class="op">~</span> <span class="va">Solar.R</span> <span class="op">+</span> <span class="va">Wind</span> <span class="op">+</span> <span class="va">Heat</span>, data<span class="op">=</span><span class="va">airquality</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></span><span class="op">(</span>mfrow<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">2</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="fu"><a href="../reference/visreg.html">visreg</a></span><span class="op">(</span><span class="va">fit</span>, <span class="st">"Wind"</span>, type<span class="op">=</span><span class="st">"conditional"</span><span class="op">)</span></span>
-<span><span class="fu"><a href="../reference/visreg.html">visreg</a></span><span class="op">(</span><span class="va">fit</span>, <span class="st">"Wind"</span>, type<span class="op">=</span><span class="st">"contrast"</span><span class="op">)</span></span></code></pre></div>
-<p><img src="contrast_files/figure-html/unnamed-chunk-3-1.png" class="r-plt" alt="" width="100%"></p>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/visreg.html">visreg</a></span><span class="op">(</span><span class="va">fit</span>, <span class="st">"Heat"</span>, type<span class="op">=</span><span class="st">"conditional"</span><span class="op">)</span></span>
-<span><span class="fu"><a href="../reference/visreg.html">visreg</a></span><span class="op">(</span><span class="va">fit</span>, <span class="st">"Heat"</span>, type<span class="op">=</span><span class="st">"contrast"</span><span class="op">)</span></span></code></pre></div>
-<p><img src="contrast_files/figure-html/unnamed-chunk-3-2.png" class="r-plt" alt="" width="100%"></p>
-<p>The similarity between the plots is that the slopes of the lines, and
-the differences between the levels of <code>Heat</code>, are exactly the
-same in both plots. However, the vertical axes and the confidence
-intervals are different. In particular, the confidence interval for a
-contrast plot has zero width at the reference level: we can say with
-certainty that <span class="math inline">\mathbb{E}(Y | x_0) -
-\mathbb{E}(Y | x_0)=0</span>. There is always uncertainty, however,
-about the actual value of <span class="math inline">\mathbb{E}(Y)</span>
-in a conditional plot for all values of <span class="math inline">x</span>. Likewise, at the mean value of wind, 9.96,
-the contrast plot passes through 0 by construction, wheras the
-conditional plot passes through 34.6.</p>
-<p>Furthermore, even where both confidence intervals have nonzero width,
-they do not have the same width, because they represent different
-things. For example, the width of the confidence interval for
-<code>Mild</code> heat is wider for the contrast plot than it is for the
-conditional plot: there is less uncertainty about the expected value of
-ozone on a mild day than there is about the difference in expected
-values between mild and cool days.</p>
-<p>In these documentation pages, we focus primarily on conditional plots
-to avoid duplication, but all of the options and ideas we discuss carry
-over to contrast plots as well. It is worth noting, however, that there
-are three situations in particular where contrast plots are very
-useful:</p>
-<ul>
-<li>Logistic regression applied to case-control studies: In such
-studies, the estimation of the intercept parameter is typically
-meaningless, so conditional plots are of questionable value. Contrast
-plots, however, are still meaningful ways to visualize the model’s
-estimates.</li>
-<li>Cox relative risk (proportional hazards) models: Likewise, in Cox
-models, the baseline hazard is not estimated and plots of absolute risk
-are dubious, but contrast plots still useful.</li>
-<li>
-<a href="mixed.html">Random effect models</a>: Most random effect
-modeling software cannot account for uncertainty in the random effects
-when calculating standard errors for <span class="math inline">\mathbb{E}(Y)</span>. Thus, while conditional plots
-may still be constructed, they will lack confidence intervals. In
-contrast plots, these terms drop out, and confidence intervals may still
-be constructed.</li>
-</ul></main>
-</div>
 
+
+
+
+
+    <p>Conditional plots were discussed in <a href="basic.html">getting started</a>. The downside of a conditional plot is that all of the terms in the model must be specified – i.e., to plot the relationship between wind and ozone, we also need to specify a value for temperature (or use the median as a default). Specifically, letting <span class="math inline">x</span> denote the predictor of interest, <span class="math inline">y</span> the outcome, and <span class="math inline">\mathbf{X}_{-j}</span> the other predictors in the model, a conditional plot represents the relationship <span class="math inline">f(x) = \mathbb{E}(Y | x, \mathbf{X}_{-j})</span>.</p>
+<p>As an alternative, we could consider relative changes, or as they are called in statistics, <em>contrasts</em>. To be specific, let <span class="math inline">x_0</span> denote a reference value for, e.g., wind, and consider plotting <span class="math inline">f(x) = \mathbb{E}(Y | x) - \mathbb{E}(Y | x_0)</span>. Readers who have taken a course in regression will recognize that this is one of the defining characteristics of a <em>regression</em> model: a one-unit change in <span class="math inline">x</span> has the same effect on <span class="math inline">\mathbb{E}(Y)</span> regardless of what the other terms in the model are. Models outside the regression framework, such as <a href="blackbox.html">random forests and support vector machines</a>, do not have this property, and therefore, may only be visualized with conditional plots.</p>
+<p>To summarize, the primary advantage of a contrast plot is that we don’t have to specify <span class="math inline">\mathbf{X}_{-j}</span>, while the primary disadvantage is that we have to specify a reference value <span class="math inline">\mathbf{x}_0</span>. By default, the reference value in <code>visreg</code> for a numeric variable is its mean, and for a factor its first, or reference, level.</p>
+<p>To see how contrast plots compare to conditional plots, let’s fit the same model as in <a href="basic.html">getting started</a>, but display contrast plots and conditional plots side-by-side:</p>
+<div class="cell" data-h="4" data-w="8">
+<div class="sourceCode cell-code" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">airquality</span><span class="op">$</span><span class="va">Heat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cut.html" class="external-link">cut</a></span><span class="op">(</span><span class="va">airquality</span><span class="op">$</span><span class="va">Temp</span>, <span class="fl">3</span>, labels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Cool"</span>, <span class="st">"Mild"</span>, <span class="st">"Hot"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">fit</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">Ozone</span> <span class="op">~</span> <span class="va">Solar.R</span> <span class="op">+</span> <span class="va">Wind</span> <span class="op">+</span> <span class="va">Heat</span>, data <span class="op">=</span> <span class="va">airquality</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></span><span class="op">(</span>mfrow <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="../reference/visreg.html">visreg</a></span><span class="op">(</span><span class="va">fit</span>, <span class="st">"Wind"</span>, type <span class="op">=</span> <span class="st">"conditional"</span><span class="op">)</span></span></code></pre></div>
+<div class="cell-output-display">
+<div>
+<figure><p><img src="contrast_files/figure-html/unnamed-chunk-3-1.png" style="width:100.0%"></p>
+</figure>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/visreg.html">visreg</a></span><span class="op">(</span><span class="va">fit</span>, <span class="st">"Wind"</span>, type <span class="op">=</span> <span class="st">"contrast"</span><span class="op">)</span></span></code></pre></div>
+<div class="cell-output-display">
+<div>
+<figure><p><img src="contrast_files/figure-html/unnamed-chunk-3-2.png" style="width:100.0%"></p>
+</figure>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/visreg.html">visreg</a></span><span class="op">(</span><span class="va">fit</span>, <span class="st">"Heat"</span>, type <span class="op">=</span> <span class="st">"conditional"</span><span class="op">)</span></span></code></pre></div>
+<div class="cell-output-display">
+<div>
+<figure><p><img src="contrast_files/figure-html/unnamed-chunk-3-3.png" style="width:100.0%"></p>
+</figure>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/visreg.html">visreg</a></span><span class="op">(</span><span class="va">fit</span>, <span class="st">"Heat"</span>, type <span class="op">=</span> <span class="st">"contrast"</span><span class="op">)</span></span></code></pre></div>
+<div class="cell-output-display">
+<div>
+<figure><p><img src="contrast_files/figure-html/unnamed-chunk-3-4.png" style="width:100.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>The similarity between the plots is that the slopes of the lines, and the differences between the levels of <code>Heat</code>, are exactly the same in both plots. However, the vertical axes and the confidence intervals are different. In particular, the confidence interval for a contrast plot has zero width at the reference level: we can say with certainty that <span class="math inline">\mathbb{E}(Y | x_0) - \mathbb{E}(Y | x_0)=0</span>. There is always uncertainty, however, about the actual value of <span class="math inline">\mathbb{E}(Y)</span> in a conditional plot for all values of <span class="math inline">x</span>. Likewise, at the mean value of wind, 9.96, the contrast plot passes through 0 by construction, wheras the conditional plot passes through 34.6.</p>
+<p>Furthermore, even where both confidence intervals have nonzero width, they do not have the same width, because they represent different things. For example, the width of the confidence interval for <code>Mild</code> heat is wider for the contrast plot than it is for the conditional plot: there is less uncertainty about the expected value of ozone on a mild day than there is about the difference in expected values between mild and cool days.</p>
+<p>In these documentation pages, we focus primarily on conditional plots to avoid duplication, but all of the options and ideas we discuss carry over to contrast plots as well. It is worth noting, however, that there are three situations in particular where contrast plots are very useful:</p>
+<ul>
+<li>Logistic regression applied to case-control studies: In such studies, the estimation of the intercept parameter is typically meaningless, so conditional plots are of questionable value. Contrast plots, however, are still meaningful ways to visualize the model’s estimates.</li>
+<li>Cox relative risk (proportional hazards) models: Likewise, in Cox models, the baseline hazard is not estimated and plots of absolute risk are dubious, but contrast plots still useful.</li>
+<li>
+<a href="mixed.html">Random effect models</a>: Most random effect modeling software cannot account for uncertainty in the random effects when calculating standard errors for <span class="math inline">\mathbb{E}(Y)</span>. Thus, while conditional plots may still be constructed, they will lack confidence intervals. In contrast plots, these terms drop out, and confidence intervals may still be constructed.</li>
+</ul>
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'light-border',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config);
+    }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script></main>
+</div>
 
 
     <footer><div class="pkgdown-footer-left">
-  <p>Developed by <a href="https://myweb.uiowa.edu/pbreheny/" class="external-link">Patrick Breheny</a>.</p>
+  <p>Developed by <a href="https://pbreheny.org/web/" class="external-link">Patrick Breheny</a>.</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Last updated: July 08, 2026</p>
+  <p>Last updated: July 12, 2026</p>
 </div>
 
     </footer>

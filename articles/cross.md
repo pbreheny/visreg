@@ -23,8 +23,8 @@ and a categorical term:
 
 ``` r
 
-airquality$Heat <- cut(airquality$Temp, 3, labels=c("Cool", "Mild", "Hot"))
-fit <- lm(Ozone ~ Solar.R + Wind * Heat, data=airquality)
+airquality$Heat <- cut(airquality$Temp, 3, labels = c("Cool", "Mild", "Hot"))
+fit <- lm(Ozone ~ Solar.R + Wind * Heat, data = airquality)
 ```
 
 We can then use `visreg` to see how the effect of wind on ozone differs
@@ -32,7 +32,7 @@ depending on the temperature:
 
 ``` r
 
-visreg(fit, "Wind", by="Heat", layout=c(3,1))
+visreg(fit, "Wind", by = "Heat")
 ```
 
 ![](cross_files/figure-html/unnamed-chunk-3-1.png)
@@ -42,7 +42,7 @@ level:
 
 ``` r
 
-visreg(fit, "Heat", by="Wind", layout=c(3,1))
+visreg(fit, "Heat", by = "Wind")
 ```
 
 ![](cross_files/figure-html/unnamed-chunk-4-1.png)
@@ -51,27 +51,6 @@ Note that, since `Wind` is a continuous variable, the panels above are
 somewhat arbitrary. By default, `visreg` sets up three panels using the
 10th, 50th, and 90th percentiles, but [the user can change both the
 number and the location of these break points](#opt).
-
-By default, `visreg` uses the `lattice` package to lay out the panels.
-Thus, in order to change the appearance of these sorts of plots, you may
-have to read the `lattice` documentation for the relevant options, such
-as `layout` in the above examples. Alternatively, you can use
-[`ggplot2`](https://pbreheny.github.io/visreg/articles/gg.md) as the
-graphics engine by specifying `gg=TRUE`:
-
-``` r
-
-visreg(fit, "Wind", by="Heat", gg=TRUE)
-```
-
-![](cross_files/figure-html/unnamed-chunk-5-1.png)
-
-``` r
-
-visreg(fit, "Heat", by="Wind", gg=TRUE)
-```
-
-![](cross_files/figure-html/unnamed-chunk-6-1.png)
 
 In all of these plots, note that each partial residuals appears exactly
 once in the plot, in the panel it is closest to.
@@ -85,89 +64,71 @@ be specified:
 
 ``` r
 
-visreg(fit, "Heat", by="Wind", breaks=4, layout=c(4,1))
+visreg(fit, "Heat", by = "Wind", breaks = 4)
 ```
 
-![](cross_files/figure-html/unnamed-chunk-7-1.png)
+![](cross_files/figure-html/unnamed-chunk-5-1.png)
 
 If `breaks` is a vector of numbers, it specifies the values at which the
 cross-sections are to be taken:
 
 ``` r
 
-visreg(fit, "Heat", by="Wind", breaks=c(seq(5, 15, 5)), layout=c(3,1))
+visreg(fit, "Heat", by = "Wind", breaks = c(seq(5, 15, 5)))
+```
+
+![](cross_files/figure-html/unnamed-chunk-6-1.png)
+
+## Graphical options
+
+Plots are built with `ggplot2`, and the returned object has class `gg`,
+so its appearance can be changed via the usual `ggplot2` components,
+such as themes:
+
+``` r
+
+visreg(fit, "Wind", by = "Heat") + theme_bw()
+```
+
+![](cross_files/figure-html/unnamed-chunk-7-1.png)
+
+The appearance of points, lines, and bands is set with the `line`,
+`fill`, and `points` arguments, [as described
+here](https://pbreheny.github.io/visreg/articles/options.md):
+
+``` r
+
+visreg(fit, "Wind", by = "Heat", fill = list(fill = "#008DFF33"))
 ```
 
 ![](cross_files/figure-html/unnamed-chunk-8-1.png)
 
-## Graphical options: `lattice`
-
-As mentioned above, when using `lattice` as the graphics engine, the
-appearance of a plot can typically be changed by specifying the
-appropriate `lattice` option, which gets passed along by `visreg`. One
-exception is the appearance of lines, points, and bands, which are
-specified [just as they are in base
-plots](https://pbreheny.github.io/visreg/articles/options.md):
+`visreg` sets up the facet strips internally via the `strip_names`
+option:
 
 ``` r
 
-visreg(fit, "Wind", by="Heat", layout=c(3,1), fill.par=list(col="#008DFF33"))
+visreg(fit, "Wind", by = "Heat", strip_names = TRUE)
 ```
 
 ![](cross_files/figure-html/unnamed-chunk-9-1.png)
-
-Another exception is the `strip` option; `visreg` sets up the strip
-internally, which interferes with the user passing the `strip` option
-along to `lattice`. `visreg` does, however, explicitly provide the
-`strip.names` option:
-
-``` r
-
-visreg(fit, "Wind", by="Heat", layout=c(3,1), strip.names=TRUE)
-```
-
-![](cross_files/figure-html/unnamed-chunk-10-1.png)
 
 You can also explicitly specify the labels for each strip:
 
 ``` r
 
-visreg(fit, "Wind", by="Heat", layout=c(3,1), strip.names=c("Cold days", "Mild days", "Hot days"))
+visreg(fit, "Wind", by = "Heat", strip_names = c("Cold days", "Mild days", "Hot days"))
+```
+
+![](cross_files/figure-html/unnamed-chunk-10-1.png)
+
+Other aspects of faceting, such as the number of rows/columns, can be
+changed by adding a new `facet_wrap()` (or `facet_grid()`) to the
+returned plot:
+
+``` r
+
+visreg(fit, "Heat", by = "Wind", breaks = 4) + facet_wrap(~Wind, nrow = 1)
 ```
 
 ![](cross_files/figure-html/unnamed-chunk-11-1.png)
-
-Other aspects of the strip’s appearance, such as the background color,
-can be set with calls to the `lattice` package’s `trellis.par.set`:
-
-``` r
-
-lattice::trellis.par.set(strip.background=list(col="gray90"))
-visreg(fit, "Wind", by="Heat", layout=c(3,1))
-```
-
-![](cross_files/figure-html/unnamed-chunk-12-1.png)
-
-## Graphical options: `ggplot2`
-
-As discussed on the
-[`ggplot2`](https://pbreheny.github.io/visreg/articles/gg.md) page, most
-`ggplot2` options are specified via additional components to the plot,
-such as:
-
-``` r
-
-visreg(fit, "Wind", by="Heat", gg=TRUE) + theme_bw()
-```
-
-![](cross_files/figure-html/unnamed-chunk-13-1.png)
-
-The exception, again, is the appearance of points/lines/bands, which are
-specified with the usual `visreg` arguments:
-
-``` r
-
-visreg(fit, "Wind", by="Heat", gg=TRUE, fill.par=list(fill="#008DFF33"))
-```
-
-![](cross_files/figure-html/unnamed-chunk-14-1.png)

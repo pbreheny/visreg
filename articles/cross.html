@@ -11,7 +11,9 @@
 <link href="../deps/bootstrap-5.3.8/bootstrap.min.css" rel="stylesheet">
 <script src="../deps/bootstrap-5.3.8/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
-<script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><link href="../extra.css" rel="stylesheet">
+<script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><script src="cross_files/libs/quarto-html/popper.min.js"></script><script src="cross_files/libs/quarto-html/tippy.umd.min.js"></script><link href="cross_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="cross_files/libs/quarto-html/light-border.css" rel="stylesheet">
+<!-- pkgdown --><script src="../pkgdown.js"></script><link href="../extra.css" rel="stylesheet">
 <meta property="og:title" content="Cross-sectional plots">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" integrity="sha384-nB0miv6/jRmo5UMMR1wu3Gz6NLsoTkbqJghGIsx//Rlm+ZU03BU6SQNC66uf4l5+" crossorigin="anonymous">
 <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js" integrity="sha384-7zkQWkzuo3B5mTepMUcHkMB5jZaolc2xDwL6VFqjFALcbeS9Ggm/Yr2r3Dy4lfFg" crossorigin="anonymous"></script><script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js" integrity="sha384-43gviWU0YVjaDtb/GhzOouOXtZMP/7XUzwPTstBeZFe/+rCMvRwr4yROQP43s0Xk" crossorigin="anonymous" onload="renderMathInElement(document.body);"></script>
@@ -24,7 +26,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">visreg</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.8.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.99.0.1</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -59,6 +61,7 @@
     <li><a class="dropdown-item" href="../articles/blackbox.html">Forests, SVMs, etc.</a></li>
     <li><a class="dropdown-item" href="../articles/mixed.html">Mixed models</a></li>
     <li><a class="dropdown-item" href="../articles/multi.html">Multiple outcomes</a></li>
+    <li><a class="dropdown-item" href="../articles/migrating-to-3-0.html">Migrating to 3.0</a></li>
     <li><a class="dropdown-item" href="../articles/faq.html">FAQ</a></li>
   </ul>
 </li>
@@ -82,147 +85,231 @@
 
 
   </div>
-</nav><div class="container template-article">
-
-
-
-
+</nav><div class="container template-quarto">
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
 
       <h1>Cross-sectional plots</h1>
-            
-      
-      <small class="dont-index">Source: <a href="https://github.com/pbreheny/visreg/blob/main/vignettes/articles/cross.rmd" class="external-link"><code>vignettes/articles/cross.rmd</code></a></small>
-      <div class="d-none name"><code>cross.rmd</code></div>
+
+
+
+
+      <small class="dont-index">Source: <a href="https://github.com/pbreheny/visreg/blob/main/vignettes/articles/cross.qmd" class="external-link"><code>vignettes/articles/cross.qmd</code></a></small>
+      <div class="d-none name"><code></code></div>
     </div>
 
-    
-    
-<p>As was the case with <a href="trans.html">nonlinear terms</a>, the
-relationship between <code>x</code> and <code>y</code> in a model with
-interactions also (typically) depends on multiple coefficients and thus,
-a visual summary tends to be much more readily understood than a numeric
-one.</p>
-<p>For models with interactions, we must simultaneously visualize the
-effect of two explanatory variables. The <code>visreg</code> package
-offers two methods for doing so; this page describes what we call
-<em>cross-sectional plots</em>, which plot one-dimensional relationships
-between the response and one predictor for several values of another
-predictor, either in separate panels or <a href="overlay.html">overlaid
-on top of one another</a>. The package also provides methods for
-constructing <a href="surface.html"><em>surface plots</em></a>, which
-attempt to provide a picture of the regression surface over both
-dimensions simultaneously.</p>
-<p>Let’s fit a model that involves an interaction between a continuous
-term and a categorical term:</p>
-<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">airquality</span><span class="op">$</span><span class="va">Heat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cut.html" class="external-link">cut</a></span><span class="op">(</span><span class="va">airquality</span><span class="op">$</span><span class="va">Temp</span>, <span class="fl">3</span>, labels<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Cool"</span>, <span class="st">"Mild"</span>, <span class="st">"Hot"</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="va">fit</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">Ozone</span> <span class="op">~</span> <span class="va">Solar.R</span> <span class="op">+</span> <span class="va">Wind</span> <span class="op">*</span> <span class="va">Heat</span>, data<span class="op">=</span><span class="va">airquality</span><span class="op">)</span></span></code></pre></div>
-<p>We can then use <code>visreg</code> to see how the effect of wind on
-ozone differs depending on the temperature:</p>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/visreg.html">visreg</a></span><span class="op">(</span><span class="va">fit</span>, <span class="st">"Wind"</span>, by<span class="op">=</span><span class="st">"Heat"</span>, layout<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">3</span>,<span class="fl">1</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<p><img src="cross_files/figure-html/unnamed-chunk-3-1.png" class="r-plt" alt="" width="100%"></p>
-<p>Or alternatively, see how the effect of temperature depends on the
-wind level:</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/visreg.html">visreg</a></span><span class="op">(</span><span class="va">fit</span>, <span class="st">"Heat"</span>, by<span class="op">=</span><span class="st">"Wind"</span>, layout<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">3</span>,<span class="fl">1</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<p><img src="cross_files/figure-html/unnamed-chunk-4-1.png" class="r-plt" alt="" width="100%"></p>
-<p>Note that, since <code>Wind</code> is a continuous variable, the
-panels above are somewhat arbitrary. By default, <code>visreg</code>
-sets up three panels using the 10th, 50th, and 90th percentiles, but <a href="#opt">the user can change both the number and the location of
-these break points</a>.</p>
-<p>By default, <code>visreg</code> uses the <code>lattice</code> package
-to lay out the panels. Thus, in order to change the appearance of these
-sorts of plots, you may have to read the <code>lattice</code>
-documentation for the relevant options, such as <code>layout</code> in
-the above examples. Alternatively, you can use <a href="gg.html"><code>ggplot2</code></a> as the graphics engine by
-specifying <code>gg=TRUE</code>:</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/visreg.html">visreg</a></span><span class="op">(</span><span class="va">fit</span>, <span class="st">"Wind"</span>, by<span class="op">=</span><span class="st">"Heat"</span>, gg<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
-<p><img src="cross_files/figure-html/unnamed-chunk-5-1.png" class="r-plt" alt="" width="100%"></p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/visreg.html">visreg</a></span><span class="op">(</span><span class="va">fit</span>, <span class="st">"Heat"</span>, by<span class="op">=</span><span class="st">"Wind"</span>, gg<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
-<p><img src="cross_files/figure-html/unnamed-chunk-6-1.png" class="r-plt" alt="" width="100%"></p>
-<p>In all of these plots, note that each partial residuals appears
-exactly once in the plot, in the panel it is closest to.</p>
-<p><a class="anchor" id="opt"></a></p>
-<div class="section level2">
-<h2 id="options">Options<a class="anchor" aria-label="anchor" href="#options"></a>
-</h2>
-<p>For a numeric <code>by</code> variable, the <code>breaks</code>
-argument controls the values at which the cross-sections are taken. By
-default, cross-sections are taken at three quantiles (10th, 50th, and
-90th), but a larger number can be specified:</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/visreg.html">visreg</a></span><span class="op">(</span><span class="va">fit</span>, <span class="st">"Heat"</span>, by<span class="op">=</span><span class="st">"Wind"</span>, breaks<span class="op">=</span><span class="fl">4</span>, layout<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">4</span>,<span class="fl">1</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<p><img src="cross_files/figure-html/unnamed-chunk-7-1.png" class="r-plt" alt="" width="100%"></p>
-<p>If <code>breaks</code> is a vector of numbers, it specifies the
-values at which the cross-sections are to be taken:</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/visreg.html">visreg</a></span><span class="op">(</span><span class="va">fit</span>, <span class="st">"Heat"</span>, by<span class="op">=</span><span class="st">"Wind"</span>, breaks<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">5</span>, <span class="fl">15</span>, <span class="fl">5</span><span class="op">)</span><span class="op">)</span>, layout<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">3</span>,<span class="fl">1</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<p><img src="cross_files/figure-html/unnamed-chunk-8-1.png" class="r-plt" alt="" width="100%"></p>
-</div>
-<div class="section level2">
-<h2 id="graphical-options-lattice">Graphical options: <code>lattice</code><a class="anchor" aria-label="anchor" href="#graphical-options-lattice"></a>
-</h2>
-<p>As mentioned above, when using <code>lattice</code> as the graphics
-engine, the appearance of a plot can typically be changed by specifying
-the appropriate <code>lattice</code> option, which gets passed along by
-<code>visreg</code>. One exception is the appearance of lines, points,
-and bands, which are specified <a href="options.html">just as they are
-in base plots</a>:</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/visreg.html">visreg</a></span><span class="op">(</span><span class="va">fit</span>, <span class="st">"Wind"</span>, by<span class="op">=</span><span class="st">"Heat"</span>, layout<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">3</span>,<span class="fl">1</span><span class="op">)</span>, fill.par<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>col<span class="op">=</span><span class="st">"#008DFF33"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<p><img src="cross_files/figure-html/unnamed-chunk-9-1.png" class="r-plt" alt="" width="100%"></p>
-<p>Another exception is the <code>strip</code> option;
-<code>visreg</code> sets up the strip internally, which interferes with
-the user passing the <code>strip</code> option along to
-<code>lattice</code>. <code>visreg</code> does, however, explicitly
-provide the <code>strip.names</code> option:</p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/visreg.html">visreg</a></span><span class="op">(</span><span class="va">fit</span>, <span class="st">"Wind"</span>, by<span class="op">=</span><span class="st">"Heat"</span>, layout<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">3</span>,<span class="fl">1</span><span class="op">)</span>, strip.names<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
-<p><img src="cross_files/figure-html/unnamed-chunk-10-1.png" class="r-plt" alt="" width="100%"></p>
-<p>You can also explicitly specify the labels for each strip:</p>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/visreg.html">visreg</a></span><span class="op">(</span><span class="va">fit</span>, <span class="st">"Wind"</span>, by<span class="op">=</span><span class="st">"Heat"</span>, layout<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">3</span>,<span class="fl">1</span><span class="op">)</span>, strip.names<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Cold days"</span>, <span class="st">"Mild days"</span>, <span class="st">"Hot days"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<p><img src="cross_files/figure-html/unnamed-chunk-11-1.png" class="r-plt" alt="" width="100%"></p>
-<p>Other aspects of the strip’s appearance, such as the background
-color, can be set with calls to the <code>lattice</code> package’s
-<code>trellis.par.set</code>:</p>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">lattice</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/lattice/man/trellis.par.get.html" class="external-link">trellis.par.set</a></span><span class="op">(</span>strip.background<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>col<span class="op">=</span><span class="st">"gray90"</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="fu"><a href="../reference/visreg.html">visreg</a></span><span class="op">(</span><span class="va">fit</span>, <span class="st">"Wind"</span>, by<span class="op">=</span><span class="st">"Heat"</span>, layout<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">3</span>,<span class="fl">1</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<p><img src="cross_files/figure-html/unnamed-chunk-12-1.png" class="r-plt" alt="" width="100%"></p>
-</div>
-<div class="section level2">
-<h2 id="graphical-options-ggplot2">Graphical options: <code>ggplot2</code><a class="anchor" aria-label="anchor" href="#graphical-options-ggplot2"></a>
-</h2>
-<p>As discussed on the <a href="gg.html"><code>ggplot2</code></a> page,
-most <code>ggplot2</code> options are specified via additional
-components to the plot, such as:</p>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/visreg.html">visreg</a></span><span class="op">(</span><span class="va">fit</span>, <span class="st">"Wind"</span>, by<span class="op">=</span><span class="st">"Heat"</span>, gg<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span> <span class="op">+</span> <span class="fu">theme_bw</span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p><img src="cross_files/figure-html/unnamed-chunk-13-1.png" class="r-plt" alt="" width="100%"></p>
-<p>The exception, again, is the appearance of points/lines/bands, which
-are specified with the usual <code>visreg</code> arguments:</p>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/visreg.html">visreg</a></span><span class="op">(</span><span class="va">fit</span>, <span class="st">"Wind"</span>, by<span class="op">=</span><span class="st">"Heat"</span>, gg<span class="op">=</span><span class="cn">TRUE</span>, fill.par<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>fill<span class="op">=</span><span class="st">"#008DFF33"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<p><img src="cross_files/figure-html/unnamed-chunk-14-1.png" class="r-plt" alt="" width="100%"></p>
-</div>
-  </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
-    </nav></aside>
-</div>
 
+
+
+
+
+    <p>As was the case with <a href="trans.html">nonlinear terms</a>, the relationship between <code>x</code> and <code>y</code> in a model with interactions also (typically) depends on multiple coefficients and thus, a visual summary tends to be much more readily understood than a numeric one.</p>
+<p>For models with interactions, we must simultaneously visualize the effect of two explanatory variables. The <code>visreg</code> package offers two methods for doing so; this page describes what we call <em>cross-sectional plots</em>, which plot one-dimensional relationships between the response and one predictor for several values of another predictor, either in separate panels or <a href="overlay.html">overlaid on top of one another</a>. The package also provides methods for constructing <a href="surface.html"><em>surface plots</em></a>, which attempt to provide a picture of the regression surface over both dimensions simultaneously.</p>
+<p>Let’s fit a model that involves an interaction between a continuous term and a categorical term:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">airquality</span><span class="op">$</span><span class="va">Heat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cut.html" class="external-link">cut</a></span><span class="op">(</span><span class="va">airquality</span><span class="op">$</span><span class="va">Temp</span>, <span class="fl">3</span>, labels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Cool"</span>, <span class="st">"Mild"</span>, <span class="st">"Hot"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">fit</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">Ozone</span> <span class="op">~</span> <span class="va">Solar.R</span> <span class="op">+</span> <span class="va">Wind</span> <span class="op">*</span> <span class="va">Heat</span>, data <span class="op">=</span> <span class="va">airquality</span><span class="op">)</span></span></code></pre></div>
+</div>
+<p>We can then use <code>visreg</code> to see how the effect of wind on ozone differs depending on the temperature:</p>
+<div class="cell" data-h="4" data-w="9">
+<div class="sourceCode cell-code" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/visreg.html">visreg</a></span><span class="op">(</span><span class="va">fit</span>, <span class="st">"Wind"</span>, by <span class="op">=</span> <span class="st">"Heat"</span><span class="op">)</span></span></code></pre></div>
+<div class="cell-output-display">
+<div>
+<figure><p><img src="cross_files/figure-html/unnamed-chunk-3-1.png" style="width:100.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Or alternatively, see how the effect of temperature depends on the wind level:</p>
+<div class="cell" data-h="4" data-w="9">
+<div class="sourceCode cell-code" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/visreg.html">visreg</a></span><span class="op">(</span><span class="va">fit</span>, <span class="st">"Heat"</span>, by <span class="op">=</span> <span class="st">"Wind"</span><span class="op">)</span></span></code></pre></div>
+<div class="cell-output-display">
+<div>
+<figure><p><img src="cross_files/figure-html/unnamed-chunk-4-1.png" style="width:100.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Note that, since <code>Wind</code> is a continuous variable, the panels above are somewhat arbitrary. By default, <code>visreg</code> sets up three panels using the 10th, 50th, and 90th percentiles, but <a href="#opt">the user can change both the number and the location of these break points</a>.</p>
+<p>In all of these plots, note that each partial residuals appears exactly once in the plot, in the panel it is closest to.</p>
+<p><a class="anchor" id="opt" href=""></a></p>
+<section class="section level2"><h2 id="options">Options<a class="anchor" aria-label="anchor" href="#options"></a>
+</h2>
+<p>For a numeric <code>by</code> variable, the <code>breaks</code> argument controls the values at which the cross-sections are taken. By default, cross-sections are taken at three quantiles (10th, 50th, and 90th), but a larger number can be specified:</p>
+<div class="cell" data-h="3.5" data-w="12">
+<div class="sourceCode cell-code" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/visreg.html">visreg</a></span><span class="op">(</span><span class="va">fit</span>, <span class="st">"Heat"</span>, by <span class="op">=</span> <span class="st">"Wind"</span>, breaks <span class="op">=</span> <span class="fl">4</span><span class="op">)</span></span></code></pre></div>
+<div class="cell-output-display">
+<div>
+<figure><p><img src="cross_files/figure-html/unnamed-chunk-5-1.png" style="width:100.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>If <code>breaks</code> is a vector of numbers, it specifies the values at which the cross-sections are to be taken:</p>
+<div class="cell" data-h="4" data-w="9">
+<div class="sourceCode cell-code" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/visreg.html">visreg</a></span><span class="op">(</span><span class="va">fit</span>, <span class="st">"Heat"</span>, by <span class="op">=</span> <span class="st">"Wind"</span>, breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">5</span>, <span class="fl">15</span>, <span class="fl">5</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<div class="cell-output-display">
+<div>
+<figure><p><img src="cross_files/figure-html/unnamed-chunk-6-1.png" style="width:100.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+</section><section class="section level2"><h2 id="graphical-options">Graphical options<a class="anchor" aria-label="anchor" href="#graphical-options"></a>
+</h2>
+<p>Plots are built with <code>ggplot2</code>, and the returned object has class <code>gg</code>, so its appearance can be changed via the usual <code>ggplot2</code> components, such as themes:</p>
+<div class="cell" data-h="4" data-w="9">
+<div class="sourceCode cell-code" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/visreg.html">visreg</a></span><span class="op">(</span><span class="va">fit</span>, <span class="st">"Wind"</span>, by <span class="op">=</span> <span class="st">"Heat"</span><span class="op">)</span> <span class="op">+</span> <span class="fu">theme_bw</span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<div class="cell-output-display">
+<div>
+<figure><p><img src="cross_files/figure-html/unnamed-chunk-7-1.png" style="width:100.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>The appearance of points, lines, and bands is set with the <code>line</code>, <code>fill</code>, and <code>points</code> arguments, <a href="options.html">as described here</a>:</p>
+<div class="cell" data-h="4" data-w="9">
+<div class="sourceCode cell-code" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/visreg.html">visreg</a></span><span class="op">(</span><span class="va">fit</span>, <span class="st">"Wind"</span>, by <span class="op">=</span> <span class="st">"Heat"</span>, fill <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="st">"#008DFF33"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<div class="cell-output-display">
+<div>
+<figure><p><img src="cross_files/figure-html/unnamed-chunk-8-1.png" style="width:100.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+<p><code>visreg</code> sets up the facet strips internally via the <code>strip_names</code> option:</p>
+<div class="cell" data-h="4" data-w="9">
+<div class="sourceCode cell-code" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/visreg.html">visreg</a></span><span class="op">(</span><span class="va">fit</span>, <span class="st">"Wind"</span>, by <span class="op">=</span> <span class="st">"Heat"</span>, strip_names <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+<div class="cell-output-display">
+<div>
+<figure><p><img src="cross_files/figure-html/unnamed-chunk-9-1.png" style="width:100.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>You can also explicitly specify the labels for each strip:</p>
+<div class="cell" data-h="4" data-w="9">
+<div class="sourceCode cell-code" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/visreg.html">visreg</a></span><span class="op">(</span><span class="va">fit</span>, <span class="st">"Wind"</span>, by <span class="op">=</span> <span class="st">"Heat"</span>, strip_names <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Cold days"</span>, <span class="st">"Mild days"</span>, <span class="st">"Hot days"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<div class="cell-output-display">
+<div>
+<figure><p><img src="cross_files/figure-html/unnamed-chunk-10-1.png" style="width:100.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Other aspects of faceting, such as the number of rows/columns, can be changed by adding a new <code>facet_wrap()</code> (or <code>facet_grid()</code>) to the returned plot:</p>
+<div class="cell" data-h="3.5" data-w="12">
+<div class="sourceCode cell-code" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/visreg.html">visreg</a></span><span class="op">(</span><span class="va">fit</span>, <span class="st">"Heat"</span>, by <span class="op">=</span> <span class="st">"Wind"</span>, breaks <span class="op">=</span> <span class="fl">4</span><span class="op">)</span> <span class="op">+</span> <span class="fu">facet_wrap</span><span class="op">(</span><span class="op">~</span><span class="va">Wind</span>, nrow <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></code></pre></div>
+<div class="cell-output-display">
+<div>
+<figure><p><img src="cross_files/figure-html/unnamed-chunk-11-1.png" style="width:100.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+</section><script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'light-border',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config);
+    }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script></main>
+</div>
 
 
     <footer><div class="pkgdown-footer-left">
-  <p>Developed by <a href="https://myweb.uiowa.edu/pbreheny/" class="external-link">Patrick Breheny</a>.</p>
+  <p>Developed by <a href="https://pbreheny.org/web/" class="external-link">Patrick Breheny</a>.</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Last updated: July 08, 2026</p>
+  <p>Last updated: July 12, 2026</p>
 </div>
 
     </footer>

@@ -2,8 +2,8 @@
 
 ## Authors
 
-- **[Patrick Breheny](https://myweb.uiowa.edu/pbreheny/)**. Author,
-  maintainer. [](https://orcid.org/0000-0002-0650-1119)
+- **[Patrick Breheny](https://pbreheny.org/web/)**. Author, maintainer.
+  [](https://orcid.org/0000-0002-0650-1119)
 
 - **Woodrow Burchett**. Contributor.
 
