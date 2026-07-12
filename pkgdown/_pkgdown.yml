@@ -63,6 +63,8 @@ navbar:
           href: articles/mixed.html
         - text: Multiple outcomes
           href: articles/multi.html
+        - text: Migrating to 3.0
+          href: articles/migrating-to-3-0.html
         - text: FAQ
           href: articles/faq.html
 
