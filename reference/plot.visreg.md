@@ -113,7 +113,7 @@ plot(x, ...)
 
 - ...:
 
-  Additional arguments passed on to the plot, such as `xlab`, `ylab`.
+  Not used.
 
 ## Value
 

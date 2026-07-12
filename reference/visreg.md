@@ -25,6 +25,7 @@ visreg(
   jitter = FALSE,
   collapse = FALSE,
   plot = TRUE,
+  predict = list(),
   ...
 )
 ```
@@ -130,11 +131,20 @@ visreg(
   [`plot.visreg()`](https://pbreheny.github.io/visreg/reference/plot.visreg.md)?
   Default is TRUE.
 
+- predict:
+
+  Named list of additional arguments to pass to
+  [`predict()`](https://rdrr.io/r/stats/predict.html) (e.g.,
+  `list(re.form = NA)` for a mixed model). Most models never need this;
+  it exists as an escape hatch since
+  [`predict()`](https://rdrr.io/r/stats/predict.html) methods vary by
+  model class and aren't otherwise accessible from `visreg()`.
+
 - ...:
 
-  Graphical parameters (e.g., `ylab`) can be passed to the function to
-  customize the plots. If `by=TRUE`, ggplot2 faceting parameters can be
-  passed, such as `strip_names` (see examples below).
+  Graphical parameters (e.g., `partial`) to pass to
+  [`plot.visreg()`](https://pbreheny.github.io/visreg/reference/plot.visreg.md)
+  (see examples below).
 
 ## Value
 

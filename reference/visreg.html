@@ -95,6 +95,7 @@ for plotting.</p>
 <span>  jitter <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  collapse <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  plot <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  predict <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>  <span class="va">...</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -188,9 +189,15 @@ single <code>visreg</code> object (<code>collapse=TRUE</code>).</p></dd>
 <dd><p>Send the calculations to <code><a href="plot.visreg.html">plot.visreg()</a></code>? Default is TRUE.</p></dd>
 
 
+<dt id="arg-predict">predict<a class="anchor" aria-label="anchor" href="#arg-predict"></a></dt>
+<dd><p>Named list of additional arguments to pass to <code><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict()</a></code> (e.g.,
+<code>list(re.form = NA)</code> for a mixed model). Most models never need this; it exists as an
+escape hatch since <code><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict()</a></code> methods vary by model class and aren't otherwise
+accessible from <code>visreg()</code>.</p></dd>
+
+
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
-<dd><p>Graphical parameters (e.g., <code>ylab</code>) can be passed to the function to customize the
-plots. If <code>by=TRUE</code>, ggplot2 faceting parameters can be passed, such as <code>strip_names</code> (see
+<dd><p>Graphical parameters (e.g., <code>partial</code>) to pass to <code><a href="plot.visreg.html">plot.visreg()</a></code> (see
 examples below).</p></dd>
 
 </dl></div>
