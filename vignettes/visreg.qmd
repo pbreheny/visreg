@@ -1,11 +1,11 @@
 ---
 title: "Quick start guide for visreg"
-output:
-  rmarkdown::html_vignette:
+format:
+  html:
     css: vignette.css
 vignette: >
   %\VignetteIndexEntry{Quick start guide for visreg}
-  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEngine{quarto::html}
   %\VignetteEncoding{UTF-8}
 ---
 

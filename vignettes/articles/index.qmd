@@ -1,5 +1,5 @@
 ---
-resource_files:
+resources:
   - rgl.html
 ---
 

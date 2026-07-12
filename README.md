@@ -25,6 +25,12 @@ To install the latest development version from GitHub:
 remotes::install_github("pbreheny/visreg")
 ```
 
+Note that version 3.0 of visreg introduced a number of [breaking changes](https://pbreheny.github.io/visreg/articles/migrating-to-3-0.html); if you wish to install the "legacy" version of visreg, version 2.8.1 was the final CRAN release before these changes took place:
+
+```r
+remotes::install_version("visreg", "2.8.1")
+```
+
 ## Usage
 
 The basic usage is that you fit a model, for example:

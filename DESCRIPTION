@@ -24,12 +24,13 @@ Suggests:
   lme4,
   MASS,
   Matrix,
+  quarto,
   rgl,
-  rmarkdown,
   survival,
   tinytest
 Enhances: nlme
-VignetteBuilder: knitr
+VignetteBuilder: quarto
+SystemRequirements: Quarto command line tool
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 Config/roxygen2/version: 8.0.0

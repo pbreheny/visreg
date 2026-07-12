@@ -10,3 +10,4 @@
 ^.project.url$
 ^\.positai$
 ^\.claude$
+^\.quarto$

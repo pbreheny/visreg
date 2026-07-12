@@ -1,6 +1,8 @@
 vignettes/*.html
 vignettes/*/*.html
+vignettes/*_files
 vignettes/articles/rgl_files
+.quarto
 docs
 .Rproj.user
 .positai
