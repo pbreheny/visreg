@@ -41,6 +41,7 @@ jobs:
           cache: true
           extra-packages: |
             any::rcmdcheck
+            local::.
             any::betareg
             any::e1071
             any::gamlss
