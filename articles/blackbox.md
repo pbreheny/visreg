@@ -18,9 +18,9 @@ aq <- na.omit(airquality)
 
 ``` r
 
-library(randomForest, quietly = TRUE)
+library(randomForest)
 fit <- randomForest(Ozone ~ Solar.R + Wind + Temp, data = aq)
-visreg(fit, "Temp", ylab = "Ozone")
+visreg(fit, "Temp") + ylab("Ozone")
 # Warning: Removed 101 rows containing missing values or values outside the scale range
 # (`geom_ribbon()`).
 ```
@@ -33,7 +33,7 @@ visreg(fit, "Temp", ylab = "Ozone")
 
 library(e1071)
 fit <- svm(Ozone ~ Solar.R + Wind + Temp, data = aq)
-visreg(fit, "Temp", ylab = "Ozone")
+visreg(fit, "Temp") + ylab("Ozone")
 # Warning: Removed 101 rows containing missing values or values outside the scale range
 # (`geom_ribbon()`).
 ```
@@ -67,7 +67,7 @@ Once defined, we
 
 library(gbm)
 fit <- gbm(Ozone ~ Solar.R + Wind + Temp, data = aq, distribution = "gaussian")
-visreg(fit, "Temp", ylab = "Ozone")
+visreg(fit, "Temp") + ylab("Ozone")
 # Warning: Removed 101 rows containing missing values or values outside the scale range
 # (`geom_ribbon()`).
 ```
@@ -82,7 +82,7 @@ the number of trees, we obtain a much more reasonable fit:
 ``` r
 
 fit <- gbm(Ozone ~ Solar.R + Wind + Temp, data = aq, distribution = "gaussian", n.trees = 5000)
-visreg(fit, "Temp", ylab = "Ozone")
+visreg(fit, "Temp") + ylab("Ozone")
 # Warning: Removed 101 rows containing missing values or values outside the scale range
 # (`geom_ribbon()`).
 ```

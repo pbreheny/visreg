@@ -7,7 +7,7 @@ model:
 
 data("birthwt", package = "MASS")
 fit <- glm(low ~ age + race + smoke + lwt, data = birthwt, family = "binomial")
-visreg(fit, "lwt", xlab = "Mother's weight", ylab = "Log odds (low birthweight)")
+visreg(fit, "lwt") + xlab("Mother's weight") + ylab("Log odds (low birthweight)")
 ```
 
 ![](glm_files/figure-html/unnamed-chunk-2-1.png)
@@ -30,7 +30,7 @@ although for GLMs the shortcut `scale="response"` is provided:
 
 ``` r
 
-visreg(fit, "lwt", scale = "response", rug = 2, xlab = "Mother's weight", ylab = "P(low birthweight)")
+visreg(fit, "lwt", scale = "response") + xlab("Mother's weight") + ylab("P(low birthweight)")
 ```
 
 ![](glm_files/figure-html/unnamed-chunk-3-1.png)
@@ -72,23 +72,14 @@ and visualize with `visreg`:
 
 ``` r
 
-par(mfrow = c(1, 3))
 visreg(fit, "x")
+visreg(fit, "x", scale = "response")
+visreg(fit, "x", scale = "response", partial = TRUE)
 ```
 
 ![](glm_files/figure-html/unnamed-chunk-7-1.png)
 
-``` r
-
-visreg(fit, "x", scale = "response")
-```
-
 ![](glm_files/figure-html/unnamed-chunk-7-2.png)
-
-``` r
-
-visreg(fit, "x", scale = "response", partial = TRUE)
-```
 
 ![](glm_files/figure-html/unnamed-chunk-7-3.png)
 

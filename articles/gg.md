@@ -35,11 +35,11 @@ visreg(fit, "Wind") + geom_smooth(method = "loess", col = "#FF4E37", fill = "#FF
 
 ![](gg_files/figure-html/unnamed-chunk-4-1.png)
 
-Or we could modify the theme:
+Or we could modify the horizontal axis:
 
 ``` r
 
-visreg(fit, "Wind") + theme_bw()
+visreg(fit, "Wind") + scale_x_sqrt()
 ```
 
 ![](gg_files/figure-html/unnamed-chunk-5-1.png)

@@ -113,7 +113,7 @@
 <section class="section level2"><h2 id="filled-contour-plots">Filled contour plots<a class="anchor" aria-label="anchor" href="#filled-contour-plots"></a>
 </h2>
 <p>The default is to provide a contoured image plot:</p>
-<div class="cell" data-h="4" data-w="5">
+<div class="cell">
 <div class="sourceCode cell-code" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/visreg2d.html">visreg2d</a></span><span class="op">(</span><span class="va">fit</span>, <span class="st">"Wind"</span>, <span class="st">"Temp"</span><span class="op">)</span></span></code></pre></div>
 <div class="cell-output-display">
@@ -124,7 +124,7 @@
 </div>
 </div>
 <p>Here, wind and temperature are laid out on a two-dimensional grid, and colors are used to represent the level of ozone. A legend is provided to the left. R’s <code>filled.contour</code> function is used to generate the plot, so if you wish to change any options, you will need to look at <code><a href="https://rdrr.io/r/graphics/filled.contour.html" class="external-link">?filled.contour</a></code> to see the correct syntax. For example, if we want different colors,</p>
-<div class="cell" data-h="4" data-w="5">
+<div class="cell">
 <div class="sourceCode cell-code" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/visreg2d.html">visreg2d</a></span><span class="op">(</span><span class="va">fit</span>, <span class="st">"Wind"</span>, <span class="st">"Temp"</span>, color.palette <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grDevices/colorRamp.html" class="external-link">colorRampPalette</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"black"</span>, <span class="st">"white"</span>, <span class="st">"purple"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <div class="cell-output-display">
@@ -137,7 +137,7 @@
 </section><section class="section level2"><h2 id="perspective-plots">Perspective plots<a class="anchor" aria-label="anchor" href="#perspective-plots"></a>
 </h2>
 <p>The other option provided by <code>visreg2d</code> is to represent the surface as a three-dimensional image. This can be done in a static manner using <code>type="persp"</code>:</p>
-<div class="cell" data-h="5" data-w="5">
+<div class="cell">
 <div class="sourceCode cell-code" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/visreg2d.html">visreg2d</a></span><span class="op">(</span><span class="va">fit</span>, <span class="st">"Wind"</span>, <span class="st">"Temp"</span>, plot.type <span class="op">=</span> <span class="st">"persp"</span><span class="op">)</span></span></code></pre></div>
 <div class="cell-output-display">
@@ -251,7 +251,7 @@
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Last updated: July 12, 2026</p>
+  <p>Last updated: July 13, 2026</p>
 </div>
 
     </footer>

@@ -15,7 +15,7 @@ milk in the weeks following calving:
 
 ``` r
 
-library(lme4, quietly = TRUE)
+library(lme4)
 data(Milk, package = "nlme")
 ctrl <- lmerControl(optCtrl = list(xtol_rel = 1e-6)) # Warning otherwise
 fit <- lmer(protein ~ Diet + Time + (Time | Cow), Milk, control = ctrl)
@@ -23,31 +23,14 @@ fit <- lmer(protein ~ Diet + Time + (Time | Cow), Milk, control = ctrl)
 
 ## Plotting fixed effects
 
-As mentioned above, a conditional plot will lack confidence bands (due
-to the large number of points, we’re making the partial residuals
-smaller and partially transparent):
+NEED TEXT
 
 ``` r
 
-visreg(fit, "Diet", ylab = "Protein", points = list(col = "#55555540", cex = 0.25))
-# Warning: Duplicated aesthetics after name standardisation: colour and size
+visreg(fit, "Diet", points = list(color = "#55555540", size = 0.75)) + ylab("Protein")
 ```
 
 ![](mixed_files/figure-html/unnamed-chunk-3-1.png)
-
-But, because the random effect terms drop out of a contrast plot, we do
-have bands here:
-
-``` r
-
-visreg(fit, "Diet",
-  type = "contrast", ylab = expression(Delta * "Protein"),
-  points = list(col = "#55555540", cex = 0.25)
-)
-# Warning: Duplicated aesthetics after name standardisation: colour and size
-```
-
-![](mixed_files/figure-html/unnamed-chunk-4-1.png)
 
 ## Plotting random effects
 
@@ -69,10 +52,10 @@ of the code are worth pointing out:
 v <- visreg(fit, "Time", by = "Cow", re.form = ~ (Time | Cow), plot = FALSE)
 sub_cow <- sample(levels(Milk$Cow), 10)
 vv <- subset(v, Cow %in% sub_cow)
-plot(vv, ylab = "Protein", layout = c(5, 2))
+plot(vv) + ylab("Protein")
 ```
 
-![](mixed_files/figure-html/unnamed-chunk-5-1.png)
+![](mixed_files/figure-html/unnamed-chunk-4-1.png)
 
 Returning the data frames, estimates, confidence intervals, and
 residuals used in the construction of its plots like this allows users

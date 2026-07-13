@@ -113,7 +113,9 @@ plot(x, ...)
 
 - ...:
 
-  Not used.
+  Not used; present only because
+  [`plot()`](https://rdrr.io/r/graphics/plot.default.html) is a generic
+  function. An error is raised if any arguments are passed here.
 
 ## Value
 

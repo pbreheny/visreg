@@ -8,12 +8,12 @@ ozone, we also need to specify a value for temperature (or use the
 median as a default). Specifically, letting x denote the predictor of
 interest, y the outcome, and \mathbf{X}\_{-j} the other predictors in
 the model, a conditional plot represents the relationship f(x) =
-\mathbb{E}(Y \| x, \mathbf{X}\_{-j}).
+\mathbb{E}(Y \mid x, \mathbf{X}\_{-j}).
 
 As an alternative, we could consider relative changes, or as they are
 called in statistics, *contrasts*. To be specific, let x_0 denote a
 reference value for, e.g., wind, and consider plotting f(x) =
-\mathbb{E}(Y \| x) - \mathbb{E}(Y \| x_0). Readers who have taken a
+\mathbb{E}(Y \mid x) - \mathbb{E}(Y \mid x_0). Readers who have taken a
 course in regression will recognize that this is one of the defining
 characteristics of a *regression* model: a one-unit change in x has the
 same effect on \mathbb{E}(Y) regardless of what the other terms in the
@@ -38,39 +38,26 @@ display contrast plots and conditional plots side-by-side:
 
 airquality$Heat <- cut(airquality$Temp, 3, labels = c("Cool", "Mild", "Hot"))
 fit <- lm(Ozone ~ Solar.R + Wind + Heat, data = airquality)
-par(mfrow = c(1, 2))
 visreg(fit, "Wind", type = "conditional")
-```
-
-![](contrast_files/figure-html/unnamed-chunk-3-1.png)
-
-``` r
-
 visreg(fit, "Wind", type = "contrast")
-```
-
-![](contrast_files/figure-html/unnamed-chunk-3-2.png)
-
-``` r
-
 visreg(fit, "Heat", type = "conditional")
-```
-
-![](contrast_files/figure-html/unnamed-chunk-3-3.png)
-
-``` r
-
 visreg(fit, "Heat", type = "contrast")
 ```
 
-![](contrast_files/figure-html/unnamed-chunk-3-4.png)
+![](contrast_files/figure-html/unnamed-chunk-2-1.png)
+
+![](contrast_files/figure-html/unnamed-chunk-2-2.png)
+
+![](contrast_files/figure-html/unnamed-chunk-2-3.png)
+
+![](contrast_files/figure-html/unnamed-chunk-2-4.png)
 
 The similarity between the plots is that the slopes of the lines, and
 the differences between the levels of `Heat`, are exactly the same in
 both plots. However, the vertical axes and the confidence intervals are
 different. In particular, the confidence interval for a contrast plot
 has zero width at the reference level: we can say with certainty that
-\mathbb{E}(Y \| x_0) - \mathbb{E}(Y \| x_0)=0. There is always
+\mathbb{E}(Y \mid x_0) - \mathbb{E}(Y \mid x_0)=0. There is always
 uncertainty, however, about the actual value of \mathbb{E}(Y) in a
 conditional plot for all values of x. Likewise, at the mean value of
 wind, 9.96, the contrast plot passes through 0 by construction, wheras

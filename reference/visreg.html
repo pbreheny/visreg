@@ -245,7 +245,8 @@ examples.</p></div>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># --- Linear models ----------------------------------------</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">## Basic</span></span></span>
@@ -269,9 +270,9 @@ examples.</p></div>
 <span class="r-in"><span><span class="va">fit3</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log</a></span><span class="op">(</span><span class="va">Ozone</span><span class="op">)</span> <span class="op">~</span> <span class="va">Solar.R</span> <span class="op">+</span> <span class="va">Wind</span> <span class="op">+</span> <span class="va">Temp</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/AsIs.html" class="external-link">I</a></span><span class="op">(</span><span class="va">Wind</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">airquality</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">visreg</span><span class="op">(</span><span class="va">fit1</span>, <span class="st">"Wind"</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="visreg-5.png" alt="" width="480" height="480"></span>
-<span class="r-in"><span><span class="fu">visreg</span><span class="op">(</span><span class="va">fit2</span>, <span class="st">"Wind"</span>, trans <span class="op">=</span> <span class="va">exp</span>, ylab <span class="op">=</span> <span class="st">"Ozone"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">visreg</span><span class="op">(</span><span class="va">fit2</span>, <span class="st">"Wind"</span>, trans <span class="op">=</span> <span class="va">exp</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">ylab</a></span><span class="op">(</span><span class="st">"Ozone"</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="visreg-6.png" alt="" width="480" height="480"></span>
-<span class="r-in"><span><span class="fu">visreg</span><span class="op">(</span><span class="va">fit3</span>, <span class="st">"Wind"</span>, trans <span class="op">=</span> <span class="va">exp</span>, ylab <span class="op">=</span> <span class="st">"Ozone"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">visreg</span><span class="op">(</span><span class="va">fit3</span>, <span class="st">"Wind"</span>, trans <span class="op">=</span> <span class="va">exp</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">ylab</a></span><span class="op">(</span><span class="st">"Ozone"</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="visreg-7.png" alt="" width="480" height="480"></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">## Conditioning</span></span></span>
@@ -286,20 +287,20 @@ examples.</p></div>
 <span class="r-plt img"><img src="visreg-10.png" alt="" width="480" height="480"></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">## Interactions</span></span></span>
-<span class="r-in"><span><span class="va">fit.in1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">Ozone</span> <span class="op">~</span> <span class="va">Solar.R</span> <span class="op">+</span> <span class="va">Wind</span> <span class="op">*</span> <span class="va">Heat</span>, data <span class="op">=</span> <span class="va">airquality</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="fu">visreg</span><span class="op">(</span><span class="va">fit.in1</span>, <span class="st">"Wind"</span>, by <span class="op">=</span> <span class="st">"Heat"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">fit_int</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">Ozone</span> <span class="op">~</span> <span class="va">Solar.R</span> <span class="op">+</span> <span class="va">Wind</span> <span class="op">*</span> <span class="va">Heat</span>, data <span class="op">=</span> <span class="va">airquality</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">visreg</span><span class="op">(</span><span class="va">fit_int</span>, <span class="st">"Wind"</span>, by <span class="op">=</span> <span class="st">"Heat"</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="visreg-11.png" alt="" width="480" height="480"></span>
-<span class="r-in"><span><span class="fu">visreg</span><span class="op">(</span><span class="va">fit.in1</span>, <span class="st">"Heat"</span>, by <span class="op">=</span> <span class="st">"Wind"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">visreg</span><span class="op">(</span><span class="va">fit_int</span>, <span class="st">"Heat"</span>, by <span class="op">=</span> <span class="st">"Wind"</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="visreg-12.png" alt="" width="480" height="480"></span>
-<span class="r-in"><span><span class="fu">visreg</span><span class="op">(</span><span class="va">fit.in1</span>, <span class="st">"Wind"</span>, by <span class="op">=</span> <span class="st">"Heat"</span>, type <span class="op">=</span> <span class="st">"contrast"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">visreg</span><span class="op">(</span><span class="va">fit_int</span>, <span class="st">"Wind"</span>, by <span class="op">=</span> <span class="st">"Heat"</span>, type <span class="op">=</span> <span class="st">"contrast"</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="visreg-13.png" alt="" width="480" height="480"></span>
-<span class="r-in"><span><span class="fu">visreg</span><span class="op">(</span><span class="va">fit.in1</span>, <span class="st">"Heat"</span>, by <span class="op">=</span> <span class="st">"Wind"</span>, breaks <span class="op">=</span> <span class="fl">6</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">visreg</span><span class="op">(</span><span class="va">fit_int</span>, <span class="st">"Heat"</span>, by <span class="op">=</span> <span class="st">"Wind"</span>, breaks <span class="op">=</span> <span class="fl">6</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="visreg-14.png" alt="" width="480" height="480"></span>
-<span class="r-in"><span><span class="fu">visreg</span><span class="op">(</span><span class="va">fit.in1</span>, <span class="st">"Heat"</span>, by <span class="op">=</span> <span class="st">"Wind"</span>, breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">10</span>, <span class="fl">20</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">visreg</span><span class="op">(</span><span class="va">fit_int</span>, <span class="st">"Heat"</span>, by <span class="op">=</span> <span class="st">"Wind"</span>, breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">10</span>, <span class="fl">20</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="visreg-15.png" alt="" width="480" height="480"></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">## Overlay</span></span></span>
-<span class="r-in"><span><span class="fu">visreg</span><span class="op">(</span><span class="va">fit.in1</span>, <span class="st">"Wind"</span>, by <span class="op">=</span> <span class="st">"Heat"</span>, overlay <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">visreg</span><span class="op">(</span><span class="va">fit_int</span>, <span class="st">"Wind"</span>, by <span class="op">=</span> <span class="st">"Heat"</span>, overlay <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="visreg-16.png" alt="" width="480" height="480"></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span></span></span>
@@ -310,37 +311,29 @@ examples.</p></div>
 <span class="r-in"><span><span class="va">birthwt</span><span class="op">$</span><span class="va">race</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">birthwt</span><span class="op">$</span><span class="va">race</span>, labels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"White"</span>, <span class="st">"Black"</span>, <span class="st">"Other"</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">birthwt</span><span class="op">$</span><span class="va">smoke</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">birthwt</span><span class="op">$</span><span class="va">smoke</span>, labels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Nonsmoker"</span>, <span class="st">"Smoker"</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">fit</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/glm.html" class="external-link">glm</a></span><span class="op">(</span><span class="va">low</span> <span class="op">~</span> <span class="va">age</span> <span class="op">+</span> <span class="va">race</span> <span class="op">+</span> <span class="va">smoke</span> <span class="op">+</span> <span class="va">lwt</span>, data <span class="op">=</span> <span class="va">birthwt</span>, family <span class="op">=</span> <span class="st">"binomial"</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="fu">visreg</span><span class="op">(</span><span class="va">fit</span>, <span class="st">"lwt"</span>,</span></span>
-<span class="r-in"><span>  xlab <span class="op">=</span> <span class="st">"Mother's Weight"</span>, ylab <span class="op">=</span> <span class="st">"Log odds (low birthweight)"</span></span></span>
-<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">visreg</span><span class="op">(</span><span class="va">fit</span>, <span class="st">"lwt"</span><span class="op">)</span> <span class="op">+</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">xlab</a></span><span class="op">(</span><span class="st">"Mother's Weight"</span><span class="op">)</span> <span class="op">+</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">ylab</a></span><span class="op">(</span><span class="st">"Log odds (low birthweight)"</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="visreg-17.png" alt="" width="480" height="480"></span>
-<span class="r-in"><span><span class="fu">visreg</span><span class="op">(</span><span class="va">fit</span>, <span class="st">"lwt"</span>,</span></span>
-<span class="r-in"><span>  scale <span class="op">=</span> <span class="st">"response"</span>, partial <span class="op">=</span> <span class="cn">FALSE</span>,</span></span>
-<span class="r-in"><span>  xlab <span class="op">=</span> <span class="st">"Mother's Weight"</span>, ylab <span class="op">=</span> <span class="st">"P(low birthweight)"</span></span></span>
-<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">visreg</span><span class="op">(</span><span class="va">fit</span>, <span class="st">"lwt"</span>, scale <span class="op">=</span> <span class="st">"response"</span>, partial <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op">+</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">xlab</a></span><span class="op">(</span><span class="st">"Mother's Weight"</span><span class="op">)</span> <span class="op">+</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">ylab</a></span><span class="op">(</span><span class="st">"P(low birthweight)"</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="visreg-18.png" alt="" width="480" height="480"></span>
-<span class="r-in"><span><span class="fu">visreg</span><span class="op">(</span><span class="va">fit</span>, <span class="st">"lwt"</span>,</span></span>
-<span class="r-in"><span>  scale <span class="op">=</span> <span class="st">"response"</span>, partial <span class="op">=</span> <span class="cn">FALSE</span>,</span></span>
-<span class="r-in"><span>  xlab <span class="op">=</span> <span class="st">"Mother's Weight"</span>, ylab <span class="op">=</span> <span class="st">"P(low birthweight)"</span>, rug <span class="op">=</span> <span class="fl">2</span></span></span>
-<span class="r-in"><span><span class="op">)</span></span></span>
-<span class="r-plt img"><img src="visreg-19.png" alt="" width="480" height="480"></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">## Proportional hazards</span></span></span>
-<span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="va"><a href="https://github.com/therneau/survival" class="external-link">survival</a></span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Loading required package: survival</span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">ovarian</span><span class="op">)</span></span></span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>data set ‘ovarian’ not found</span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">cancer</span>, package<span class="op">=</span><span class="st">"survival"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">ovarian</span><span class="op">$</span><span class="va">rx</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">ovarian</span><span class="op">$</span><span class="va">rx</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">fit</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/survival/man/coxph.html" class="external-link">coxph</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/survival/man/Surv.html" class="external-link">Surv</a></span><span class="op">(</span><span class="va">futime</span>, <span class="va">fustat</span><span class="op">)</span> <span class="op">~</span> <span class="va">age</span> <span class="op">+</span> <span class="va">rx</span>, data <span class="op">=</span> <span class="va">ovarian</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="fu">visreg</span><span class="op">(</span><span class="va">fit</span>, <span class="st">"age"</span>, ylab <span class="op">=</span> <span class="st">"log(Hazard ratio)"</span><span class="op">)</span></span></span>
-<span class="r-plt img"><img src="visreg-20.png" alt="" width="480" height="480"></span>
+<span class="r-in"><span><span class="va">fit</span> <span class="op">&lt;-</span> <span class="fu">survival</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/survival/man/coxph.html" class="external-link">coxph</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>  <span class="fu">survival</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/survival/man/Surv.html" class="external-link">Surv</a></span><span class="op">(</span><span class="va">futime</span>, <span class="va">fustat</span><span class="op">)</span> <span class="op">~</span> <span class="va">age</span> <span class="op">+</span> <span class="va">rx</span>,</span></span>
+<span class="r-in"><span>  data <span class="op">=</span> <span class="va">ovarian</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">visreg</span><span class="op">(</span><span class="va">fit</span>, <span class="st">"age"</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">ylab</a></span><span class="op">(</span><span class="st">"log(Hazard ratio)"</span><span class="op">)</span></span></span>
+<span class="r-plt img"><img src="visreg-19.png" alt="" width="480" height="480"></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">## Robust regression</span></span></span>
-<span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="va"><a href="http://www.stats.ox.ac.uk/pub/MASS4/" class="external-link">MASS</a></span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Loading required package: MASS</span>
-<span class="r-in"><span><span class="va">fit</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/MASS/man/rlm.html" class="external-link">rlm</a></span><span class="op">(</span><span class="va">Ozone</span> <span class="op">~</span> <span class="va">Solar.R</span> <span class="op">+</span> <span class="va">Wind</span> <span class="op">*</span> <span class="va">Heat</span>, data <span class="op">=</span> <span class="va">airquality</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">fit</span> <span class="op">&lt;-</span> <span class="fu">MASS</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/MASS/man/rlm.html" class="external-link">rlm</a></span><span class="op">(</span><span class="va">Ozone</span> <span class="op">~</span> <span class="va">Solar.R</span> <span class="op">+</span> <span class="va">Wind</span> <span class="op">*</span> <span class="va">Heat</span>, data <span class="op">=</span> <span class="va">airquality</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">visreg</span><span class="op">(</span><span class="va">fit</span>, <span class="st">"Wind"</span>, cond <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>Heat <span class="op">=</span> <span class="st">"Mild"</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-plt img"><img src="visreg-21.png" alt="" width="480" height="480"></span>
+<span class="r-plt img"><img src="visreg-20.png" alt="" width="480" height="480"></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">## And more...; anything with a 'predict' method should work</span></span></span>
 <span class="r-in"><span></span></span>
@@ -358,7 +351,7 @@ examples.</p></div>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Last updated: July 12, 2026</p>
+  <p>Last updated: July 13, 2026</p>
 </div>
 
     </footer></div>

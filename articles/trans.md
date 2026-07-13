@@ -27,15 +27,16 @@ transformation you can think of; here are some examples:
 
 fit <- lm(Ozone ~ Solar.R + Wind + Wind * I(Wind > 10) + Temp, data = airquality)
 visreg(fit, "Wind", print_cond = FALSE)
-# Warning:   You are plotting the effect of 'Wind' as if it were a 'main effect', but the
-#   model contains an interaction involving this variable that has not been addressed via the 'by'
-#   or 'cond' argument.  The plot therefore shows the effect of 'Wind' conditional on the
-#   values below, not its overall effect.
-# 
-#   Conditions used in construction of plot
-# Solar.R: 207
-# Temp: 79
 ```
+
+    Warning:   You are plotting the effect of 'Wind' as if it were a 'main effect', but the
+      model contains an interaction involving this variable that has not been addressed via the 'by'
+      or 'cond' argument.  The plot therefore shows the effect of 'Wind' conditional on the
+      values below, not its overall effect.
+
+      Conditions used in construction of plot
+    Solar.R: 207
+    Temp: 79
 
 ![](trans_files/figure-html/unnamed-chunk-3-1.png)
 
@@ -74,7 +75,7 @@ ozone concentrations instead of the ozone concentrations directly:
 ``` r
 
 fit <- lm(log(Ozone) ~ Solar.R + Wind + Temp, data = airquality)
-visreg(fit, "Wind", trans = exp, ylab = "Ozone", partial = TRUE)
+visreg(fit, "Wind", trans = exp, partial = TRUE) + ylab("Ozone")
 ```
 
 ![](trans_files/figure-html/unnamed-chunk-6-1.png)
@@ -101,7 +102,7 @@ combined and visualized in a straightforward manner:
 ``` r
 
 fit <- lm(log(Ozone) ~ Solar.R + Wind + I(Wind^2) + Temp, data = airquality)
-visreg(fit, "Wind", trans = exp, ylab = "Ozone", partial = TRUE)
+visreg(fit, "Wind", trans = exp, partial = TRUE) + ylab("Ozone")
 ```
 
 ![](trans_files/figure-html/unnamed-chunk-7-1.png)

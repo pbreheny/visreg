@@ -67,9 +67,10 @@ Now, `fit$gam` does not include the call (i.e., `fit$gam$call` is
 ``` r
 
 visreg(fit$gam, "x")
-# Error in `FUN()`:
-# ! object 'y' not found
 ```
+
+    Error in `FUN()`:
+    ! object 'y' not found
 
 So you have to include it manually:
 
@@ -96,16 +97,17 @@ with the model from the previous question, this code fails:
 ``` r
 
 visreg(fit$gam, "x", scale = "response")
-# Error in `UseMethod()`:
-# ! no applicable method for 'family' applied to an object of class "gam"
 ```
+
+    Error in `UseMethod()`:
+    ! no applicable method for 'family' applied to an object of class "gam"
 
 Since this is a binomial model with a logistic link,
 `binomial()$linkinv` provides the inverse transformation:
 
 ``` r
 
-visreg(fit$gam, "x", trans = binomial()$linkinv, ylab = "Probability")
+visreg(fit$gam, "x", trans = binomial()$linkinv) + ylab("Probability")
 ```
 
 ![](faq_files/figure-html/unnamed-chunk-8-1.png)

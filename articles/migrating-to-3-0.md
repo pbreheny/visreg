@@ -53,7 +53,7 @@ warnings after upgrading.
 | `print.cond` | `print_cond` | [`plot.visreg()`](https://pbreheny.github.io/visreg/reference/plot.visreg.md) |  |
 | `strip.names` | `strip_names` | [`plot.visreg()`](https://pbreheny.github.io/visreg/reference/plot.visreg.md) |  |
 | `legend` | *(removed)* | [`plot.visreg()`](https://pbreheny.github.io/visreg/reference/plot.visreg.md) | `ggplot2` draws a legend automatically when one is needed; suppress it with `+ ggplot2::theme(legend.position = "none")`. |
-| `whitespace` | *(removed)* | [`plot.visreg()`](https://pbreheny.github.io/visreg/reference/plot.visreg.md) | Controlled panel spacing in the old lattice backend; use standard `ggplot2`/`facet_grid()` mechanisms if you need to adjust spacing. |
+| `whitespace` | *(removed)* | [`plot.visreg()`](https://pbreheny.github.io/visreg/reference/plot.visreg.md) | Controlled panel spacing in the old lattice backend; use standard `ggplot2`/[`facet_grid()`](https://ggplot2.tidyverse.org/reference/facet_grid.html) mechanisms if you need to adjust spacing. |
 | `xtrans` | *(removed)* | [`visreg()`](https://pbreheny.github.io/visreg/reference/visreg.md) |  |
 | `type = "effect"` | `type = "contrast"` | [`visreg()`](https://pbreheny.github.io/visreg/reference/visreg.md), [`visreg2d()`](https://pbreheny.github.io/visreg/reference/visreg2d.md) | The deprecated alias has been fully removed; `contrast` is the only spelling now. |
 | `visregList()` | [`visreg_list()`](https://pbreheny.github.io/visreg/reference/visreg_list.md) | top-level function | The function and the S3 class it returns (`"visregList"` → `"visreg_list"`) were both renamed. |

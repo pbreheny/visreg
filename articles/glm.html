@@ -104,11 +104,11 @@
 
 
     <p>Generally speaking, visreg works the same way for GLMs as with any other model:</p>
-<div class="cell" data-h="5" data-w="5">
+<div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"birthwt"</span>, package <span class="op">=</span> <span class="st">"MASS"</span><span class="op">)</span></span>
 <span><span class="va">fit</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/glm.html" class="external-link">glm</a></span><span class="op">(</span><span class="va">low</span> <span class="op">~</span> <span class="va">age</span> <span class="op">+</span> <span class="va">race</span> <span class="op">+</span> <span class="va">smoke</span> <span class="op">+</span> <span class="va">lwt</span>, data <span class="op">=</span> <span class="va">birthwt</span>, family <span class="op">=</span> <span class="st">"binomial"</span><span class="op">)</span></span>
-<span><span class="fu"><a href="../reference/visreg.html">visreg</a></span><span class="op">(</span><span class="va">fit</span>, <span class="st">"lwt"</span>, xlab <span class="op">=</span> <span class="st">"Mother's weight"</span>, ylab <span class="op">=</span> <span class="st">"Log odds (low birthweight)"</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu"><a href="../reference/visreg.html">visreg</a></span><span class="op">(</span><span class="va">fit</span>, <span class="st">"lwt"</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">xlab</a></span><span class="op">(</span><span class="st">"Mother's weight"</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">ylab</a></span><span class="op">(</span><span class="st">"Log odds (low birthweight)"</span><span class="op">)</span></span></code></pre></div>
 <div class="cell-output-display">
 <div>
 <figure><p><img src="glm_files/figure-html/unnamed-chunk-2-1.png" width="672"></p>
@@ -116,14 +116,13 @@
 </div>
 </div>
 </div>
-<p><a class="anchor" id="scale" href=""></a></p>
 <section class="section level2"><h2 id="scale">Scale<a class="anchor" aria-label="anchor" href="#scale"></a>
 </h2>
 <p>The unique aspect of GLMs is the link function joining the linear predictors to the response – note that the vertical axis in the above plot is the log-odds of the outcome, not low birthweight itself. This is the best scale on which to examine residuals and modeling assumption, because, in a sense, it is the scale on which the modeling actually takes place (Mother’s weight is assumed to have a linear form in the model, and the above plot is linear).</p>
 <p>For communicating modeling results, however, it is often useful to transform the above outcome to the probability scale. This can be done by manually specifying <code>trans</code> as described in <a href="trans.html">transformations</a>, although for GLMs the shortcut <code>scale="response"</code> is provided:</p>
-<div class="cell" data-h="5" data-w="5">
+<div class="cell">
 <div class="sourceCode cell-code" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/visreg.html">visreg</a></span><span class="op">(</span><span class="va">fit</span>, <span class="st">"lwt"</span>, scale <span class="op">=</span> <span class="st">"response"</span>, rug <span class="op">=</span> <span class="fl">2</span>, xlab <span class="op">=</span> <span class="st">"Mother's weight"</span>, ylab <span class="op">=</span> <span class="st">"P(low birthweight)"</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/visreg.html">visreg</a></span><span class="op">(</span><span class="va">fit</span>, <span class="st">"lwt"</span>, scale <span class="op">=</span> <span class="st">"response"</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">xlab</a></span><span class="op">(</span><span class="st">"Mother's weight"</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">ylab</a></span><span class="op">(</span><span class="st">"P(low birthweight)"</span><span class="op">)</span></span></code></pre></div>
 <div class="cell-output-display">
 <div>
 <figure><p><img src="glm_files/figure-html/unnamed-chunk-3-1.png" width="672"></p>
@@ -152,30 +151,20 @@
 <code class="sourceCode R"><span><span class="va">fit</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/glm.html" class="external-link">glm</a></span><span class="op">(</span><span class="va">y</span> <span class="op">~</span> <span class="va">x</span>, family <span class="op">=</span> <span class="va">poisson</span><span class="op">)</span></span></code></pre></div>
 </div>
 <p>and visualize with <code>visreg</code>:</p>
-<div class="cell" data-h="3" data-w="9">
 <div class="sourceCode cell-code" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></span><span class="op">(</span>mfrow <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">3</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="fu"><a href="../reference/visreg.html">visreg</a></span><span class="op">(</span><span class="va">fit</span>, <span class="st">"x"</span><span class="op">)</span></span></code></pre></div>
-<div class="cell-output-display">
-<div>
-<figure><p><img src="glm_files/figure-html/unnamed-chunk-7-1.png" style="width:100.0%"></p>
-</figure>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/visreg.html">visreg</a></span><span class="op">(</span><span class="va">fit</span>, <span class="st">"x"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="../reference/visreg.html">visreg</a></span><span class="op">(</span><span class="va">fit</span>, <span class="st">"x"</span>, scale <span class="op">=</span> <span class="st">"response"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="../reference/visreg.html">visreg</a></span><span class="op">(</span><span class="va">fit</span>, <span class="st">"x"</span>, scale <span class="op">=</span> <span class="st">"response"</span>, partial <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+<div class="cell quarto-layout-panel" data-layout-ncol="3" data-w="3" data-h="3">
+<div class="quarto-layout-row">
+<div class="quarto-layout-cell" style="flex-basis: 33.3%;justify-content: center;">
+<p><img src="glm_files/figure-html/unnamed-chunk-7-1.png"></p>
 </div>
+<div class="quarto-layout-cell" style="flex-basis: 33.3%;justify-content: center;">
+<p><img src="glm_files/figure-html/unnamed-chunk-7-2.png"></p>
 </div>
-<div class="sourceCode cell-code" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/visreg.html">visreg</a></span><span class="op">(</span><span class="va">fit</span>, <span class="st">"x"</span>, scale <span class="op">=</span> <span class="st">"response"</span><span class="op">)</span></span></code></pre></div>
-<div class="cell-output-display">
-<div>
-<figure><p><img src="glm_files/figure-html/unnamed-chunk-7-2.png" style="width:100.0%"></p>
-</figure>
-</div>
-</div>
-<div class="sourceCode cell-code" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/visreg.html">visreg</a></span><span class="op">(</span><span class="va">fit</span>, <span class="st">"x"</span>, scale <span class="op">=</span> <span class="st">"response"</span>, partial <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
-<div class="cell-output-display">
-<div>
-<figure><p><img src="glm_files/figure-html/unnamed-chunk-7-3.png" style="width:100.0%"></p>
-</figure>
+<div class="quarto-layout-cell" style="flex-basis: 33.3%;justify-content: center;">
+<p><img src="glm_files/figure-html/unnamed-chunk-7-3.png"></p>
 </div>
 </div>
 </div>
@@ -273,7 +262,7 @@
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Last updated: July 12, 2026</p>
+  <p>Last updated: July 13, 2026</p>
 </div>
 
     </footer>

@@ -21,23 +21,14 @@ degrees and (3) a hot temperature of 100 degrees.
 ``` r
 
 fit <- lm(Ozone ~ Solar.R + Wind + Temp, data = airquality)
-par(mfrow = c(1, 3))
 visreg(fit, "Wind", cond = list(Temp = 50))
+visreg(fit, "Wind")
+visreg(fit, "Wind", cond = list(Temp = 100))
 ```
 
 ![](cond_files/figure-html/unnamed-chunk-2-1.png)
 
-``` r
-
-visreg(fit, "Wind")
-```
-
 ![](cond_files/figure-html/unnamed-chunk-2-2.png)
-
-``` r
-
-visreg(fit, "Wind", cond = list(Temp = 100))
-```
 
 ![](cond_files/figure-html/unnamed-chunk-2-3.png)
 

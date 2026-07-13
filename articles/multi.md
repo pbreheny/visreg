@@ -27,13 +27,13 @@ example:
 
 ``` r
 
-visreg(fit, "Ozone",
-  collapse = TRUE, overlay = TRUE, ylab = "Probability",
-  ylim = c(0, 1), partial = FALSE, rug = 2
-)
-# Warning: Removed 303 rows containing missing values or values outside the scale range
-# (`geom_ribbon()`).
+visreg(fit, "Ozone", collapse = TRUE, overlay = TRUE, partial = FALSE) +
+  coord_cartesian(ylim = 0:1) +
+  ylab("Probability")
 ```
+
+    Warning: Removed 303 rows containing missing values or values outside the scale range
+    (`geom_ribbon()`).
 
 ![](multi_files/figure-html/unnamed-chunk-3-1.png)
 
@@ -45,7 +45,7 @@ here:
 ``` r
 
 library(quantreg)
-fit <- rq(Ozone ~ Wind + Temp, tau = c(.25, .5, .75), data = airquality)
+fit <- rq(Ozone ~ Wind + Temp, tau = c(0.25, 0.5, 0.75), data = airquality)
 v <- visreg(fit, "Wind", overlay = TRUE, collapse = TRUE)
 ```
 
@@ -55,15 +55,15 @@ quantiles of interest. To obtain them, you must construct the
 
 ``` r
 
-fit1 <- rq(Ozone ~ Wind + Temp, tau = .25, data = airquality)
-fit2 <- rq(Ozone ~ Wind + Temp, tau = .5, data = airquality)
-fit3 <- rq(Ozone ~ Wind + Temp, tau = .75, data = airquality)
+fit1 <- rq(Ozone ~ Wind + Temp, tau = 0.25, data = airquality)
+fit2 <- rq(Ozone ~ Wind + Temp, tau = 0.5, data = airquality)
+fit3 <- rq(Ozone ~ Wind + Temp, tau = 0.75, data = airquality)
 v <- visreg_list(visreg(fit1, "Wind", plot = FALSE),
   visreg(fit2, "Wind", plot = FALSE),
   visreg(fit3, "Wind", plot = FALSE),
   labels = c("25%", "50%", "75%"), collapse = TRUE
 )
-plot(v, ylab = "Ozone")
+plot(v) + ylab("Ozone")
 ```
 
 ![](multi_files/figure-html/unnamed-chunk-5-1.png)

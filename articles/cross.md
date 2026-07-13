@@ -87,7 +87,7 @@ such as themes:
 
 ``` r
 
-visreg(fit, "Wind", by = "Heat") + theme_bw()
+visreg(fit, "Wind", by = "Heat")
 ```
 
 ![](cross_files/figure-html/unnamed-chunk-7-1.png)
@@ -123,12 +123,15 @@ visreg(fit, "Wind", by = "Heat", strip_names = c("Cold days", "Mild days", "Hot 
 ![](cross_files/figure-html/unnamed-chunk-10-1.png)
 
 Other aspects of faceting, such as the number of rows/columns, can be
-changed by adding a new `facet_wrap()` (or `facet_grid()`) to the
-returned plot:
+changed by adding a new
+[`facet_wrap()`](https://ggplot2.tidyverse.org/reference/facet_wrap.html)
+(or
+[`facet_grid()`](https://ggplot2.tidyverse.org/reference/facet_grid.html))
+to the returned plot:
 
 ``` r
 
-visreg(fit, "Heat", by = "Wind", breaks = 4) + facet_wrap(~Wind, nrow = 1)
+visreg(fit, "Heat", by = "Wind", breaks = 4) + facet_wrap(~ Wind, nrow = 1)
 ```
 
 ![](cross_files/figure-html/unnamed-chunk-11-1.png)

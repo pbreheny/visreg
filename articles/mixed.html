@@ -107,36 +107,20 @@
 <p>As an illustration, consider the following random-intercept, random-slope model from a study involving the protein content of cows’ milk in the weeks following calving:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/lme4/lme4/" class="external-link">lme4</a></span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/lme4/lme4/" class="external-link">lme4</a></span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">Milk</span>, package <span class="op">=</span> <span class="st">"nlme"</span><span class="op">)</span></span>
 <span><span class="va">ctrl</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lme4/man/lmerControl.html" class="external-link">lmerControl</a></span><span class="op">(</span>optCtrl <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>xtol_rel <span class="op">=</span> <span class="fl">1e-6</span><span class="op">)</span><span class="op">)</span> <span class="co"># Warning otherwise</span></span>
 <span><span class="va">fit</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lme4/man/lmer.html" class="external-link">lmer</a></span><span class="op">(</span><span class="va">protein</span> <span class="op">~</span> <span class="va">Diet</span> <span class="op">+</span> <span class="va">Time</span> <span class="op">+</span> <span class="op">(</span><span class="va">Time</span> <span class="op">|</span> <span class="va">Cow</span><span class="op">)</span>, <span class="va">Milk</span>, control <span class="op">=</span> <span class="va">ctrl</span><span class="op">)</span></span></code></pre></div>
 </div>
 <section class="section level2"><h2 id="plotting-fixed-effects">Plotting fixed effects<a class="anchor" aria-label="anchor" href="#plotting-fixed-effects"></a>
 </h2>
-<p>As mentioned above, a conditional plot will lack confidence bands (due to the large number of points, we’re making the partial residuals smaller and partially transparent):</p>
-<div class="cell" data-h="5" data-w="5">
+<p>NEED TEXT</p>
+<div class="cell">
 <div class="sourceCode cell-code" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/visreg.html">visreg</a></span><span class="op">(</span><span class="va">fit</span>, <span class="st">"Diet"</span>, ylab <span class="op">=</span> <span class="st">"Protein"</span>, points <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>col <span class="op">=</span> <span class="st">"#55555540"</span>, cex <span class="op">=</span> <span class="fl">0.25</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co"># Warning: Duplicated aesthetics after name standardisation: colour and size</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/visreg.html">visreg</a></span><span class="op">(</span><span class="va">fit</span>, <span class="st">"Diet"</span>, points <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>color <span class="op">=</span> <span class="st">"#55555540"</span>, size <span class="op">=</span> <span class="fl">0.75</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">ylab</a></span><span class="op">(</span><span class="st">"Protein"</span><span class="op">)</span></span></code></pre></div>
 <div class="cell-output-display">
 <div>
 <figure><p><img src="mixed_files/figure-html/unnamed-chunk-3-1.png" width="672"></p>
-</figure>
-</div>
-</div>
-</div>
-<p>But, because the random effect terms drop out of a contrast plot, we do have bands here:</p>
-<div class="cell" data-h="5" data-w="5">
-<div class="sourceCode cell-code" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/visreg.html">visreg</a></span><span class="op">(</span><span class="va">fit</span>, <span class="st">"Diet"</span>,</span>
-<span>  type <span class="op">=</span> <span class="st">"contrast"</span>, ylab <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/expression.html" class="external-link">expression</a></span><span class="op">(</span><span class="va">Delta</span> <span class="op">*</span> <span class="st">"Protein"</span><span class="op">)</span>,</span>
-<span>  points <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>col <span class="op">=</span> <span class="st">"#55555540"</span>, cex <span class="op">=</span> <span class="fl">0.25</span><span class="op">)</span></span>
-<span><span class="op">)</span></span>
-<span><span class="co"># Warning: Duplicated aesthetics after name standardisation: colour and size</span></span></code></pre></div>
-<div class="cell-output-display">
-<div>
-<figure><p><img src="mixed_files/figure-html/unnamed-chunk-4-1.png" width="672"></p>
 </figure>
 </div>
 </div>
@@ -148,15 +132,15 @@
 <li>According to the object-oriented design of <code>visreg</code>, the <code>predict</code> method supplied by <code>lme4</code> is used. It has its own option, <code>re.form</code>, to control how random effects are used in the prediction, and this must be passed through <code>visreg</code> accordingly.</li>
 <li>For the sake of space, I’m going to subset the plot to ten cows rather than all 79. This can be accomplished by returning, then subsetting, the raw <code>visreg</code> object prior to plotting.</li>
 </ul>
-<div class="cell" data-h="4" data-w="9">
-<div class="sourceCode cell-code" id="cb4"><pre class="downlit sourceCode r">
+<div class="cell" data-h="3" data-w="9">
+<div class="sourceCode cell-code" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">v</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/visreg.html">visreg</a></span><span class="op">(</span><span class="va">fit</span>, <span class="st">"Time"</span>, by <span class="op">=</span> <span class="st">"Cow"</span>, re.form <span class="op">=</span> <span class="op">~</span> <span class="op">(</span><span class="va">Time</span> <span class="op">|</span> <span class="va">Cow</span><span class="op">)</span>, plot <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span><span class="va">sub_cow</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/levels.html" class="external-link">levels</a></span><span class="op">(</span><span class="va">Milk</span><span class="op">$</span><span class="va">Cow</span><span class="op">)</span>, <span class="fl">10</span><span class="op">)</span></span>
 <span><span class="va">vv</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/subset.html" class="external-link">subset</a></span><span class="op">(</span><span class="va">v</span>, <span class="va">Cow</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="va">sub_cow</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">vv</span>, ylab <span class="op">=</span> <span class="st">"Protein"</span>, layout <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">5</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">vv</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">ylab</a></span><span class="op">(</span><span class="st">"Protein"</span><span class="op">)</span></span></code></pre></div>
 <div class="cell-output-display">
 <div>
-<figure><p><img src="mixed_files/figure-html/unnamed-chunk-5-1.png" style="width:100.0%"></p>
+<figure><p><img src="mixed_files/figure-html/unnamed-chunk-4-1.png" style="width:100.0%"></p>
 </figure>
 </div>
 </div>
@@ -254,7 +238,7 @@
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Last updated: July 12, 2026</p>
+  <p>Last updated: July 13, 2026</p>
 </div>
 
     </footer>

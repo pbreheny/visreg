@@ -108,7 +108,8 @@ example that adds a title and re-labels the (log-transformed) y-axis:
 
 fit <- lm(log(Ozone) ~ Solar.R + Wind + Temp, data = airquality)
 at <- seq(1.5, 5, 0.5)
-visreg(fit, "Wind", ylab = "Ozone") +
+visreg(fit, "Wind") +
+  ylab("Ozone") +
   ggtitle("Ozone is bad for you") +
   scale_y_continuous(breaks = at, labels = round(exp(at), 1))
 ```
@@ -124,14 +125,14 @@ accompanying line) is controlled through the `fill`/`line` arguments’
 ``` r
 
 fit <- lm(Ozone ~ Solar.R + Wind + Heat, data = airquality)
-visreg(fit, "Heat", fill = list(width = .9))
+visreg(fit, "Heat", line = list(width = 0.98), fill = list(width = 0.98))
 ```
 
 ![](options_files/figure-html/unnamed-chunk-11-1.png)
 
 ``` r
 
-visreg(fit, "Heat", fill = list(width = .1))
+visreg(fit, "Heat", line = list(width = 0.1), fill = list(width = 0.1))
 ```
 
 ![](options_files/figure-html/unnamed-chunk-12-1.png)

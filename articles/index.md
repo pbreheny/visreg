@@ -20,11 +20,17 @@ A more complex example, which uses the
 ``` r
 
 library(mgcv)
-# Loading required package: nlme
-# This is mgcv 1.9-4. For overview type '?mgcv'.
+```
+
+    Loading required package: nlme
+
+    This is mgcv 1.9-4. For overview type '?mgcv'.
+
+``` r
+
 airquality$Heat <- cut(airquality$Temp, 3, labels = c("Cool", "Mild", "Hot"))
 fit <- gam(Ozone ~ s(Wind, by = Heat, sp = 0.1), data = airquality)
-visreg(fit, "Wind", "Heat", ylab = "Ozone")
+visreg(fit, "Wind", "Heat") + ylab("Ozone")
 ```
 
 ![](index_files/figure-html/unnamed-chunk-4-1.png)
