@@ -15,8 +15,7 @@ visreg(fit, "Wind", type = "contrast") |> print() |> expect_silent()
 fit <- lm(Ozone ~ Solar.R + Wind + I(Temp^2) + I(Wind^2), data = airquality)
 visreg(fit, "Temp") |> print() |> expect_silent()
 
-# Transformed response; visreg automatically plots log(Wind) back on its
-# natural axis, since it's a model term rather than a `trans`/`xtrans` option
+# Transformed response
 fit <- lm(log(Ozone) ~ Solar.R + Wind + Temp, data = airquality)
 visreg(fit, "Wind") |> print() |> expect_silent()
 fit <- lm(log(Ozone) ~ log(Wind), data = airquality)
@@ -57,13 +56,11 @@ fit <- lm(Ozone ~ Solar.R + Wind * Heat, data = airquality)
 visreg(
   fit,
   "Heat",
-  xlab = "Heat Category",
   line = list(color = "blue", linewidth = 10),
   points = list(color = "red", size = 2),
   alpha = 0.001,
   fill = list(fill = "yellow", color = "green")
 ) |>
-  print() |>
   expect_warning()
 visreg(
   fit,
@@ -72,7 +69,6 @@ visreg(
   points = list(color = "red", size = 2),
   fill = list(fill = "yellow", color = "green")
 ) |>
-  print() |>
   expect_warning()
 visreg(
   fit,

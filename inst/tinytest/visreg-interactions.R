@@ -96,7 +96,8 @@ visreg(fit, "Wind", by = "Hotness", overlay = TRUE) |> print() |> expect_silent(
 
 # Aesthetic options
 fit <- lm(Ozone ~ Wind * Heat + Solar.R + Mon, data = airquality)
-visreg(fit, "Wind", by = "Heat", xlab = "XXX", ylab = "YYY") |> print() |> expect_silent()
+p <- visreg(fit, "Wind", by = "Heat") + ggplot2::xlab("XXX") + ggplot2::ylab("YYY")
+expect_silent(print(p))
 visreg(
   fit,
   "Wind",
@@ -107,7 +108,8 @@ visreg(
 ) |>
   print() |>
   expect_silent()
-visreg(fit, "Heat", by = "Wind", xlab = "XXX", ylab = "YYY") |> print() |> expect_silent()
+visreg(fit, "Heat", by = "Wind") + ggplot2::xlab("XXX") + ggplot2::ylab("YYY")
+expect_silent(print(p))
 visreg(
   fit,
   "Heat",

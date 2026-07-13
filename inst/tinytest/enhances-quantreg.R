@@ -1,3 +1,4 @@
+library(tinytest)
 suppressPackageStartupMessages(library(quantreg))
 
 # Basic usage
@@ -35,4 +36,5 @@ v <- visreg_list(
   labels = paste("tau", c(0.25, 0.5, 0.75), sep = "="),
   collapse = TRUE
 )
-plot(v, ylab = "Ozone") |> print() |> expect_silent()
+p <- plot(v) + ggplot2::ylab("Ozone")
+expect_silent(print(p))

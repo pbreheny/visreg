@@ -2,13 +2,12 @@
 title: Transformations
 ---
 
-```{r include=FALSE}
+```{r}
+#| include: false
 library(visreg)
+library(ggplot2)
+theme_set(theme_minimal())
 knitr::opts_knit$set(aliases = c(h = "fig.height", w = "fig.width"))
-knitr::opts_chunk$set(comment = "#", collapse = TRUE, cache = FALSE, tidy = FALSE)
-knitr::knit_hooks$set(small.mar = function(before, options, envir) {
-  if (before) par(mar = c(4, 4, .1, .1))
-})
 ```
 
 [Getting started](basic.html) described how `visreg` provides a visual summary of a model, somewhat akin to the numerical summary you get from `summary(fit)`.  For nonlinear terms, however, it is usually difficult to interpret numerical summaries, and visual representations become far more important.
@@ -17,24 +16,25 @@ knitr::knit_hooks$set(small.mar = function(before, options, envir) {
 
 For example, suppose we allow the effect of wind on ozone to be nonlinear by introducing a quadratic term into the model:
 
-```{r, h=5, w=5}
+```{r}
 fit <- lm(Ozone ~ Solar.R + Wind + I(Wind^2) + Temp, data = airquality)
 visreg(fit, "Wind")
 ```
 
 Note that `visreg` automatically detects the nonlinear relationship and represents this correctly in the plot.  This should work for any transformation you can think of; here are some examples:
 
-```{r, h=5, w=5}
+```{r}
 fit <- lm(Ozone ~ Solar.R + Wind + Wind * I(Wind > 10) + Temp, data = airquality)
 visreg(fit, "Wind", print_cond = FALSE)
 ```
 
-```{r, h=5, w=5}
+```{r}
 fit <- lm(Ozone ~ Solar.R + poly(Wind, 3) + Temp, data = airquality)
 visreg(fit, "Wind")
 ```
 
-```{r, h=5, w=5, message=FALSE}
+```{r}
+#| message: false
 library(splines)
 fit <- lm(Ozone ~ Solar.R + ns(Wind, df = 3) + Temp, data = airquality)
 visreg(fit, "Wind")
@@ -46,9 +46,9 @@ If you ever run across a kind of transformation that produces an error in `visre
 
 Another kind of nonlinear model arises when the outcome is transformed, but we are interested in plotting the relationship on the original scale.  For example, ozone levels must be positive.  However, as the [GAM on the front page](index.html#gam) illustrates, some models may result in predictions or confidence band that fall below 0.  One way of remedying this is to model the log of ozone concentrations instead of the ozone concentrations directly:
 
-```{r, h=5, w=5}
+```{r}
 fit <- lm(log(Ozone) ~ Solar.R + Wind + Temp, data = airquality)
-visreg(fit, "Wind", trans = exp, ylab = "Ozone", partial = TRUE)
+visreg(fit, "Wind", trans = exp, partial = TRUE) + ylab("Ozone")
 ```
 
 Note that here, the plotting involves an inverse transformation.  There is no automatic way for `visreg` to know what the correct inverse transformation is (except for [GLMs](glm.html)), so this must be supplied as a function.
@@ -59,8 +59,8 @@ Also note that by default, `visreg` turns off partial residuals when `trans` is 
 
 As one would hope, nonlinear terms and outcome transformations can be combined and visualized in a straightforward manner:
 
-```{r, h=5, w=5}
+```{r}
 fit <- lm(log(Ozone) ~ Solar.R + Wind + I(Wind^2) + Temp, data = airquality)
-visreg(fit, "Wind", trans = exp, ylab = "Ozone", partial = TRUE)
+visreg(fit, "Wind", trans = exp, partial = TRUE) + ylab("Ozone")
 ```
 

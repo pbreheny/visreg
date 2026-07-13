@@ -2,21 +2,21 @@
 title: Mixed models
 ---
 
-```{r include=FALSE}
+```{r}
+#| include: false
 library(visreg)
+library(ggplot2)
+theme_set(theme_minimal())
 knitr::opts_knit$set(aliases = c(h = "fig.height", w = "fig.width"))
-knitr::opts_chunk$set(comment = "#", collapse = TRUE, cache = FALSE, tidy = FALSE)
-knitr::knit_hooks$set(small.mar = function(before, options, envir) {
-  if (before) par(mar = c(4, 4, 0.1, 0.1))
-})
 ```
 
 `visreg` can be used with mixed models, for example from the `nlme` or `lme4` packages, although it is worth noting that these packages are unable to incorporate uncertainty about random effects into predictions, and therefore do not offer confidence intervals, meaning that `visreg` plots will lack confidence bands.  Nevertheless, `visreg` is still useful for visualizing the effects of fixed effects in such models using contrast plots, as well as plotting effects without confidence intervals.
 
 As an illustration, consider the following random-intercept, random-slope model from a study involving the protein content of cows' milk in the weeks following calving:
 
-```{r, message=FALSE}
-library(lme4, quietly = TRUE)
+```{r}
+#| message: false
+library(lme4)
 data(Milk, package = "nlme")
 ctrl <- lmerControl(optCtrl = list(xtol_rel = 1e-6)) # Warning otherwise
 fit <- lmer(protein ~ Diet + Time + (Time | Cow), Milk, control = ctrl)
@@ -24,19 +24,10 @@ fit <- lmer(protein ~ Diet + Time + (Time | Cow), Milk, control = ctrl)
 
 # Plotting fixed effects
 
-As mentioned above, a conditional plot will lack confidence bands (due to the large number of points, we're making the partial residuals smaller and partially transparent):
+NEED TEXT
 
-```{r, h=5, w=5}
-visreg(fit, "Diet", ylab = "Protein", points = list(col = "#55555540", cex = 0.25))
-```
-
-But, because the random effect terms drop out of a contrast plot, we do have bands here:
-
-```{r, h=5, w=5}
-visreg(fit, "Diet",
-  type = "contrast", ylab = expression(Delta * "Protein"),
-  points = list(col = "#55555540", cex = 0.25)
-)
+```{r}
+visreg(fit, "Diet", points = list(color = "#55555540", size = 0.75)) + ylab("Protein")
 ```
 
 # Plotting random effects
@@ -46,11 +37,14 @@ The `visreg` package can also be used to plot random effects, although again, th
 * According to the object-oriented design of `visreg`, the `predict` method supplied by `lme4` is used.  It has its own option, `re.form`, to control how random effects are used in the prediction, and this must be passed through `visreg` accordingly.
 * For the sake of space, I'm going to subset the plot to ten cows rather than all 79.  This can be accomplished by returning, then subsetting, the raw `visreg` object prior to plotting.
 
-```{r, h=4, w=9, out.width='100%'}
+```{r}
+#| h: 3
+#| w: 9
+#| out.width: 100%
 v <- visreg(fit, "Time", by = "Cow", re.form = ~ (Time | Cow), plot = FALSE)
 sub_cow <- sample(levels(Milk$Cow), 10)
 vv <- subset(v, Cow %in% sub_cow)
-plot(vv, ylab = "Protein", layout = c(5, 2))
+plot(vv) + ylab("Protein")
 ```
 
 Returning the data frames, estimates, confidence intervals, and residuals used in the construction of its plots like this allows users to write their own extensions and modifications of `visreg` plots.

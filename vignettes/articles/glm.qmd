@@ -2,24 +2,21 @@
 title: Generalized linear models
 ---
 
-```{r include=FALSE}
+```{r}
+#| include: false
 library(visreg)
+library(ggplot2)
+theme_set(theme_minimal())
 knitr::opts_knit$set(aliases = c(h = "fig.height", w = "fig.width"))
-knitr::opts_chunk$set(comment = "#", collapse = TRUE, cache = FALSE, tidy = FALSE)
-knitr::knit_hooks$set(small.mar = function(before, options, envir) {
-  if (before) par(mar = c(4, 4, .1, .1))
-})
 ```
 
 Generally speaking, visreg works the same way for GLMs as with any other model:
 
-```{r, h=5, w=5}
+```{r}
 data("birthwt", package = "MASS")
 fit <- glm(low ~ age + race + smoke + lwt, data = birthwt, family = "binomial")
-visreg(fit, "lwt", xlab = "Mother's weight", ylab = "Log odds (low birthweight)")
+visreg(fit, "lwt") + xlab("Mother's weight") + ylab("Log odds (low birthweight)")
 ```
-
-<a class="anchor" id="scale"></a>
 
 # Scale
 
@@ -27,8 +24,8 @@ The unique aspect of GLMs is the link function joining the linear predictors to 
 
 For communicating modeling results, however, it is often useful to transform the above outcome to the probability scale.  This can be done by manually specifying `trans` as described in [transformations](trans.html), although for GLMs the shortcut `scale="response"` is provided:
 
-```{r, h=5, w=5, dependson="birthwt"}
-visreg(fit, "lwt", scale = "response", rug = 2, xlab = "Mother's weight", ylab = "P(low birthweight)")
+```{r}
+visreg(fit, "lwt", scale = "response") + xlab("Mother's weight") + ylab("P(low birthweight)")
 ```
 
 # Partial residuals
@@ -57,8 +54,11 @@ fit <- glm(y ~ x, family = poisson)
 
 and visualize with `visreg`:
 
-```{r, h=3, w=9, fig.retina=2, out.width='100%'}
-par(mfrow = c(1, 3))
+```{r}
+#| h: 3
+#| w: 3
+#| layout-ncol: 3
+#| out.width: 100%
 visreg(fit, "x")
 visreg(fit, "x", scale = "response")
 visreg(fit, "x", scale = "response", partial = TRUE)

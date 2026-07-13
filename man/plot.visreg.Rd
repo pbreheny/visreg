@@ -64,7 +64,8 @@ and plot the partial residuals on top, specify \code{top='points'}.}
 \item{points}{List of parameters to pass to \code{\link[ggplot2:geom_point]{ggplot2::geom_point()}} (continuous \code{xvar}) or
 \code{\link[ggplot2:geom_jitter]{ggplot2::geom_jitter()}} (factor \code{xvar}) when partial residuals are plotted.}
 
-\item{...}{Not used.}
+\item{...}{Not used; present only because \code{plot()} is a generic function. An error is raised
+if any arguments are passed here.}
 }
 \value{
 A ggplot object, or if \code{x} is a \code{\link[=visreg_list]{visreg_list()}}, a list of ggplot objects.

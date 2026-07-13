@@ -2,20 +2,21 @@
 title: Multiple outcomes
 ---
 
-```{r include=FALSE}
+```{r}
+#| include: false
 library(visreg)
+library(ggplot2)
+theme_set(theme_minimal())
 knitr::opts_knit$set(aliases = c(h = "fig.height", w = "fig.width"))
-knitr::opts_chunk$set(comment = "#", collapse = TRUE, cache = FALSE, tidy = FALSE)
-knitr::knit_hooks$set(small.mar = function(before, options, envir) {
-  if (before) par(mar = c(4, 4, .1, .1))
-})
 ```
 
 Multiple `visreg` objects can be bundled together in an object of class `visreg_list`; for example, when you submit `visreg(fit)`, you get a `visreg_list`, one `visreg` object for each predictor in the model.  `visreg_list`s can also be used for handling models with multiple outcomes.
 
 For example, suppose we fit a multinomial regression model using the `nnet` package:
 
-```{r, message=FALSE, results='hide'}
+```{r}
+#| message: false
+#| output: false
 library(nnet)
 airquality$Heat <- cut(airquality$Temp, 3, labels = c("Cool", "Mild", "Hot"))
 fit <- multinom(Heat ~ Wind + Ozone, airquality)
@@ -23,33 +24,38 @@ fit <- multinom(Heat ~ Wind + Ozone, airquality)
 
 By default, `visreg(fit, "Ozone")` would create three separate plots, one for each level of the outcome, `Heat`.  By specifying `collapse=TRUE`, we collapse the list down to a single `visreg` object which can be plotted using the [methods](cross.html) [described](overlay.html) [here](surface.html).  For example:
 
-```{r, message=FALSE, h=5, w=5}
-visreg(fit, "Ozone",
-  collapse = TRUE, overlay = TRUE, ylab = "Probability",
-  ylim = c(0, 1), partial = FALSE, rug = 2
-)
+```{r}
+#| message: false
+visreg(fit, "Ozone", collapse = TRUE, overlay = TRUE, partial = FALSE) +
+  coord_cartesian(ylim = 0:1) +
+  ylab("Probability")
 ```
 
 Another example is quantile regression using the `quantreg` package.  Here, there is only one outcome, but we could be interested in modeling several different quantiles.  The `collapse` option is used similarly here:
 
-```{r, message=FALSE, h=5, w=5}
+```{r}
+#| message: false
 library(quantreg)
-fit <- rq(Ozone ~ Wind + Temp, tau = c(.25, .5, .75), data = airquality)
+fit <- rq(Ozone ~ Wind + Temp, tau = c(0.25, 0.5, 0.75), data = airquality)
 v <- visreg(fit, "Wind", overlay = TRUE, collapse = TRUE)
 ```
 
 NOTE: `quantreg` does not return standand errors if you specify multiple quantiles of interest.  To obtain them, you must construct the `visreg_list` manually:
 
-```{r, h=3, w=9, out.width='100%'}
-fit1 <- rq(Ozone ~ Wind + Temp, tau = .25, data = airquality)
-fit2 <- rq(Ozone ~ Wind + Temp, tau = .5, data = airquality)
-fit3 <- rq(Ozone ~ Wind + Temp, tau = .75, data = airquality)
+```{r}
+#| h: 3
+#| w: 3
+#| out.width: 100%
+#| layout-ncol: 3
+fit1 <- rq(Ozone ~ Wind + Temp, tau = 0.25, data = airquality)
+fit2 <- rq(Ozone ~ Wind + Temp, tau = 0.5, data = airquality)
+fit3 <- rq(Ozone ~ Wind + Temp, tau = 0.75, data = airquality)
 v <- visreg_list(visreg(fit1, "Wind", plot = FALSE),
   visreg(fit2, "Wind", plot = FALSE),
   visreg(fit3, "Wind", plot = FALSE),
   labels = c("25%", "50%", "75%"), collapse = TRUE
 )
-plot(v, ylab = "Ozone")
+plot(v) + ylab("Ozone")
 ```
 
 Notice the use of the `labels` argument to label the elements of the list.

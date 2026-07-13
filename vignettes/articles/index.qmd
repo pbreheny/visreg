@@ -3,13 +3,12 @@ resources:
   - rgl.html
 ---
 
-```{r include=FALSE}
+```{r}
+#| include: false
 library(visreg)
+library(ggplot2)
+theme_set(theme_minimal())
 knitr::opts_knit$set(aliases = c(h = "fig.height", w = "fig.width"))
-knitr::opts_chunk$set(comment = "#", collapse = TRUE, cache = FALSE, tidy = FALSE)
-knitr::knit_hooks$set(small.mar = function(before, options, envir) {
-  if (before) par(mar = c(4, 4, .1, .1))
-})
 ```
 
 ```{r}
@@ -18,15 +17,18 @@ fit <- lm(Ozone ~ Solar.R + Wind + Temp, data = airquality)
 
 and then you pass it to `visreg`:
 
-```{r, h=5, w=5}
+```{r}
 visreg(fit, "Wind")
 ```
 
 A more complex example, which uses the `gam()` function from **mgcv**:
 
-```{r, h=3, w=9, out.width='100%'}
+```{r}
+#| h: 3
+#| w: 9
+#| out.width: 100%
 library(mgcv)
 airquality$Heat <- cut(airquality$Temp, 3, labels = c("Cool", "Mild", "Hot"))
 fit <- gam(Ozone ~ s(Wind, by = Heat, sp = 0.1), data = airquality)
-visreg(fit, "Wind", "Heat", ylab = "Ozone")
+visreg(fit, "Wind", "Heat") + ylab("Ozone")
 ```

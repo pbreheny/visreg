@@ -38,7 +38,8 @@
 #'   [ggplot2::geom_crossbar()] (factor `xvar`) when shaded confidence regions are plotted.
 #' @param points List of parameters to pass to [ggplot2::geom_point()] (continuous `xvar`) or
 #'   [ggplot2::geom_jitter()] (factor `xvar`) when partial residuals are plotted.
-#' @param ... Not used.
+#' @param ... Not used; present only because `plot()` is a generic function. An error is raised
+#'   if any arguments are passed here.
 #'
 #' @returns A ggplot object, or if `x` is a [visreg_list()], a list of ggplot objects.
 #'
@@ -72,6 +73,7 @@ plot.visreg <- function(
   points = NULL,
   ...
 ) {
+  rlang::check_dots_empty()
   top <- match.arg(top)
   if (print_cond || isTRUE(x$meta$main_effect_warn)) {
     print_cond(x)

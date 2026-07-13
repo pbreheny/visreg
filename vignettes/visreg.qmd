@@ -9,8 +9,11 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-```{r, include=FALSE}
+```{r}
+#| include: false
 library(visreg)
+library(ggplot2)
+theme_set(theme_minimal())
 knitr::opts_knit$set(aliases = c(h = "fig.height", w = "fig.width"))
 ```
 
@@ -32,7 +35,7 @@ fit <- lm(Ozone ~ Solar.R + Wind + Temp, data = airquality)
 
 We can then visualize what the model says about the relationship between the outcome and, say, wind, with:
 
-```{r, h=5, w=5}
+```{r}
 visreg(fit, "Wind")
 ```
 
@@ -47,19 +50,22 @@ fit <- lm(Ozone ~ Solar.R + Wind * Heat, data = airquality)
 
 Visreg can plot cross-sections of this fit, either in separate panels:
 
-```{r, h=4, w=9, out.width='100%'}
+```{r}
+#| h: 4
+#| w: 9
+#| out.width: 100%
 visreg(fit, "Wind", by = "Heat")
 ```
 
 Or overlaid on top of one another:
 
-```{r, h=5, w=5}
+```{r}
 visreg(fit, "Wind", by = "Heat", overlay = TRUE)
 ```
 
 Or as a two-dimensional filled contour plot (level plot):
 
-```{r, h=5, w=6}
+```{r}
 fit <- lm(Ozone ~ poly(Wind, 2) * poly(Temp, 2), data = airquality)
 visreg2d(fit, "Wind", "Temp")
 ```

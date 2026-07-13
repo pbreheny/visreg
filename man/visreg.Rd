@@ -127,6 +127,7 @@ See \code{\link[=plot.visreg]{plot.visreg()}} for plotting options, such as chan
 confidence bands, etc.
 }
 \examples{
+library(ggplot2)
 
 # --- Linear models ----------------------------------------
 
@@ -146,8 +147,8 @@ fit1 <- lm(Ozone ~ Solar.R + Wind + Temp + I(Wind^2), data = airquality)
 fit2 <- lm(log(Ozone) ~ Solar.R + Wind + Temp, data = airquality)
 fit3 <- lm(log(Ozone) ~ Solar.R + Wind + Temp + I(Wind^2), data = airquality)
 visreg(fit1, "Wind")
-visreg(fit2, "Wind", trans = exp, ylab = "Ozone")
-visreg(fit3, "Wind", trans = exp, ylab = "Ozone")
+visreg(fit2, "Wind", trans = exp) + ylab("Ozone")
+visreg(fit3, "Wind", trans = exp) + ylab("Ozone")
 
 ## Conditioning
 visreg(fit, "Wind", cond = list(Temp = 50))
@@ -155,15 +156,15 @@ visreg(fit, "Wind", print_cond = TRUE)
 visreg(fit, "Wind", cond = list(Temp = 100))
 
 ## Interactions
-fit.in1 <- lm(Ozone ~ Solar.R + Wind * Heat, data = airquality)
-visreg(fit.in1, "Wind", by = "Heat")
-visreg(fit.in1, "Heat", by = "Wind")
-visreg(fit.in1, "Wind", by = "Heat", type = "contrast")
-visreg(fit.in1, "Heat", by = "Wind", breaks = 6)
-visreg(fit.in1, "Heat", by = "Wind", breaks = c(0, 10, 20))
+fit_int <- lm(Ozone ~ Solar.R + Wind * Heat, data = airquality)
+visreg(fit_int, "Wind", by = "Heat")
+visreg(fit_int, "Heat", by = "Wind")
+visreg(fit_int, "Wind", by = "Heat", type = "contrast")
+visreg(fit_int, "Heat", by = "Wind", breaks = 6)
+visreg(fit_int, "Heat", by = "Wind", breaks = c(0, 10, 20))
 
 ## Overlay
-visreg(fit.in1, "Wind", by = "Heat", overlay = TRUE)
+visreg(fit_int, "Wind", by = "Heat", overlay = TRUE)
 
 
 # --- Nonlinear models -------------------------------------
@@ -173,28 +174,24 @@ data("birthwt", package = "MASS")
 birthwt$race <- factor(birthwt$race, labels = c("White", "Black", "Other"))
 birthwt$smoke <- factor(birthwt$smoke, labels = c("Nonsmoker", "Smoker"))
 fit <- glm(low ~ age + race + smoke + lwt, data = birthwt, family = "binomial")
-visreg(fit, "lwt",
-  xlab = "Mother's Weight", ylab = "Log odds (low birthweight)"
-)
-visreg(fit, "lwt",
-  scale = "response", partial = FALSE,
-  xlab = "Mother's Weight", ylab = "P(low birthweight)"
-)
-visreg(fit, "lwt",
-  scale = "response", partial = FALSE,
-  xlab = "Mother's Weight", ylab = "P(low birthweight)", rug = 2
-)
+visreg(fit, "lwt") +
+  xlab("Mother's Weight") +
+  ylab("Log odds (low birthweight)")
+visreg(fit, "lwt", scale = "response", partial = FALSE) +
+  xlab("Mother's Weight") +
+  ylab("P(low birthweight)")
 
 ## Proportional hazards
-require(survival)
-data(ovarian)
+data(cancer, package="survival")
 ovarian$rx <- factor(ovarian$rx)
-fit <- coxph(Surv(futime, fustat) ~ age + rx, data = ovarian)
-visreg(fit, "age", ylab = "log(Hazard ratio)")
+fit <- survival::coxph(
+  survival::Surv(futime, fustat) ~ age + rx,
+  data = ovarian
+)
+visreg(fit, "age") + ylab("log(Hazard ratio)")
 
 ## Robust regression
-require(MASS)
-fit <- rlm(Ozone ~ Solar.R + Wind * Heat, data = airquality)
+fit <- MASS::rlm(Ozone ~ Solar.R + Wind * Heat, data = airquality)
 visreg(fit, "Wind", cond = list(Heat = "Mild"))
 
 ## And more...; anything with a 'predict' method should work

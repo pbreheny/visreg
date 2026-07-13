@@ -99,7 +99,7 @@ visreg(fit, "Wind",
 ```
 
 Note that the *values* passed to `line`/`fill`/`points` are `ggplot2` aesthetics (`color`, `size`,
-`shape`, ...), not base R `par()` names (`col`, `cex`, `pch`) — this was already true whenever
+`shape`, ...), not base R `par()` names (`col`, `cex`, `pch`) --- this was already true whenever
 `gg = TRUE` was used pre-3.0, so it should look familiar if you were already using the `ggplot2`
 backend. See [Graphical options](options) for details.
 
