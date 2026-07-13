@@ -81,7 +81,7 @@ visreg(fit$gam, "x", scale = "response")
 Since this is a binomial model with a logistic link, `binomial()$linkinv` provides the inverse transformation:
 
 ```{r}
-visreg(fit$gam, "x", trans = binomial()$linkinv} + ylab("Probability")
+visreg(fit$gam, "x", trans = binomial()$linkinv) + ylab("Probability")
 ```
 
 # Q: Can I have the response variable on the horizontal axis instead of the vertical axis?
