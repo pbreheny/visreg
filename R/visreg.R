@@ -53,11 +53,11 @@
 #'   single `visreg` object (`collapse=TRUE`).
 #' @param plot Send the calculations to [plot.visreg()]? Default is TRUE.
 #' @param predict Named list of additional arguments to pass to `predict()` (e.g.,
-#'   `list(re.form = NA)` for a mixed model). Most models never need this; it exists as an
-#'   escape hatch since `predict()` methods vary by model class and aren't otherwise
-#'   accessible from `visreg()`.
-#' @param ... Graphical parameters (e.g., `partial`) to pass to [plot.visreg()] (see
-#'   examples below).
+#'   `list(re.form = NA)` for a mixed model). Most models never need this; it exists as an escape
+#'   hatch since `predict()` methods vary by model class and aren't otherwise accessible from
+#'   `visreg()`.
+#' @param ... Graphical parameters (e.g., `partial`) to pass to [plot.visreg()] (see examples
+#'   below).
 #'
 #' @returns
 #' A `visreg` or `visreg_list` object (which is simply a list of `visreg` objects). A visreg` object

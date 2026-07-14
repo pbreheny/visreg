@@ -14,27 +14,14 @@ This page contains miscellaneous questions that I have been asked about visreg, 
 
 # Q: In `visreg2d`, is it possible to superimpose data points onto the plot?
 
-Yes; it's probably easiest to do this using `ggplot2` to render the surface:
+Yes; `visreg2d()` renders its surface with `ggplot2`, so you can just add a layer:
 
 ```{r}
 fit <- lm(Ozone ~ Solar.R + Wind + Temp + I(Wind^2) + I(Temp^2) + I(Wind * Temp) + I(Wind * Temp^2) +
   I(Temp * Wind^2) + I(Temp^2 * Wind^2), data = airquality)
-visreg2d(fit, x = "Wind", y = "Temp", plot.type = "gg") +
+visreg2d(fit, x = "Wind", y = "Temp") +
   geom_point(aes(Wind, Temp), data = subset(airquality, !is.na(Ozone)), col = "gray50")
 ```
-
-You can do it with base R graphics too, but it's kind of complicated because of how `filled.contour()` works and the way in which it actually creates two plots, one main plot and one plot for the legend:
-
-```{r}
-p <- quote({
-  axis(1, at = mx, labels = lx)
-  axis(2, at = my, labels = ly)
-  with(airquality, points(Wind, Temp, pch = 19))
-})
-visreg2d(fit, x = "Wind", y = "Temp", plot.type = "image", plot.axes = p)
-```
-
-Doing this through the axes is admittedly very weird -- it's not my idea; see `?filled.contour`.
 
 # Q: Does `visreg` work with `gamm` (mgcv) or `gamm4` objects?
 

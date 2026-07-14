@@ -31,8 +31,11 @@
 #'   conditional plots in visreg are constructed by filling in other explanatory variables with the
 #'   median (for numeric variables) or most common category (for factors), but this can be
 #'   overridden by specifying their values using `cond` (see examples).
-#' @param plot Send the calculations to [plot.visreg2d()], producing a plot? Default is TRUE.
-#' @param \dots Graphical parameters (e.g., `ylab`) can be passed to the function to customize the
+#' @param plot Send the calculations to [plot.visreg2d()], producing a `ggplot2` raster/contour
+#'   plot? Default is TRUE. For a static 3D perspective plot or an interactive `rgl` plot, use
+#'   `plot = FALSE` and pass the result to [persp.visreg2d()] or `rgl::persp3d()` instead; see
+#'   examples.
+#' @param ... Graphical parameters (e.g., `ylab`) can be passed to the function to customize the
 #'   plots.
 #'
 #' @returns A `visreg2d` object consisting of:
@@ -47,8 +50,9 @@
 #' }
 #'
 #' @seealso
-#' [plot.visreg2d()] for the plotting function and the
-#' [vignette](https://pbreheny.github.io/visreg/surface.html) for examples.
+#' [plot.visreg2d()] for the 2-dimensional raster/contour plot, [persp.visreg2d()] for a static
+#' 3-dimensional perspective plot, and the
+#' [vignette](https://pbreheny.github.io/visreg/articles/surface.html) for examples.
 #' @references
 #' - <https://pbreheny.github.io/visreg/>
 #' - Breheny P and Burchett W. (2017) Visualization of regression models using
@@ -62,15 +66,13 @@
 #'   data = airquality
 #' )
 #'
-#' visreg2d(fit, x = "Wind", y = "Temp", plot.type = "image")
-#' visreg2d(fit, x = "Wind", y = "Temp", plot.type = "persp")
+#' visreg2d(fit, x = "Wind", y = "Temp")
+#' visreg2d(fit, x = "Wind", y = "Temp", plot = FALSE) |> persp()
 #'
 #' ## Requires the rgl package
 #' \dontrun{
-#' visreg2d(fit, x = "Wind", y = "Temp", plot.type = "rgl")
+#' visreg2d(fit, x = "Wind", y = "Temp", plot = FALSE) |> rgl::persp3d()
 #' }
-#'
-#' visreg2d(fit, x = "Wind", y = "Temp")
 #'
 #' @export
 visreg2d <- function(
@@ -115,10 +117,7 @@ visreg2d <- function(
 
   # Plot or return
   if (plot) {
-    p <- plot(v, ...)
-    if (!is.null(p) && inherits(p, "gg") || inherits(p, "list")) {
-      return(p)
-    }
+    return(plot(v, ...))
   }
   invisible(v)
 }

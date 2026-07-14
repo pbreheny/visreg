@@ -6,10 +6,9 @@
 \usage{
 \method{plot}{visreg2d}(
   x,
-  plot.type = c("image", "persp", "rgl", "gg"),
-  xlab,
-  ylab,
-  zlab,
+  xlab = NULL,
+  ylab = NULL,
+  zlab = NULL,
   color,
   print_cond = FALSE,
   whitespace = 0.2,
@@ -19,24 +18,13 @@
 \arguments{
 \item{x}{A \code{\link[=visreg2d]{visreg2d()}} object.}
 
-\item{plot.type}{The style of plot to be produced. The following options are
-supported:
-\itemize{
-\item \code{image}: a filled contour
-\item \code{gg}: a filled contour plot using ggplot2
-\item \code{persp}: a 3 dimensional perspective plot
-\item \code{rgl}: a version of the perspective plot that can be rotated (requires the rgl package to be
-installed)
-}}
-
 \item{xlab}{Axis label for x variable}
 
 \item{ylab}{Axis label for y variable}
 
-\item{zlab}{Axis label for outcome}
+\item{zlab}{Label for the color legend}
 
-\item{color}{For \code{plot.type='persp'} or \code{plot.type='rgl'}, the color of the surface. For
-\code{plot.type='image'} or \code{plot.type='gg'}, a vector of colors used to establish a color palette.}
+\item{color}{A vector of colors used to establish the color palette for the fill/legend.}
 
 \item{print_cond}{If \code{print_cond==TRUE}, the explanatory variable values conditioned on in a
 conditional plot are printed to the console (default: \code{FALSE}). If \code{print_cond==TRUE} and
@@ -46,11 +34,18 @@ unless interactions are present.}
 \item{whitespace}{When \code{xvar} or \code{yvar} is a factor, \code{whitespace} determines the amount of space
 in between the factors. Default is 0.2, meaning that 20 percent of the axis is whitespace.}
 
-\item{...}{Graphical parameters can be passed to the function to customize the plots.}
+\item{...}{Not used.}
+}
+\value{
+A \code{ggplot2} object.
 }
 \description{
 Plot method for visualizing how two variables interact to affect the response in regression
-models.
+models, as a \code{ggplot2} raster/contour plot.
+}
+\details{
+For 3-dimensional surface plots, see \code{\link[=persp.visreg2d]{persp.visreg2d()}} (static) or \code{rgl::persp3d()} (interactive,
+requires the \code{rgl} package).
 }
 \examples{
 fit <- lm(
@@ -59,22 +54,8 @@ fit <- lm(
   data = airquality
 )
 
-visreg2d(fit, x = "Wind", y = "Temp", plot.type = "image")
-visreg2d(fit,
-  x = "Wind", y = "Temp", plot.type = "image",
-  color = c("purple", "green", "red")
-)
-visreg2d(fit, x = "Wind", y = "Temp", plot.type = "persp")
-
-## Requires the rgl package
-\donttest{
-visreg2d(fit, x = "Wind", y = "Temp", plot.type = "rgl")
-}
-
-## Requires the ggplot2 package
-\donttest{
-visreg2d(fit, x = "Wind", y = "Temp", plot.type = "gg")
-}
+visreg2d(fit, x = "Wind", y = "Temp")
+visreg2d(fit, x = "Wind", y = "Temp", color = c("purple", "green", "red"))
 
 }
 \references{
@@ -83,7 +64,8 @@ visreg. \emph{R Journal}, \strong{9}: 56-71.
 \doi{10.32614/RJ-2017-046}
 }
 \seealso{
-\code{\link[=visreg2d]{visreg2d()}} for creating two-dimensional \code{visreg} objects, and the
-\href{https://pbreheny.github.io/visreg/surface.html}{surface plots vignette} for examples and
-details.
+\code{\link[=visreg2d]{visreg2d()}} for creating two-dimensional \code{visreg} objects, \code{\link[=persp.visreg2d]{persp.visreg2d()}} for static 3D
+surface plots, and the
+\href{https://pbreheny.github.io/visreg/articles/surface.html}{surface plots vignette} for examples
+and details.
 }

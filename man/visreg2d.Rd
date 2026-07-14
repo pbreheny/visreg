@@ -58,9 +58,12 @@ conditional plots in visreg are constructed by filling in other explanatory vari
 median (for numeric variables) or most common category (for factors), but this can be
 overridden by specifying their values using \code{cond} (see examples).}
 
-\item{plot}{Send the calculations to \code{\link[=plot.visreg2d]{plot.visreg2d()}}, producing a plot? Default is TRUE.}
+\item{plot}{Send the calculations to \code{\link[=plot.visreg2d]{plot.visreg2d()}}, producing a \code{ggplot2} raster/contour
+plot? Default is TRUE. For a static 3D perspective plot or an interactive \code{rgl} plot, use
+\code{plot = FALSE} and pass the result to \code{\link[=persp.visreg2d]{persp.visreg2d()}} or \code{rgl::persp3d()} instead; see
+examples.}
 
-\item{\dots}{Graphical parameters (e.g., \code{ylab}) can be passed to the function to customize the
+\item{...}{Graphical parameters (e.g., \code{ylab}) can be passed to the function to customize the
 plots.}
 }
 \value{
@@ -86,15 +89,13 @@ fit <- lm(
   data = airquality
 )
 
-visreg2d(fit, x = "Wind", y = "Temp", plot.type = "image")
-visreg2d(fit, x = "Wind", y = "Temp", plot.type = "persp")
+visreg2d(fit, x = "Wind", y = "Temp")
+visreg2d(fit, x = "Wind", y = "Temp", plot = FALSE) |> persp()
 
 ## Requires the rgl package
 \dontrun{
-visreg2d(fit, x = "Wind", y = "Temp", plot.type = "rgl")
+visreg2d(fit, x = "Wind", y = "Temp", plot = FALSE) |> rgl::persp3d()
 }
-
-visreg2d(fit, x = "Wind", y = "Temp")
 
 }
 \references{
@@ -106,6 +107,7 @@ visreg. \emph{R Journal}, \strong{9}: 56-71.
 }
 }
 \seealso{
-\code{\link[=plot.visreg2d]{plot.visreg2d()}} for the plotting function and the
-\href{https://pbreheny.github.io/visreg/surface.html}{vignette} for examples.
+\code{\link[=plot.visreg2d]{plot.visreg2d()}} for the 2-dimensional raster/contour plot, \code{\link[=persp.visreg2d]{persp.visreg2d()}} for a static
+3-dimensional perspective plot, and the
+\href{https://pbreheny.github.io/visreg/articles/surface.html}{vignette} for examples.
 }

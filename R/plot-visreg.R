@@ -1,9 +1,9 @@
 #' Visualization of regression functions
 #'
-#' Default plots contain a
-#' confidence band, prediction line, and partial residuals. Factors, transformations, conditioning,
-#' interactions, and a variety of other options are supported. The `plot.visreg()` function accepts
-#' a `visreg` object as calculated by [visreg()] and creates the plot.
+#' Default plots contain a confidence band, prediction line, and partial residuals. Factors,
+#' transformations, conditioning, interactions, and a variety of other options are supported. The
+#' `plot.visreg()` function accepts a `visreg` object as calculated by [visreg()] and creates the
+#' plot.
 #'
 #' If `x` is a [visreg_list()], `plot.visreg_list()` is dispatched instead; it simply calls
 #' `plot.visreg()` on each element in turn, passing along the same arguments to each element.
@@ -38,8 +38,8 @@
 #'   [ggplot2::geom_crossbar()] (factor `xvar`) when shaded confidence regions are plotted.
 #' @param points List of parameters to pass to [ggplot2::geom_point()] (continuous `xvar`) or
 #'   [ggplot2::geom_jitter()] (factor `xvar`) when partial residuals are plotted.
-#' @param ... Not used; present only because `plot()` is a generic function. An error is raised
-#'   if any arguments are passed here.
+#' @param ... Not used; present only because `plot()` is a generic function. An error is raised if
+#'   any arguments are passed here.
 #'
 #' @returns A ggplot object, or if `x` is a [visreg_list()], a list of ggplot objects.
 #'
