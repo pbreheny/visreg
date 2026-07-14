@@ -56,17 +56,5 @@ the `rgl` package first.
 
 ``` r
 
-library(rgl)
-```
-
-    Warning in rgl.init(initValue, onlyNULL): RGL: unable to open X11 display
-
-    Warning: 'rgl.init' failed, will use the null device.
-    See '?rgl.useNULL' for ways to avoid this warning.
-
-``` r
-
-options(rgl.useNULL = TRUE)
 visreg2d(fit, "Wind", "Temp", plot.type = "rgl")
-rgl::rglwidget()
 ```
