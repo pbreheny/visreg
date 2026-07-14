@@ -89,7 +89,13 @@ visreg2d(
 
   Send the calculations to
   [`plot.visreg2d()`](https://pbreheny.github.io/visreg/reference/plot.visreg2d.md),
-  producing a plot? Default is TRUE.
+  producing a `ggplot2` raster/contour plot? Default is TRUE. For a
+  static 3D perspective plot or an interactive `rgl` plot, use
+  `plot = FALSE` and pass the result to
+  [`persp.visreg2d()`](https://pbreheny.github.io/visreg/reference/persp.visreg2d.md)
+  or
+  [`rgl::persp3d()`](https://dmurdoch.github.io/rgl/dev/reference/persp3d.html)
+  instead; see examples.
 
 - ...:
 
@@ -128,8 +134,11 @@ A `visreg2d` object consisting of:
 ## See also
 
 [`plot.visreg2d()`](https://pbreheny.github.io/visreg/reference/plot.visreg2d.md)
-for the plotting function and the
-[vignette](https://pbreheny.github.io/visreg/surface.html) for examples.
+for the 2-dimensional raster/contour plot,
+[`persp.visreg2d()`](https://pbreheny.github.io/visreg/reference/persp.visreg2d.md)
+for a static 3-dimensional perspective plot, and the
+[vignette](https://pbreheny.github.io/visreg/articles/surface.html) for
+examples.
 
 ## Examples
 
@@ -140,16 +149,13 @@ fit <- lm(
   data = airquality
 )
 
-visreg2d(fit, x = "Wind", y = "Temp", plot.type = "image")
+visreg2d(fit, x = "Wind", y = "Temp")
 
-visreg2d(fit, x = "Wind", y = "Temp", plot.type = "persp")
+visreg2d(fit, x = "Wind", y = "Temp", plot = FALSE) |> persp()
 
 
 ## Requires the rgl package
 if (FALSE) { # \dontrun{
-visreg2d(fit, x = "Wind", y = "Temp", plot.type = "rgl")
+visreg2d(fit, x = "Wind", y = "Temp", plot = FALSE) |> rgl::persp3d()
 } # }
-
-visreg2d(fit, x = "Wind", y = "Temp")
-
 ```

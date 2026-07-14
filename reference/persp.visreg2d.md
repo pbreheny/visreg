@@ -1,22 +1,27 @@
-# Visualization of regression functions for two variables
+# Static 3D perspective plot for a visreg2d object
 
-Plot method for visualizing how two variables interact to affect the
-response in regression models, as a `ggplot2` raster/contour plot.
+[`persp()`](https://rdrr.io/r/graphics/persp.html) method for
+[`visreg2d()`](https://pbreheny.github.io/visreg/reference/visreg2d.md)
+objects: draws a static 3-dimensional perspective plot of the fitted
+surface, using base R's
+[`graphics::persp()`](https://rdrr.io/r/graphics/persp.html).
 
 ## Usage
 
 ``` r
 # S3 method for class 'visreg2d'
-plot(
+persp(
   x,
   xlab = NULL,
   ylab = NULL,
   zlab = NULL,
-  color,
-  print_cond = FALSE,
+  color = "#2fa4e7",
   whitespace = 0.2,
   ...
 )
+
+# S3 method for class 'visreg_list'
+persp(x, ...)
 ```
 
 ## Arguments
@@ -37,20 +42,11 @@ plot(
 
 - zlab:
 
-  Label for the color legend
+  Axis label for outcome
 
 - color:
 
-  A vector of colors used to establish the color palette for the
-  fill/legend.
-
-- print_cond:
-
-  If `print_cond==TRUE`, the explanatory variable values conditioned on
-  in a conditional plot are printed to the console (default: `FALSE`).
-  If `print_cond==TRUE` and `type=="contrast"`, the conditions will
-  still be printed, but they have no bearing on the plot unless
-  interactions are present.
+  The color of the surface.
 
 - whitespace:
 
@@ -60,19 +56,21 @@ plot(
 
 - ...:
 
-  Not used.
+  Additional graphical parameters, passed to
+  [`graphics::persp()`](https://rdrr.io/r/graphics/persp.html).
 
 ## Value
 
-A `ggplot2` object.
+The viewing transformation matrix, invisibly; see
+[`graphics::persp()`](https://rdrr.io/r/graphics/persp.html).
 
 ## Details
 
-For 3-dimensional surface plots, see
-[`persp.visreg2d()`](https://pbreheny.github.io/visreg/reference/persp.visreg2d.md)
-(static) or
+For an interactive version that can be rotated with the mouse, see
 [`rgl::persp3d()`](https://dmurdoch.github.io/rgl/dev/reference/persp3d.html)
-(interactive, requires the `rgl` package).
+(requires the `rgl` package). For a 2-dimensional raster/contour plot,
+see
+[`plot.visreg2d()`](https://pbreheny.github.io/visreg/reference/plot.visreg2d.md).
 
 ## References
 
@@ -84,8 +82,8 @@ using visreg. *R Journal*, **9**: 56-71.
 
 [`visreg2d()`](https://pbreheny.github.io/visreg/reference/visreg2d.md)
 for creating two-dimensional `visreg` objects,
-[`persp.visreg2d()`](https://pbreheny.github.io/visreg/reference/persp.visreg2d.md)
-for static 3D surface plots, and the [surface plots
+[`plot.visreg2d()`](https://pbreheny.github.io/visreg/reference/plot.visreg2d.md)
+for the 2-dimensional raster/contour plot, and the [surface plots
 vignette](https://pbreheny.github.io/visreg/articles/surface.html) for
 examples and details.
 
@@ -98,8 +96,7 @@ fit <- lm(
   data = airquality
 )
 
-visreg2d(fit, x = "Wind", y = "Temp")
-
-visreg2d(fit, x = "Wind", y = "Temp", color = c("purple", "green", "red"))
+v <- visreg2d(fit, x = "Wind", y = "Temp", plot = FALSE)
+persp(v)
 
 ```

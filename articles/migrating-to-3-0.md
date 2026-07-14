@@ -1,5 +1,10 @@
 # Migrating to visreg 3.0
 
+    Warning in rgl.init(initValue, onlyNULL): RGL: unable to open X11 display
+
+    Warning: 'rgl.init' failed, will use the null device.
+    See '?rgl.useNULL' for ways to avoid this warning.
+
     visreg 3.0 includes breaking changes. For migration details, see:
     https://pbreheny.github.io/visreg/articles/migrating-to-3-0.html
 
@@ -57,6 +62,10 @@ warnings after upgrading.
 | `xtrans` | *(removed)* | [`visreg()`](https://pbreheny.github.io/visreg/reference/visreg.md) |  |
 | `type = "effect"` | `type = "contrast"` | [`visreg()`](https://pbreheny.github.io/visreg/reference/visreg.md), [`visreg2d()`](https://pbreheny.github.io/visreg/reference/visreg2d.md) | The deprecated alias has been fully removed; `contrast` is the only spelling now. |
 | `visregList()` | [`visreg_list()`](https://pbreheny.github.io/visreg/reference/visreg_list.md) | top-level function | The function and the S3 class it returns (`"visregList"` → `"visreg_list"`) were both renamed. |
+| `plot.type = "image"` | *(removed)* | [`visreg2d()`](https://pbreheny.github.io/visreg/reference/visreg2d.md) | Redundant with the raster plot below; use the default instead. |
+| `plot.type = "gg"` | *(removed — now the default)* | [`visreg2d()`](https://pbreheny.github.io/visreg/reference/visreg2d.md) | [`plot.visreg2d()`](https://pbreheny.github.io/visreg/reference/plot.visreg2d.md) always builds a `ggplot2` object now; there’s nothing to select. |
+| `plot.type = "persp"` | [`persp()`](https://rdrr.io/r/graphics/persp.html) | [`visreg2d()`](https://pbreheny.github.io/visreg/reference/visreg2d.md) | Compute with `plot = FALSE`, then call [`persp()`](https://rdrr.io/r/graphics/persp.html) on the result: `visreg2d(fit, "x", "y", plot = FALSE) \|> persp()`. |
+| `plot.type = "rgl"` | [`rgl::persp3d()`](https://dmurdoch.github.io/rgl/dev/reference/persp3d.html) | [`visreg2d()`](https://pbreheny.github.io/visreg/reference/visreg2d.md) | Compute with `plot = FALSE`, then call [`rgl::persp3d()`](https://dmurdoch.github.io/rgl/dev/reference/persp3d.html) on the result. |
 
 If you were passing any of the old dotted/camelCase names positionally
 rather than by name, that will still work — only the names themselves
@@ -131,6 +140,42 @@ See [Graphical
 options](https://pbreheny.github.io/visreg/articles/options) for
 details.
 
+## `visreg2d()` surface plots
+
+[`plot.visreg2d()`](https://pbreheny.github.io/visreg/reference/plot.visreg2d.md)
+used to take a `plot.type` argument with four options (`"image"`,
+`"gg"`, `"persp"`, `"rgl"`) that behaved like four unrelated functions
+glued together — different return types, different side effects, and
+mostly-incompatible sets of graphical parameters. 3.0 splits these apart
+by rendering paradigm instead of hiding them behind one enum:
+
+- **`plot(v)`** is now the only 2D flat plot, and it’s always a
+  `ggplot2` raster/contour plot (the old `image` type, a base R
+  `filled.contour`, is gone — it was redundant with `gg`, which is now
+  simply the default).
+- **`persp(v)`** — a static 3D perspective plot — is now a method for
+  base R’s own [`persp()`](https://rdrr.io/r/graphics/persp.html)
+  generic, rather than a `visreg2d`-specific spelling.
+- **`rgl::persp3d(v)`** — the interactive, rotatable 3D plot — is
+  likewise a method for `rgl`’s own `persp3d()` generic.
+
+[`visreg2d()`](https://pbreheny.github.io/visreg/reference/visreg2d.md)
+no longer has a `plot.type` argument at all: `plot = TRUE` (the default)
+always draws the `ggplot2` version. For a perspective or `rgl` plot,
+compute with `plot = FALSE` and pass the result along:
+
+``` r
+
+fit <- lm(Ozone ~ Solar.R + Wind + Temp + I(Wind^2) + I(Temp^2), data = airquality)
+visreg2d(fit, "Wind", "Temp", plot = FALSE) |> persp()
+```
+
+![](migrating-to-3-0_files/figure-html/unnamed-chunk-4-1.png)
+
+See the [surface plots
+vignette](https://pbreheny.github.io/visreg/articles/surface) for
+further examples, including `rgl`.
+
 ## Still in progress
 
 3.0 is still being finished, and this article will be updated as the
@@ -144,11 +189,6 @@ remaining pieces land:
   yet (an escape hatch for passing arguments like `re.form` through to
   the model’s own [`predict()`](https://rdrr.io/r/stats/predict.html)
   method). Don’t be surprised if this area continues to change.
-- **[`visreg2d()`](https://pbreheny.github.io/visreg/reference/visreg2d.md).**
-  The 2D surface-plotting functions are being rethought and, unlike the
-  rest of the package, still use the old base R plotting code and naming
-  conventions in places. They are not yet part of the ggplot2-only,
-  snake_case cleanup described above.
 
 ## Keeping the old behavior
 

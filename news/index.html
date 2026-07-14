@@ -64,6 +64,8 @@
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="3.0.0" id="visreg-300">visreg 3.0.0<a class="anchor" aria-label="anchor" href="#visreg-300"></a></h2>
 <ul><li>Change: Removed deprecation support for type = “effect”</li>
+<li>Change: <code><a href="../reference/visreg2d.html">visreg2d()</a></code>’s <code>plot.type</code> argument is gone. <code><a href="../reference/plot.visreg2d.html">plot.visreg2d()</a></code> is now always a <code>ggplot2</code> contour plot (the base R <code>filled.contour</code>-based <code>"image"</code> type has been removed as redundant).</li>
+<li>Static and interactive 3D surface plots are now handled by native S3 generics <code><a href="../reference/persp.visreg2d.html">persp.visreg2d()</a></code> <code>persp3d.visreg2d()</code>.</li>
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="2.8.1" id="visreg-281">visreg 2.8.1<a class="anchor" aria-label="anchor" href="#visreg-281"></a></h2><p class="text-muted">CRAN release: 2026-07-08</p>

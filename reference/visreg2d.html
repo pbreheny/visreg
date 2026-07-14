@@ -146,7 +146,10 @@ overridden by specifying their values using <code>cond</code> (see examples).</p
 
 
 <dt id="arg-plot">plot<a class="anchor" aria-label="anchor" href="#arg-plot"></a></dt>
-<dd><p>Send the calculations to <code><a href="plot.visreg2d.html">plot.visreg2d()</a></code>, producing a plot? Default is TRUE.</p></dd>
+<dd><p>Send the calculations to <code><a href="plot.visreg2d.html">plot.visreg2d()</a></code>, producing a <code>ggplot2</code> raster/contour
+plot? Default is TRUE. For a static 3D perspective plot or an interactive <code>rgl</code> plot, use
+<code>plot = FALSE</code> and pass the result to <code><a href="persp.visreg2d.html">persp.visreg2d()</a></code> or <code><a href="https://dmurdoch.github.io/rgl/dev/reference/persp3d.html" class="external-link">rgl::persp3d()</a></code> instead; see
+examples.</p></dd>
 
 
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
@@ -181,8 +184,9 @@ visreg. <em>R Journal</em>, <strong>9</strong>: 56-71.
 </ul></div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
-    <div class="dont-index"><p><code><a href="plot.visreg2d.html">plot.visreg2d()</a></code> for the plotting function and the
-<a href="https://pbreheny.github.io/visreg/surface.html">vignette</a> for examples.</p></div>
+    <div class="dont-index"><p><code><a href="plot.visreg2d.html">plot.visreg2d()</a></code> for the 2-dimensional raster/contour plot, <code><a href="persp.visreg2d.html">persp.visreg2d()</a></code> for a static
+3-dimensional perspective plot, and the
+<a href="https://pbreheny.github.io/visreg/articles/surface.html">vignette</a> for examples.</p></div>
     </div>
 
     <div class="section level2">
@@ -193,18 +197,15 @@ visreg. <em>R Journal</em>, <strong>9</strong>: 56-71.
 <span class="r-in"><span>  data <span class="op">=</span> <span class="va">airquality</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="fu">visreg2d</span><span class="op">(</span><span class="va">fit</span>, x <span class="op">=</span> <span class="st">"Wind"</span>, y <span class="op">=</span> <span class="st">"Temp"</span>, plot.type <span class="op">=</span> <span class="st">"image"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">visreg2d</span><span class="op">(</span><span class="va">fit</span>, x <span class="op">=</span> <span class="st">"Wind"</span>, y <span class="op">=</span> <span class="st">"Temp"</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="visreg2d-1.png" alt="" width="480" height="480"></span>
-<span class="r-in"><span><span class="fu">visreg2d</span><span class="op">(</span><span class="va">fit</span>, x <span class="op">=</span> <span class="st">"Wind"</span>, y <span class="op">=</span> <span class="st">"Temp"</span>, plot.type <span class="op">=</span> <span class="st">"persp"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">visreg2d</span><span class="op">(</span><span class="va">fit</span>, x <span class="op">=</span> <span class="st">"Wind"</span>, y <span class="op">=</span> <span class="st">"Temp"</span>, plot <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/graphics/persp.html" class="external-link">persp</a></span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="visreg2d-2.png" alt="" width="480" height="480"></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">## Requires the rgl package</span></span></span>
 <span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span> <span class="co"># \dontrun{</span></span></span>
-<span class="r-in"><span><span class="fu">visreg2d</span><span class="op">(</span><span class="va">fit</span>, x <span class="op">=</span> <span class="st">"Wind"</span>, y <span class="op">=</span> <span class="st">"Temp"</span>, plot.type <span class="op">=</span> <span class="st">"rgl"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">visreg2d</span><span class="op">(</span><span class="va">fit</span>, x <span class="op">=</span> <span class="st">"Wind"</span>, y <span class="op">=</span> <span class="st">"Temp"</span>, plot <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu">rgl</span><span class="fu">::</span><span class="fu"><a href="https://dmurdoch.github.io/rgl/dev/reference/persp3d.html" class="external-link">persp3d</a></span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span> <span class="co"># }</span></span></span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="fu">visreg2d</span><span class="op">(</span><span class="va">fit</span>, x <span class="op">=</span> <span class="st">"Wind"</span>, y <span class="op">=</span> <span class="st">"Temp"</span><span class="op">)</span></span></span>
-<span class="r-plt img"><img src="visreg2d-3.png" alt="" width="480" height="480"></span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>

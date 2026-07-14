@@ -11,11 +11,11 @@ fit <- lm(Ozone ~ Solar.R + ns(Wind, df = 2) * ns(Temp, df = 2), data = airquali
 
 We might wish to visualize how ozone depends on wind and temperature as
 a continuous regression surface. `visreg2d` provides two main options
-for this, filled contour plots and perspective plots.
+for this, raster plots and perspective plots.
 
-## Filled contour plots
+## Raster plots
 
-The default is to provide a contoured image plot:
+The default is to provide a raster plot, built with `ggplot2`:
 
 ``` r
 
@@ -26,14 +26,13 @@ visreg2d(fit, "Wind", "Temp")
 
 Here, wind and temperature are laid out on a two-dimensional grid, and
 colors are used to represent the level of ozone. A legend is provided to
-the left. R’s `filled.contour` function is used to generate the plot, so
-if you wish to change any options, you will need to look at
-[`?filled.contour`](https://rdrr.io/r/graphics/filled.contour.html) to
-see the correct syntax. For example, if we want different colors,
+the right. Because the result is a `ggplot2` object, you can further
+customize it as you would any other `ggplot2` plot; for example, if we
+want different colors,
 
 ``` r
 
-visreg2d(fit, "Wind", "Temp", color.palette = colorRampPalette(c("black", "white", "purple")))
+visreg2d(fit, "Wind", "Temp", color = c("black", "white", "purple"))
 ```
 
 ![](surface_files/figure-html/unnamed-chunk-4-1.png)
@@ -41,20 +40,22 @@ visreg2d(fit, "Wind", "Temp", color.palette = colorRampPalette(c("black", "white
 ## Perspective plots
 
 The other option provided by `visreg2d` is to represent the surface as a
-three-dimensional image. This can be done in a static manner using
-`type="persp"`:
+three-dimensional image. This can be done in a static manner by
+computing the surface with `plot = FALSE` and passing the result to
+[`persp()`](https://rdrr.io/r/graphics/persp.html):
 
 ``` r
 
-visreg2d(fit, "Wind", "Temp", plot.type = "persp")
+visreg2d(fit, "Wind", "Temp", plot = FALSE) |> persp()
 ```
 
 ![](surface_files/figure-html/unnamed-chunk-5-1.png)
 
-Or dynamically using `type="rgl"`. For this, you will need to install
-the `rgl` package first.
+Or dynamically using
+[`rgl::persp3d()`](https://dmurdoch.github.io/rgl/dev/reference/persp3d.html).
+For this, you will need to install the `rgl` package first.
 
 ``` r
 
-visreg2d(fit, "Wind", "Temp", plot.type = "rgl")
+visreg2d(fit, "Wind", "Temp", plot = FALSE) |> rgl::persp3d()
 ```

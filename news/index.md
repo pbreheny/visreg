@@ -3,6 +3,16 @@
 ## visreg 3.0.0
 
 - Change: Removed deprecation support for type = “effect”
+- Change:
+  [`visreg2d()`](https://pbreheny.github.io/visreg/reference/visreg2d.md)’s
+  `plot.type` argument is gone.
+  [`plot.visreg2d()`](https://pbreheny.github.io/visreg/reference/plot.visreg2d.md)
+  is now always a `ggplot2` contour plot (the base R
+  `filled.contour`-based `"image"` type has been removed as redundant).
+- Static and interactive 3D surface plots are now handled by native S3
+  generics
+  [`persp.visreg2d()`](https://pbreheny.github.io/visreg/reference/persp.visreg2d.md)
+  `persp3d.visreg2d()`.
 
 ## visreg 2.8.1
 

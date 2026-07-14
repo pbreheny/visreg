@@ -5,39 +5,19 @@ visreg, with answers posted here so that others can read them too.
 
 ## Q: In `visreg2d`, is it possible to superimpose data points onto the plot?
 
-Yes; it’s probably easiest to do this using `ggplot2` to render the
-surface:
+Yes;
+[`visreg2d()`](https://pbreheny.github.io/visreg/reference/visreg2d.md)
+renders its surface with `ggplot2`, so you can just add a layer:
 
 ``` r
 
 fit <- lm(Ozone ~ Solar.R + Wind + Temp + I(Wind^2) + I(Temp^2) + I(Wind * Temp) + I(Wind * Temp^2) +
   I(Temp * Wind^2) + I(Temp^2 * Wind^2), data = airquality)
-visreg2d(fit, x = "Wind", y = "Temp", plot.type = "gg") +
+visreg2d(fit, x = "Wind", y = "Temp") +
   geom_point(aes(Wind, Temp), data = subset(airquality, !is.na(Ozone)), col = "gray50")
 ```
 
 ![](faq_files/figure-html/unnamed-chunk-2-1.png)
-
-You can do it with base R graphics too, but it’s kind of complicated
-because of how
-[`filled.contour()`](https://rdrr.io/r/graphics/filled.contour.html)
-works and the way in which it actually creates two plots, one main plot
-and one plot for the legend:
-
-``` r
-
-p <- quote({
-  axis(1, at = mx, labels = lx)
-  axis(2, at = my, labels = ly)
-  with(airquality, points(Wind, Temp, pch = 19))
-})
-visreg2d(fit, x = "Wind", y = "Temp", plot.type = "image", plot.axes = p)
-```
-
-![](faq_files/figure-html/unnamed-chunk-3-1.png)
-
-Doing this through the axes is admittedly very weird – it’s not my idea;
-see [`?filled.contour`](https://rdrr.io/r/graphics/filled.contour.html).
 
 ## Q: Does `visreg` work with `gamm` (mgcv) or `gamm4` objects?
 
@@ -80,7 +60,7 @@ fit$gam$data <- dat
 visreg(fit$gam, "x")
 ```
 
-![](faq_files/figure-html/unnamed-chunk-6-1.png)
+![](faq_files/figure-html/unnamed-chunk-5-1.png)
 
 ## Q: I’m getting the following error message: `Error in UseMethod("family") : no applicable method for 'family' applied to an object of class XXXX`.
 
@@ -110,7 +90,7 @@ Since this is a binomial model with a logistic link,
 visreg(fit$gam, "x", trans = binomial()$linkinv) + ylab("Probability")
 ```
 
-![](faq_files/figure-html/unnamed-chunk-8-1.png)
+![](faq_files/figure-html/unnamed-chunk-7-1.png)
 
 ## Q: Can I have the response variable on the horizontal axis instead of the vertical axis?
 
@@ -123,4 +103,4 @@ fit <- lm(Ozone ~ Solar.R + Wind + Temp, data = airquality)
 visreg(fit, "Wind") + coord_flip()
 ```
 
-![](faq_files/figure-html/unnamed-chunk-9-1.png)
+![](faq_files/figure-html/unnamed-chunk-8-1.png)

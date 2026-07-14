@@ -105,6 +105,13 @@
 
     <div class="cell">
 <div class="cell-output cell-output-stderr">
+<pre><code>Warning in rgl.init(initValue, onlyNULL): RGL: unable to open X11 display</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: 'rgl.init' failed, will use the null device.
+See '?rgl.useNULL' for ways to avoid this warning.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
 <pre><code>visreg 3.0 includes breaking changes. For migration details, see:
 https://pbreheny.github.io/visreg/articles/migrating-to-3-0.html</code></pre>
 </div>
@@ -200,6 +207,31 @@ https://pbreheny.github.io/visreg/articles/migrating-to-3-0.html</code></pre>
 <td>top-level function</td>
 <td>The function and the S3 class it returns (<code>"visregList"</code> → <code>"visreg_list"</code>) were both renamed.</td>
 </tr>
+<tr class="even">
+<td><code>plot.type = "image"</code></td>
+<td><em>(removed)</em></td>
+<td><code><a href="../reference/visreg2d.html">visreg2d()</a></code></td>
+<td>Redundant with the raster plot below; use the default instead.</td>
+</tr>
+<tr class="odd">
+<td><code>plot.type = "gg"</code></td>
+<td><em>(removed — now the default)</em></td>
+<td><code><a href="../reference/visreg2d.html">visreg2d()</a></code></td>
+<td>
+<code><a href="../reference/plot.visreg2d.html">plot.visreg2d()</a></code> always builds a <code>ggplot2</code> object now; there’s nothing to select.</td>
+</tr>
+<tr class="even">
+<td><code>plot.type = "persp"</code></td>
+<td><code><a href="https://rdrr.io/r/graphics/persp.html" class="external-link">persp()</a></code></td>
+<td><code><a href="../reference/visreg2d.html">visreg2d()</a></code></td>
+<td>Compute with <code>plot = FALSE</code>, then call <code><a href="https://rdrr.io/r/graphics/persp.html" class="external-link">persp()</a></code> on the result: <code>visreg2d(fit, "x", "y", plot = FALSE) \|&gt; persp()</code>.</td>
+</tr>
+<tr class="odd">
+<td><code>plot.type = "rgl"</code></td>
+<td><code><a href="https://dmurdoch.github.io/rgl/dev/reference/persp3d.html" class="external-link">rgl::persp3d()</a></code></td>
+<td><code><a href="../reference/visreg2d.html">visreg2d()</a></code></td>
+<td>Compute with <code>plot = FALSE</code>, then call <code><a href="https://dmurdoch.github.io/rgl/dev/reference/persp3d.html" class="external-link">rgl::persp3d()</a></code> on the result.</td>
+</tr>
 </tbody>
 </table>
 <p>If you were passing any of the old dotted/camelCase names positionally rather than by name, that will still work — only the names themselves changed, not the argument order.</p>
@@ -236,7 +268,7 @@ https://pbreheny.github.io/visreg/articles/migrating-to-3-0.html</code></pre>
 </table>
 <p>For example:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="downlit sourceCode r">
+<div class="sourceCode cell-code" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">fit</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">Ozone</span> <span class="op">~</span> <span class="va">Solar.R</span> <span class="op">+</span> <span class="va">Wind</span> <span class="op">+</span> <span class="va">Temp</span>, data <span class="op">=</span> <span class="va">airquality</span><span class="op">)</span></span>
 <span><span class="va">v</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/visreg.html">visreg</a></span><span class="op">(</span><span class="va">fit</span>, <span class="st">"Wind"</span>, plot <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">v</span><span class="op">$</span><span class="va">fit</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Wind"</span>, <span class="st">"visreg_fit"</span>, <span class="st">"visreg_lwr"</span>, <span class="st">"visreg_upr"</span><span class="op">)</span><span class="op">]</span><span class="op">)</span></span></code></pre></div>
@@ -253,7 +285,7 @@ https://pbreheny.github.io/visreg/articles/migrating-to-3-0.html</code></pre>
 </section><section class="level2"><h2 id="a-worked-example">A worked example<a class="anchor" aria-label="anchor" href="#a-worked-example"></a>
 </h2>
 <p>Old (2.8.1 and earlier) code that customized the appearance of a plot might have looked like this:</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/visreg.html">visreg</a></span><span class="op">(</span><span class="va">fit</span>, <span class="st">"Wind"</span>, gg <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  line.par <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>col <span class="op">=</span> <span class="st">"red"</span><span class="op">)</span>,</span>
 <span>  fill.par <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="st">"green"</span><span class="op">)</span>,</span>
@@ -261,7 +293,7 @@ https://pbreheny.github.io/visreg/articles/migrating-to-3-0.html</code></pre>
 <span><span class="op">)</span></span></code></pre></div>
 <p>The 3.0 equivalent drops <code>gg = TRUE</code> (no longer needed) and renames the three styling arguments:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="downlit sourceCode r">
+<div class="sourceCode cell-code" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/visreg.html">visreg</a></span><span class="op">(</span><span class="va">fit</span>, <span class="st">"Wind"</span>,</span>
 <span>  line <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>color <span class="op">=</span> <span class="st">"red"</span><span class="op">)</span>,</span>
 <span>  fill <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="st">"green"</span><span class="op">)</span>,</span>
@@ -275,18 +307,41 @@ https://pbreheny.github.io/visreg/articles/migrating-to-3-0.html</code></pre>
 </div>
 </div>
 <p>Note that the <em>values</em> passed to <code>line</code>/<code>fill</code>/<code>points</code> are <code>ggplot2</code> aesthetics (<code>color</code>, <code>size</code>, <code>shape</code>, …), not base R <code><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par()</a></code> names (<code>col</code>, <code>cex</code>, <code>pch</code>) — this was already true whenever <code>gg = TRUE</code> was used pre-3.0, so it should look familiar if you were already using the <code>ggplot2</code> backend. See <a href="options">Graphical options</a> for details.</p>
+</section><section class="level2"><h2 id="visreg2d-surface-plots">
+<code>visreg2d()</code> surface plots<a class="anchor" aria-label="anchor" href="#visreg2d-surface-plots"></a>
+</h2>
+<p><code><a href="../reference/plot.visreg2d.html">plot.visreg2d()</a></code> used to take a <code>plot.type</code> argument with four options (<code>"image"</code>, <code>"gg"</code>, <code>"persp"</code>, <code>"rgl"</code>) that behaved like four unrelated functions glued together — different return types, different side effects, and mostly-incompatible sets of graphical parameters. 3.0 splits these apart by rendering paradigm instead of hiding them behind one enum:</p>
+<ul>
+<li>
+<strong><code>plot(v)</code></strong> is now the only 2D flat plot, and it’s always a <code>ggplot2</code> raster/contour plot (the old <code>image</code> type, a base R <code>filled.contour</code>, is gone — it was redundant with <code>gg</code>, which is now simply the default).</li>
+<li>
+<strong><code>persp(v)</code></strong> — a static 3D perspective plot — is now a method for base R’s own <code><a href="https://rdrr.io/r/graphics/persp.html" class="external-link">persp()</a></code> generic, rather than a <code>visreg2d</code>-specific spelling.</li>
+<li>
+<strong><code>rgl::persp3d(v)</code></strong> — the interactive, rotatable 3D plot — is likewise a method for <code>rgl</code>’s own <code>persp3d()</code> generic.</li>
+</ul>
+<p><code><a href="../reference/visreg2d.html">visreg2d()</a></code> no longer has a <code>plot.type</code> argument at all: <code>plot = TRUE</code> (the default) always draws the <code>ggplot2</code> version. For a perspective or <code>rgl</code> plot, compute with <code>plot = FALSE</code> and pass the result along:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">fit</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">Ozone</span> <span class="op">~</span> <span class="va">Solar.R</span> <span class="op">+</span> <span class="va">Wind</span> <span class="op">+</span> <span class="va">Temp</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/AsIs.html" class="external-link">I</a></span><span class="op">(</span><span class="va">Wind</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/AsIs.html" class="external-link">I</a></span><span class="op">(</span><span class="va">Temp</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">airquality</span><span class="op">)</span></span>
+<span><span class="fu"><a href="../reference/visreg2d.html">visreg2d</a></span><span class="op">(</span><span class="va">fit</span>, <span class="st">"Wind"</span>, <span class="st">"Temp"</span>, plot <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/graphics/persp.html" class="external-link">persp</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<div class="cell-output-display">
+<div>
+<figure><p><img src="migrating-to-3-0_files/figure-html/unnamed-chunk-4-1.png" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>See the <a href="surface">surface plots vignette</a> for further examples, including <code>rgl</code>.</p>
 </section><section class="level2"><h2 id="still-in-progress">Still in progress<a class="anchor" aria-label="anchor" href="#still-in-progress"></a>
 </h2>
 <p>3.0 is still being finished, and this article will be updated as the remaining pieces land:</p>
 <ul>
 <li>
 <strong>Mixed models.</strong> Prediction and standard-error handling for <code>lme4</code>/<code>nlme</code>/<code>glmmTMB</code> models is being reworked, and the <a href="mixed">mixed models article</a> hasn’t been updated to reflect the new <code>predict</code> argument to <code><a href="../reference/visreg.html">visreg()</a></code> yet (an escape hatch for passing arguments like <code>re.form</code> through to the model’s own <code><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict()</a></code> method). Don’t be surprised if this area continues to change.</li>
-<li>
-<strong><code><a href="../reference/visreg2d.html">visreg2d()</a></code>.</strong> The 2D surface-plotting functions are being rethought and, unlike the rest of the package, still use the old base R plotting code and naming conventions in places. They are not yet part of the ggplot2-only, snake_case cleanup described above.</li>
 </ul></section><section class="level2"><h2 id="keeping-the-old-behavior">Keeping the old behavior<a class="anchor" aria-label="anchor" href="#keeping-the-old-behavior"></a>
 </h2>
 <p>If you’re not ready to update your code, you don’t have to: the last CRAN release before these changes, version 2.8.1, remains available and can be installed alongside or instead of the current version:</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">remotes</span><span class="fu">::</span><span class="fu">install_version</span><span class="op">(</span><span class="st">"visreg"</span>, <span class="st">"2.8.1"</span><span class="op">)</span></span></code></pre></div>
 </section><script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
