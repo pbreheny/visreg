@@ -51,12 +51,22 @@ visreg2d(fit, "Wind", "Temp", plot.type = "persp")
 
 ![](surface_files/figure-html/unnamed-chunk-5-1.png)
 
-Or dynamically using `type="rgl"`:
+Or dynamically using `type="rgl"`. For this, you will need to install
+the `rgl` package first.
 
 ``` r
 
-visreg2d(fit, "Wind", "Temp", plot.type = "rgl")
+library(rgl)
 ```
 
-For the interactive `rgl` option, you will need to install the `rgl`
-package first.
+    Warning in rgl.init(initValue, onlyNULL): RGL: unable to open X11 display
+
+    Warning: 'rgl.init' failed, will use the null device.
+    See '?rgl.useNULL' for ways to avoid this warning.
+
+``` r
+
+options(rgl.useNULL = TRUE)
+visreg2d(fit, "Wind", "Temp", plot.type = "rgl")
+rgl::rglwidget()
+```
