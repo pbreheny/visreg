@@ -4,10 +4,11 @@
 ^roadmap.md$
 ^CLAUDE.md$
 
+\.quarto
+
 ^.air.toml$
 ^.version.json$
 ^\.github$
 ^.project.url$
 ^\.positai$
 ^\.claude$
-^\.quarto$
