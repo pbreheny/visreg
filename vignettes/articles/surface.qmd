@@ -28,7 +28,7 @@ The default is to provide a contoured image plot:
 visreg2d(fit, "Wind", "Temp")
 ```
 
-Here, wind and temperature are laid out on a two-dimensional grid, and colors are used to represent the level of ozone.  A legend is provided to the left.  R's `filled.contour` function is used to generate the plot, so if you wish to change any options, you will need to look at `?filled.contour` to see the correct syntax.  For example, if we want different colors,
+Here, wind and temperature are laid out on a two-dimensional grid, and colors are used to represent the level of ozone. A legend is provided to the left. R's `filled.contour` function is used to generate the plot, so if you wish to change any options, you will need to look at `?filled.contour` to see the correct syntax. For example, if we want different colors,
 
 ```{r}
 visreg2d(fit, "Wind", "Temp", color.palette = colorRampPalette(c("black", "white", "purple")))
@@ -36,7 +36,7 @@ visreg2d(fit, "Wind", "Temp", color.palette = colorRampPalette(c("black", "white
 
 # Perspective plots
 
-The other option provided by `visreg2d` is to represent the surface as a three-dimensional image.  This can be done in a static manner using `type="persp"`:
+The other option provided by `visreg2d` is to represent the surface as a three-dimensional image. This can be done in a static manner using `type="persp"`:
 
 ```{r}
 visreg2d(fit, "Wind", "Temp", plot.type = "persp")
@@ -45,6 +45,14 @@ visreg2d(fit, "Wind", "Temp", plot.type = "persp")
 Or dynamically using `type="rgl"`. For this, you will need to install the `rgl` package first.
 
 ```{r}
+#| eval: false
+visreg2d(fit, "Wind", "Temp", plot.type = "rgl")
+```
+
+```{r}
+#| echo: false
+#| warning: false
+#| message: false
 library(rgl)
 options(rgl.useNULL = TRUE)
 visreg2d(fit, "Wind", "Temp", plot.type = "rgl")
