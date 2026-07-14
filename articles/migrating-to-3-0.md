@@ -1,10 +1,5 @@
 # Migrating to visreg 3.0
 
-    Warning in rgl.init(initValue, onlyNULL): RGL: unable to open X11 display
-
-    Warning: 'rgl.init' failed, will use the null device.
-    See '?rgl.useNULL' for ways to avoid this warning.
-
     visreg 3.0 includes breaking changes. For migration details, see:
     https://pbreheny.github.io/visreg/articles/migrating-to-3-0.html
 
