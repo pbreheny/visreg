@@ -17,6 +17,8 @@
 #'   unless interactions are present.
 #' @param whitespace When `xvar` or `yvar` is a factor, `whitespace` determines the amount of space
 #'   in between the factors. Default is 0.2, meaning that 20 percent of the axis is whitespace.
+#' @param plot.type Deprecated, no longer has any effect. See
+#'   [vignette](https://pbreheny.github.io/visreg/articles/surface.html).
 #' @param ... Not used.
 #'
 #' @returns A `ggplot2` object.
@@ -50,8 +52,18 @@ plot.visreg2d <- function(
   color,
   print_cond = FALSE,
   whitespace = 0.2,
+  plot.type = NULL,
   ...
 ) {
+  if (!missing(plot.type)) {
+    rlang::warn(
+      "The `plot.type` argument is deprecated and no longer has any effect.",
+      class = "visreg_deprecated_plot_type",
+      .frequency = "once",
+      .frequency_id = "visreg_plot_type"
+    )
+  }
+  rlang::check_dots_empty()
   if (missing(color)) {
     color <- c(pal(3)[3], "gray90", pal(3)[1])
   }

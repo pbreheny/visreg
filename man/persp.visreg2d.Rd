@@ -3,6 +3,7 @@
 \name{persp.visreg2d}
 \alias{persp.visreg2d}
 \alias{persp.visreg_list}
+\alias{persp3d.visreg_list}
 \title{Static 3D perspective plot for a visreg2d object}
 \usage{
 \method{persp}{visreg2d}(
@@ -16,6 +17,8 @@
 )
 
 \method{persp}{visreg_list}(x, ...)
+
+persp3d.visreg_list(x, ...)
 }
 \arguments{
 \item{x}{A \code{\link[=visreg2d]{visreg2d()}} object.}
@@ -37,12 +40,12 @@ in between the factors. Default is 0.2, meaning that 20 percent of the axis is w
 The viewing transformation matrix, invisibly; see \code{\link[graphics:persp]{graphics::persp()}}.
 }
 \description{
-\code{persp()} method for \code{\link[=visreg2d]{visreg2d()}} objects: draws a static 3-dimensional perspective plot of
-the fitted surface, using base R's \code{\link[graphics:persp]{graphics::persp()}}.
+\code{persp()} method for \code{\link[=visreg2d]{visreg2d()}} objects: draws a static 3-dimensional perspective plot of the
+fitted surface, using base R's \code{\link[graphics:persp]{graphics::persp()}}.
 }
 \details{
-For an interactive version that can be rotated with the mouse, see \code{rgl::persp3d()}
-(requires the \code{rgl} package). For a 2-dimensional raster/contour plot, see \code{\link[=plot.visreg2d]{plot.visreg2d()}}.
+For an interactive version that can be rotated with the mouse, see \code{rgl::persp3d()} (requires the
+\code{rgl} package). For a 2-dimensional raster/contour plot, see \code{\link[=plot.visreg2d]{plot.visreg2d()}}.
 }
 \examples{
 fit <- lm(

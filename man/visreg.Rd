@@ -84,12 +84,12 @@ single \code{visreg} object (\code{collapse=TRUE}).}
 \item{plot}{Send the calculations to \code{\link[=plot.visreg]{plot.visreg()}}? Default is TRUE.}
 
 \item{predict}{Named list of additional arguments to pass to \code{predict()} (e.g.,
-\code{list(re.form = NA)} for a mixed model). Most models never need this; it exists as an
-escape hatch since \code{predict()} methods vary by model class and aren't otherwise
-accessible from \code{visreg()}.}
+\code{list(re.form = NA)} for a mixed model). Most models never need this; it exists as an escape
+hatch since \code{predict()} methods vary by model class and aren't otherwise accessible from
+\code{visreg()}.}
 
-\item{...}{Graphical parameters (e.g., \code{partial}) to pass to \code{\link[=plot.visreg]{plot.visreg()}} (see
-examples below).}
+\item{...}{Graphical parameters (e.g., \code{partial}) to pass to \code{\link[=plot.visreg]{plot.visreg()}} (see examples
+below).}
 }
 \value{
 A \code{visreg} or \code{visreg_list} object (which is simply a list of \code{visreg} objects). A visreg` object

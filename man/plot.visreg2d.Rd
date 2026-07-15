@@ -12,6 +12,7 @@
   color,
   print_cond = FALSE,
   whitespace = 0.2,
+  plot.type = NULL,
   ...
 )
 }
@@ -34,6 +35,9 @@ unless interactions are present.}
 \item{whitespace}{When \code{xvar} or \code{yvar} is a factor, \code{whitespace} determines the amount of space
 in between the factors. Default is 0.2, meaning that 20 percent of the axis is whitespace.}
 
+\item{plot.type}{Deprecated, no longer has any effect. See
+\href{https://pbreheny.github.io/visreg/articles/surface.html}{vignette}.}
+
 \item{...}{Not used.}
 }
 \value{
@@ -44,8 +48,8 @@ Plot method for visualizing how two variables interact to affect the response in
 models, as a \code{ggplot2} raster/contour plot.
 }
 \details{
-For 3-dimensional surface plots, see \code{\link[=persp.visreg2d]{persp.visreg2d()}} (static) or \code{rgl::persp3d()} (interactive,
-requires the \code{rgl} package).
+For 3-dimensional surface plots, see \code{\link[=persp.visreg2d]{persp.visreg2d()}} (static) or \code{rgl::persp3d()}
+(interactive, requires the \code{rgl} package).
 }
 \examples{
 fit <- lm(

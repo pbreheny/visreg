@@ -17,6 +17,7 @@
   line = NULL,
   fill = NULL,
   points = NULL,
+  gg = TRUE,
   ...
 )
 
@@ -64,17 +65,19 @@ and plot the partial residuals on top, specify \code{top='points'}.}
 \item{points}{List of parameters to pass to \code{\link[ggplot2:geom_point]{ggplot2::geom_point()}} (continuous \code{xvar}) or
 \code{\link[ggplot2:geom_jitter]{ggplot2::geom_jitter()}} (factor \code{xvar}) when partial residuals are plotted.}
 
-\item{...}{Not used; present only because \code{plot()} is a generic function. An error is raised
-if any arguments are passed here.}
+\item{gg}{Deprecated, no longer has any effect.}
+
+\item{...}{Not used; present only because \code{plot()} is a generic function. An error is raised if
+any arguments are passed here.}
 }
 \value{
 A ggplot object, or if \code{x} is a \code{\link[=visreg_list]{visreg_list()}}, a list of ggplot objects.
 }
 \description{
-Default plots contain a
-confidence band, prediction line, and partial residuals. Factors, transformations, conditioning,
-interactions, and a variety of other options are supported. The \code{plot.visreg()} function accepts
-a \code{visreg} object as calculated by \code{\link[=visreg]{visreg()}} and creates the plot.
+Default plots contain a confidence band, prediction line, and partial residuals. Factors,
+transformations, conditioning, interactions, and a variety of other options are supported. The
+\code{plot.visreg()} function accepts a \code{visreg} object as calculated by \code{\link[=visreg]{visreg()}} and creates the
+plot.
 }
 \details{
 If \code{x} is a \code{\link[=visreg_list]{visreg_list()}}, \code{plot.visreg_list()} is dispatched instead; it simply calls

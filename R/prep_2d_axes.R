@@ -1,5 +1,5 @@
 # Grid/axis layout shared by plot.visreg2d(), persp.visreg2d(), and persp3d.visreg2d().
-# Lays factor axes out on [0, 1] via factorAxis2d() and reorders z accordingly; numeric
+# Lays factor axes out on [0, 1] via factor_axis_2d() and reorders z accordingly; numeric
 # axes pass through unchanged.
 prep_2d_axes <- function(v, whitespace, gg = FALSE) {
   zz <- v$z
@@ -11,7 +11,7 @@ prep_2d_axes <- function(v, whitespace, gg = FALSE) {
   }
 
   if (is.factor(v$x)) {
-    x_axis <- factorAxis2d(v$x, whitespace, 99)
+    x_axis <- factor_axis_2d(v$x, whitespace, 99)
     xx <- x_axis$x
     mx <- x_axis$m
     lx <- x_axis$l
@@ -20,7 +20,7 @@ prep_2d_axes <- function(v, whitespace, gg = FALSE) {
     xx <- v$x
   }
   if (is.factor(v$y)) {
-    y_axis <- factorAxis2d(v$y, whitespace, 99)
+    y_axis <- factor_axis_2d(v$y, whitespace, 99)
     yy <- y_axis$x
     my <- y_axis$m
     ly <- y_axis$l

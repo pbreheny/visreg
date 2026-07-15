@@ -1,4 +1,4 @@
-factorAxis2d <- function(xx, w, nn) {
+factor_axis_2d <- function(xx, w, nn) {
   l <- levels(xx)
   n_l <- nlevels(xx)
   len <- n_l * (1 - w) + (n_l - 1) * w

@@ -38,6 +38,7 @@
 #'   [ggplot2::geom_crossbar()] (factor `xvar`) when shaded confidence regions are plotted.
 #' @param points List of parameters to pass to [ggplot2::geom_point()] (continuous `xvar`) or
 #'   [ggplot2::geom_jitter()] (factor `xvar`) when partial residuals are plotted.
+#' @param gg Deprecated, no longer has any effect.
 #' @param ... Not used; present only because `plot()` is a generic function. An error is raised if
 #'   any arguments are passed here.
 #'
@@ -71,8 +72,17 @@ plot.visreg <- function(
   line = NULL,
   fill = NULL,
   points = NULL,
+  gg = TRUE,
   ...
 ) {
+  if (!missing(gg)) {
+    rlang::warn(
+      "The `gg` argument is deprecated and no longer has any effect; all plots are ggplot2-based.",
+      class = "visreg_deprecated_gg",
+      .frequency = "once",
+      .frequency_id = "visreg_gg"
+    )
+  }
   rlang::check_dots_empty()
   top <- match.arg(top)
   if (print_cond || isTRUE(x$meta$main_effect_warn)) {

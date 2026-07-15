@@ -37,7 +37,7 @@
 #' v <- visreg2d(fit, x = "Wind", y = "Temp", plot = FALSE)
 #' persp(v)
 #'
-#' @exportS3Method persp visreg2d
+#' @export
 persp.visreg2d <- function(
   x,
   xlab = NULL,
