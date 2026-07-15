@@ -23,6 +23,7 @@ plot(
   line = NULL,
   fill = NULL,
   points = NULL,
+  gg = TRUE,
   ...
 )
 
@@ -110,6 +111,10 @@ plot(x, ...)
   (continuous `xvar`) or
   [`ggplot2::geom_jitter()`](https://ggplot2.tidyverse.org/reference/geom_jitter.html)
   (factor `xvar`) when partial residuals are plotted.
+
+- gg:
+
+  Deprecated, no longer has any effect.
 
 - ...:
 

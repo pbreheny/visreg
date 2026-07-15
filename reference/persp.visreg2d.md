@@ -22,6 +22,8 @@ persp(
 
 # S3 method for class 'visreg_list'
 persp(x, ...)
+
+persp3d.visreg_list(x, ...)
 ```
 
 ## Arguments

@@ -4,6 +4,7 @@
 
 - [`persp(`*`<visreg2d>`*`)`](https://pbreheny.github.io/visreg/reference/persp.visreg2d.md)
   [`persp(`*`<visreg_list>`*`)`](https://pbreheny.github.io/visreg/reference/persp.visreg2d.md)
+  [`persp3d.visreg_list()`](https://pbreheny.github.io/visreg/reference/persp.visreg2d.md)
   : Static 3D perspective plot for a visreg2d object
 - [`plot(`*`<visreg>`*`)`](https://pbreheny.github.io/visreg/reference/plot.visreg.md)
   [`plot(`*`<visreg_list>`*`)`](https://pbreheny.github.io/visreg/reference/plot.visreg.md)

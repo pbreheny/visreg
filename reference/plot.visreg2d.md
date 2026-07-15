@@ -15,6 +15,7 @@ plot(
   color,
   print_cond = FALSE,
   whitespace = 0.2,
+  plot.type = NULL,
   ...
 )
 ```
@@ -57,6 +58,11 @@ plot(
   When `xvar` or `yvar` is a factor, `whitespace` determines the amount
   of space in between the factors. Default is 0.2, meaning that 20
   percent of the axis is whitespace.
+
+- plot.type:
+
+  Deprecated, no longer has any effect. See
+  [vignette](https://pbreheny.github.io/visreg/articles/surface.html).
 
 - ...:
 
