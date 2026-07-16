@@ -4,7 +4,7 @@ As the name implies, `visreg` is primarily designed to visualize
 regression models. However, it is also compatible with any formula-based
 model class that supplies a `predict` method, which includes models such
 as random forests and support vector machines. Such methods are often
-thought of as \``black boxes'', but`visreg\` offers a convenient way to
+thought of as “black boxes”, but `visreg` offers a convenient way to
 visualize the resulting fit and possibly gain some insight into the
 model. Some of these packages do not automatically handle missing data,
 so we first create a complete-case data set:
@@ -20,9 +20,7 @@ aq <- na.omit(airquality)
 
 library(randomForest)
 fit <- randomForest(Ozone ~ Solar.R + Wind + Temp, data = aq)
-visreg(fit, "Temp") + ylab("Ozone")
-# Warning: Removed 101 rows containing missing values or values outside the scale range
-# (`geom_ribbon()`).
+visreg(fit, "Temp", band = FALSE) + ylab("Ozone")
 ```
 
 ![](blackbox_files/figure-html/unnamed-chunk-3-1.png)
@@ -33,15 +31,15 @@ visreg(fit, "Temp") + ylab("Ozone")
 
 library(e1071)
 fit <- svm(Ozone ~ Solar.R + Wind + Temp, data = aq)
-visreg(fit, "Temp") + ylab("Ozone")
-# Warning: Removed 101 rows containing missing values or values outside the scale range
-# (`geom_ribbon()`).
+visreg(fit, "Temp", band = FALSE) + ylab("Ozone")
 ```
 
 ![](blackbox_files/figure-html/unnamed-chunk-4-1.png)
 
 Note that neither random forests nor support vector machines are able to
-provide confidence bands for fitted values, so no shaded bands appear.
+provide confidence bands for fitted values, so we have set
+`band = FALSE` (if `band = TRUE`, the same plot appears, but with a
+warning message).
 
 ## Gradient boosted trees
 
@@ -67,9 +65,7 @@ Once defined, we
 
 library(gbm)
 fit <- gbm(Ozone ~ Solar.R + Wind + Temp, data = aq, distribution = "gaussian")
-visreg(fit, "Temp") + ylab("Ozone")
-# Warning: Removed 101 rows containing missing values or values outside the scale range
-# (`geom_ribbon()`).
+visreg(fit, "Temp", band = FALSE) + ylab("Ozone")
 ```
 
 ![](blackbox_files/figure-html/unnamed-chunk-6-1.png)
@@ -82,9 +78,7 @@ the number of trees, we obtain a much more reasonable fit:
 ``` r
 
 fit <- gbm(Ozone ~ Solar.R + Wind + Temp, data = aq, distribution = "gaussian", n.trees = 5000)
-visreg(fit, "Temp") + ylab("Ozone")
-# Warning: Removed 101 rows containing missing values or values outside the scale range
-# (`geom_ribbon()`).
+visreg(fit, "Temp", band = FALSE) + ylab("Ozone")
 ```
 
 ![](blackbox_files/figure-html/unnamed-chunk-7-1.png)

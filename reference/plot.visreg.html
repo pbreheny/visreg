@@ -84,7 +84,8 @@ plot.</p>
 <span>  print_cond <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  partial <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/identical.html" class="external-link">identical</a></span><span class="op">(</span><span class="va">x</span><span class="op">$</span><span class="va">meta</span><span class="op">$</span><span class="va">trans</span>, <span class="va">I</span><span class="op">)</span>,</span>
 <span>  band <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>  rug <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html" class="external-link">ifelse</a></span><span class="op">(</span><span class="va">partial</span>, <span class="fl">0</span>, <span class="fl">2</span><span class="op">)</span>,</span>
+<span>  rug <span class="op">=</span> <span class="fl">0</span>,</span>
+<span>  jitter <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  strip_names <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">is.numeric</a></span><span class="op">(</span><span class="va">x</span><span class="op">$</span><span class="va">fit</span><span class="op">[</span>, <span class="va">x</span><span class="op">$</span><span class="va">meta</span><span class="op">$</span><span class="va">by</span><span class="op">]</span><span class="op">)</span>,</span>
 <span>  top <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"line"</span>, <span class="st">"points"</span><span class="op">)</span>,</span>
 <span>  line <span class="op">=</span> <span class="cn">NULL</span>,</span>
@@ -95,7 +96,10 @@ plot.</p>
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># S3 method for class 'visreg_list'</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">...</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># S3 method for class 'visreg_plot_list'</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -128,13 +132,19 @@ unless interactions are present.</p></dd>
 
 
 <dt id="arg-rug">rug<a class="anchor" aria-label="anchor" href="#arg-rug"></a></dt>
-<dd><p>By default, partial residuals are plotted. Alternatively, a rug may be plotted along
-the horizontal axis instead. Setting <code>rug=TRUE</code> turns off partial residuals by default; if one
-wants both to be plotted, both <code>rug=TRUE</code> and <code>partial=TRUE</code> need to be specified. Two types of
-rug plots are available. If <code>rug=1</code> or <code>rug=TRUE</code>, then a basic rug is drawn on the bottom. If
-<code>rug=2</code>, then separate rugs are drawn on the top for observations with positive residuals and
-on the bottom for observations with negative residuals. Such plots are particularly useful in
-logistic regression (see examples).</p></dd>
+<dd><p>Controls the appearance of a rug along the horizontal axis:</p><ul><li><p><code>rug=0</code>/<code>FALSE</code>: No rug (default)</p></li>
+<li><p><code>rug=1</code>/<code>TRUE</code>: Basic rug is drawn along the bottom axis</p></li>
+<li><p><code>rug=2</code>: Separate rugs drawn on the top for observations with positive residuals and
+on the bottom for observations with negative residuals.</p></li>
+</ul></dd>
+
+
+<dt id="arg-jitter">jitter<a class="anchor" aria-label="anchor" href="#arg-jitter"></a></dt>
+<dd><p>If <code>jitter=TRUE</code>, a small amount of random noise is added to the horizontal
+position of partial residuals (and, if drawn, the rug). Potentially useful if many
+observations have exactly the same value. Only applies when <code>xvar</code> is continuous; for factor
+<code>xvar</code>, the horizontal spacing of points is already controlled by <code>visreg</code> and this argument
+has no effect. Default is <code>FALSE</code>.</p></dd>
 
 
 <dt id="arg-strip-names">strip_names<a class="anchor" aria-label="anchor" href="#arg-strip-names"></a></dt>
@@ -216,7 +226,7 @@ visreg. <em>R Journal</em>, <strong>9</strong>: 56-71.
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Last updated: July 15, 2026</p>
+  <p>Last updated: July 16, 2026</p>
 </div>
 
     </footer></div>

@@ -118,8 +118,8 @@
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_cartesian.html" class="external-link">coord_cartesian</a></span><span class="op">(</span>ylim <span class="op">=</span> <span class="fl">0</span><span class="op">:</span><span class="fl">1</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">ylab</a></span><span class="op">(</span><span class="st">"Probability"</span><span class="op">)</span></span></code></pre></div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Warning: Removed 303 rows containing missing values or values outside the scale range
-(`geom_ribbon()`).</code></pre>
+<pre><code>Warning: band = TRUE but no confidence interval available for this type of
+model.</code></pre>
 </div>
 <div class="cell-output-display">
 <div>
@@ -134,9 +134,13 @@
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://www.r-project.org" class="external-link">quantreg</a></span><span class="op">)</span></span>
 <span><span class="va">fit</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/quantreg/man/rq.html" class="external-link">rq</a></span><span class="op">(</span><span class="va">Ozone</span> <span class="op">~</span> <span class="va">Wind</span> <span class="op">+</span> <span class="va">Temp</span>, tau <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.25</span>, <span class="fl">0.5</span>, <span class="fl">0.75</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">airquality</span><span class="op">)</span></span>
 <span><span class="va">v</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/visreg.html">visreg</a></span><span class="op">(</span><span class="va">fit</span>, <span class="st">"Wind"</span>, overlay <span class="op">=</span> <span class="cn">TRUE</span>, collapse <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: band = TRUE but no confidence interval available for this type of
+model.</code></pre>
+</div>
 </div>
 <p>NOTE: <code>quantreg</code> does not return standand errors if you specify multiple quantiles of interest. To obtain them, you must construct the <code>visreg_list</code> manually:</p>
-<div class="sourceCode cell-code" id="cb5"><pre class="downlit sourceCode r">
+<div class="sourceCode cell-code" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">fit1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/quantreg/man/rq.html" class="external-link">rq</a></span><span class="op">(</span><span class="va">Ozone</span> <span class="op">~</span> <span class="va">Wind</span> <span class="op">+</span> <span class="va">Temp</span>, tau <span class="op">=</span> <span class="fl">0.25</span>, data <span class="op">=</span> <span class="va">airquality</span><span class="op">)</span></span>
 <span><span class="va">fit2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/quantreg/man/rq.html" class="external-link">rq</a></span><span class="op">(</span><span class="va">Ozone</span> <span class="op">~</span> <span class="va">Wind</span> <span class="op">+</span> <span class="va">Temp</span>, tau <span class="op">=</span> <span class="fl">0.5</span>, data <span class="op">=</span> <span class="va">airquality</span><span class="op">)</span></span>
 <span><span class="va">fit3</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/quantreg/man/rq.html" class="external-link">rq</a></span><span class="op">(</span><span class="va">Ozone</span> <span class="op">~</span> <span class="va">Wind</span> <span class="op">+</span> <span class="va">Temp</span>, tau <span class="op">=</span> <span class="fl">0.75</span>, data <span class="op">=</span> <span class="va">airquality</span><span class="op">)</span></span>
@@ -146,7 +150,7 @@
 <span>  labels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"25%"</span>, <span class="st">"50%"</span>, <span class="st">"75%"</span><span class="op">)</span>, collapse <span class="op">=</span> <span class="cn">TRUE</span></span>
 <span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">v</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">ylab</a></span><span class="op">(</span><span class="st">"Ozone"</span><span class="op">)</span></span></code></pre></div>
-<div class="cell quarto-layout-panel" data-layout-ncol="3" data-h="3" data-w="3">
+<div class="cell quarto-layout-panel" data-w="3" data-h="3" data-layout-ncol="3">
 <div class="quarto-layout-row">
 <div class="quarto-layout-cell" style="flex-basis: 33.3%;justify-content: center;">
 <p><img src="multi_files/figure-html/unnamed-chunk-5-1.png"></p>
@@ -249,7 +253,7 @@
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Last updated: July 15, 2026</p>
+  <p>Last updated: July 16, 2026</p>
 </div>
 
     </footer>

@@ -32,8 +32,8 @@ visreg(fit, "Ozone", collapse = TRUE, overlay = TRUE, partial = FALSE) +
   ylab("Probability")
 ```
 
-    Warning: Removed 303 rows containing missing values or values outside the scale range
-    (`geom_ribbon()`).
+    Warning: band = TRUE but no confidence interval available for this type of
+    model.
 
 ![](multi_files/figure-html/unnamed-chunk-3-1.png)
 
@@ -48,6 +48,9 @@ library(quantreg)
 fit <- rq(Ozone ~ Wind + Temp, tau = c(0.25, 0.5, 0.75), data = airquality)
 v <- visreg(fit, "Wind", overlay = TRUE, collapse = TRUE)
 ```
+
+    Warning: band = TRUE but no confidence interval available for this type of
+    model.
 
 NOTE: `quantreg` does not return standand errors if you specify multiple
 quantiles of interest. To obtain them, you must construct the

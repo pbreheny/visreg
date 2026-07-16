@@ -17,7 +17,8 @@ plot(
   print_cond = FALSE,
   partial = identical(x$meta$trans, I),
   band = TRUE,
-  rug = ifelse(partial, 0, 2),
+  rug = 0,
+  jitter = FALSE,
   strip_names = is.numeric(x$fit[, x$meta$by]),
   top = c("line", "points"),
   line = NULL,
@@ -29,6 +30,9 @@ plot(
 
 # S3 method for class 'visreg_list'
 plot(x, ...)
+
+# S3 method for class 'visreg_plot_list'
+print(x, ...)
 ```
 
 ## Arguments
@@ -63,15 +67,24 @@ plot(x, ...)
 
 - rug:
 
-  By default, partial residuals are plotted. Alternatively, a rug may be
-  plotted along the horizontal axis instead. Setting `rug=TRUE` turns
-  off partial residuals by default; if one wants both to be plotted,
-  both `rug=TRUE` and `partial=TRUE` need to be specified. Two types of
-  rug plots are available. If `rug=1` or `rug=TRUE`, then a basic rug is
-  drawn on the bottom. If `rug=2`, then separate rugs are drawn on the
-  top for observations with positive residuals and on the bottom for
-  observations with negative residuals. Such plots are particularly
-  useful in logistic regression (see examples).
+  Controls the appearance of a rug along the horizontal axis:
+
+  - `rug=0`/`FALSE`: No rug (default)
+
+  - `rug=1`/`TRUE`: Basic rug is drawn along the bottom axis
+
+  - `rug=2`: Separate rugs drawn on the top for observations with
+    positive residuals and on the bottom for observations with negative
+    residuals.
+
+- jitter:
+
+  If `jitter=TRUE`, a small amount of random noise is added to the
+  horizontal position of partial residuals (and, if drawn, the rug).
+  Potentially useful if many observations have exactly the same value.
+  Only applies when `xvar` is continuous; for factor `xvar`, the
+  horizontal spacing of points is already controlled by `visreg` and
+  this argument has no effect. Default is `FALSE`.
 
 - strip_names:
 

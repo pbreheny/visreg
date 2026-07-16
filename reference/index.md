@@ -8,6 +8,7 @@
   : Static 3D perspective plot for a visreg2d object
 - [`plot(`*`<visreg>`*`)`](https://pbreheny.github.io/visreg/reference/plot.visreg.md)
   [`plot(`*`<visreg_list>`*`)`](https://pbreheny.github.io/visreg/reference/plot.visreg.md)
+  [`print(`*`<visreg_plot_list>`*`)`](https://pbreheny.github.io/visreg/reference/plot.visreg.md)
   : Visualization of regression functions
 - [`plot(`*`<visreg2d>`*`)`](https://pbreheny.github.io/visreg/reference/plot.visreg2d.md)
   : Visualization of regression functions for two variables

@@ -22,7 +22,6 @@ visreg(
   alpha = 0.05,
   nn = 101,
   cond = list(),
-  jitter = FALSE,
   collapse = FALSE,
   plot = TRUE,
   predict = list(),
@@ -112,11 +111,6 @@ visreg(
   filling in other explanatory variables with the median (for numeric
   variables) or most common category (for factors), but this can be
   overridden by specifying their values using `cond` (see examples).
-
-- jitter:
-
-  Adds a small amount of noise to `xvar`. Potentially useful if many
-  observations have exactly the same value. Default is FALSE.
 
 - collapse:
 

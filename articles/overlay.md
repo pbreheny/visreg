@@ -68,7 +68,6 @@ usual `ggplot2` way, by adding a scale to the returned plot:
 
 ``` r
 
-library(ggplot2)
 visreg(fit, "Wind", by = "Heat", overlay = TRUE) +
   scale_color_manual(values = c("#00C1C9", "#D63EFF", "#FF4E37")) +
   scale_fill_manual(values = c("#00C1C980", "#D63EFF80", "#FF4E3780"))
