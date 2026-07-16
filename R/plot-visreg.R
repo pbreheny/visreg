@@ -99,9 +99,43 @@ plot.visreg <- function(
     }
   }
 
+  if (all(is.na(x$fit$visreg_lwr))) {
+    if (band) {
+      band <- FALSE
+      warning(
+        paste0(
+          "band = TRUE but no confidence interval available for this type of model."
+        ),
+        call. = FALSE
+      )
+    }
+  }
+
   if (is.factor(x$fit[, x$meta$x])) {
-    gg_factor_plot(x, partial, band, rug, strip_names, overlay, top, line, fill, points)
+    gg_factor_plot(
+      x,
+      partial,
+      band,
+      rug,
+      strip_names,
+      overlay,
+      top,
+      line,
+      fill,
+      points
+    )
   } else {
-    gg_cont_plot(x, partial, band, rug, strip_names, overlay, top, line, fill, points)
+    gg_cont_plot(
+      x,
+      partial,
+      band,
+      rug,
+      strip_names,
+      overlay,
+      top,
+      line,
+      fill,
+      points
+    )
   }
 }

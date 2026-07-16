@@ -11,7 +11,7 @@ knitr::opts_knit$set(aliases = c(h = "fig.height", w = "fig.width"))
 knitr::opts_chunk$set(comment = "#", collapse = TRUE, cache = FALSE, tidy = FALSE)
 ```
 
-As the name implies, `visreg` is primarily designed to visualize regression models.  However, it is also compatible with any formula-based model class that supplies a `predict` method, which includes models such as random forests and support vector machines.  Such methods are often thought of as ``black boxes'', but `visreg` offers a convenient way to visualize the resulting fit and possibly gain some insight into the model.  Some of these packages do not automatically handle missing data, so we first create a complete-case data set:
+As the name implies, `visreg` is primarily designed to visualize regression models. However, it is also compatible with any formula-based model class that supplies a `predict` method, which includes models such as random forests and support vector machines. Such methods are often thought of as "black boxes", but `visreg` offers a convenient way to visualize the resulting fit and possibly gain some insight into the model. Some of these packages do not automatically handle missing data, so we first create a complete-case data set:
 
 ```{r}
 aq <- na.omit(airquality)
@@ -23,7 +23,7 @@ aq <- na.omit(airquality)
 #| message: false
 library(randomForest)
 fit <- randomForest(Ozone ~ Solar.R + Wind + Temp, data = aq)
-visreg(fit, "Temp") + ylab("Ozone")
+visreg(fit, "Temp", band = FALSE) + ylab("Ozone")
 ```
 
 # Support vector machines
@@ -32,14 +32,14 @@ visreg(fit, "Temp") + ylab("Ozone")
 #| message: false
 library(e1071)
 fit <- svm(Ozone ~ Solar.R + Wind + Temp, data = aq)
-visreg(fit, "Temp") + ylab("Ozone")
+visreg(fit, "Temp", band = FALSE) + ylab("Ozone")
 ```
 
-Note that neither random forests nor support vector machines are able to provide confidence bands for fitted values, so no shaded bands appear.
+Note that neither random forests nor support vector machines are able to provide confidence bands for fitted values, so we have set `band = FALSE` (if `band = TRUE`, the same plot appears, but with a warning message).
 
 # Gradient boosted trees
 
-The implementation of gradient boosted trees in the `gbm` package does not offer a `residuals` method.  This would normally cause `visreg` to omit plotting the partial residuals.  However, we can supply our own user-defined `residuals` method:
+The implementation of gradient boosted trees in the `gbm` package does not offer a `residuals` method. This would normally cause `visreg` to omit plotting the partial residuals. However, we can supply our own user-defined `residuals` method:
 
 ```{r}
 residuals.gbm <- function(fit) {
@@ -55,15 +55,15 @@ Once defined, we
 #| message: false
 library(gbm)
 fit <- gbm(Ozone ~ Solar.R + Wind + Temp, data = aq, distribution = "gaussian")
-visreg(fit, "Temp") + ylab("Ozone")
+visreg(fit, "Temp", band = FALSE) + ylab("Ozone")
 ```
 
-Note that the default settings for `gbm` do not produce a very good fit here.  In particular, the default number of trees (100) is too low to capture the relationship between temperature and ozone.  By increasing the number of trees, we obtain a much more reasonable fit:
+Note that the default settings for `gbm` do not produce a very good fit here. In particular, the default number of trees (100) is too low to capture the relationship between temperature and ozone. By increasing the number of trees, we obtain a much more reasonable fit:
 
 ```{r}
 #| message: false
 fit <- gbm(Ozone ~ Solar.R + Wind + Temp, data = aq, distribution = "gaussian", n.trees = 5000)
-visreg(fit, "Temp") + ylab("Ozone")
+visreg(fit, "Temp", band = FALSE) + ylab("Ozone")
 ```
 
 This is a nice illustration of how visualizing a "black box" method using `visreg` can provide insight into setting some of the tuning parameters of these methods.
