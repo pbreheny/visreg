@@ -25,9 +25,7 @@
 #'   collapse = TRUE,
 #'   labels = c("Confidence: 0.80", "Confidence: 0.99")
 #' )
-#' op <- par(mfrow = c(1, 2))
 #' plot(vv1)
-#' par(op)
 #' plot(vv2)
 #'
 #' @export

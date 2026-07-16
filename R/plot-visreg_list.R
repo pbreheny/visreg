@@ -1,7 +1,14 @@
 #' @rdname plot.visreg
 #' @export
 plot.visreg_list <- function(x, ...) {
-  lapply(x, plot, ...) |> invisible()
+  structure(lapply(x, plot, ...), class = c("visreg_plot_list", "list"))
+}
+
+#' @rdname plot.visreg
+#' @export
+print.visreg_plot_list <- function(x, ...) {
+  for (p in x) print(p)
+  invisible(x)
 }
 
 #' @rdname persp.visreg2d
