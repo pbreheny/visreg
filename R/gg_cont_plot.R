@@ -3,6 +3,7 @@ gg_cont_plot <- function(
   partial,
   band,
   rug,
+  jitter,
   strip_names,
   overlay,
   top,
@@ -15,6 +16,9 @@ gg_cont_plot <- function(
   fill_data <- data.frame(x = xx, ymin = v$fit$visreg_lwr, ymax = v$fit$visreg_upr)
   line_data <- data.frame(x = xx, y = v$fit$visreg_fit)
   point_data <- data.frame(x = v$res[, v$meta$x], y = v$res$visreg_res)
+  if (jitter) {
+    point_data$x <- jitter(point_data$x)
+  }
   if ("by" %in% names(v$meta)) {
     bb <- factor(v$fit[, v$meta$by])
     fill_data[[v$meta$by]] <- bb

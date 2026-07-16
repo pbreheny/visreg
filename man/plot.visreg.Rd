@@ -13,6 +13,7 @@
   partial = identical(x$meta$trans, I),
   band = TRUE,
   rug = 0,
+  jitter = FALSE,
   strip_names = is.numeric(x$fit[, x$meta$by]),
   top = c("line", "points"),
   line = NULL,
@@ -49,6 +50,12 @@ unless interactions are present.}
 \item \code{rug=2}: Separate rugs drawn on the top for observations with positive residuals and
 on the bottom for observations with negative residuals.
 }}
+
+\item{jitter}{If \code{jitter=TRUE}, a small amount of random noise is added to the horizontal
+position of partial residuals (and, if drawn, the rug). Potentially useful if many
+observations have exactly the same value. Only applies when \code{xvar} is continuous; for factor
+\code{xvar}, the horizontal spacing of points is already controlled by \code{visreg} and this argument
+has no effect. Default is \code{FALSE}.}
 
 \item{strip_names}{When \code{by=TRUE}, \code{strip_names=TRUE} adds the name of the \code{by} variable to the
 strip at the top of each panel. Default is \code{FALSE} for factors and \code{TRUE} for numeric \code{by}

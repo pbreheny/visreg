@@ -23,6 +23,11 @@
 #'   - `rug=1`/`TRUE`: Basic rug is drawn along the bottom axis
 #'   - `rug=2`: Separate rugs drawn on the top for observations with positive residuals and
 #'     on the bottom for observations with negative residuals.
+#' @param jitter If `jitter=TRUE`, a small amount of random noise is added to the horizontal
+#'   position of partial residuals (and, if drawn, the rug). Potentially useful if many
+#'   observations have exactly the same value. Only applies when `xvar` is continuous; for factor
+#'   `xvar`, the horizontal spacing of points is already controlled by `visreg` and this argument
+#'   has no effect. Default is `FALSE`.
 #' @param strip_names When `by=TRUE`, `strip_names=TRUE` adds the name of the `by` variable to the
 #'   strip at the top of each panel. Default is `FALSE` for factors and `TRUE` for numeric `by`
 #'   variables. `strip_names` can also be a character vector, in which case it replaces the strip
@@ -65,6 +70,7 @@ plot.visreg <- function(
   partial = identical(x$meta$trans, I),
   band = TRUE,
   rug = 0,
+  jitter = FALSE,
   strip_names = is.numeric(x$fit[, x$meta$by]),
   top = c("line", "points"),
   line = NULL,
@@ -130,6 +136,7 @@ plot.visreg <- function(
       partial,
       band,
       rug,
+      jitter,
       strip_names,
       overlay,
       top,

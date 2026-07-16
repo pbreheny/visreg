@@ -16,7 +16,6 @@ visreg(
   alpha = 0.05,
   nn = 101,
   cond = list(),
-  jitter = FALSE,
   collapse = FALSE,
   plot = TRUE,
   predict = list(),
@@ -73,9 +72,6 @@ add to the computational burden, but produce a smoother plot (default: 101).}
 conditional plots in visreg are constructed by filling in other explanatory variables with the
 median (for numeric variables) or most common category (for factors), but this can be
 overridden by specifying their values using \code{cond} (see examples).}
-
-\item{jitter}{Adds a small amount of noise to \code{xvar}. Potentially useful if many observations
-have exactly the same value. Default is FALSE.}
 
 \item{collapse}{If the \code{predict} method for \code{fit} returns a matrix, should this be returns as
 multiple visreg objects bound together as a list (\code{collapse=FALSE}) or collapsed down to a

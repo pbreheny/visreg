@@ -46,8 +46,6 @@
 #'   conditional plots in visreg are constructed by filling in other explanatory variables with the
 #'   median (for numeric variables) or most common category (for factors), but this can be
 #'   overridden by specifying their values using `cond` (see examples).
-#' @param jitter Adds a small amount of noise to `xvar`. Potentially useful if many observations
-#'   have exactly the same value. Default is FALSE.
 #' @param collapse If the `predict` method for `fit` returns a matrix, should this be returns as
 #'   multiple visreg objects bound together as a list (`collapse=FALSE`) or collapsed down to a
 #'   single `visreg` object (`collapse=TRUE`).
@@ -179,7 +177,6 @@ visreg <- function(
   alpha = 0.05,
   nn = 101,
   cond = list(),
-  jitter = FALSE,
   collapse = FALSE,
   plot = TRUE,
   predict = list(),
@@ -197,7 +194,7 @@ visreg <- function(
 
   # Calculate v
   y_name <- make_y_name(fit, scale, trans, type)
-  v <- build_visreg(fit, dat, xvar, nn, cond, type, trans, alpha, jitter, by, y_name, predict)
+  v <- build_visreg(fit, dat, xvar, nn, cond, type, trans, alpha, by, y_name, predict)
   if (collapse) {
     v <- collapse_visreg_list(v)
   }
