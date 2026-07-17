@@ -171,20 +171,6 @@ See the [surface plots
 vignette](https://pbreheny.github.io/visreg/articles/surface) for
 further examples, including `rgl`.
 
-## Still in progress
-
-3.0 is still being finished, and this article will be updated as the
-remaining pieces land:
-
-- **Mixed models.** Prediction and standard-error handling for
-  `lme4`/`nlme`/`glmmTMB` models is being reworked, and the [mixed
-  models article](https://pbreheny.github.io/visreg/articles/mixed)
-  hasn’t been updated to reflect the new `predict` argument to
-  [`visreg()`](https://pbreheny.github.io/visreg/reference/visreg.md)
-  yet (an escape hatch for passing arguments like `re.form` through to
-  the model’s own [`predict()`](https://rdrr.io/r/stats/predict.html)
-  method). Don’t be surprised if this area continues to change.
-
 ## Keeping the old behavior
 
 If you’re not ready to update your code, you don’t have to: the last

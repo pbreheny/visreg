@@ -1,13 +1,8 @@
 # Multiple outcomes
 
 Multiple `visreg` objects can be bundled together in an object of class
-`visreg_list`; for example, when you submit `visreg(fit)`, you get a
-`visreg_list`, one `visreg` object for each predictor in the model.
-`visreg_list`s can also be used for handling models with multiple
-outcomes.
-
-For example, suppose we fit a multinomial regression model using the
-`nnet` package:
+`visreg_list`. For example, suppose we fit a multinomial regression
+model using the `nnet` package:
 
 ``` r
 

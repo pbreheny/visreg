@@ -131,7 +131,7 @@ to the returned plot:
 
 ``` r
 
-visreg(fit, "Heat", by = "Wind", breaks = 4) + facet_wrap(~ Wind, nrow = 1)
+visreg(fit, "Heat", by = "Wind", breaks = 4) + facet_wrap(~Wind, nrow = 1)
 ```
 
 ![](cross_files/figure-html/unnamed-chunk-11-1.png)

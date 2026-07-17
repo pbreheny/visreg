@@ -139,7 +139,7 @@
 <li>Logistic regression applied to case-control studies: In such studies, the estimation of the intercept parameter is typically meaningless, so conditional plots are of questionable value. Contrast plots, however, are still meaningful ways to visualize the model’s estimates.</li>
 <li>Cox relative risk (proportional hazards) models: Likewise, in Cox models, the baseline hazard is not estimated and plots of absolute risk are dubious, but contrast plots still useful.</li>
 <li>
-<a href="mixed.html">Random effect models</a>: Most random effect modeling software cannot account for uncertainty in the random effects when calculating standard errors for <span class="math inline">\mathbb{E}(Y)</span>. Thus, while conditional plots may still be constructed, they will lack confidence intervals. In contrast plots, these terms drop out, and confidence intervals may still be constructed.</li>
+<a href="mixed.html">Random effect models</a>: Some mixed-model software, such as <code>nlme</code>, do not return standard errors for the estimate of <span class="math inline">\mathbb{E}(Y \mid X)</span> due to the difficulty of accounting for uncertainty introduced by random effects. For those packages, conditional plots may still be constructed but will lack confidence intervals. In contrast plots, the random-effect terms drop out, so confidence intervals can always be constructed.</li>
 </ul>
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
@@ -233,7 +233,7 @@
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Last updated: July 16, 2026</p>
+  <p>Last updated: July 17, 2026</p>
 </div>
 
     </footer>

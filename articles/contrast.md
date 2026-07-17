@@ -84,9 +84,10 @@ are three situations in particular where contrast plots are very useful:
   models, the baseline hazard is not estimated and plots of absolute
   risk are dubious, but contrast plots still useful.
 - [Random effect
-  models](https://pbreheny.github.io/visreg/articles/mixed.md): Most
-  random effect modeling software cannot account for uncertainty in the
-  random effects when calculating standard errors for \mathbb{E}(Y).
-  Thus, while conditional plots may still be constructed, they will lack
-  confidence intervals. In contrast plots, these terms drop out, and
-  confidence intervals may still be constructed.
+  models](https://pbreheny.github.io/visreg/articles/mixed.md): Some
+  mixed-model software, such as `nlme`, do not return standard errors
+  for the estimate of \mathbb{E}(Y \mid X) due to the difficulty of
+  accounting for uncertainty introduced by random effects. For those
+  packages, conditional plots may still be constructed but will lack
+  confidence intervals. In contrast plots, the random-effect terms drop
+  out, so confidence intervals can always be constructed.

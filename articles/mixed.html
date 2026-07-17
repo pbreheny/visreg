@@ -103,7 +103,8 @@
 
 
 
-    <p><code>visreg</code> can be used with mixed models, for example from the <code>nlme</code> or <code>lme4</code> packages, although it is worth noting that these packages are unable to incorporate uncertainty about random effects into predictions, and therefore do not offer confidence intervals, meaning that <code>visreg</code> plots will lack confidence bands. Nevertheless, <code>visreg</code> is still useful for visualizing the effects of fixed effects in such models using contrast plots, as well as plotting effects without confidence intervals.</p>
+    <p><code>visreg</code> works with mixed models, but how much you get out of a plot depends on the modeling package. As of <code>lme4</code> 1.1-27, <code>predict.merMod()</code> supports <code>se.fit=TRUE</code>, so <code>visreg</code> can compute real confidence bands for <code>lme4</code> models – this article focuses on <code>lme4</code> and shows the three most useful ways to do that. Other mixed-model packages haven’t caught up: <code>nlme</code>’s <code>predict.lme()</code> has no <code>se.fit</code> option at all, so plots of <code>lme</code> fits will still lack confidence bands (contrast plots are still useful there, since the random effects cancel out of a contrast – see <a href="contrast.html">contrast vs. conditional plots</a>).</p>
+<p>The key control for <code>lme4</code> models is <code>re.form</code>, <code>lme4</code>’s own argument for deciding which random effects to condition on when predicting. <code>visreg</code> passes this through via the <code>predict</code> argument (see <code><a href="../reference/visreg.html">?visreg</a></code>) rather than having its own option for it, since it’s specific to how <code>lme4</code> handles prediction.</p>
 <p>As an illustration, consider the following random-intercept, random-slope model from a study involving the protein content of cows’ milk in the weeks following calving:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="downlit sourceCode r">
@@ -112,12 +113,13 @@
 <span><span class="va">ctrl</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lme4/man/lmerControl.html" class="external-link">lmerControl</a></span><span class="op">(</span>optCtrl <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>xtol_rel <span class="op">=</span> <span class="fl">1e-6</span><span class="op">)</span><span class="op">)</span> <span class="co"># Warning otherwise</span></span>
 <span><span class="va">fit</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lme4/man/lmer.html" class="external-link">lmer</a></span><span class="op">(</span><span class="va">protein</span> <span class="op">~</span> <span class="va">Diet</span> <span class="op">+</span> <span class="va">Time</span> <span class="op">+</span> <span class="op">(</span><span class="va">Time</span> <span class="op">|</span> <span class="va">Cow</span><span class="op">)</span>, <span class="va">Milk</span>, control <span class="op">=</span> <span class="va">ctrl</span><span class="op">)</span></span></code></pre></div>
 </div>
-<section class="section level2"><h2 id="plotting-fixed-effects">Plotting fixed effects<a class="anchor" aria-label="anchor" href="#plotting-fixed-effects"></a>
+<section class="section level2"><h2 id="population-level-effects-the-default">Population-level effects (the default)<a class="anchor" aria-label="anchor" href="#population-level-effects-the-default"></a>
 </h2>
-<p>NEED TEXT</p>
+<p>By default, <code>visreg</code> predicts with <code>re.form=NA</code>: the random effects are ignored altogether, and the plot shows the fixed-effect (population-average) relationship, with a confidence band reflecting uncertainty about the fixed effects only. No extra arguments are needed for this – it’s what you get by calling <code><a href="../reference/visreg.html">visreg()</a></code> normally:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/visreg.html">visreg</a></span><span class="op">(</span><span class="va">fit</span>, <span class="st">"Diet"</span>, points <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>color <span class="op">=</span> <span class="st">"#55555540"</span>, size <span class="op">=</span> <span class="fl">0.75</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">ylab</a></span><span class="op">(</span><span class="st">"Protein"</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/visreg.html">visreg</a></span><span class="op">(</span><span class="va">fit</span>, <span class="st">"Diet"</span>, points <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>color <span class="op">=</span> <span class="st">"#55555540"</span>, size <span class="op">=</span> <span class="fl">0.75</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">ylab</a></span><span class="op">(</span><span class="st">"Protein"</span><span class="op">)</span></span></code></pre></div>
 <div class="cell-output-display">
 <div>
 <figure><p><img src="mixed_files/figure-html/unnamed-chunk-3-1.png" width="672"></p>
@@ -125,16 +127,13 @@
 </div>
 </div>
 </div>
-</section><section class="section level2"><h2 id="plotting-random-effects">Plotting random effects<a class="anchor" aria-label="anchor" href="#plotting-random-effects"></a>
+<p>This is the right choice when you want to describe the typical cow, and it’s the plot most people want most of the time.</p>
+</section><section class="section level2"><h2 id="conditioning-on-the-estimated-random-effects">Conditioning on the estimated random effects<a class="anchor" aria-label="anchor" href="#conditioning-on-the-estimated-random-effects"></a>
 </h2>
-<p>The <code>visreg</code> package can also be used to plot random effects, although again, the plots will not include intervals. Below, we plot the modeled relationship between protein content and time for each cow. Two aspects of the code are worth pointing out:</p>
-<ul>
-<li>According to the object-oriented design of <code>visreg</code>, the <code>predict</code> method supplied by <code>lme4</code> is used. It has its own option, <code>re.form</code>, to control how random effects are used in the prediction, and this must be passed through <code>visreg</code> accordingly.</li>
-<li>For the sake of space, I’m going to subset the plot to ten cows rather than all 79. This can be accomplished by returning, then subsetting, the raw <code>visreg</code> object prior to plotting.</li>
-</ul>
+<p>Passing <code>predict = list(re.form = NULL)</code> tells <code>lme4</code> to condition on the estimated (BLUP) random effects for whichever cow each row of the prediction grid belongs to (<code>NULL</code> is <code>lme4</code>’s own default for <code>re.form</code>, and is equivalent here to spelling out the full random-effects formula, <code>re.form = ~ (Time | Cow)</code>, since <code>Cow</code> is the model’s only grouping factor). Combined with <code>by</code>, this lets you plot cow-specific curves – the fitted relationship between protein and time, separately for each cow. For the sake of space, we subset the plot to ten cows rather than all 79; this can be done by returning, then subsetting, the raw <code>visreg</code> object prior to plotting.</p>
 <div class="cell" data-h="3" data-w="9">
 <div class="sourceCode cell-code" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">v</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/visreg.html">visreg</a></span><span class="op">(</span><span class="va">fit</span>, <span class="st">"Time"</span>, by <span class="op">=</span> <span class="st">"Cow"</span>, re.form <span class="op">=</span> <span class="op">~</span> <span class="op">(</span><span class="va">Time</span> <span class="op">|</span> <span class="va">Cow</span><span class="op">)</span>, plot <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="va">v</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/visreg.html">visreg</a></span><span class="op">(</span><span class="va">fit</span>, <span class="st">"Time"</span>, by <span class="op">=</span> <span class="st">"Cow"</span>, predict <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>re.form <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span>, plot <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span><span class="va">sub_cow</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/levels.html" class="external-link">levels</a></span><span class="op">(</span><span class="va">Milk</span><span class="op">$</span><span class="va">Cow</span><span class="op">)</span>, <span class="fl">10</span><span class="op">)</span></span>
 <span><span class="va">vv</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/subset.html" class="external-link">subset</a></span><span class="op">(</span><span class="va">v</span>, <span class="va">Cow</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="va">sub_cow</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">vv</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">ylab</a></span><span class="op">(</span><span class="st">"Protein"</span><span class="op">)</span></span></code></pre></div>
@@ -145,7 +144,43 @@
 </div>
 </div>
 </div>
-<p>Returning the data frames, estimates, confidence intervals, and residuals used in the construction of its plots like this allows users to write their own extensions and modifications of <code>visreg</code> plots.</p>
+<p>Each cow’s curve now has its own confidence band, but it’s worth being clear about what these bands represent: they reflect the precision with which <em>that cow’s own trajectory</em> is estimated, given its random effects, and are a different quantity than the population-level band above, which reflects uncertainty about the fixed effects for a “typical” cow.</p>
+</section><section class="section level2"><h2 id="conditioning-on-some-but-not-all-random-effects">Conditioning on some, but not all, random effects<a class="anchor" aria-label="anchor" href="#conditioning-on-some-but-not-all-random-effects"></a>
+</h2>
+<p>When a model has more than one grouping factor, <code>re.form</code> can also be a formula naming just the grouping factor(s) you want to condition on, letting you marginalize over the rest. This isn’t an option for the milk yield model above, which has only one grouping factor (<code>Cow</code>) with a correlated random slope and intercept – asking <code>lme4</code> to condition on just the random intercept via <code>re.form = ~ (1 | Cow)</code> actually raises an error (<code>non-conformable arguments</code>), because it can’t split a correlated slope and intercept apart like that. Partial conditioning only becomes useful once a model has more than one grouping factor to choose from.</p>
+<p>As a small example, suppose patients are seen at different clinics, and both patients and clinics have their own random intercepts:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span></span>
+<span><span class="va">n_clinic</span> <span class="op">&lt;-</span> <span class="fl">15</span></span>
+<span><span class="va">n_patient</span> <span class="op">&lt;-</span> <span class="fl">20</span></span>
+<span><span class="va">n</span> <span class="op">&lt;-</span> <span class="fl">300</span></span>
+<span><span class="va">clinic</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="va">n_clinic</span>, <span class="va">n</span>, replace <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">patient</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="va">n_patient</span>, <span class="va">n</span>, replace <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">severity</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span><span class="op">(</span><span class="va">n</span><span class="op">)</span></span>
+<span><span class="va">b_clinic</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="va">n_clinic</span>, sd <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span></span>
+<span><span class="va">b_patient</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="va">n_patient</span>, sd <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
+<span><span class="va">outcome</span> <span class="op">&lt;-</span> <span class="fl">2</span> <span class="op">+</span> <span class="fl">1.5</span> <span class="op">*</span> <span class="va">severity</span> <span class="op">+</span> <span class="va">b_clinic</span><span class="op">[</span><span class="va">clinic</span><span class="op">]</span> <span class="op">+</span> <span class="va">b_patient</span><span class="op">[</span><span class="va">patient</span><span class="op">]</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="va">n</span>, sd <span class="op">=</span> <span class="fl">0.3</span><span class="op">)</span></span>
+<span><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span><span class="va">outcome</span>, <span class="va">severity</span>, <span class="va">clinic</span>, <span class="va">patient</span><span class="op">)</span></span>
+<span><span class="va">fit2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lme4/man/lmer.html" class="external-link">lmer</a></span><span class="op">(</span><span class="va">outcome</span> <span class="op">~</span> <span class="va">severity</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span> <span class="op">|</span> <span class="va">patient</span><span class="op">)</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span> <span class="op">|</span> <span class="va">clinic</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">dat</span><span class="op">)</span></span></code></pre></div>
+</div>
+<p>Conditioning on clinic random effects while marginalizing over patient random effects:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/visreg.html">visreg</a></span><span class="op">(</span><span class="va">fit2</span>, <span class="st">"severity"</span>, predict <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>re.form <span class="op">=</span> <span class="op">~</span> <span class="op">(</span><span class="fl">1</span> <span class="op">|</span> <span class="va">clinic</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>       cond <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>clinic <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/levels.html" class="external-link">levels</a></span><span class="op">(</span><span class="va">clinic</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">ylab</a></span><span class="op">(</span><span class="st">"Outcome"</span><span class="op">)</span></span></code></pre></div>
+<div class="cell-output-display">
+<div>
+<figure><p><img src="mixed_files/figure-html/unnamed-chunk-6-1.png" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>This differs from both the fully marginal plot (<code>re.form=NA</code>, the default) and the fully conditional one (<code>re.form=NULL</code>, conditioning on both clinic and patient): it isolates the uncertainty coming from patients, while still reflecting which clinic is being examined.</p>
+</section><section class="section level2"><h2 id="returning-the-data-used-in-a-plot">Returning the data used in a plot<a class="anchor" aria-label="anchor" href="#returning-the-data-used-in-a-plot"></a>
+</h2>
+<p>Returning the data frames, estimates, confidence intervals, and residuals used in the construction of its plots, as in the <code><a href="https://rdrr.io/r/base/subset.html" class="external-link">subset()</a></code> example above, allows users to write their own extensions and modifications of <code>visreg</code> plots.</p>
 </section><script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
       var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
@@ -238,7 +273,7 @@
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Last updated: July 16, 2026</p>
+  <p>Last updated: July 17, 2026</p>
 </div>
 
     </footer>
