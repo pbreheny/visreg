@@ -93,5 +93,5 @@ Other aspects of faceting, such as the number of rows/columns, can be changed by
 #| h: 3.5
 #| w: 12
 #| out.width: 100%
-visreg(fit, "Heat", by = "Wind", breaks = 4) + facet_wrap(~ Wind, nrow = 1)
+visreg(fit, "Heat", by = "Wind", breaks = 4) + facet_wrap(~Wind, nrow = 1)
 ```
