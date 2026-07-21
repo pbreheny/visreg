@@ -7,9 +7,8 @@
 #' `rgl` package). For a 2-dimensional raster/contour plot, see [plot.visreg2d()].
 #'
 #' @param x A [visreg2d()] object.
-#' @param xlab Axis label for x variable
-#' @param ylab Axis label for y variable
-#' @param zlab Axis label for outcome
+#' @param xlab,ylab Axis labels for predictors (default: variable name)
+#' @param zlab Axis label for outcome (default: variable name)
 #' @param color The color of the surface.
 #' @param whitespace When `xvar` or `yvar` is a factor, `whitespace` determines the amount of space
 #'   in between the factors. Default is 0.2, meaning that 20 percent of the axis is whitespace.
@@ -29,13 +28,19 @@
 #'
 #' @examples
 #' fit <- lm(
-#'   Ozone ~ Solar.R + Wind + Temp + I(Wind^2) + I(Temp^2) +
-#'     I(Wind * Temp) + I(Wind * Temp^2) + I(Temp * Wind^2) + I(Temp^2 * Wind^2),
+#'   Ozone ~ Solar.R + Wind + Temp +
+#'     I(Wind^2) + I(Temp^2) + I(Wind * Temp) +
+#'     I(Wind * Temp^2) + I(Temp * Wind^2) +
+#'     I(Temp^2 * Wind^2),
 #'   data = airquality
 #' )
 #'
 #' v <- visreg2d(fit, x = "Wind", y = "Temp", plot = FALSE)
 #' persp(v)
+#'
+#' airquality$Heat <- cut(airquality$Temp, 3, labels = c("Cool", "Mild", "Hot"))
+#' fit2 <- lm(Ozone ~ Solar.R + Wind * Heat, data = airquality)
+#' visreg2d(fit2, "Heat", "Wind", plot = FALSE) |> persp(theta = 230)
 #'
 #' @export
 persp.visreg2d <- function(
@@ -50,6 +55,19 @@ persp.visreg2d <- function(
   labs <- resolve_2d_labels(x, xlab, ylab, zlab, drop_expr_z = TRUE)
   axes <- prep_2d_axes(x, whitespace, gg = FALSE)
   ticktype <- if (is.factor(x$x) || is.factor(x$y)) "simple" else "detailed"
+
+  fit <- lm(
+    Ozone ~ Solar.R +
+      Wind +
+      Temp +
+      I(Wind^2) +
+      I(Temp^2) +
+      I(Wind * Temp) +
+      I(Wind * Temp^2) +
+      I(Temp * Wind^2) +
+      I(Temp^2 * Wind^2),
+    data = airquality
+  )
 
   plot_args <- list(
     x = axes$xx,

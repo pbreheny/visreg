@@ -95,10 +95,10 @@ If \code{x} is a \code{\link[=visreg_list]{visreg_list()}}, \code{plot.visreg_li
 }
 \examples{
 fit <- lm(Ozone ~ Solar.R + Wind + Temp, data = airquality)
-visreg(fit, "Wind", line = list(color = "red"), points = list(size = 1, shape = 1))
+visreg(fit, "Wind")
 
 # Changing appearance
-visreg(fit, "Wind", line = list(color = "red"), points = list(size = 1, shape = 1))
+visreg(fit, "Wind", line = list(color = "red"), points = list(size = 2))
 
 }
 \references{

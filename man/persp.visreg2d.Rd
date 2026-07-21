@@ -23,11 +23,9 @@ persp3d.visreg_list(x, ...)
 \arguments{
 \item{x}{A \code{\link[=visreg2d]{visreg2d()}} object.}
 
-\item{xlab}{Axis label for x variable}
+\item{xlab, ylab}{Axis labels for predictors (default: variable name)}
 
-\item{ylab}{Axis label for y variable}
-
-\item{zlab}{Axis label for outcome}
+\item{zlab}{Axis label for outcome (default: variable name)}
 
 \item{color}{The color of the surface.}
 
@@ -49,13 +47,19 @@ For an interactive version that can be rotated with the mouse, see \code{rgl::pe
 }
 \examples{
 fit <- lm(
-  Ozone ~ Solar.R + Wind + Temp + I(Wind^2) + I(Temp^2) +
-    I(Wind * Temp) + I(Wind * Temp^2) + I(Temp * Wind^2) + I(Temp^2 * Wind^2),
+  Ozone ~ Solar.R + Wind + Temp +
+    I(Wind^2) + I(Temp^2) + I(Wind * Temp) +
+    I(Wind * Temp^2) + I(Temp * Wind^2) +
+    I(Temp^2 * Wind^2),
   data = airquality
 )
 
 v <- visreg2d(fit, x = "Wind", y = "Temp", plot = FALSE)
 persp(v)
+
+airquality$Heat <- cut(airquality$Temp, 3, labels = c("Cool", "Mild", "Hot"))
+fit2 <- lm(Ozone ~ Solar.R + Wind * Heat, data = airquality)
+visreg2d(fit2, "Heat", "Wind", plot = FALSE) |> persp(theta = 230)
 
 }
 \references{

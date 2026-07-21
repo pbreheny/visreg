@@ -1,88 +1,111 @@
-predict_arg_patches <- list(
-  lme = function(fit, args, predict) {
+# All model class-specific adaptations/patches go here:
+# - `args` to patch the arguments passed to predict()
+# - `call` if the results need to be reshaped
+predict_adapters <- list(
+  mlm = list(call = function(fit, args, se_fit) {
+    if (!se_fit) {
+      return(default_predict_call(fit, args, se_fit))
+    }
+    list(
+      fit = suppressWarnings(do.call("predict", args)),
+      se.fit = se_mlm(fit, newdata = args$newdata)
+    )
+  }),
+  randomForest = list(call = function(fit, args, se_fit) {
+    if (fit$type != "classification") {
+      return(default_predict_call(fit, args, se_fit))
+    }
+    args$type <- "prob"
+    p_mat <- suppressWarnings(do.call("predict", args))
+    if (se_fit) list(fit = p_mat[, 2], se.fit = NA) else p_mat[, 2]
+  }),
+  loess = list(call = function(fit, args, se_fit) {
+    if (se_fit) {
+      args$se <- TRUE
+    }
+    suppressWarnings(do.call("predict", args))
+  }),
+  rq = list(
+    args = function(fit, args, predict) {
+      args$interval <- "confidence"
+      args
+    },
+    call = function(fit, args, se_fit) {
+      p <- suppressWarnings(do.call("predict", args))
+      if (se_fit) p else p[, 1]
+    }
+  ),
+  svm = list(
+    args = function(fit, args, predict) {
+      args$probability <- TRUE
+      args
+    },
+    call = function(fit, args, se_fit) {
+      p <- default_predict_call(fit, args, se_fit)
+      if (fit$type < 3) attr(p, "probabilities") else p
+    }
+  ),
+  lme = list(args = function(fit, args, predict) {
     args$level <- 0
     args
-  },
-  merMod = function(fit, args, predict) {
+  }),
+  merMod = list(args = function(fit, args, predict) {
     if (!("re.form" %in% names(predict))) {
       args$re.form <- NA
     }
     args
-  },
-  rq = function(fit, args, predict) {
-    args$interval <- "confidence"
-    args
-  },
-  svm = function(fit, args, predict) {
-    args$probability <- TRUE
-    args
-  },
-  multinom = function(fit, args, predict) {
+  }),
+  multinom = list(args = function(fit, args, predict) {
     args$type <- "probs"
     args
-  },
-  polr = function(fit, args, predict) {
+  }),
+  polr = list(args = function(fit, args, predict) {
     args$type <- "probs"
     args
-  },
-  gbm = function(fit, args, predict) {
+  }),
+  gbm = list(args = function(fit, args, predict) {
     args$n.trees <- length(fit$trees)
     args
-  },
-  betareg = function(fit, args, predict) {
-    args$type <- c("link", "variance")
-    args
-  }
+  }),
+  betareg = list(
+    args = function(fit, args, predict) {
+      args$type <- c("link", "variance")
+      args
+    },
+    disable_se = TRUE
+  )
 )
 
-build_predict_args <- function(fit, dat, predict) {
-  predict_args <- list(object = fit, newdata = dat)
-  for (cls in names(predict_arg_patches)) {
-    if (inherits(fit, cls)) {
-      predict_args <- predict_arg_patches[[cls]](fit, predict_args, predict)
-    }
-  }
-  if (length(predict)) {
-    predict_args[names(predict)] <- predict
-  }
-  predict_args
-}
-
-do_predict <- function(fit, dat, se_fit, predict_args) {
+default_predict_call <- function(fit, args, se_fit) {
   if (se_fit) {
-    if (inherits(fit, "mlm")) {
-      p <- list(
-        fit = suppressWarnings(do.call("predict", predict_args)),
-        se.fit = se_mlm(fit, newdata = dat)
-      )
-    } else if (inherits(fit, "randomForest") && fit$type == "classification") {
-      predict_args$type <- "prob"
-      p_mat <- suppressWarnings(do.call("predict", predict_args))
-      p <- list(fit = p_mat[, 2], se.fit = NA)
-    } else if (inherits(fit, "loess")) {
-      predict_args$se <- TRUE
-      p <- suppressWarnings(do.call("predict", predict_args))
-    } else {
-      predict_args$se.fit <- TRUE
-      p <- suppressWarnings(do.call("predict", predict_args))
-    }
-  } else if (inherits(fit, "randomForest") && fit$type == "classification") {
-    p <- predict(fit, type = "prob")[, 2]
-  } else if (inherits(fit, "rq")) {
-    p <- suppressWarnings(do.call("predict", predict_args))[, 1]
-  } else {
-    p <- suppressWarnings(do.call("predict", predict_args))
+    args$se.fit <- TRUE
   }
-  if (inherits(fit, "svm") && fit$type < 3) {
-    p <- attr(p, "probabilities")
-  }
-  p
+  suppressWarnings(do.call("predict", args))
 }
 
 visreg_pred <- function(fit, dat, se_fit = FALSE, predict = list()) {
-  if (inherits(fit, "betareg")) {
+  adapters <- predict_adapters[vapply(
+    names(predict_adapters),
+    function(cls) inherits(fit, cls),
+    logical(1)
+  )]
+
+  # For models where passing se.fit produces an error
+  if (any(vapply(adapters, function(a) isTRUE(a$disable_se), logical(1)))) {
     se_fit <- FALSE
   }
-  predict_args <- build_predict_args(fit, dat, predict)
-  do_predict(fit, dat, se_fit, predict_args)
+
+  # Set up model-specific and user-passed arguments
+  args <- list(object = fit, newdata = dat)
+  for (adapter in adapters) {
+    if (!is.null(adapter$args)) args <- adapter$args(fit, args, predict)
+  }
+  if (length(predict)) {
+    args[names(predict)] <- predict
+  }
+
+  # If model needs a special call, use that, otherwise default
+  call_adapter <- Find(function(a) !is.null(a$call), adapters)
+  call_fn <- if (!is.null(call_adapter)) call_adapter$call else default_predict_call
+  call_fn(fit, args, se_fit)
 }

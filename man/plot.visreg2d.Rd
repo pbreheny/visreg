@@ -19,11 +19,9 @@
 \arguments{
 \item{x}{A \code{\link[=visreg2d]{visreg2d()}} object.}
 
-\item{xlab}{Axis label for x variable}
+\item{xlab, ylab}{Axis labels for predictors (default: variable name)}
 
-\item{ylab}{Axis label for y variable}
-
-\item{zlab}{Label for the color legend}
+\item{zlab}{Label for the color legend (default: outcome variable name)}
 
 \item{color}{A vector of colors used to establish the color palette for the fill/legend.}
 

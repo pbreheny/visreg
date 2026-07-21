@@ -7,9 +7,8 @@
 #' (interactive, requires the `rgl` package).
 #'
 #' @param x A [visreg2d()] object.
-#' @param xlab Axis label for x variable
-#' @param ylab Axis label for y variable
-#' @param zlab Label for the color legend
+#' @param xlab,ylab Axis labels for predictors (default: variable name)
+#' @param zlab Label for the color legend (default: outcome variable name)
 #' @param color A vector of colors used to establish the color palette for the fill/legend.
 #' @param print_cond If `print_cond==TRUE`, the explanatory variable values conditioned on in a
 #'   conditional plot are printed to the console (default: `FALSE`). If `print_cond==TRUE` and

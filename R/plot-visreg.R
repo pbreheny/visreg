@@ -57,10 +57,10 @@
 #'
 #' @examples
 #' fit <- lm(Ozone ~ Solar.R + Wind + Temp, data = airquality)
-#' visreg(fit, "Wind", line = list(color = "red"), points = list(size = 1, shape = 1))
+#' visreg(fit, "Wind")
 #'
 #' # Changing appearance
-#' visreg(fit, "Wind", line = list(color = "red"), points = list(size = 1, shape = 1))
+#' visreg(fit, "Wind", line = list(color = "red"), points = list(size = 2))
 #'
 #' @export
 plot.visreg <- function(
@@ -109,40 +109,15 @@ plot.visreg <- function(
     if (band) {
       band <- FALSE
       warning(
-        paste0(
-          "band = TRUE but no confidence interval available for this type of model."
-        ),
+        paste0("band = TRUE but no confidence interval available for this type of model."),
         call. = FALSE
       )
     }
   }
 
   if (is.factor(x$fit[, x$meta$x])) {
-    gg_factor_plot(
-      x,
-      partial,
-      band,
-      rug,
-      strip_names,
-      overlay,
-      top,
-      line,
-      fill,
-      points
-    )
+    gg_factor_plot(x, partial, band, rug, strip_names, overlay, top, line, fill, points)
   } else {
-    gg_cont_plot(
-      x,
-      partial,
-      band,
-      rug,
-      jitter,
-      strip_names,
-      overlay,
-      top,
-      line,
-      fill,
-      points
-    )
+    gg_cont_plot(x, partial, band, rug, jitter, strip_names, overlay, top, line, fill, points)
   }
 }
