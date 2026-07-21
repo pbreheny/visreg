@@ -39,12 +39,10 @@ fit <- lm(Ozone ~ Solar.R + Wind * Heat, data = airquality)
 v <- visreg(fit, "Wind", by = "Heat", plot = FALSE)
 
 # Plot only certain levels
-vv <- subset(v, Heat %in% c("Cool", "Hot"))
-plot(vv)
+subset(v, Heat %in% c("Cool", "Hot")) |> plot()
 
 
 # Plot only up to wind 15 mph
-vv <- subset(v, Wind < 15)
-plot(vv)
+subset(v, Wind < 15) |> plot()
 
 ```

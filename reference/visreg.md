@@ -181,7 +181,7 @@ confidence bands, etc.
 - <https://pbreheny.github.io/visreg/>
 
 - Breheny P and Burchett W. (2017) Visualization of regression models
-  using visreg. *R Journal*, **9**: 56-71.
+  using visreg. *R Journal*, 9: 56–71.
   [doi:10.32614/RJ-2017-046](https://doi.org/10.32614/RJ-2017-046)
 
 ## See also

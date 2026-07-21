@@ -165,10 +165,10 @@ vignette](https://pbreheny.github.io/visreg/surface.html) for examples.
 
 ``` r
 fit <- lm(Ozone ~ Solar.R + Wind + Temp, data = airquality)
-visreg(fit, "Wind", line = list(color = "red"), points = list(size = 1, shape = 1))
+visreg(fit, "Wind")
 
 
 # Changing appearance
-visreg(fit, "Wind", line = list(color = "red"), points = list(size = 1, shape = 1))
+visreg(fit, "Wind", line = list(color = "red"), points = list(size = 2))
 
 ```

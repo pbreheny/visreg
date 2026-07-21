@@ -34,17 +34,13 @@ persp3d.visreg_list(x, ...)
   [`visreg2d()`](https://pbreheny.github.io/visreg/reference/visreg2d.md)
   object.
 
-- xlab:
+- xlab, ylab:
 
-  Axis label for x variable
-
-- ylab:
-
-  Axis label for y variable
+  Axis labels for predictors (default: variable name)
 
 - zlab:
 
-  Axis label for outcome
+  Axis label for outcome (default: variable name)
 
 - color:
 
@@ -93,12 +89,19 @@ examples and details.
 
 ``` r
 fit <- lm(
-  Ozone ~ Solar.R + Wind + Temp + I(Wind^2) + I(Temp^2) +
-    I(Wind * Temp) + I(Wind * Temp^2) + I(Temp * Wind^2) + I(Temp^2 * Wind^2),
+  Ozone ~ Solar.R + Wind + Temp +
+    I(Wind^2) + I(Temp^2) + I(Wind * Temp) +
+    I(Wind * Temp^2) + I(Temp * Wind^2) +
+    I(Temp^2 * Wind^2),
   data = airquality
 )
 
 v <- visreg2d(fit, x = "Wind", y = "Temp", plot = FALSE)
 persp(v)
+
+
+airquality$Heat <- cut(airquality$Temp, 3, labels = c("Cool", "Mild", "Hot"))
+fit2 <- lm(Ozone ~ Solar.R + Wind * Heat, data = airquality)
+visreg2d(fit2, "Heat", "Wind", plot = FALSE) |> persp(theta = 230)
 
 ```

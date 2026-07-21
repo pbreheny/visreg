@@ -28,17 +28,13 @@ plot(
   [`visreg2d()`](https://pbreheny.github.io/visreg/reference/visreg2d.md)
   object.
 
-- xlab:
+- xlab, ylab:
 
-  Axis label for x variable
-
-- ylab:
-
-  Axis label for y variable
+  Axis labels for predictors (default: variable name)
 
 - zlab:
 
-  Label for the color legend
+  Label for the color legend (default: outcome variable name)
 
 - color:
 
