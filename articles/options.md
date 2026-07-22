@@ -29,48 +29,28 @@ visreg(fit, "Wind", partial = FALSE)
 
 ![](options_files/figure-html/unnamed-chunk-4-1.png)
 
-Note that by default, when you turn off partial residuals, visreg tries
-to display a rug so you can at least see where the observations are. You
-can turn this off too:
-
 ``` r
 
-visreg(fit, "Wind", partial = FALSE, rug = FALSE)
+visreg(fit, "Wind", partial = FALSE, rug = TRUE)
 ```
 
 ![](options_files/figure-html/unnamed-chunk-5-1.png)
 
-Finally, there is an option for displaying separate rugs for positive
-and negative residuals on the top and bottom axes, respectively, with
-`rug=2` (this is particularly useful for [logistic
-regression](https://pbreheny.github.io/visreg/articles/glm.md)):
+## Jittering
+
+If there are many ties in a numeric variable `x`, jittering can be
+helpful way to avoid overplotting. Compare the following two plots:
 
 ``` r
 
-visreg(fit, "Wind", rug = 2, partial = FALSE)
+month_fit <- lm(Ozone ~ Solar.R + Wind + poly(Month, 2), data = airquality)
+visreg(month_fit, "Month")
+visreg(month_fit, "Month", jitter = TRUE)
 ```
 
 ![](options_files/figure-html/unnamed-chunk-6-1.png)
 
-## Jittering
-
-If there are many ties in a numeric variable `x`, jittering can be
-helpful way to avoid overplotting:
-
-``` r
-
-fit <- lm(Ozone ~ Solar.R + Wind + poly(Month, 2), data = airquality)
-visreg(fit, "Month")
-```
-
-![](options_files/figure-html/unnamed-chunk-7-1.png)
-
-``` r
-
-visreg(fit, "Month", jitter = TRUE)
-```
-
-![](options_files/figure-html/unnamed-chunk-8-1.png)
+![](options_files/figure-html/unnamed-chunk-6-2.png)
 
 ## Appearance of points, lines, and bands
 
@@ -89,14 +69,16 @@ parameter that geom accepts can be specified:
 
 ``` r
 
-visreg(fit, "Wind",
+visreg(
+  fit,
+  "Wind",
   line = list(color = "red"),
   fill = list(fill = "green"),
-  points = list(size = 1.5, shape = 1)
+  points = list(size = 2, shape = 1)
 )
 ```
 
-![](options_files/figure-html/unnamed-chunk-9-1.png)
+![](options_files/figure-html/unnamed-chunk-7-1.png)
 
 ## Generic plot options
 
@@ -109,12 +91,11 @@ example that adds a title and re-labels the (log-transformed) y-axis:
 fit <- lm(log(Ozone) ~ Solar.R + Wind + Temp, data = airquality)
 at <- seq(1.5, 5, 0.5)
 visreg(fit, "Wind") +
-  ylab("Ozone") +
-  ggtitle("Ozone is bad for you") +
+  labs(title = "Ozone is bad for you", y = "Ozone") +
   scale_y_continuous(breaks = at, labels = round(exp(at), 1))
 ```
 
-![](options_files/figure-html/unnamed-chunk-10-1.png)
+![](options_files/figure-html/unnamed-chunk-8-1.png)
 
 ## Band width for factors
 
@@ -126,16 +107,12 @@ accompanying line) is controlled through the `fill`/`line` arguments’
 
 fit <- lm(Ozone ~ Solar.R + Wind + Heat, data = airquality)
 visreg(fit, "Heat", line = list(width = 0.98), fill = list(width = 0.98))
-```
-
-![](options_files/figure-html/unnamed-chunk-11-1.png)
-
-``` r
-
 visreg(fit, "Heat", line = list(width = 0.1), fill = list(width = 0.1))
 ```
 
-![](options_files/figure-html/unnamed-chunk-12-1.png)
+![](options_files/figure-html/unnamed-chunk-9-1.png)
+
+![](options_files/figure-html/unnamed-chunk-9-2.png)
 
 ## Subsetting the plot
 
@@ -149,7 +126,7 @@ v1 <- subset(v, Heat %in% c("Cool", "Hot"))
 plot(v1)
 ```
 
-![](options_files/figure-html/unnamed-chunk-13-1.png)
+![](options_files/figure-html/unnamed-chunk-10-1.png)
 
 ``` r
 
@@ -157,4 +134,4 @@ v2 <- subset(v, Wind < 15)
 plot(v2)
 ```
 
-![](options_files/figure-html/unnamed-chunk-14-1.png)
+![](options_files/figure-html/unnamed-chunk-11-1.png)

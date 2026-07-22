@@ -26,7 +26,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">visreg</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.99.0.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.99.0.2</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -135,7 +135,7 @@
 </section><section class="section level2"><h2 id="conditioning-on-the-estimated-random-effects">Conditioning on the estimated random effects<a class="anchor" aria-label="anchor" href="#conditioning-on-the-estimated-random-effects"></a>
 </h2>
 <p>Passing <code>predict = list(re.form = NULL)</code> tells <code>lme4</code> to condition on the estimated (BLUP) random effects for a specific cow. Combined with <code>by</code>, this lets you plot cow-specific curves — the estimated relationship between protein and time, separately for each cow. For the sake of space, we subset the plot to 8 cows rather than all 79; this can be done by returning, then subsetting, the raw <code>visreg</code> object prior to plotting.</p>
-<div class="cell" data-h="3" data-w="9">
+<div class="cell">
 <div class="sourceCode cell-code" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">sub_cow</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/levels.html" class="external-link">levels</a></span><span class="op">(</span><span class="va">Milk</span><span class="op">$</span><span class="va">Cow</span><span class="op">)</span>, <span class="fl">8</span><span class="op">)</span></span>
 <span><span class="fu"><a href="../reference/visreg.html">visreg</a></span><span class="op">(</span><span class="va">fit</span>, <span class="st">"Time"</span>, by <span class="op">=</span> <span class="st">"Cow"</span>, predict <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>re.form <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span>, plot <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op">|&gt;</span></span>
@@ -164,15 +164,23 @@
 <span><span class="va">severity</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span><span class="op">(</span><span class="va">n</span><span class="op">)</span></span>
 <span><span class="va">b_clinic</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="va">n_clinic</span>, sd <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span></span>
 <span><span class="va">b_patient</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="va">n_patient</span>, sd <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
-<span><span class="va">outcome</span> <span class="op">&lt;-</span> <span class="fl">2</span> <span class="op">+</span> <span class="fl">1.5</span> <span class="op">*</span> <span class="va">severity</span> <span class="op">+</span> <span class="va">b_clinic</span><span class="op">[</span><span class="va">clinic</span><span class="op">]</span> <span class="op">+</span> <span class="va">b_patient</span><span class="op">[</span><span class="va">patient</span><span class="op">]</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="va">n</span>, sd <span class="op">=</span> <span class="fl">0.3</span><span class="op">)</span></span>
+<span><span class="va">outcome</span> <span class="op">&lt;-</span> <span class="fl">2</span> <span class="op">+</span></span>
+<span>  <span class="fl">1.5</span> <span class="op">*</span> <span class="va">severity</span> <span class="op">+</span></span>
+<span>  <span class="va">b_clinic</span><span class="op">[</span><span class="va">clinic</span><span class="op">]</span> <span class="op">+</span></span>
+<span>  <span class="va">b_patient</span><span class="op">[</span><span class="va">patient</span><span class="op">]</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="va">n</span>, sd <span class="op">=</span> <span class="fl">0.3</span><span class="op">)</span></span>
 <span><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span><span class="va">outcome</span>, <span class="va">severity</span>, <span class="va">clinic</span>, <span class="va">patient</span><span class="op">)</span></span>
 <span><span class="va">fit2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lme4/man/lmer.html" class="external-link">lmer</a></span><span class="op">(</span><span class="va">outcome</span> <span class="op">~</span> <span class="va">severity</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span> <span class="op">|</span> <span class="va">patient</span><span class="op">)</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span> <span class="op">|</span> <span class="va">clinic</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">dat</span><span class="op">)</span></span></code></pre></div>
 </div>
 <p>Conditioning on clinic random effects while marginalizing over patient random effects:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/visreg.html">visreg</a></span><span class="op">(</span><span class="va">fit2</span>, <span class="st">"severity"</span>, predict <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>re.form <span class="op">=</span> <span class="op">~</span> <span class="op">(</span><span class="fl">1</span> <span class="op">|</span> <span class="va">clinic</span><span class="op">)</span><span class="op">)</span>,</span>
-<span>       cond <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>clinic <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/levels.html" class="external-link">levels</a></span><span class="op">(</span><span class="va">clinic</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/visreg.html">visreg</a></span><span class="op">(</span></span>
+<span>  <span class="va">fit2</span>,</span>
+<span>  <span class="st">"severity"</span>,</span>
+<span>  predict <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>re.form <span class="op">=</span> <span class="op">~</span> <span class="op">(</span><span class="fl">1</span> <span class="op">|</span> <span class="va">clinic</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>  cond <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>clinic <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/levels.html" class="external-link">levels</a></span><span class="op">(</span><span class="va">clinic</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span></span>
+<span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">ylab</a></span><span class="op">(</span><span class="st">"Outcome"</span><span class="op">)</span></span></code></pre></div>
 <div class="cell-output-display">
 <div>
@@ -274,7 +282,7 @@
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Last updated: July 21, 2026</p>
+  <p>Last updated: July 22, 2026</p>
 </div>
 
     </footer>

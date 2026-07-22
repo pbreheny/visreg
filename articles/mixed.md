@@ -95,7 +95,11 @@ patient <- factor(sample(1:n_patient, n, replace = TRUE))
 severity <- runif(n)
 b_clinic <- rnorm(n_clinic, sd = 0.5)
 b_patient <- rnorm(n_patient, sd = 1)
-outcome <- 2 + 1.5 * severity + b_clinic[clinic] + b_patient[patient] + rnorm(n, sd = 0.3)
+outcome <- 2 +
+  1.5 * severity +
+  b_clinic[clinic] +
+  b_patient[patient] +
+  rnorm(n, sd = 0.3)
 dat <- data.frame(outcome, severity, clinic, patient)
 fit2 <- lmer(outcome ~ severity + (1 | patient) + (1 | clinic), data = dat)
 ```
@@ -105,8 +109,12 @@ random effects:
 
 ``` r
 
-visreg(fit2, "severity", predict = list(re.form = ~ (1 | clinic)),
-       cond = list(clinic = levels(clinic)[1])) +
+visreg(
+  fit2,
+  "severity",
+  predict = list(re.form = ~ (1 | clinic)),
+  cond = list(clinic = levels(clinic)[1])
+) +
   ylab("Outcome")
 ```
 

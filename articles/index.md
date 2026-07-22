@@ -24,6 +24,13 @@ library(mgcv)
 
     Loading required package: nlme
 
+
+    Attaching package: 'nlme'
+
+    The following object is masked from 'package:visreg':
+
+        collapse
+
     This is mgcv 1.9-4. For overview type '?mgcv'.
 
 ``` r

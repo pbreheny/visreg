@@ -26,7 +26,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">visreg</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.99.0.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.99.0.2</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -163,7 +163,12 @@
 <p>Note that the default settings for <code>gbm</code> do not produce a very good fit here. In particular, the default number of trees (100) is too low to capture the relationship between temperature and ozone. By increasing the number of trees, we obtain a much more reasonable fit:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">fit</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://gbm-developers.github.io/gbm/reference/gbm.html" class="external-link">gbm</a></span><span class="op">(</span><span class="va">Ozone</span> <span class="op">~</span> <span class="va">Solar.R</span> <span class="op">+</span> <span class="va">Wind</span> <span class="op">+</span> <span class="va">Temp</span>, data <span class="op">=</span> <span class="va">aq</span>, distribution <span class="op">=</span> <span class="st">"gaussian"</span>, n.trees <span class="op">=</span> <span class="fl">5000</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="va">fit</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://gbm-developers.github.io/gbm/reference/gbm.html" class="external-link">gbm</a></span><span class="op">(</span></span>
+<span>  <span class="va">Ozone</span> <span class="op">~</span> <span class="va">Solar.R</span> <span class="op">+</span> <span class="va">Wind</span> <span class="op">+</span> <span class="va">Temp</span>,</span>
+<span>  data <span class="op">=</span> <span class="va">aq</span>,</span>
+<span>  distribution <span class="op">=</span> <span class="st">"gaussian"</span>,</span>
+<span>  n.trees <span class="op">=</span> <span class="fl">5000</span></span>
+<span><span class="op">)</span></span>
 <span><span class="fu"><a href="../reference/visreg.html">visreg</a></span><span class="op">(</span><span class="va">fit</span>, <span class="st">"Temp"</span>, band <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">ylab</a></span><span class="op">(</span><span class="st">"Ozone"</span><span class="op">)</span></span></code></pre></div>
 <div class="cell-output-display">
 <div>
@@ -265,7 +270,7 @@
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Last updated: July 21, 2026</p>
+  <p>Last updated: July 22, 2026</p>
 </div>
 
     </footer>

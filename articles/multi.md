@@ -22,13 +22,17 @@ example:
 
 ``` r
 
-visreg(fit, "Ozone", collapse = TRUE, overlay = TRUE, partial = FALSE) +
+visreg(
+  fit,
+  "Ozone",
+  collapse = TRUE,
+  overlay = TRUE,
+  partial = FALSE,
+  band = FALSE
+) +
   coord_cartesian(ylim = 0:1) +
   ylab("Probability")
 ```
-
-    Warning: band = TRUE but no confidence interval available for this type of
-    model.
 
 ![](multi_files/figure-html/unnamed-chunk-3-1.png)
 
@@ -41,11 +45,10 @@ here:
 
 library(quantreg)
 fit <- rq(Ozone ~ Wind + Temp, tau = c(0.25, 0.5, 0.75), data = airquality)
-v <- visreg(fit, "Wind", overlay = TRUE, collapse = TRUE)
+visreg(fit, "Wind", overlay = TRUE, collapse = TRUE, band = FALSE)
 ```
 
-    Warning: band = TRUE but no confidence interval available for this type of
-    model.
+![](multi_files/figure-html/unnamed-chunk-4-1.png)
 
 NOTE: `quantreg` does not return standand errors if you specify multiple
 quantiles of interest. To obtain them, you must construct the
@@ -56,12 +59,14 @@ quantiles of interest. To obtain them, you must construct the
 fit1 <- rq(Ozone ~ Wind + Temp, tau = 0.25, data = airquality)
 fit2 <- rq(Ozone ~ Wind + Temp, tau = 0.5, data = airquality)
 fit3 <- rq(Ozone ~ Wind + Temp, tau = 0.75, data = airquality)
-v <- visreg_list(visreg(fit1, "Wind", plot = FALSE),
+v <- visreg_list(
+  visreg(fit1, "Wind", plot = FALSE),
   visreg(fit2, "Wind", plot = FALSE),
   visreg(fit3, "Wind", plot = FALSE),
-  labels = c("25%", "50%", "75%"), collapse = TRUE
+  labels = c("25%", "50%", "75%"),
+  collapse = TRUE
 )
-plot(v) + ylab("Ozone")
+plot(v, overlay = TRUE) + ylab("Ozone")
 ```
 
 ![](multi_files/figure-html/unnamed-chunk-5-1.png)

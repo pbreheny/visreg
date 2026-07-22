@@ -7,7 +7,9 @@ model:
 
 data("birthwt", package = "MASS")
 fit <- glm(low ~ age + race + smoke + lwt, data = birthwt, family = "binomial")
-visreg(fit, "lwt") + xlab("Mother's weight") + ylab("Log odds (low birthweight)")
+visreg(fit, "lwt") +
+  xlab("Mother's weight") +
+  ylab("Log odds (low birthweight)")
 ```
 
 ![](glm_files/figure-html/unnamed-chunk-2-1.png)
@@ -30,19 +32,20 @@ although for GLMs the shortcut `scale="response"` is provided:
 
 ``` r
 
-visreg(fit, "lwt", scale = "response") + xlab("Mother's weight") + ylab("P(low birthweight)")
+visreg(fit, "lwt", scale = "response") +
+  xlab("Mother's weight") +
+  ylab("P(low birthweight)")
 ```
 
 ![](glm_files/figure-html/unnamed-chunk-3-1.png)
 
 ## Partial residuals
 
-Note that by default, `visreg` switches to a rug display rather than
-show residuals when a transformation has been applied to the vertical
-axis. The reason for this is that residuals are useful to examine on the
-linear predictor scale, but can be misleading when transformed – a
-moderate residual can appear huge after a transformation, and vice
-versa.
+By default, `visreg` turns off partial residuals when a transformation
+has been applied to the vertical axis. The reason for this is that
+residuals are useful to examine on the linear predictor scale, but can
+be misleading when transformed — a moderate residual can appear huge
+after a transformation, and vice versa.
 
 To illustrate, suppose we generate some data from a Poisson distribution
 using a log link:
@@ -94,3 +97,18 @@ It is worth mentioning that `visreg` uses deviance residuals for GLMs
 and Cox proportional hazards models; these are the most symmetric
 residuals, and thus, most useful for visually assessing problems with
 fit.
+
+Another option, if you want to show the location of the observations,
+but not display them in this potentially misleading way, is to use a
+rug, either a single rug along the bottom (`rug = 1`) or separate rugs
+for positive and negative residuals (`rug = 2`):
+
+``` r
+
+visreg(fit, "x", scale = "response", rug = 1)
+visreg(fit, "x", scale = "response", rug = 2)
+```
+
+![](glm_files/figure-html/unnamed-chunk-8-1.png)
+
+![](glm_files/figure-html/unnamed-chunk-8-2.png)

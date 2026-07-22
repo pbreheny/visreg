@@ -77,7 +77,12 @@ the number of trees, we obtain a much more reasonable fit:
 
 ``` r
 
-fit <- gbm(Ozone ~ Solar.R + Wind + Temp, data = aq, distribution = "gaussian", n.trees = 5000)
+fit <- gbm(
+  Ozone ~ Solar.R + Wind + Temp,
+  data = aq,
+  distribution = "gaussian",
+  n.trees = 5000
+)
 visreg(fit, "Temp", band = FALSE) + ylab("Ozone")
 ```
 

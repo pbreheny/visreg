@@ -6,7 +6,10 @@ continuous variables:
 ``` r
 
 library(splines)
-fit <- lm(Ozone ~ Solar.R + ns(Wind, df = 2) * ns(Temp, df = 2), data = airquality)
+fit <- lm(
+  Ozone ~ Solar.R + ns(Wind, df = 2) * ns(Temp, df = 2),
+  data = airquality
+)
 ```
 
 We might wish to visualize how ozone depends on wind and temperature as
@@ -59,3 +62,6 @@ For this, you will need to install the `rgl` package first.
 
 visreg2d(fit, "Wind", "Temp", plot = FALSE) |> rgl::persp3d()
 ```
+
+You can interact with the above figure (click and drag to turn the
+surface about).

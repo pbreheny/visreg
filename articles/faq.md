@@ -11,10 +11,24 @@ renders its surface with `ggplot2`, so you can just add a layer:
 
 ``` r
 
-fit <- lm(Ozone ~ Solar.R + Wind + Temp + I(Wind^2) + I(Temp^2) + I(Wind * Temp) + I(Wind * Temp^2) +
-  I(Temp * Wind^2) + I(Temp^2 * Wind^2), data = airquality)
+fit <- lm(
+  Ozone ~ Solar.R +
+    Wind +
+    Temp +
+    I(Wind^2) +
+    I(Temp^2) +
+    I(Wind * Temp) +
+    I(Wind * Temp^2) +
+    I(Temp * Wind^2) +
+    I(Temp^2 * Wind^2),
+  data = airquality
+)
 visreg2d(fit, x = "Wind", y = "Temp") +
-  geom_point(aes(Wind, Temp), data = subset(airquality, !is.na(Ozone)), col = "gray50")
+  geom_point(
+    aes(Wind, Temp),
+    data = subset(airquality, !is.na(Ozone)),
+    col = "gray50"
+  )
 ```
 
 ![](faq_files/figure-html/unnamed-chunk-2-1.png)
@@ -33,10 +47,10 @@ library(tibble)
 n <- 20
 dat <- tibble(
   ID = factor(rep(LETTERS[1:n], each = 5)),
-  x  = rnorm(n * 5),
+  x = rnorm(n * 5),
   lp = rnorm(n)[as.numeric(ID)] + x^2 - 1,
-  p  = binomial()$linkinv(lp),
-  y  = rbinom(n * 5, 1, p)
+  p = binomial()$linkinv(lp),
+  y = rbinom(n * 5, 1, p)
 )
 fit <- gamm(y ~ s(x), data = dat, dist = "binomial", random = list(ID = ~1))
 ```

@@ -79,29 +79,7 @@ visreg(fit, "Heat", by = "Wind", breaks = c(seq(5, 15, 5)))
 
 ![](cross_files/figure-html/unnamed-chunk-6-1.png)
 
-## Graphical options
-
-Plots are built with `ggplot2`, and the returned object has class `gg`,
-so its appearance can be changed via the usual `ggplot2` components,
-such as themes:
-
-``` r
-
-visreg(fit, "Wind", by = "Heat")
-```
-
-![](cross_files/figure-html/unnamed-chunk-7-1.png)
-
-The appearance of points, lines, and bands is set with the `line`,
-`fill`, and `points` arguments, [as described
-here](https://pbreheny.github.io/visreg/articles/options.md):
-
-``` r
-
-visreg(fit, "Wind", by = "Heat", fill = list(fill = "#008DFF33"))
-```
-
-![](cross_files/figure-html/unnamed-chunk-8-1.png)
+## Strip names
 
 `visreg` sets up the facet strips internally via the `strip_names`
 option:
@@ -111,16 +89,21 @@ option:
 visreg(fit, "Wind", by = "Heat", strip_names = TRUE)
 ```
 
-![](cross_files/figure-html/unnamed-chunk-9-1.png)
+![](cross_files/figure-html/unnamed-chunk-7-1.png)
 
 You can also explicitly specify the labels for each strip:
 
 ``` r
 
-visreg(fit, "Wind", by = "Heat", strip_names = c("Cold days", "Mild days", "Hot days"))
+visreg(
+  fit,
+  "Wind",
+  by = "Heat",
+  strip_names = c("Cold days", "Mild days", "Hot days")
+)
 ```
 
-![](cross_files/figure-html/unnamed-chunk-10-1.png)
+![](cross_files/figure-html/unnamed-chunk-8-1.png)
 
 Other aspects of faceting, such as the number of rows/columns, can be
 changed by adding a new
@@ -131,7 +114,7 @@ to the returned plot:
 
 ``` r
 
-visreg(fit, "Heat", by = "Wind", breaks = 4) + facet_wrap(~Wind, nrow = 1)
+visreg(fit, "Heat", by = "Wind", breaks = 4) + facet_wrap(~Wind, nrow = 2)
 ```
 
-![](cross_files/figure-html/unnamed-chunk-11-1.png)
+![](cross_files/figure-html/unnamed-chunk-9-1.png)
