@@ -7,7 +7,7 @@ title: Generalized linear models
 library(visreg)
 library(ggplot2)
 theme_set(theme_minimal())
-knitr::opts_knit$set(aliases = c(h = "fig.height", w = "fig.width"))
+knitr::opts_chunk$set(fig.asp = 1 / 1.618)
 ```
 
 Generally speaking, visreg works the same way for GLMs as with any other model:
@@ -15,7 +15,9 @@ Generally speaking, visreg works the same way for GLMs as with any other model:
 ```{r}
 data("birthwt", package = "MASS")
 fit <- glm(low ~ age + race + smoke + lwt, data = birthwt, family = "binomial")
-visreg(fit, "lwt") + xlab("Mother's weight") + ylab("Log odds (low birthweight)")
+visreg(fit, "lwt") +
+  xlab("Mother's weight") +
+  ylab("Log odds (low birthweight)")
 ```
 
 # Scale
@@ -25,12 +27,14 @@ The unique aspect of GLMs is the link function joining the linear predictors to 
 For communicating modeling results, however, it is often useful to transform the above outcome to the probability scale.  This can be done by manually specifying `trans` as described in [transformations](trans.html), although for GLMs the shortcut `scale="response"` is provided:
 
 ```{r}
-visreg(fit, "lwt", scale = "response") + xlab("Mother's weight") + ylab("P(low birthweight)")
+visreg(fit, "lwt", scale = "response") +
+  xlab("Mother's weight") +
+  ylab("P(low birthweight)")
 ```
 
 # Partial residuals
 
-Note that by default, `visreg` switches to a rug display rather than show residuals when a transformation has been applied to the vertical axis.  The reason for this is that residuals are useful to examine on the linear predictor scale, but can be misleading when transformed -- a moderate residual can appear huge after a transformation, and vice versa.
+By default, `visreg` turns off partial residuals when a transformation has been applied to the vertical axis. The reason for this is that residuals are useful to examine on the linear predictor scale, but can be misleading when transformed --- a moderate residual can appear huge after a transformation, and vice versa.
 
 To illustrate, suppose we generate some data from a Poisson distribution using a log link:
 
@@ -55,10 +59,9 @@ fit <- glm(y ~ x, family = poisson)
 and visualize with `visreg`:
 
 ```{r}
-#| h: 3
-#| w: 3
-#| layout-ncol: 3
 #| out.width: 100%
+#| layout-ncol: 3
+#| fig-width: 3
 visreg(fit, "x")
 visreg(fit, "x", scale = "response")
 visreg(fit, "x", scale = "response", partial = TRUE)
@@ -67,3 +70,13 @@ visreg(fit, "x", scale = "response", partial = TRUE)
 The default `visreg` plot (left) clearly illustrates that 49 of the observations fit the model well, but the 50th is a big outlier.  By transforming to the response scale, we can see the exponential relationship between `x` and `y`.  The third plot, however, is misleading -- not only does it indicate that there are several large positive outliers, but it obscures the one actual outlier.
 
 It is worth mentioning that `visreg` uses deviance residuals for GLMs and Cox proportional hazards models; these are the most symmetric residuals, and thus, most useful for visually assessing problems with fit.
+
+Another option, if you want to show the location of the observations, but not display them in this potentially misleading way, is to use a rug, either a single rug along the bottom (`rug = 1`) or separate rugs for positive and negative residuals (`rug = 2`):
+
+```{r}
+#| out.width: 100%
+#| layout-ncol: 2
+#| fig-width: 4
+visreg(fit, "x", scale = "response", rug = 1)
+visreg(fit, "x", scale = "response", rug = 2)
+```

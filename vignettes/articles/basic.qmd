@@ -7,8 +7,7 @@ title: Getting started
 library(visreg)
 library(ggplot2)
 theme_set(theme_minimal())
-knitr::opts_knit$set(aliases = c(h = "fig.height", w = "fig.width"))
-knitr::opts_chunk$set(comment = "#", collapse = TRUE, cache = FALSE, tidy = FALSE)
+knitr::opts_chunk$set(comment = "#", collapse = TRUE, cache = FALSE, tidy = FALSE, fig.asp = 1 / 1.618)
 ```
 
 Let's begin with a simple, additive, linear model:

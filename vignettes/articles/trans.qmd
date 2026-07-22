@@ -7,7 +7,7 @@ title: Transformations
 library(visreg)
 library(ggplot2)
 theme_set(theme_minimal())
-knitr::opts_knit$set(aliases = c(h = "fig.height", w = "fig.width"))
+knitr::opts_chunk$set(fig.asp = 1 / 1.618)
 ```
 
 [Getting started](basic.html) described how `visreg` provides a visual summary of a model, somewhat akin to the numerical summary you get from `summary(fit)`.  For nonlinear terms, however, it is usually difficult to interpret numerical summaries, and visual representations become far more important.

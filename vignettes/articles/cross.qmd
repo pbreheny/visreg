@@ -7,7 +7,7 @@ title: Cross-sectional plots
 library(visreg)
 library(ggplot2)
 theme_set(theme_minimal())
-knitr::opts_knit$set(aliases = c(h = "fig.height", w = "fig.width"))
+knitr::opts_chunk$set(fig.asp = 1 / 1.618)
 ```
 
 As was the case with [nonlinear terms](trans.html), the relationship between `x` and `y` in a model with interactions also (typically) depends on multiple coefficients and thus, a visual summary tends to be much more readily understood than a numeric one.
@@ -25,6 +25,7 @@ We can then use `visreg` to see how the effect of wind on ozone differs dependin
 
 ```{r}
 #| out.width: 100%
+#| fig-asp: 0.34
 visreg(fit, "Wind", by = "Heat")
 ```
 
@@ -32,6 +33,7 @@ Or alternatively, see how the effect of temperature depends on the wind level:
 
 ```{r}
 #| out.width: 100%
+#| fig-asp: 0.34
 visreg(fit, "Heat", by = "Wind")
 ```
 
@@ -44,9 +46,8 @@ In all of these plots, note that each partial residuals appears exactly once in 
 For a numeric `by` variable, the `breaks` argument controls the values at which the cross-sections are taken. By default, cross-sections are taken at three quantiles (10th, 50th, and 90th), but a larger number can be specified:
 
 ```{r}
-#| h: 3.5
-#| w: 12
 #| out.width: 100%
+#| fig-asp: 0.25
 visreg(fit, "Heat", by = "Wind", breaks = 4)
 ```
 
@@ -54,29 +55,17 @@ If `breaks` is a vector of numbers, it specifies the values at which the cross-s
 
 ```{r}
 #| out.width: 100%
+#| fig-asp: 0.34
 visreg(fit, "Heat", by = "Wind", breaks = c(seq(5, 15, 5)))
 ```
 
-# Graphical options
-
-Plots are built with `ggplot2`, and the returned object has class `gg`, so its appearance can be changed via the usual `ggplot2` components, such as themes:
-
-```{r}
-#| out.width: 100%
-visreg(fit, "Wind", by = "Heat")
-```
-
-The appearance of points, lines, and bands is set with the `line`, `fill`, and `points` arguments, [as described here](options.html):
-
-```{r}
-#| out.width: 100%
-visreg(fit, "Wind", by = "Heat", fill = list(fill = "#008DFF33"))
-```
+# Strip names
 
 `visreg` sets up the facet strips internally via the `strip_names` option:
 
 ```{r}
 #| out.width: 100%
+#| fig-asp: 0.34
 visreg(fit, "Wind", by = "Heat", strip_names = TRUE)
 ```
 
@@ -84,14 +73,19 @@ You can also explicitly specify the labels for each strip:
 
 ```{r}
 #| out.width: 100%
-visreg(fit, "Wind", by = "Heat", strip_names = c("Cold days", "Mild days", "Hot days"))
+#| fig-asp: 0.34
+visreg(
+  fit,
+  "Wind",
+  by = "Heat",
+  strip_names = c("Cold days", "Mild days", "Hot days")
+)
 ```
 
 Other aspects of faceting, such as the number of rows/columns, can be changed by adding a new `facet_wrap()` (or `facet_grid()`) to the returned plot:
 
 ```{r}
-#| h: 3.5
-#| w: 12
 #| out.width: 100%
-visreg(fit, "Heat", by = "Wind", breaks = 4) + facet_wrap(~Wind, nrow = 1)
+#| fig-asp: 0.5
+visreg(fit, "Heat", by = "Wind", breaks = 4) + facet_wrap(~Wind, nrow = 2)
 ```

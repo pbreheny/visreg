@@ -7,7 +7,7 @@ title: Mixed models
 library(visreg)
 library(ggplot2)
 theme_set(theme_minimal())
-knitr::opts_knit$set(aliases = c(h = "fig.height", w = "fig.width"))
+knitr::opts_chunk$set(fig.asp = 1 / 1.618)
 ```
 
 `visreg` can be used to visualize mixed models, although whether you get confidence intervals or not depends on the package you're using. I can't provide a comprehensive listing of all mixed model packages, but:
@@ -48,9 +48,9 @@ separately for each cow. For the sake of space, we subset the plot to 8 cows rat
 this can be done by returning, then subsetting, the raw `visreg` object prior to plotting.
 
 ```{r}
-#| h: 3
-#| w: 9
 #| out.width: 100%
+#| fig-width: 9
+#| fig-asp: 0.2
 sub_cow <- sample(levels(Milk$Cow), 8)
 visreg(fit, "Time", by = "Cow", predict = list(re.form = NULL), plot = FALSE) |>
   subset(Cow %in% sub_cow) |>
@@ -80,7 +80,11 @@ patient <- factor(sample(1:n_patient, n, replace = TRUE))
 severity <- runif(n)
 b_clinic <- rnorm(n_clinic, sd = 0.5)
 b_patient <- rnorm(n_patient, sd = 1)
-outcome <- 2 + 1.5 * severity + b_clinic[clinic] + b_patient[patient] + rnorm(n, sd = 0.3)
+outcome <- 2 +
+  1.5 * severity +
+  b_clinic[clinic] +
+  b_patient[patient] +
+  rnorm(n, sd = 0.3)
 dat <- data.frame(outcome, severity, clinic, patient)
 fit2 <- lmer(outcome ~ severity + (1 | patient) + (1 | clinic), data = dat)
 ```
@@ -88,8 +92,12 @@ fit2 <- lmer(outcome ~ severity + (1 | patient) + (1 | clinic), data = dat)
 Conditioning on clinic random effects while marginalizing over patient random effects:
 
 ```{r}
-visreg(fit2, "severity", predict = list(re.form = ~ (1 | clinic)),
-       cond = list(clinic = levels(clinic)[1])) +
+visreg(
+  fit2,
+  "severity",
+  predict = list(re.form = ~ (1 | clinic)),
+  cond = list(clinic = levels(clinic)[1])
+) +
   ylab("Outcome")
 ```
 

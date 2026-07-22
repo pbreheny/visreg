@@ -7,7 +7,7 @@ title: Contrast vs. conditional plots
 library(visreg)
 library(ggplot2)
 theme_set(theme_minimal())
-knitr::opts_knit$set(aliases = c(h = "fig.height", w = "fig.width"))
+knitr::opts_chunk$set(fig.asp = 1 / 1.618)
 ```
 
 {{< include _commands.tex >}}
@@ -21,8 +21,7 @@ To summarize, the primary advantage of a contrast plot is that we don't have to 
 To see how contrast plots compare to conditional plots, let's fit the same model as in [getting started](basic.html), but display contrast plots and conditional plots side-by-side:
 
 ```{r}
-#| h: 4
-#| w: 4
+#| fig-width: 4
 #| out.width: 100%
 #| layout-ncol: 2
 airquality$Heat <- cut(airquality$Temp, 3, labels = c("Cool", "Mild", "Hot"))

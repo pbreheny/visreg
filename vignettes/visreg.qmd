@@ -14,7 +14,7 @@ vignette: >
 library(visreg)
 library(ggplot2)
 theme_set(theme_minimal())
-knitr::opts_knit$set(aliases = c(h = "fig.height", w = "fig.width"))
+knitr::opts_chunk$set(fig.asp = 1 / 1.618)
 ```
 
 This guide is intended to briefly demonstrate the basic usage of `visreg`.
@@ -51,8 +51,8 @@ fit <- lm(Ozone ~ Solar.R + Wind * Heat, data = airquality)
 Visreg can plot cross-sections of this fit, either in separate panels:
 
 ```{r}
-#| h: 4
-#| w: 9
+#| fig-width: 9
+#| fig-asp: 0.444444
 #| out.width: 100%
 visreg(fit, "Wind", by = "Heat")
 ```

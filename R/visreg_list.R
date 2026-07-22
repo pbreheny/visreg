@@ -32,7 +32,7 @@
 visreg_list <- function(..., labels, collapse = FALSE) {
   out <- structure(list(...), class = "visreg_list")
   if (collapse) {
-    out <- collapse_visreg_list(out, labels = labels)
+    out <- collapse(out, labels = labels)
   }
   out
 }

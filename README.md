@@ -45,8 +45,8 @@ and then you pass it to `visreg`:
 visreg(fit, "Wind")
 ```
 
-<p align="center">
-<img alt="img" src="https://pbreheny.github.io/visreg/articles/basic_files/figure-html/unnamed-chunk-3-1.png" style="width: 50%;">
+<p align="center" class="cell-output-display">
+<img alt="img" src="https://pbreheny.github.io/visreg/articles/basic_files/figure-html/unnamed-chunk-3-1.png" width="672">
 </p>
 
 A more complex example, which uses the `gam()` function from **mgcv**:
@@ -57,8 +57,8 @@ fit <- gam(Ozone ~ s(Wind, by=Heat, sp=0.1), data=airquality)
 visreg(fit, "Wind", "Heat") + ylab("Ozone")
 ```
 
-<p align="center">
-<img alt="img" src="https://pbreheny.github.io/visreg/articles/index_files/figure-html/unnamed-chunk-4-1.png" style="margin:auto; width: 80%;">
+<p align="center" class="cell-output-display">
+<img alt="img" src="https://pbreheny.github.io/visreg/articles/index_files/figure-html/unnamed-chunk-4-1.png" width="672">
 </p>
 
 ## More information

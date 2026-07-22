@@ -7,7 +7,7 @@ title: visreg and ggplot2
 library(visreg)
 library(ggplot2)
 theme_set(theme_minimal())
-knitr::opts_knit$set(aliases = c(h = "fig.height", w = "fig.width"))
+knitr::opts_chunk$set(fig.asp = 1 / 1.618)
 ```
 
 `visreg` plots are built with `ggplot2`. For example:

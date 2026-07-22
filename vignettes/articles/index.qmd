@@ -8,7 +8,7 @@ resources:
 library(visreg)
 library(ggplot2)
 theme_set(theme_minimal())
-knitr::opts_knit$set(aliases = c(h = "fig.height", w = "fig.width"))
+knitr::opts_chunk$set(fig.asp = 1 / 1.618)
 ```
 
 ```{r}
@@ -24,9 +24,8 @@ visreg(fit, "Wind")
 A more complex example, which uses the `gam()` function from **mgcv**:
 
 ```{r}
-#| h: 3
-#| w: 9
 #| out.width: 100%
+#| fig-asp: 0.34
 library(mgcv)
 airquality$Heat <- cut(airquality$Temp, 3, labels = c("Cool", "Mild", "Hot"))
 fit <- gam(Ozone ~ s(Wind, by = Heat, sp = 0.1), data = airquality)

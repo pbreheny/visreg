@@ -7,7 +7,7 @@ title: Frequently asked questions
 library(visreg)
 library(ggplot2)
 theme_set(theme_minimal())
-knitr::opts_knit$set(aliases = c(h = "fig.height", w = "fig.width"))
+knitr::opts_chunk$set(fig.asp = 1 / 1.618)
 ```
 
 This page contains miscellaneous questions that I have been asked about visreg, with answers posted here so that others can read them too.
@@ -17,10 +17,24 @@ This page contains miscellaneous questions that I have been asked about visreg, 
 Yes; `visreg2d()` renders its surface with `ggplot2`, so you can just add a layer:
 
 ```{r}
-fit <- lm(Ozone ~ Solar.R + Wind + Temp + I(Wind^2) + I(Temp^2) + I(Wind * Temp) + I(Wind * Temp^2) +
-  I(Temp * Wind^2) + I(Temp^2 * Wind^2), data = airquality)
+fit <- lm(
+  Ozone ~ Solar.R +
+    Wind +
+    Temp +
+    I(Wind^2) +
+    I(Temp^2) +
+    I(Wind * Temp) +
+    I(Wind * Temp^2) +
+    I(Temp * Wind^2) +
+    I(Temp^2 * Wind^2),
+  data = airquality
+)
 visreg2d(fit, x = "Wind", y = "Temp") +
-  geom_point(aes(Wind, Temp), data = subset(airquality, !is.na(Ozone)), col = "gray50")
+  geom_point(
+    aes(Wind, Temp),
+    data = subset(airquality, !is.na(Ozone)),
+    col = "gray50"
+  )
 ```
 
 # Q: Does `visreg` work with `gamm` (mgcv) or `gamm4` objects?
@@ -34,10 +48,10 @@ library(tibble)
 n <- 20
 dat <- tibble(
   ID = factor(rep(LETTERS[1:n], each = 5)),
-  x  = rnorm(n * 5),
+  x = rnorm(n * 5),
   lp = rnorm(n)[as.numeric(ID)] + x^2 - 1,
-  p  = binomial()$linkinv(lp),
-  y  = rbinom(n * 5, 1, p)
+  p = binomial()$linkinv(lp),
+  y = rbinom(n * 5, 1, p)
 )
 fit <- gamm(y ~ s(x), data = dat, dist = "binomial", random = list(ID = ~1))
 ```
