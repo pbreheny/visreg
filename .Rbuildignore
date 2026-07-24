@@ -1,14 +1,13 @@
 ^pkgdown$
 ^docs$
 ^vignettes/articles$
-^roadmap.md$
 ^CLAUDE.md$
 
 \.quarto
 
-^.air.toml$
-^.version.json$
+^\.air.toml$
+^\.version.json$
 ^\.github$
-^.project.url$
+^\.project.url$
 ^\.positai$
 ^\.claude$

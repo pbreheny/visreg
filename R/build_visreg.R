@@ -13,6 +13,11 @@ build_visreg <- function(fit, f, xvar, nn, cond, type, trans, alpha, by, y_name,
   has_interaction <- vapply(interacting, function(iv) length(iv) > 0, logical(1))
   main_effect_warn <- vapply(interacting, function(iv) length(setdiff(iv, covered)) > 0, logical(1))
   lev <- attr(cond, "lev")
+  var_labels <- attr(f, "var_labels")
+  label_for <- function(name) {
+    if (is.null(var_labels) || is.na(name) || !(name %in% names(var_labels))) return(NA_character_)
+    unname(var_labels[name])
+  }
 
   # Get xy list
   xy <- vector("list", n_cond)
@@ -26,8 +31,10 @@ build_visreg <- function(fit, f, xvar, nn, cond, type, trans, alpha, by, y_name,
   }
 
   # Format
+  x_label <- vapply(xvar, label_for, character(1))
   meta <- list(
     x = xvar,
+    x_label = unname(x_label),
     y = xy[[1]]$y$name,
     has_interaction = unname(has_interaction[xvar[1]]),
     main_effect_warn = unname(main_effect_warn[xvar[1]]),
@@ -63,6 +70,7 @@ build_visreg <- function(fit, f, xvar, nn, cond, type, trans, alpha, by, y_name,
       for (j in 1:n_cond) {
         meta_j <- meta
         meta_j$x <- xvar[j]
+        meta_j$x_label <- unname(x_label[j])
         meta_j$has_interaction <- unname(has_interaction[xvar[j]])
         meta_j$main_effect_warn <- unname(main_effect_warn[xvar[j]])
         v[[j]] <- list(
@@ -125,6 +133,7 @@ build_visreg <- function(fit, f, xvar, nn, cond, type, trans, alpha, by, y_name,
         for (k in 1:n_y) {
           meta_jk <- meta
           meta_jk$x <- meta$x[j]
+          meta_jk$x_label <- unname(meta$x_label[j])
           meta_jk$y <- meta$y[k]
           meta_jk$y_name <- meta$y_name[k]
           meta_jk$has_interaction <- unname(has_interaction[meta$x[j]])

@@ -37,12 +37,16 @@ prep_2d_axes <- function(v, whitespace, gg = FALSE) {
 # Label defaulting shared by the same three renderers. `drop_expr_z` handles the fact that
 # persp()/persp3d() cannot use an expression as a zlab, unlike ggplot2.
 resolve_2d_labels <- function(v, xlab, ylab, zlab, drop_expr_z = FALSE) {
-  if (is.null(xlab)) xlab <- v$meta$x
-  if (is.null(ylab)) ylab <- v$meta$y
+  if (is.null(xlab)) {
+    xlab <- if (is.null(v$meta$x_label) || is.na(v$meta$x_label)) v$meta$x else v$meta$x_label
+  }
+  if (is.null(ylab)) {
+    ylab <- if (is.null(v$meta$y_label) || is.na(v$meta$y_label)) v$meta$y else v$meta$y_label
+  }
   if (is.null(zlab)) {
     z_meta <- v$meta$z
     if (drop_expr_z && is.expression(z_meta)) z_meta <- NULL
-    zlab <- if (is.null(z_meta)) paste0("f(", v$meta$x, ", ", v$meta$y, ")") else z_meta
+    zlab <- if (is.null(z_meta)) paste0("f(", xlab, ", ", ylab, ")") else z_meta
   }
   list(xlab = xlab, ylab = ylab, zlab = zlab)
 }

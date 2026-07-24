@@ -69,13 +69,20 @@ build_visreg2d <- function(fit, f, xvar, yvar, nn, cond, type, scale, trans) {
       )
     }
   }
-  z_label <- make_y_name(fit, scale, trans, type)
+  var_labels <- attr(f, "var_labels")
+  label_for <- function(name) {
+    if (is.null(var_labels) || !(name %in% names(var_labels))) return(NA_character_)
+    unname(var_labels[name])
+  }
+  z_label <- make_y_name(fit, scale, trans, type, var_labels)
   term_frame <- model.frame(as.formula(paste("~", form)), filled_frame)
   cond_names <- setdiff(names(term_frame), c(xvar, yvar))
   cond_names <- intersect(cond_names, names(filled_frame))
   base_meta <- list(
     x = xvar,
+    x_label = label_for(xvar),
     y = yvar,
+    y_label = label_for(yvar),
     trans = trans,
     class = class(fit),
     cond = term_frame[1, cond_names, drop = FALSE]

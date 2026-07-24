@@ -27,9 +27,9 @@ gg_cont_plot <- function(
   }
 
   # Plotting defaults
-  xlab <- v$meta$x
+  xlab <- if (is.null(v$meta$x_label) || is.na(v$meta$x_label)) v$meta$x else v$meta$x_label
   ylab <- if (is.null(v$meta$y_name)) {
-    paste("f(", v$meta$x, ")", sep = "")
+    paste("f(", xlab, ")", sep = "")
   } else {
     v$meta$y_name
   }

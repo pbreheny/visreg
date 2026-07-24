@@ -193,7 +193,7 @@ visreg <- function(
   cond <- setup_cond(cond, dat, by, breaks)
 
   # Calculate v
-  y_name <- make_y_name(fit, scale, trans, type)
+  y_name <- make_y_name(fit, scale, trans, type, attr(dat, "var_labels"))
   v <- build_visreg(fit, dat, xvar, nn, cond, type, trans, alpha, by, y_name, predict)
   if (collapse) {
     v <- collapse_visreg_list(v)

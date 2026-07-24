@@ -34,6 +34,13 @@ setup_frame <- function(fit, xvar, call_env, data) {
     if (nrow(random_vars) > 0) model_frame <- cbind(model_frame, random_vars)
   }
 
+  # Capture variable labels (e.g. from Hmisc::label() or labelled::var_label())
+  # now, since row subsetting below drops arbitrary column attributes
+  var_labels <- vapply(model_frame, function(col) {
+    lab <- attr(col, "label")
+    if (is.null(lab) || length(lab) != 1 || !is.character(lab)) NA_character_ else lab
+  }, character(1))
+
   # Restrict to rows the original model actually used
   if ("subset" %in% names(fit_call) && !inherits(fit, "averaging")) {
     keep <- eval(fit_call$subset, source_data, data_env)
@@ -98,5 +105,6 @@ setup_frame <- function(fit, xvar, call_env, data) {
 
   attr(model_frame, "needs_update") <- needs_update
   attr(model_frame, "xvar") <- xvar
+  attr(model_frame, "var_labels") <- var_labels
   model_frame
 }
