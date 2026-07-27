@@ -1,13 +1,26 @@
 # Graphical options
 
 `visreg` tries to set up pleasant-looking default options, but
-everything can be tailored to user specifications. For the plots below,
-we work from this general model:
+everything can be tailored to user specifications. This article covers
+options that must be controlled through
+[`visreg()`](https://pbreheny.github.io/visreg/reference/visreg.md)
+itself; other aspects of the plot, like titles, transforming axes,
+adding annotations, etc., can all be handled using the [usual ggplot2
+syntax](https://pbreheny.github.io/visreg/articles/gg.md). For the plots
+below, we work from this general model:
 
 ``` r
 
+airquality$WindLevel <- cut(
+  airquality$Wind,
+  3,
+  labels = c("Calm", "Sorta windy", "Real windy")
+)
 airquality$Heat <- cut(airquality$Temp, 3, labels = c("Cool", "Mild", "Hot"))
-fit <- lm(Ozone ~ Solar.R + Wind + Heat, data = airquality)
+fit <- lm(
+  Ozone ~ Solar.R + WindLevel + Heat + poly(Month, 2),
+  data = airquality
+)
 ```
 
 ## Turning on/off plot components
@@ -17,40 +30,24 @@ partial residuals, but the residuals and the bands can be turned off:
 
 ``` r
 
-visreg(fit, "Wind", band = FALSE)
+visreg(fit, "Solar.R", band = FALSE)
 ```
 
 ![](options_files/figure-html/unnamed-chunk-3-1.png)
 
 ``` r
 
-visreg(fit, "Wind", partial = FALSE)
+visreg(fit, "Solar.R", partial = FALSE)
 ```
 
 ![](options_files/figure-html/unnamed-chunk-4-1.png)
 
 ``` r
 
-visreg(fit, "Wind", partial = FALSE, rug = TRUE)
+visreg(fit, "Solar.R", partial = FALSE, rug = TRUE)
 ```
 
 ![](options_files/figure-html/unnamed-chunk-5-1.png)
-
-## Jittering
-
-If there are many ties in a numeric variable `x`, jittering can be
-helpful way to avoid overplotting. Compare the following two plots:
-
-``` r
-
-month_fit <- lm(Ozone ~ Solar.R + Wind + poly(Month, 2), data = airquality)
-visreg(month_fit, "Month")
-visreg(month_fit, "Month", jitter = TRUE)
-```
-
-![](options_files/figure-html/unnamed-chunk-6-1.png)
-
-![](options_files/figure-html/unnamed-chunk-6-2.png)
 
 ## Appearance of points, lines, and bands
 
@@ -71,31 +68,29 @@ parameter that geom accepts can be specified:
 
 visreg(
   fit,
-  "Wind",
+  "Solar.R",
   line = list(color = "red"),
   fill = list(fill = "green"),
   points = list(size = 2, shape = 1)
 )
 ```
 
-![](options_files/figure-html/unnamed-chunk-7-1.png)
+![](options_files/figure-html/unnamed-chunk-6-1.png)
 
-## Generic plot options
+## Jittering
 
-`visreg` returns a `gg` object, so its appearance can be customized just
-like any other `ggplot2` plot, by adding further components. Here’s an
-example that adds a title and re-labels the (log-transformed) y-axis:
+If there are many ties in a numeric variable `x`, jittering can be
+helpful way to avoid overplotting. Compare the following two plots:
 
 ``` r
 
-fit <- lm(log(Ozone) ~ Solar.R + Wind + Temp, data = airquality)
-at <- seq(1.5, 5, 0.5)
-visreg(fit, "Wind") +
-  labs(title = "Ozone is bad for you", y = "Ozone") +
-  scale_y_continuous(breaks = at, labels = round(exp(at), 1))
+visreg(fit, "Month")
+visreg(fit, "Month", jitter = TRUE)
 ```
 
-![](options_files/figure-html/unnamed-chunk-8-1.png)
+![](options_files/figure-html/unnamed-chunk-7-1.png)
+
+![](options_files/figure-html/unnamed-chunk-7-2.png)
 
 ## Band width for factors
 
@@ -105,33 +100,10 @@ accompanying line) is controlled through the `fill`/`line` arguments’
 
 ``` r
 
-fit <- lm(Ozone ~ Solar.R + Wind + Heat, data = airquality)
 visreg(fit, "Heat", line = list(width = 0.98), fill = list(width = 0.98))
 visreg(fit, "Heat", line = list(width = 0.1), fill = list(width = 0.1))
 ```
 
-![](options_files/figure-html/unnamed-chunk-9-1.png)
+![](options_files/figure-html/unnamed-chunk-8-1.png)
 
-![](options_files/figure-html/unnamed-chunk-9-2.png)
-
-## Subsetting the plot
-
-Occasionally, you might want to plot only a subset of the levels or
-observations; you can use `subset` to accomplish this:
-
-``` r
-
-v <- visreg(fit, "Wind", by = "Heat", plot = FALSE)
-v1 <- subset(v, Heat %in% c("Cool", "Hot"))
-plot(v1)
-```
-
-![](options_files/figure-html/unnamed-chunk-10-1.png)
-
-``` r
-
-v2 <- subset(v, Wind < 15)
-plot(v2)
-```
-
-![](options_files/figure-html/unnamed-chunk-11-1.png)
+![](options_files/figure-html/unnamed-chunk-8-2.png)

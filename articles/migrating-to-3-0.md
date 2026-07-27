@@ -124,16 +124,18 @@ visreg(fit, "Wind",
 )
 ```
 
-![](migrating-to-3-0_files/figure-html/unnamed-chunk-3-1.png)
-
 Note that the *values* passed to `line`/`fill`/`points` are `ggplot2`
 aesthetics (`color`, `size`, `shape`, …), not base R
 [`par()`](https://rdrr.io/r/graphics/par.html) names (`col`, `cex`,
 `pch`) — this was already true whenever `gg = TRUE` was used pre-3.0, so
 it should look familiar if you were already using the `ggplot2` backend.
 See [Graphical
-options](https://pbreheny.github.io/visreg/articles/options) for
-details.
+options](https://pbreheny.github.io/visreg/articles/options.md) for the
+full set of arguments
+[`visreg()`](https://pbreheny.github.io/visreg/reference/visreg.md)
+exposes, and [Customizing with
+ggplot2](https://pbreheny.github.io/visreg/articles/gg.md) for
+everything else you can do to the plot it returns.
 
 ## `visreg2d()` surface plots
 
@@ -165,11 +167,42 @@ fit <- lm(Ozone ~ Solar.R + Wind + Temp + I(Wind^2) + I(Temp^2), data = airquali
 visreg2d(fit, "Wind", "Temp", plot = FALSE) |> persp()
 ```
 
-![](migrating-to-3-0_files/figure-html/unnamed-chunk-4-1.png)
+![](migrating-to-3-0_files/figure-html/unnamed-chunk-3-1.png)
 
 See the [surface plots
-vignette](https://pbreheny.github.io/visreg/articles/surface) for
+vignette](https://pbreheny.github.io/visreg/articles/surface.md) for
 further examples, including `rgl`.
+
+## If you’re coming from base R graphics
+
+If you were relying on the base R (or `lattice`) backend rather than
+`gg = TRUE`, the renamed arguments above aren’t the biggest adjustment –
+it’s that customization now happens by adding `ggplot2` layers with `+`,
+rather than by passing more arguments to
+[`visreg()`](https://pbreheny.github.io/visreg/reference/visreg.md) or
+calling base functions like
+[`title()`](https://rdrr.io/r/graphics/title.html),
+[`abline()`](https://rdrr.io/r/graphics/abline.html), or
+[`par()`](https://rdrr.io/r/graphics/par.html) afterward. Two articles
+are aimed specifically at this transition:
+
+- [Graphical
+  options](https://pbreheny.github.io/visreg/articles/options.md) covers
+  the arguments
+  [`visreg()`](https://pbreheny.github.io/visreg/reference/visreg.md)
+  still exposes directly (turning components on/off, jittering,
+  line/fill/point styling, factor band width) – the closest analogues to
+  what you could previously do with
+  [`par()`](https://rdrr.io/r/graphics/par.html) and friends.
+- [Customizing with
+  ggplot2](https://pbreheny.github.io/visreg/articles/gg.md) covers
+  everything else: titles, axis transformations, annotations, overlaying
+  a smooth, and combining multiple plots with `patchwork` – things you’d
+  previously have reached for
+  [`title()`](https://rdrr.io/r/graphics/title.html),
+  [`abline()`](https://rdrr.io/r/graphics/abline.html),
+  [`text()`](https://rdrr.io/r/graphics/text.html), or
+  `par(mfrow = ...)` to do.
 
 ## Keeping the old behavior
 

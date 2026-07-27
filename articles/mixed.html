@@ -26,7 +26,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">visreg</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.99.0.2</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.99.0.3</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -40,10 +40,10 @@
   <ul class="dropdown-menu" aria-labelledby="dropdown-basic-framework">
 <li><a class="dropdown-item" href="../articles/basic.html">Getting started</a></li>
     <li><a class="dropdown-item" href="../articles/contrast.html">Contrast vs. conditional plots</a></li>
-    <li><a class="dropdown-item" href="../articles/trans.html">Transformations</a></li>
-    <li><a class="dropdown-item" href="../articles/cond.html">Conditioning</a></li>
+    <li><a class="dropdown-item" href="../articles/transformations.html">Transformations</a></li>
+    <li><a class="dropdown-item" href="../articles/conditioning.html">Conditioning</a></li>
     <li><a class="dropdown-item" href="../articles/options.html">Graphical options</a></li>
-    <li><a class="dropdown-item" href="../articles/gg.html">Visreg and ggplot2</a></li>
+    <li><a class="dropdown-item" href="../articles/gg.html">Customizing with ggplot2</a></li>
   </ul>
 </li>
 <li class="nav-item dropdown">
@@ -118,7 +118,7 @@
 <span><span class="va">ctrl</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lme4/man/lmerControl.html" class="external-link">lmerControl</a></span><span class="op">(</span>optCtrl <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>xtol_rel <span class="op">=</span> <span class="fl">1e-6</span><span class="op">)</span><span class="op">)</span> <span class="co"># Warning otherwise</span></span>
 <span><span class="va">fit</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/lme4/man/lmer.html" class="external-link">lmer</a></span><span class="op">(</span><span class="va">protein</span> <span class="op">~</span> <span class="va">Diet</span> <span class="op">+</span> <span class="va">Time</span> <span class="op">+</span> <span class="op">(</span><span class="va">Time</span> <span class="op">|</span> <span class="va">Cow</span><span class="op">)</span>, <span class="va">Milk</span>, control <span class="op">=</span> <span class="va">ctrl</span><span class="op">)</span></span></code></pre></div>
 </div>
-<section class="section level2"><h2 id="population-level-effects-the-default">Population-level effects (the default)<a class="anchor" aria-label="anchor" href="#population-level-effects-the-default"></a>
+<section class="level2"><h2 id="population-level-effects-the-default">Population-level effects (the default)<a class="anchor" aria-label="anchor" href="#population-level-effects-the-default"></a>
 </h2>
 <p>By default, <code>visreg</code> predicts with <code>re.form=NA</code>: the random effects are ignored altogether, and the plot shows the fixed-effect (population-average) relationship, with a confidence band reflecting uncertainty about the fixed effects only. No extra arguments are needed for this — it’s what you get by calling <code><a href="../reference/visreg.html">visreg()</a></code> normally:</p>
 <div class="cell">
@@ -132,7 +132,7 @@
 </div>
 </div>
 <p>This is the right choice when you want to describe the typical cow, and it’s the plot most people want most of the time.</p>
-</section><section class="section level2"><h2 id="conditioning-on-the-estimated-random-effects">Conditioning on the estimated random effects<a class="anchor" aria-label="anchor" href="#conditioning-on-the-estimated-random-effects"></a>
+</section><section class="level2"><h2 id="conditioning-on-the-estimated-random-effects">Conditioning on the estimated random effects<a class="anchor" aria-label="anchor" href="#conditioning-on-the-estimated-random-effects"></a>
 </h2>
 <p>Passing <code>predict = list(re.form = NULL)</code> tells <code>lme4</code> to condition on the estimated (BLUP) random effects for a specific cow. Combined with <code>by</code>, this lets you plot cow-specific curves — the estimated relationship between protein and time, separately for each cow. For the sake of space, we subset the plot to 8 cows rather than all 79; this can be done by returning, then subsetting, the raw <code>visreg</code> object prior to plotting.</p>
 <div class="cell">
@@ -150,7 +150,7 @@
 </div>
 </div>
 <p>Each cow’s curve now has its own confidence band, but it’s worth being clear about what these bands represent: they reflect the precision with which <em>that cow’s own trajectory</em> is estimated, given its random effects, and are a different quantity than the population-level band above, which reflects uncertainty about the fixed effects for a typical cow.</p>
-</section><section class="section level2"><h2 id="conditioning-on-some-but-not-all-random-effects">Conditioning on some, but not all, random effects<a class="anchor" aria-label="anchor" href="#conditioning-on-some-but-not-all-random-effects"></a>
+</section><section class="level2"><h2 id="conditioning-on-some-but-not-all-random-effects">Conditioning on some, but not all, random effects<a class="anchor" aria-label="anchor" href="#conditioning-on-some-but-not-all-random-effects"></a>
 </h2>
 <p>When a model has more than one grouping factor, <code>re.form</code> can also be a formula naming just the grouping factor(s) you want to condition on, letting you marginalize over the rest. This isn’t an option for the milk yield model above, which has only one grouping factor (<code>Cow</code>), so let’s simulate a small artificial example involving patients seen at different clinics, and both patients and clinics have their own random intercepts:</p>
 <div class="cell">
@@ -273,7 +273,8 @@
       }
     }
   });
-  </script></main>
+  </script></main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
+    </nav></aside>
 </div>
 
 
@@ -282,7 +283,7 @@
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Last updated: July 24, 2026</p>
+  <p>Last updated: July 27, 2026</p>
 </div>
 
     </footer>

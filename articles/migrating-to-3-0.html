@@ -26,7 +26,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">visreg</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.99.0.2</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.99.0.3</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -40,10 +40,10 @@
   <ul class="dropdown-menu" aria-labelledby="dropdown-basic-framework">
 <li><a class="dropdown-item" href="../articles/basic.html">Getting started</a></li>
     <li><a class="dropdown-item" href="../articles/contrast.html">Contrast vs. conditional plots</a></li>
-    <li><a class="dropdown-item" href="../articles/trans.html">Transformations</a></li>
-    <li><a class="dropdown-item" href="../articles/cond.html">Conditioning</a></li>
+    <li><a class="dropdown-item" href="../articles/transformations.html">Transformations</a></li>
+    <li><a class="dropdown-item" href="../articles/conditioning.html">Conditioning</a></li>
     <li><a class="dropdown-item" href="../articles/options.html">Graphical options</a></li>
-    <li><a class="dropdown-item" href="../articles/gg.html">Visreg and ggplot2</a></li>
+    <li><a class="dropdown-item" href="../articles/gg.html">Customizing with ggplot2</a></li>
   </ul>
 </li>
 <li class="nav-item dropdown">
@@ -285,21 +285,13 @@ https://pbreheny.github.io/visreg/articles/migrating-to-3-0.html</code></pre>
 <span>  points.par <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>cex <span class="op">=</span> <span class="fl">2</span>, pch <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
 <p>The 3.0 equivalent drops <code>gg = TRUE</code> (no longer needed) and renames the three styling arguments:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/visreg.html">visreg</a></span><span class="op">(</span><span class="va">fit</span>, <span class="st">"Wind"</span>,</span>
 <span>  line <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>color <span class="op">=</span> <span class="st">"red"</span><span class="op">)</span>,</span>
 <span>  fill <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="st">"green"</span><span class="op">)</span>,</span>
 <span>  points <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">2</span>, shape <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
-<div class="cell-output-display">
-<div>
-<figure><p><img src="migrating-to-3-0_files/figure-html/unnamed-chunk-3-1.png" width="672"></p>
-</figure>
-</div>
-</div>
-</div>
-<p>Note that the <em>values</em> passed to <code>line</code>/<code>fill</code>/<code>points</code> are <code>ggplot2</code> aesthetics (<code>color</code>, <code>size</code>, <code>shape</code>, …), not base R <code><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par()</a></code> names (<code>col</code>, <code>cex</code>, <code>pch</code>) — this was already true whenever <code>gg = TRUE</code> was used pre-3.0, so it should look familiar if you were already using the <code>ggplot2</code> backend. See <a href="options">Graphical options</a> for details.</p>
+<p>Note that the <em>values</em> passed to <code>line</code>/<code>fill</code>/<code>points</code> are <code>ggplot2</code> aesthetics (<code>color</code>, <code>size</code>, <code>shape</code>, …), not base R <code><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par()</a></code> names (<code>col</code>, <code>cex</code>, <code>pch</code>) — this was already true whenever <code>gg = TRUE</code> was used pre-3.0, so it should look familiar if you were already using the <code>ggplot2</code> backend. See <a href="options.html">Graphical options</a> for the full set of arguments <code><a href="../reference/visreg.html">visreg()</a></code> exposes, and <a href="gg.html">Customizing with ggplot2</a> for everything else you can do to the plot it returns.</p>
 </section><section class="level2"><h2 id="visreg2d-surface-plots">
 <code>visreg2d()</code> surface plots<a class="anchor" aria-label="anchor" href="#visreg2d-surface-plots"></a>
 </h2>
@@ -319,13 +311,21 @@ https://pbreheny.github.io/visreg/articles/migrating-to-3-0.html</code></pre>
 <span><span class="fu"><a href="../reference/visreg2d.html">visreg2d</a></span><span class="op">(</span><span class="va">fit</span>, <span class="st">"Wind"</span>, <span class="st">"Temp"</span>, plot <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/graphics/persp.html" class="external-link">persp</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <div class="cell-output-display">
 <div>
-<figure><p><img src="migrating-to-3-0_files/figure-html/unnamed-chunk-4-1.png" width="672"></p>
+<figure><p><img src="migrating-to-3-0_files/figure-html/unnamed-chunk-3-1.png" width="672"></p>
 </figure>
 </div>
 </div>
 </div>
-<p>See the <a href="surface">surface plots vignette</a> for further examples, including <code>rgl</code>.</p>
-</section><section class="level2"><h2 id="keeping-the-old-behavior">Keeping the old behavior<a class="anchor" aria-label="anchor" href="#keeping-the-old-behavior"></a>
+<p>See the <a href="surface.html">surface plots vignette</a> for further examples, including <code>rgl</code>.</p>
+</section><section class="level2"><h2 id="if-youre-coming-from-base-r-graphics">If you’re coming from base R graphics<a class="anchor" aria-label="anchor" href="#if-youre-coming-from-base-r-graphics"></a>
+</h2>
+<p>If you were relying on the base R (or <code>lattice</code>) backend rather than <code>gg = TRUE</code>, the renamed arguments above aren’t the biggest adjustment – it’s that customization now happens by adding <code>ggplot2</code> layers with <code>+</code>, rather than by passing more arguments to <code><a href="../reference/visreg.html">visreg()</a></code> or calling base functions like <code><a href="https://rdrr.io/r/graphics/title.html" class="external-link">title()</a></code>, <code><a href="https://rdrr.io/r/graphics/abline.html" class="external-link">abline()</a></code>, or <code><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par()</a></code> afterward. Two articles are aimed specifically at this transition:</p>
+<ul>
+<li>
+<a href="options.html">Graphical options</a> covers the arguments <code><a href="../reference/visreg.html">visreg()</a></code> still exposes directly (turning components on/off, jittering, line/fill/point styling, factor band width) – the closest analogues to what you could previously do with <code><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par()</a></code> and friends.</li>
+<li>
+<a href="gg.html">Customizing with ggplot2</a> covers everything else: titles, axis transformations, annotations, overlaying a smooth, and combining multiple plots with <code>patchwork</code> – things you’d previously have reached for <code><a href="https://rdrr.io/r/graphics/title.html" class="external-link">title()</a></code>, <code><a href="https://rdrr.io/r/graphics/abline.html" class="external-link">abline()</a></code>, <code><a href="https://rdrr.io/r/graphics/text.html" class="external-link">text()</a></code>, or <code>par(mfrow = ...)</code> to do.</li>
+</ul></section><section class="level2"><h2 id="keeping-the-old-behavior">Keeping the old behavior<a class="anchor" aria-label="anchor" href="#keeping-the-old-behavior"></a>
 </h2>
 <p>If you’re not ready to update your code, you don’t have to: the last CRAN release before these changes, version 2.8.1, remains available and can be installed alongside or instead of the current version:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
@@ -423,7 +423,7 @@ https://pbreheny.github.io/visreg/articles/migrating-to-3-0.html</code></pre>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Last updated: July 24, 2026</p>
+  <p>Last updated: July 27, 2026</p>
 </div>
 
     </footer>

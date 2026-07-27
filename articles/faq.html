@@ -26,7 +26,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">visreg</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.99.0.2</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.99.0.3</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -40,10 +40,10 @@
   <ul class="dropdown-menu" aria-labelledby="dropdown-basic-framework">
 <li><a class="dropdown-item" href="../articles/basic.html">Getting started</a></li>
     <li><a class="dropdown-item" href="../articles/contrast.html">Contrast vs. conditional plots</a></li>
-    <li><a class="dropdown-item" href="../articles/trans.html">Transformations</a></li>
-    <li><a class="dropdown-item" href="../articles/cond.html">Conditioning</a></li>
+    <li><a class="dropdown-item" href="../articles/transformations.html">Transformations</a></li>
+    <li><a class="dropdown-item" href="../articles/conditioning.html">Conditioning</a></li>
     <li><a class="dropdown-item" href="../articles/options.html">Graphical options</a></li>
-    <li><a class="dropdown-item" href="../articles/gg.html">Visreg and ggplot2</a></li>
+    <li><a class="dropdown-item" href="../articles/gg.html">Customizing with ggplot2</a></li>
   </ul>
 </li>
 <li class="nav-item dropdown">
@@ -104,7 +104,7 @@
 
 
     <p>This page contains miscellaneous questions that I have been asked about visreg, with answers posted here so that others can read them too.</p>
-<section class="section level2"><h2 id="q-in-visreg2d-is-it-possible-to-superimpose-data-points-onto-the-plot">Q: In <code>visreg2d</code>, is it possible to superimpose data points onto the plot?<a class="anchor" aria-label="anchor" href="#q-in-visreg2d-is-it-possible-to-superimpose-data-points-onto-the-plot"></a>
+<section class="level2"><h2 id="q-in-visreg2d-is-it-possible-to-superimpose-data-points-onto-the-plot">Q: In <code>visreg2d</code>, is it possible to superimpose data points onto the plot?<a class="anchor" aria-label="anchor" href="#q-in-visreg2d-is-it-possible-to-superimpose-data-points-onto-the-plot"></a>
 </h2>
 <p>Yes; <code><a href="../reference/visreg2d.html">visreg2d()</a></code> renders its surface with <code>ggplot2</code>, so you can just add a layer:</p>
 <div class="cell">
@@ -134,7 +134,7 @@
 </div>
 </div>
 </div>
-</section><section class="section level2"><h2 id="q-does-visreg-work-with-gamm-mgcv-or-gamm4-objects">Q: Does <code>visreg</code> work with <code>gamm</code> (mgcv) or <code>gamm4</code> objects?<a class="anchor" aria-label="anchor" href="#q-does-visreg-work-with-gamm-mgcv-or-gamm4-objects"></a>
+</section><section class="level2"><h2 id="q-does-visreg-work-with-gamm-mgcv-or-gamm4-objects">Q: Does <code>visreg</code> work with <code>gamm</code> (mgcv) or <code>gamm4</code> objects?<a class="anchor" aria-label="anchor" href="#q-does-visreg-work-with-gamm-mgcv-or-gamm4-objects"></a>
 </h2>
 <p>Yes, although it takes a minor workaround since these objects have an unusual structure. First, let’s simulate some data and fit a model (I’m just using a <code>tibble</code> here for convenience, it isn’t relevant to the question):</p>
 <div class="cell">
@@ -172,7 +172,7 @@
 </div>
 </div>
 </div>
-</section><section class="section level2"><h2 id="q-im-getting-the-following-error-message-error-in-usemethodfamily-no-applicable-method-for-family-applied-to-an-object-of-class-xxxx-">Q: I’m getting the following error message: <code>Error in UseMethod("family") : no applicable method for 'family' applied to an object of class XXXX</code>.<a class="anchor" aria-label="anchor" href="#q-im-getting-the-following-error-message-error-in-usemethodfamily-no-applicable-method-for-family-applied-to-an-object-of-class-xxxx-"></a>
+</section><section class="level2"><h2 id="q-im-getting-the-following-error-message-error-in-usemethodfamily-no-applicable-method-for-family-applied-to-an-object-of-class-xxxx-">Q: I’m getting the following error message: <code>Error in UseMethod("family") : no applicable method for 'family' applied to an object of class XXXX</code>.<a class="anchor" aria-label="anchor" href="#q-im-getting-the-following-error-message-error-in-usemethodfamily-no-applicable-method-for-family-applied-to-an-object-of-class-xxxx-"></a>
 </h2>
 <p>When you specify <code>scale='response'</code>, you’re telling <code>visreg</code> to automatically find the transformation mapping the linear predictor to the scale of the response. It can only do that if the fitted model object provides that transformation through the <code><a href="https://rdrr.io/r/stats/family.html" class="external-link">family()</a></code> method. Many R models (e.g., <code>glm</code>) do this, but some (e.g., the <code>glmmADMB</code> package, <code>gamm</code> from the <code>mgcv</code> package) don’t. If you’re working with one of these models, you’ll have to supply that transformation yourself. For example, with the model from the previous question, this code fails:</p>
 <div class="cell">
@@ -194,7 +194,7 @@
 </div>
 </div>
 </div>
-</section><section class="section level2"><h2 id="q-can-i-have-the-response-variable-on-the-horizontal-axis-instead-of-the-vertical-axis">Q: Can I have the response variable on the horizontal axis instead of the vertical axis?<a class="anchor" aria-label="anchor" href="#q-can-i-have-the-response-variable-on-the-horizontal-axis-instead-of-the-vertical-axis"></a>
+</section><section class="level2"><h2 id="q-can-i-have-the-response-variable-on-the-horizontal-axis-instead-of-the-vertical-axis">Q: Can I have the response variable on the horizontal axis instead of the vertical axis?<a class="anchor" aria-label="anchor" href="#q-can-i-have-the-response-variable-on-the-horizontal-axis-instead-of-the-vertical-axis"></a>
 </h2>
 <p>You can achieve this via <code><a href="https://ggplot2.tidyverse.org/reference/coord_flip.html" class="external-link">ggplot2::coord_flip</a></code>:</p>
 <div class="cell">
@@ -291,7 +291,8 @@
       }
     }
   });
-  </script></main>
+  </script></main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
+    </nav></aside>
 </div>
 
 
@@ -300,7 +301,7 @@
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Last updated: July 24, 2026</p>
+  <p>Last updated: July 27, 2026</p>
 </div>
 
     </footer>

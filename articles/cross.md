@@ -1,8 +1,8 @@
 # Cross-sectional plots
 
 As was the case with [nonlinear
-terms](https://pbreheny.github.io/visreg/articles/trans.md), the
-relationship between `x` and `y` in a model with interactions also
+terms](https://pbreheny.github.io/visreg/articles/transformations.md),
+the relationship between `x` and `y` in a model with interactions also
 (typically) depends on multiple coefficients and thus, a visual summary
 tends to be much more readily understood than a numeric one.
 
@@ -13,8 +13,8 @@ plots*, which plot one-dimensional relationships between the response
 and one predictor for several values of another predictor, either in
 separate panels or [overlaid on top of one
 another](https://pbreheny.github.io/visreg/articles/overlay.md). The
-package also provides methods for constructing [*surface
-plots*](https://pbreheny.github.io/visreg/articles/surface.md), which
+package also provides methods for constructing [surface
+plots](https://pbreheny.github.io/visreg/articles/surface.md), which
 attempt to provide a picture of the regression surface over both
 dimensions simultaneously.
 
@@ -50,12 +50,13 @@ visreg(fit, "Heat", by = "Wind")
 Note that, since `Wind` is a continuous variable, the panels above are
 somewhat arbitrary. By default, `visreg` sets up three panels using the
 10th, 50th, and 90th percentiles, but [the user can change both the
-number and the location of these break points](#opt).
+number and the location of these break
+points](#controlling-the-cross-sections).
 
-In all of these plots, note that each partial residuals appears exactly
+In all of these plots, note that each partial residual appears exactly
 once in the plot, in the panel it is closest to.
 
-## Options
+## Controlling the cross-sections
 
 For a numeric `by` variable, the `breaks` argument controls the values
 at which the cross-sections are taken. By default, cross-sections are
@@ -79,7 +80,7 @@ visreg(fit, "Heat", by = "Wind", breaks = c(seq(5, 15, 5)))
 
 ![](cross_files/figure-html/unnamed-chunk-6-1.png)
 
-## Strip names
+## Facet options
 
 `visreg` sets up the facet strips internally via the `strip_names`
 option:
@@ -118,3 +119,30 @@ visreg(fit, "Heat", by = "Wind", breaks = 4) + facet_wrap(~Wind, nrow = 2)
 ```
 
 ![](cross_files/figure-html/unnamed-chunk-9-1.png)
+
+## Subsetting the plot
+
+**visreg** also offers a
+[`subset()`](https://rdrr.io/r/base/subset.html) method if you only want
+to show certain observations or levels of a category. You could, of
+course, filter these observations out before fitting the model, but that
+would change the actual model and results. Using \[subset.visreg()\]
+happens after fitting instead: visreg computes the cross-section from
+the full model and the full data, and only then discards the data you
+don’t want to display.
+
+``` r
+
+visreg(fit, "Wind", by = "Heat", plot = FALSE) |>
+  subset(Heat %in% c("Cool", "Hot")) |>
+  plot()
+```
+
+![](cross_files/figure-html/unnamed-chunk-10-1.png)
+
+``` r
+
+visreg(fit, "Wind", by = "Heat", plot = FALSE) |> subset(Wind < 15) |> plot()
+```
+
+![](cross_files/figure-html/unnamed-chunk-11-1.png)

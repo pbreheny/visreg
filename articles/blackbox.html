@@ -26,7 +26,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">visreg</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.99.0.2</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.99.0.3</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -40,10 +40,10 @@
   <ul class="dropdown-menu" aria-labelledby="dropdown-basic-framework">
 <li><a class="dropdown-item" href="../articles/basic.html">Getting started</a></li>
     <li><a class="dropdown-item" href="../articles/contrast.html">Contrast vs. conditional plots</a></li>
-    <li><a class="dropdown-item" href="../articles/trans.html">Transformations</a></li>
-    <li><a class="dropdown-item" href="../articles/cond.html">Conditioning</a></li>
+    <li><a class="dropdown-item" href="../articles/transformations.html">Transformations</a></li>
+    <li><a class="dropdown-item" href="../articles/conditioning.html">Conditioning</a></li>
     <li><a class="dropdown-item" href="../articles/options.html">Graphical options</a></li>
-    <li><a class="dropdown-item" href="../articles/gg.html">Visreg and ggplot2</a></li>
+    <li><a class="dropdown-item" href="../articles/gg.html">Customizing with ggplot2</a></li>
   </ul>
 </li>
 <li class="nav-item dropdown">
@@ -108,7 +108,7 @@
 <div class="sourceCode cell-code" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">aq</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/na.fail.html" class="external-link">na.omit</a></span><span class="op">(</span><span class="va">airquality</span><span class="op">)</span></span></code></pre></div>
 </div>
-<section class="section level2"><h2 id="random-forests">Random forests<a class="anchor" aria-label="anchor" href="#random-forests"></a>
+<section class="level2"><h2 id="random-forests">Random forests<a class="anchor" aria-label="anchor" href="#random-forests"></a>
 </h2>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb2"><pre class="downlit sourceCode r">
@@ -122,7 +122,7 @@
 </div>
 </div>
 </div>
-</section><section class="section level2"><h2 id="support-vector-machines">Support vector machines<a class="anchor" aria-label="anchor" href="#support-vector-machines"></a>
+</section><section class="level2"><h2 id="support-vector-machines">Support vector machines<a class="anchor" aria-label="anchor" href="#support-vector-machines"></a>
 </h2>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb3"><pre class="downlit sourceCode r">
@@ -137,7 +137,7 @@
 </div>
 </div>
 <p>Note that neither random forests nor support vector machines are able to provide confidence bands for fitted values, so we have set <code>band = FALSE</code> (if <code>band = TRUE</code>, the same plot appears, but with a warning message).</p>
-</section><section class="section level2"><h2 id="gradient-boosted-trees">Gradient boosted trees<a class="anchor" aria-label="anchor" href="#gradient-boosted-trees"></a>
+</section><section class="level2"><h2 id="gradient-boosted-trees">Gradient boosted trees<a class="anchor" aria-label="anchor" href="#gradient-boosted-trees"></a>
 </h2>
 <p>The implementation of gradient boosted trees in the <code>gbm</code> package does not offer a <code>residuals</code> method. This would normally cause <code>visreg</code> to omit plotting the partial residuals. However, we can supply our own user-defined <code>residuals</code> method:</p>
 <div class="cell">
@@ -261,7 +261,8 @@
       }
     }
   });
-  </script></main>
+  </script></main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
+    </nav></aside>
 </div>
 
 
@@ -270,7 +271,7 @@
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Last updated: July 24, 2026</p>
+  <p>Last updated: July 27, 2026</p>
 </div>
 
     </footer>

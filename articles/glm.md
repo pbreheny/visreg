@@ -27,7 +27,7 @@ model, and the above plot is linear).
 For communicating modeling results, however, it is often useful to
 transform the above outcome to the probability scale. This can be done
 by manually specifying `trans` as described in
-[transformations](https://pbreheny.github.io/visreg/articles/trans.md),
+[transformations](https://pbreheny.github.io/visreg/articles/transformations.md),
 although for GLMs the shortcut `scale="response"` is provided:
 
 ``` r

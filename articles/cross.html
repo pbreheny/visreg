@@ -26,7 +26,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">visreg</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.99.0.2</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.99.0.3</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -40,10 +40,10 @@
   <ul class="dropdown-menu" aria-labelledby="dropdown-basic-framework">
 <li><a class="dropdown-item" href="../articles/basic.html">Getting started</a></li>
     <li><a class="dropdown-item" href="../articles/contrast.html">Contrast vs. conditional plots</a></li>
-    <li><a class="dropdown-item" href="../articles/trans.html">Transformations</a></li>
-    <li><a class="dropdown-item" href="../articles/cond.html">Conditioning</a></li>
+    <li><a class="dropdown-item" href="../articles/transformations.html">Transformations</a></li>
+    <li><a class="dropdown-item" href="../articles/conditioning.html">Conditioning</a></li>
     <li><a class="dropdown-item" href="../articles/options.html">Graphical options</a></li>
-    <li><a class="dropdown-item" href="../articles/gg.html">Visreg and ggplot2</a></li>
+    <li><a class="dropdown-item" href="../articles/gg.html">Customizing with ggplot2</a></li>
   </ul>
 </li>
 <li class="active nav-item dropdown">
@@ -103,8 +103,8 @@
 
 
 
-    <p>As was the case with <a href="trans.html">nonlinear terms</a>, the relationship between <code>x</code> and <code>y</code> in a model with interactions also (typically) depends on multiple coefficients and thus, a visual summary tends to be much more readily understood than a numeric one.</p>
-<p>For models with interactions, we must simultaneously visualize the effect of two explanatory variables. The <code>visreg</code> package offers two methods for doing so; this page describes what we call <em>cross-sectional plots</em>, which plot one-dimensional relationships between the response and one predictor for several values of another predictor, either in separate panels or <a href="overlay.html">overlaid on top of one another</a>. The package also provides methods for constructing <a href="surface.html"><em>surface plots</em></a>, which attempt to provide a picture of the regression surface over both dimensions simultaneously.</p>
+    <p>As was the case with <a href="transformations.html">nonlinear terms</a>, the relationship between <code>x</code> and <code>y</code> in a model with interactions also (typically) depends on multiple coefficients and thus, a visual summary tends to be much more readily understood than a numeric one.</p>
+<p>For models with interactions, we must simultaneously visualize the effect of two explanatory variables. The <code>visreg</code> package offers two methods for doing so; this page describes what we call <em>cross-sectional plots</em>, which plot one-dimensional relationships between the response and one predictor for several values of another predictor, either in separate panels or <a href="overlay.html">overlaid on top of one another</a>. The package also provides methods for constructing <a href="surface.html">surface plots</a>, which attempt to provide a picture of the regression surface over both dimensions simultaneously.</p>
 <p>Let’s fit a model that involves an interaction between a continuous term and a categorical term:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="downlit sourceCode r">
@@ -133,9 +133,9 @@
 </div>
 </div>
 </div>
-<p>Note that, since <code>Wind</code> is a continuous variable, the panels above are somewhat arbitrary. By default, <code>visreg</code> sets up three panels using the 10th, 50th, and 90th percentiles, but <a href="#opt">the user can change both the number and the location of these break points</a>.</p>
-<p>In all of these plots, note that each partial residuals appears exactly once in the plot, in the panel it is closest to.</p>
-<section class="section level2"><h2 id="options">Options<a class="anchor" aria-label="anchor" href="#options"></a>
+<p>Note that, since <code>Wind</code> is a continuous variable, the panels above are somewhat arbitrary. By default, <code>visreg</code> sets up three panels using the 10th, 50th, and 90th percentiles, but <a href="#controlling-the-cross-sections">the user can change both the number and the location of these break points</a>.</p>
+<p>In all of these plots, note that each partial residual appears exactly once in the plot, in the panel it is closest to.</p>
+<section class="level2"><h2 id="controlling-the-cross-sections">Controlling the cross-sections<a class="anchor" aria-label="anchor" href="#controlling-the-cross-sections"></a>
 </h2>
 <p>For a numeric <code>by</code> variable, the <code>breaks</code> argument controls the values at which the cross-sections are taken. By default, cross-sections are taken at three quantiles (10th, 50th, and 90th), but a larger number can be specified:</p>
 <div class="cell">
@@ -159,7 +159,7 @@
 </div>
 </div>
 </div>
-</section><section class="section level2"><h2 id="strip-names">Strip names<a class="anchor" aria-label="anchor" href="#strip-names"></a>
+</section><section class="level2"><h2 id="facet-options">Facet options<a class="anchor" aria-label="anchor" href="#facet-options"></a>
 </h2>
 <p><code>visreg</code> sets up the facet strips internally via the <code>strip_names</code> option:</p>
 <div class="cell">
@@ -195,6 +195,31 @@
 <div class="cell-output-display">
 <div>
 <figure><p><img src="cross_files/figure-html/unnamed-chunk-9-1.png" style="width:100.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+</section><section class="level2"><h2 id="subsetting-the-plot">Subsetting the plot<a class="anchor" aria-label="anchor" href="#subsetting-the-plot"></a>
+</h2>
+<p><strong>visreg</strong> also offers a <code><a href="https://rdrr.io/r/base/subset.html" class="external-link">subset()</a></code> method if you only want to show certain observations or levels of a category. You could, of course, filter these observations out before fitting the model, but that would change the actual model and results. Using [subset.visreg()] happens after fitting instead: visreg computes the cross-section from the full model and the full data, and only then discards the data you don’t want to display.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/visreg.html">visreg</a></span><span class="op">(</span><span class="va">fit</span>, <span class="st">"Wind"</span>, by <span class="op">=</span> <span class="st">"Heat"</span>, plot <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/subset.html" class="external-link">subset</a></span><span class="op">(</span><span class="va">Heat</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Cool"</span>, <span class="st">"Hot"</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<div class="cell-output-display">
+<div>
+<figure><p><img src="cross_files/figure-html/unnamed-chunk-10-1.png" style="width:100.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/visreg.html">visreg</a></span><span class="op">(</span><span class="va">fit</span>, <span class="st">"Wind"</span>, by <span class="op">=</span> <span class="st">"Heat"</span>, plot <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/base/subset.html" class="external-link">subset</a></span><span class="op">(</span><span class="va">Wind</span> <span class="op">&lt;</span> <span class="fl">15</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<div class="cell-output-display">
+<div>
+<figure><p><img src="cross_files/figure-html/unnamed-chunk-11-1.png" style="width:100.0%"></p>
 </figure>
 </div>
 </div>
@@ -282,7 +307,8 @@
       }
     }
   });
-  </script></main>
+  </script></main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
+    </nav></aside>
 </div>
 
 
@@ -291,7 +317,7 @@
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Last updated: July 24, 2026</p>
+  <p>Last updated: July 27, 2026</p>
 </div>
 
     </footer>

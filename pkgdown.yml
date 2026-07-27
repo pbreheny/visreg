@@ -4,7 +4,7 @@ pkgdown_sha: ~
 articles:
   articles/basic: basic.html
   articles/blackbox: blackbox.html
-  articles/cond: cond.html
+  articles/conditioning: conditioning.html
   articles/contrast: contrast.html
   articles/cross: cross.html
   articles/faq: faq.html
@@ -17,9 +17,9 @@ articles:
   articles/options: options.html
   articles/overlay: overlay.html
   articles/surface: surface.html
-  articles/trans: trans.html
+  articles/transformations: transformations.html
   visreg: visreg.html
-last_built: 2026-07-24T22:16Z
+last_built: 2026-07-27T19:01Z
 urls:
   reference: https://pbreheny.github.io/visreg/reference
   article: https://pbreheny.github.io/visreg/articles
