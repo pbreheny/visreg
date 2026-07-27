@@ -46,10 +46,15 @@ expect_equal(round(head(v$fit$visreg_fit[v$fit$Heat == "Hot"], 3), 3), c(102.206
 # A plot on top of the returned plot; an additive fit here, so there's no
 # 'main effect in an interaction model' warning to work around
 fit_add <- lm(Ozone ~ Wind + Heat + Solar.R + Mon, data = airquality)
-(visreg(fit_add, "Wind") +
-  ggplot2::geom_smooth(color = "red", method = "loess", formula = y ~ x)) |>
-  print() |>
-  expect_silent()
+p_smooth <- visreg(fit_add, "Wind") +
+  ggplot2::geom_smooth(color = "red", method = "loess", formula = y ~ x)
+p_smooth |> print() |> expect_silent()
+
+# The added layer has no data/mapping of its own, so it must inherit x/y
+# from the base plot; check it actually drew something rather than
+# silently building against an empty data frame
+smooth_layer <- ggplot2::ggplot_build(p_smooth)$data[[length(p_smooth$layers)]]
+expect_true(nrow(smooth_layer) > 0)
 visreg(fit_add, "Wind", line = list(color = "green")) |> print() |> expect_silent()
 visreg(fit_add, "Heat", line = list(color = "green")) |> print() |> expect_silent()
 

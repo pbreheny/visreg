@@ -45,7 +45,14 @@ gg_factor_plot <- function(
     v$meta$y_name
   }
 
-  p <- ggplot2::ggplot() + ggplot2::xlab(xlab) + ggplot2::ylab(ylab)
+  # Base plot carries the partial residuals as its default data/mapping, so
+  # that layers a caller adds afterward (e.g. + geom_smooth()) have
+  # something sensible to inherit. visreg's own layers below each carry
+  # their own explicit data + mapping and set inherit.aes = FALSE, so none
+  # of them are affected by this default.
+  p <- ggplot2::ggplot(res_data, ggplot2::aes(x = .data$x, y = .data$y)) +
+    ggplot2::xlab(xlab) +
+    ggplot2::ylab(ylab)
 
   # Band (geom_tile), line (geom_errorbar with ymin=ymax=fit), and jitter
   # (residuals) aesthetic defaults.  Band and line are kept as separate
@@ -62,7 +69,8 @@ gg_factor_plot <- function(
       ),
       data = fit_data,
       position = dodge,
-      width = 1
+      width = 1,
+      inherit.aes = FALSE
     )
     line_args <- list(
       mapping = ggplot2::aes(
@@ -74,13 +82,15 @@ gg_factor_plot <- function(
       data = fit_data,
       position = dodge,
       width = 1,
-      linewidth = 1
+      linewidth = 1,
+      inherit.aes = FALSE
     )
     point_args <- list(
       mapping = ggplot2::aes(x = .data$x, y = .data$y, color = .data[[v$meta$by]]),
       data = res_data,
       position = ggplot2::position_jitterdodge(jitter.width = 0.15, dodge.width = 0.7),
-      size = 0.8
+      size = 0.8,
+      inherit.aes = FALSE
     )
     n_by <- length(by_levels)
     col <- pal(n_by)
@@ -110,21 +120,24 @@ gg_factor_plot <- function(
       ),
       data = fit_data,
       fill = "gray85",
-      width = 0.6
+      width = 0.6,
+      inherit.aes = FALSE
     )
     line_args <- list(
       mapping = ggplot2::aes(x = .data$x, ymin = .data$fit, ymax = .data$fit),
       data = fit_data,
       width = 0.6,
       linewidth = 1,
-      color = "#008DFFFF"
+      color = "#008DFFFF",
+      inherit.aes = FALSE
     )
     point_args <- list(
       mapping = ggplot2::aes(x = .data$x, y = .data$y),
       data = res_data,
       position = ggplot2::position_jitter(width = 0.15, height = 0),
       size = 0.8,
-      color = "gray50"
+      color = "gray50",
+      inherit.aes = FALSE
     )
     if (length(fill)) {
       fill_args[names(fill)] <- fill
@@ -152,12 +165,28 @@ gg_factor_plot <- function(
   }
 
   if (rug == 1) {
-    p <- p + ggplot2::geom_rug(data = res_data, ggplot2::aes(x = .data$x), sides = "b")
+    p <- p +
+      ggplot2::geom_rug(
+        data = res_data,
+        ggplot2::aes(x = .data$x),
+        sides = "b",
+        inherit.aes = FALSE
+      )
   }
   if (rug == 2) {
     p <- p +
-      ggplot2::geom_rug(data = res_data[res_data$pos, ], ggplot2::aes(x = .data$x), sides = "t") +
-      ggplot2::geom_rug(data = res_data[!res_data$pos, ], ggplot2::aes(x = .data$x), sides = "b")
+      ggplot2::geom_rug(
+        data = res_data[res_data$pos, ],
+        ggplot2::aes(x = .data$x),
+        sides = "t",
+        inherit.aes = FALSE
+      ) +
+      ggplot2::geom_rug(
+        data = res_data[!res_data$pos, ],
+        ggplot2::aes(x = .data$x),
+        sides = "b",
+        inherit.aes = FALSE
+      )
   }
 
   # Facet
