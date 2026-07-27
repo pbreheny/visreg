@@ -35,6 +35,8 @@ jobs:
             any::e1071
             any::gbm
             any::ggplot2
+            any::labelled
+            any::patchwork
             any::pkgdown
             any::quantreg
             any::randomForest

@@ -94,7 +94,7 @@ visreg(fit, "Wind", gg = TRUE,
 
 The 3.0 equivalent drops `gg = TRUE` (no longer needed) and renames the three styling arguments:
 
-```{r}
+```r
 visreg(fit, "Wind",
   line = list(color = "red"),
   fill = list(fill = "green"),
@@ -105,7 +105,8 @@ visreg(fit, "Wind",
 Note that the *values* passed to `line`/`fill`/`points` are `ggplot2` aesthetics (`color`, `size`,
 `shape`, ...), not base R `par()` names (`col`, `cex`, `pch`) --- this was already true whenever
 `gg = TRUE` was used pre-3.0, so it should look familiar if you were already using the `ggplot2`
-backend. See [Graphical options](options) for details.
+backend. See [Graphical options](options.html) for the full set of arguments `visreg()` exposes,
+and [Customizing with ggplot2](gg.html) for everything else you can do to the plot it returns.
 
 ## `visreg2d()` surface plots
 
@@ -131,7 +132,22 @@ fit <- lm(Ozone ~ Solar.R + Wind + Temp + I(Wind^2) + I(Temp^2), data = airquali
 visreg2d(fit, "Wind", "Temp", plot = FALSE) |> persp()
 ```
 
-See the [surface plots vignette](surface) for further examples, including `rgl`.
+See the [surface plots vignette](surface.html) for further examples, including `rgl`.
+
+## If you're coming from base R graphics
+
+If you were relying on the base R (or `lattice`) backend rather than `gg = TRUE`, the renamed
+arguments above aren't the biggest adjustment -- it's that customization now happens by adding
+`ggplot2` layers with `+`, rather than by passing more arguments to `visreg()` or calling base
+functions like `title()`, `abline()`, or `par()` afterward. Two articles are aimed specifically at
+this transition:
+
+- [Graphical options](options.html) covers the arguments `visreg()` still exposes directly
+  (turning components on/off, jittering, line/fill/point styling, factor band width) -- the
+  closest analogues to what you could previously do with `par()` and friends.
+- [Customizing with ggplot2](gg.html) covers everything else: titles, axis transformations,
+  annotations, overlaying a smooth, and combining multiple plots with `patchwork` -- things you'd
+  previously have reached for `title()`, `abline()`, `text()`, or `par(mfrow = ...)` to do.
 
 ## Keeping the old behavior
 

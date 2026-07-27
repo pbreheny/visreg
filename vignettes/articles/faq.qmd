@@ -12,7 +12,7 @@ knitr::opts_chunk$set(fig.asp = 1 / 1.618)
 
 This page contains miscellaneous questions that I have been asked about visreg, with answers posted here so that others can read them too.
 
-# Q: In `visreg2d`, is it possible to superimpose data points onto the plot?
+## Q: In `visreg2d`, is it possible to superimpose data points onto the plot?
 
 Yes; `visreg2d()` renders its surface with `ggplot2`, so you can just add a layer:
 
@@ -37,7 +37,7 @@ visreg2d(fit, x = "Wind", y = "Temp") +
   )
 ```
 
-# Q: Does `visreg` work with `gamm` (mgcv) or `gamm4` objects?
+## Q: Does `visreg` work with `gamm` (mgcv) or `gamm4` objects?
 
 Yes, although it takes a minor workaround since these objects have an unusual structure.  First, let's simulate some data and fit a model (I'm just using a `tibble` here for convenience, it isn't relevant to the question):
 
@@ -70,7 +70,7 @@ fit$gam$data <- dat
 visreg(fit$gam, "x")
 ```
 
-# Q: I'm getting the following error message: `Error in UseMethod("family") : no applicable method for 'family' applied to an object of class XXXX`.
+## Q: I'm getting the following error message: `Error in UseMethod("family") : no applicable method for 'family' applied to an object of class XXXX`.
 
 When you specify `scale='response'`, you're telling `visreg` to automatically find the transformation mapping the linear predictor to the scale of the response.  It can only do that if the fitted model object provides that transformation through the `family()` method.  Many R models (e.g., `glm`) do this, but some (e.g., the `glmmADMB` package, `gamm` from the `mgcv` package) don't.  If you're working with one of these models, you'll have to supply that transformation yourself.  For example, with the model from the previous question, this code fails:
 
@@ -85,7 +85,7 @@ Since this is a binomial model with a logistic link, `binomial()$linkinv` provid
 visreg(fit$gam, "x", trans = binomial()$linkinv) + ylab("Probability")
 ```
 
-# Q: Can I have the response variable on the horizontal axis instead of the vertical axis?
+## Q: Can I have the response variable on the horizontal axis instead of the vertical axis?
 
 You can achieve this via `ggplot2::coord_flip`:
 

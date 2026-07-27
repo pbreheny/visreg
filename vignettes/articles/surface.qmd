@@ -23,7 +23,7 @@ fit <- lm(
 
 We might wish to visualize how ozone depends on wind and temperature as a continuous regression surface. `visreg2d` provides two main options for this, raster plots and perspective plots.
 
-# Raster plots
+## Raster plots
 
 The default is to provide a raster plot, built with `ggplot2`:
 
@@ -37,7 +37,7 @@ Here, wind and temperature are laid out on a two-dimensional grid, and colors ar
 visreg2d(fit, "Wind", "Temp", color = c("black", "white", "purple"))
 ```
 
-# Perspective plots
+## Perspective plots
 
 The other option provided by `visreg2d` is to represent the surface as a three-dimensional image. This can be done in a static manner by computing the surface with `plot = FALSE` and passing the result to `persp()`:
 

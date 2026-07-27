@@ -27,12 +27,12 @@ navbar:
         - text: Contrast vs. conditional plots
           href: articles/contrast.html
         - text: Transformations
-          href: articles/trans.html
+          href: articles/transformations.html
         - text: Conditioning
-          href: articles/cond.html
+          href: articles/conditioning.html
         - text: Graphical options
           href: articles/options.html
-        - text: Visreg and ggplot2
+        - text: Customizing with ggplot2
           href: articles/gg.html
     interaction:
       text: Models with interactions

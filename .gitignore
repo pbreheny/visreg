@@ -2,6 +2,7 @@ vignettes/*.html
 vignettes/*/*.html
 vignettes/*_files
 vignettes/articles/rgl_files
+vignettes/articles/.gitignore
 .quarto
 docs
 .Rproj.user

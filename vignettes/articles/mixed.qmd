@@ -26,7 +26,7 @@ ctrl <- lmerControl(optCtrl = list(xtol_rel = 1e-6)) # Warning otherwise
 fit <- lmer(protein ~ Diet + Time + (Time | Cow), Milk, control = ctrl)
 ```
 
-# Population-level effects (the default)
+## Population-level effects (the default)
 
 By default, `visreg` predicts with `re.form=NA`: the random effects are ignored altogether, and
 the plot shows the fixed-effect (population-average) relationship, with a confidence band
@@ -40,7 +40,7 @@ visreg(fit, "Diet") + ylab("Protein")
 This is the right choice when you want to describe the typical cow, and it's the plot most people
 want most of the time.
 
-# Conditioning on the estimated random effects
+## Conditioning on the estimated random effects
 
 Passing `predict = list(re.form = NULL)` tells `lme4` to condition on the estimated (BLUP) random
 effects for a specific cow. Combined with `by`, this lets you plot cow-specific curves --- the estimated relationship between protein and time,
@@ -63,7 +63,7 @@ bands represent: they reflect the precision with which *that cow's own trajector
 given its random effects, and are a different quantity than the population-level band above, which
 reflects uncertainty about the fixed effects for a typical cow.
 
-# Conditioning on some, but not all, random effects
+## Conditioning on some, but not all, random effects
 
 When a model has more than one grouping factor, `re.form` can also be a formula naming just the
 grouping factor(s) you want to condition on, letting you marginalize over the rest. This isn't an

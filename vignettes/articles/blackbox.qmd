@@ -22,7 +22,7 @@ As the name implies, `visreg` is primarily designed to visualize regression mode
 aq <- na.omit(airquality)
 ```
 
-# Random forests
+## Random forests
 
 ```{r}
 #| message: false
@@ -31,7 +31,7 @@ fit <- randomForest(Ozone ~ Solar.R + Wind + Temp, data = aq)
 visreg(fit, "Temp", band = FALSE) + ylab("Ozone")
 ```
 
-# Support vector machines
+## Support vector machines
 
 ```{r}
 #| message: false
@@ -42,7 +42,7 @@ visreg(fit, "Temp", band = FALSE) + ylab("Ozone")
 
 Note that neither random forests nor support vector machines are able to provide confidence bands for fitted values, so we have set `band = FALSE` (if `band = TRUE`, the same plot appears, but with a warning message).
 
-# Gradient boosted trees
+## Gradient boosted trees
 
 The implementation of gradient boosted trees in the `gbm` package does not offer a `residuals` method. This would normally cause `visreg` to omit plotting the partial residuals. However, we can supply our own user-defined `residuals` method:
 

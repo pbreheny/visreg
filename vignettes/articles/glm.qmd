@@ -20,11 +20,11 @@ visreg(fit, "lwt") +
   ylab("Log odds (low birthweight)")
 ```
 
-# Scale
+## Scale
 
 The unique aspect of GLMs is the link function joining the linear predictors to the response -- note that the vertical axis in the above plot is the log-odds of the outcome, not low birthweight itself.  This is the best scale on which to examine residuals and modeling assumption, because, in a sense, it is the scale on which the modeling actually takes place (Mother's weight is assumed to have a linear form in the model, and the above plot is linear).
 
-For communicating modeling results, however, it is often useful to transform the above outcome to the probability scale.  This can be done by manually specifying `trans` as described in [transformations](trans.html), although for GLMs the shortcut `scale="response"` is provided:
+For communicating modeling results, however, it is often useful to transform the above outcome to the probability scale.  This can be done by manually specifying `trans` as described in [transformations](transformations.html), although for GLMs the shortcut `scale="response"` is provided:
 
 ```{r}
 visreg(fit, "lwt", scale = "response") +
@@ -32,7 +32,7 @@ visreg(fit, "lwt", scale = "response") +
   ylab("P(low birthweight)")
 ```
 
-# Partial residuals
+## Partial residuals
 
 By default, `visreg` turns off partial residuals when a transformation has been applied to the vertical axis. The reason for this is that residuals are useful to examine on the linear predictor scale, but can be misleading when transformed --- a moderate residual can appear huge after a transformation, and vice versa.
 
