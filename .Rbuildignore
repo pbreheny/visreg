@@ -2,6 +2,7 @@
 ^docs$
 ^vignettes/articles$
 ^CLAUDE.md$
+^codecov.yml$
 
 \.quarto
 

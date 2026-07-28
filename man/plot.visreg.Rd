@@ -108,5 +108,5 @@ visreg. \emph{R Journal}, \strong{9}: 56-71.
 }
 \seealso{
 \link{visreg2d} for creating \code{visreg} objects, and the
-\href{https://pbreheny.github.io/visreg/surface.html}{options vignette} for examples.
+\href{https://pbreheny.github.io/visreg/articles/options.html}{options vignette} for examples.
 }

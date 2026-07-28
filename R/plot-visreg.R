@@ -49,7 +49,7 @@
 #'
 #' @seealso
 #' [visreg2d] for creating `visreg` objects, and the
-#' [options vignette](https://pbreheny.github.io/visreg/surface.html) for examples.
+#' [options vignette](https://pbreheny.github.io/visreg/articles/options.html) for examples.
 #' @references
 #' Breheny P and Burchett W. (2017) Visualization of regression models using
 #' visreg. *R Journal*, **9**: 56-71.

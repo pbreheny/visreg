@@ -56,19 +56,6 @@ persp.visreg2d <- function(
   axes <- prep_2d_axes(x, whitespace, gg = FALSE)
   ticktype <- if (is.factor(x$x) || is.factor(x$y)) "simple" else "detailed"
 
-  fit <- lm(
-    Ozone ~ Solar.R +
-      Wind +
-      Temp +
-      I(Wind^2) +
-      I(Temp^2) +
-      I(Wind * Temp) +
-      I(Wind * Temp^2) +
-      I(Temp * Wind^2) +
-      I(Temp^2 * Wind^2),
-    data = airquality
-  )
-
   plot_args <- list(
     x = axes$xx,
     y = axes$yy,
