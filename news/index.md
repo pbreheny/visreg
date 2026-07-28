@@ -2,17 +2,35 @@
 
 ## visreg 3.0.0
 
-- Change: Removed deprecation support for type = “effect”
-- Change:
+- Breaking change: Base and lattice plots removed entirely. All plots
+  produced by
+  [`plot.visreg()`](https://pbreheny.github.io/visreg/reference/plot.visreg.md)
+  are ggplot2-based now.
+- Breaking change:
   [`visreg2d()`](https://pbreheny.github.io/visreg/reference/visreg2d.md)’s
   `plot.type` argument is gone.
   [`plot.visreg2d()`](https://pbreheny.github.io/visreg/reference/plot.visreg2d.md)
   is now always a `ggplot2` contour plot (the base R
   `filled.contour`-based `"image"` type has been removed as redundant).
-- Static and interactive 3D surface plots are now handled by native S3
+  Static and interactive 3D surface plots are now handled by native S3
   generics
   [`persp.visreg2d()`](https://pbreheny.github.io/visreg/reference/persp.visreg2d.md)
   `persp3d.visreg2d()`.
+- Breaking change: Strict snake_case is enforced throughout the codebase
+  now. This is mostly internal, but a few user-facing options and names
+  in the visreg return object are affected.
+- Change: Better warnings for situations where user plots main effect
+  when interaction is present.
+- Change: Vague use of … to pass arguments around is eliminated;
+  residuals= and predict= arguments now required to specifically pass
+  arguments to those methods; otherwise arguments passed only to plot
+  and only if explicitly allowed.
+- Change: visreg now uses labels if available for axis labels.
+- Change: Now require explicit opt-in for rug plots.
+- Change: Removed deprecation support for type = “effect”.
+- Internal: Major overhaul to testing suite.
+- Documentation: URLs, references, links updated.
+- Documentation: Vignettes written in Quarto now.
 
 ## visreg 2.8.1
 

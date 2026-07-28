@@ -159,7 +159,8 @@ using visreg. *R Journal*, **9**: 56-71.
 
 [visreg2d](https://pbreheny.github.io/visreg/reference/visreg2d.md) for
 creating `visreg` objects, and the [options
-vignette](https://pbreheny.github.io/visreg/surface.html) for examples.
+vignette](https://pbreheny.github.io/visreg/articles/options.html) for
+examples.
 
 ## Examples
 

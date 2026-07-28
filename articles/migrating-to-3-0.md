@@ -1,8 +1,5 @@
 # Migrating to visreg 3.0
 
-    visreg 3.0 includes breaking changes. For migration details, see:
-    https://pbreheny.github.io/visreg/articles/migrating-to-3-0.html
-
 Version 3.0 of **visreg** is a breaking release. This article explains
 what changed, why, and how to update your code. If you’d rather not
 update your code right now, see [Keeping the old
@@ -11,36 +8,31 @@ pre-3.0 version.
 
 ## What changed, and why
 
-**visreg** is old enough that it accumulated three separate plotting
-backends over the years: base R graphics, `lattice`, and (added later,
-on top of the other two) `ggplot2`. Keeping all three in sync as
-features were added became increasingly difficult, and most users only
-ever used the `ggplot2` output anyway (via `gg = TRUE`). In 3.0, the
-base R and lattice plotting code has been removed entirely:
+Over the years, **visreg** accumulated three separate plotting backends
+over the years: base R graphics, `lattice`, and `ggplot2`. Keeping all
+three in sync as features were added became increasingly difficult,
+especially since many options were much easier to implement using
+**ggplot2**. Furthermore,
+[`plot.visreg()`](https://pbreheny.github.io/visreg/reference/plot.visreg.md)
+was unpredictable in the sense that it could return completely different
+types of objects depending on how it was called.
+
+In 3.0, the base R and lattice plotting code has been removed entirely:
 [`plot.visreg()`](https://pbreheny.github.io/visreg/reference/plot.visreg.md)
 now always builds and returns a `ggplot2` object, which you can further
 modify with `+`, just as you would any other `ggplot2` plot. The `gg`
-argument is gone because there is no longer a choice to make.
+argument is gone because there is no longer a choice involved.
 
 At the same time, the package’s internal and user-facing naming was
 inconsistent — a mix of `camelCase`, `dotted.names`, and `snake_case`
 left over from different eras of the codebase. 3.0 standardizes
 everything to `snake_case`. Most of this was internal and invisible to
 users, but a handful of user-facing argument names changed as a result
-(see the table below). A few arguments that only made sense for the old
-lattice/base-R backends (panel spacing, legend toggling) have been
-removed, since `ggplot2` handles these automatically. `type = "effect"`,
-a deprecated alias for `type = "contrast"` that had been printing a
-warning for years, has also been removed for good.
-
-Separately,
-[`visreg()`](https://pbreheny.github.io/visreg/reference/visreg.md) is
-now stricter about a common source of misleading plots: if you plot the
-main effect of a variable that participates in an interaction, without
-using `by` or `cond` to address the interaction, `visreg` now always
-warns you (previously this only happened in some cases). This isn’t a
-rename, but it’s a behavior change worth knowing about if you see new
-warnings after upgrading.
+(see the table below). A few arguments that only ever made sense for the
+old lattice/base-R backends (panel spacing, legend toggling) have been
+removed, since `ggplot2` handles these automatically. Finally,
+`type = "effect"`, a deprecated alias for `type = "contrast"` that had
+been printing a warning for years, has also been removed for good.
 
 ## Renamed and removed arguments
 
@@ -54,8 +46,8 @@ warnings after upgrading.
 | `strip.names` | `strip_names` | [`plot.visreg()`](https://pbreheny.github.io/visreg/reference/plot.visreg.md) |  |
 | `legend` | *(removed)* | [`plot.visreg()`](https://pbreheny.github.io/visreg/reference/plot.visreg.md) | `ggplot2` draws a legend automatically when one is needed; suppress it with `+ ggplot2::theme(legend.position = "none")`. |
 | `whitespace` | *(removed)* | [`plot.visreg()`](https://pbreheny.github.io/visreg/reference/plot.visreg.md) | Controlled panel spacing in the old lattice backend; use standard `ggplot2`/[`facet_grid()`](https://ggplot2.tidyverse.org/reference/facet_grid.html) mechanisms if you need to adjust spacing. |
-| `xtrans` | *(removed)* | [`visreg()`](https://pbreheny.github.io/visreg/reference/visreg.md) |  |
-| `type = "effect"` | `type = "contrast"` | [`visreg()`](https://pbreheny.github.io/visreg/reference/visreg.md), [`visreg2d()`](https://pbreheny.github.io/visreg/reference/visreg2d.md) | The deprecated alias has been fully removed; `contrast` is the only spelling now. |
+| `xtrans` | *(removed)* | [`visreg()`](https://pbreheny.github.io/visreg/reference/visreg.md) | Change the x axis with ggplot2’s `scale_x_*()` functions |
+| `type = "effect"` | `type = "contrast"` | [`visreg()`](https://pbreheny.github.io/visreg/reference/visreg.md), [`visreg2d()`](https://pbreheny.github.io/visreg/reference/visreg2d.md) | The deprecated alias has been fully removed. |
 | `visregList()` | [`visreg_list()`](https://pbreheny.github.io/visreg/reference/visreg_list.md) | top-level function | The function and the S3 class it returns (`"visregList"` → `"visreg_list"`) were both renamed. |
 | `plot.type = "image"` | *(removed)* | [`visreg2d()`](https://pbreheny.github.io/visreg/reference/visreg2d.md) | Redundant with the raster plot below; use the default instead. |
 | `plot.type = "gg"` | *(removed — now the default)* | [`visreg2d()`](https://pbreheny.github.io/visreg/reference/visreg2d.md) | [`plot.visreg2d()`](https://pbreheny.github.io/visreg/reference/plot.visreg2d.md) always builds a `ggplot2` object now; there’s nothing to select. |
@@ -143,8 +135,8 @@ everything else you can do to the plot it returns.
 used to take a `plot.type` argument with four options (`"image"`,
 `"gg"`, `"persp"`, `"rgl"`) that behaved like four unrelated functions
 glued together — different return types, different side effects, and
-mostly-incompatible sets of graphical parameters. 3.0 splits these apart
-by rendering paradigm instead of hiding them behind one enum:
+mostly-incompatible sets of graphical parameters. **visreg** 3.0 splits
+these apart by rendering paradigm:
 
 - **`plot(v)`** is now the only 2D flat plot, and it’s always a
   `ggplot2` raster/contour plot (the old `image` type, a base R
@@ -152,9 +144,9 @@ by rendering paradigm instead of hiding them behind one enum:
   simply the default).
 - **`persp(v)`** — a static 3D perspective plot — is now a method for
   base R’s own [`persp()`](https://rdrr.io/r/graphics/persp.html)
-  generic, rather than a `visreg2d`-specific spelling.
+  generic function.
 - **`rgl::persp3d(v)`** — the interactive, rotatable 3D plot — is
-  likewise a method for `rgl`’s own `persp3d()` generic.
+  likewise a method for `rgl`’s `persp3d()` generic.
 
 [`visreg2d()`](https://pbreheny.github.io/visreg/reference/visreg2d.md)
 no longer has a `plot.type` argument at all: `plot = TRUE` (the default)
@@ -163,11 +155,12 @@ compute with `plot = FALSE` and pass the result along:
 
 ``` r
 
-fit <- lm(Ozone ~ Solar.R + Wind + Temp + I(Wind^2) + I(Temp^2), data = airquality)
+fit <- lm(
+  Ozone ~ Solar.R + Wind + Temp + I(Wind^2) + I(Temp^2),
+  data = airquality
+)
 visreg2d(fit, "Wind", "Temp", plot = FALSE) |> persp()
 ```
-
-![](migrating-to-3-0_files/figure-html/unnamed-chunk-3-1.png)
 
 See the [surface plots
 vignette](https://pbreheny.github.io/visreg/articles/surface.md) for
@@ -176,33 +169,24 @@ further examples, including `rgl`.
 ## If you’re coming from base R graphics
 
 If you were relying on the base R (or `lattice`) backend rather than
-`gg = TRUE`, the renamed arguments above aren’t the biggest adjustment –
+`gg = TRUE`, the renamed arguments above aren’t the biggest adjustment —
 it’s that customization now happens by adding `ggplot2` layers with `+`,
 rather than by passing more arguments to
 [`visreg()`](https://pbreheny.github.io/visreg/reference/visreg.md) or
 calling base functions like
 [`title()`](https://rdrr.io/r/graphics/title.html),
 [`abline()`](https://rdrr.io/r/graphics/abline.html), or
-[`par()`](https://rdrr.io/r/graphics/par.html) afterward. Two articles
-are aimed specifically at this transition:
-
-- [Graphical
-  options](https://pbreheny.github.io/visreg/articles/options.md) covers
-  the arguments
-  [`visreg()`](https://pbreheny.github.io/visreg/reference/visreg.md)
-  still exposes directly (turning components on/off, jittering,
-  line/fill/point styling, factor band width) – the closest analogues to
-  what you could previously do with
-  [`par()`](https://rdrr.io/r/graphics/par.html) and friends.
-- [Customizing with
-  ggplot2](https://pbreheny.github.io/visreg/articles/gg.md) covers
-  everything else: titles, axis transformations, annotations, overlaying
-  a smooth, and combining multiple plots with `patchwork` – things you’d
-  previously have reached for
-  [`title()`](https://rdrr.io/r/graphics/title.html),
-  [`abline()`](https://rdrr.io/r/graphics/abline.html),
-  [`text()`](https://rdrr.io/r/graphics/text.html), or
-  `par(mfrow = ...)` to do.
+[`par()`](https://rdrr.io/r/graphics/par.html) afterward. The article
+[Customizing with
+ggplot2](https://pbreheny.github.io/visreg/articles/gg.md) is aimed at
+helping users with this transition: how to add titles, transform axes,
+annotate with text, overlay smooths curve or other lines, and how to
+combine multiple plots into one image. These are all things that you
+would have used [`title()`](https://rdrr.io/r/graphics/title.html),
+[`abline()`](https://rdrr.io/r/graphics/abline.html),
+[`text()`](https://rdrr.io/r/graphics/text.html), `par(mfrow = ...)`,
+etc., to do; you can still do all these things, but you have to go
+through the **ggplot2** infrastructure now.
 
 ## Keeping the old behavior
 
