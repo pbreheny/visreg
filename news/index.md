@@ -2,6 +2,8 @@
 
 ## visreg 3.0.0
 
+CRAN release: 2026-07-28
+
 - Breaking change: Base and lattice plots removed entirely. All plots
   produced by
   [`plot.visreg()`](https://pbreheny.github.io/visreg/reference/plot.visreg.md)
